@@ -85,6 +85,7 @@
                         <div class="text-center">
                             <p class="tx-16 fw-bolder">{{ auth()->user()->name }}</p>
                             <p class="tx-12 text-muted">{{ auth()->user()->email }}</p>
+                            <p class="tx-12 text-muted">{{ auth()->user()->role }}</p>
                         </div>
                     </div>
                     <ul class="list-unstyled p-1">
