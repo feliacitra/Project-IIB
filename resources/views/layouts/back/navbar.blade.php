@@ -1,5 +1,9 @@
 <!-- partial:partials/_navbar.html -->
 <nav class="navbar">
+    <form id="logout-form" method="POST" action="{{ route('logout') }}">
+        @csrf <!-- CSRF protection token -->
+        <button type="submit" style="display: none;">Logout</button>
+    </form>
     <a href="#" class="sidebar-toggler">
         <i data-feather="menu"></i>
     </a>
@@ -79,8 +83,9 @@
                             <img class="wd-80 ht-80 rounded-circle" src="https://via.placeholder.com/80x80" alt="">
                         </div>
                         <div class="text-center">
-                            <p class="tx-16 fw-bolder">Amiah Burton</p>
-                            <p class="tx-12 text-muted">amiahburton@gmail.com</p>
+                            <p class="tx-16 fw-bolder">{{ auth()->user()->name }}</p>
+                            <p class="tx-12 text-muted">{{ auth()->user()->email }}</p>
+                            <p class="tx-12 text-muted">{{ auth()->user()->role }}</p>
                         </div>
                     </div>
                     <ul class="list-unstyled p-1">
@@ -102,8 +107,8 @@
                                 <span>Switch User</span>
                             </a>
                         </li>
-                        <li class="dropdown-item py-2">
-                            <a href="javascript:;" class="text-body ms-0">
+                        <li id="logout-btn" class="dropdown-item py-2">
+                            <a href="{{ route('logout') }}" class="text-body ms-0">
                                 <i class="me-2 icon-md" data-feather="log-out"></i>
                                 <span>Log Out</span>
                             </a>

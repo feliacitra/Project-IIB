@@ -67,6 +67,17 @@
 </div>
 
 <!-- core:js -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#logout-btn').click(function() {
+            event.preventDefault(); // Prevent default click behavior
+
+            // Find the logout form and submit it
+            $('#logout-form').submit();
+        });
+    });
+</script>
 <script src="{{ asset('back/vendors/core/core.js') }}"></script>
 <!-- endinject -->
 
