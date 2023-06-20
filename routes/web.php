@@ -18,6 +18,10 @@ Route::get('/', function () {
     return redirect('/dashboard');
 });
 
+Route::get('/admin', function() {
+    return view('admin.dashboard');
+})->name('admin');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
