@@ -26,8 +26,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/ubahpassword', function () {
-    return view('ubahpassword');
+Route::get('/changepassword', function () {
+    return view('changepassword');
 });
 
 require __DIR__.'/auth.php';
