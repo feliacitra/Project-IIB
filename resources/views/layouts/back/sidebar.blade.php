@@ -10,13 +10,61 @@
     </div>
     <div class="sidebar-body">
         <ul class="nav">
-            <li class="nav-item nav-category">Main</li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="link-icon" data-feather="box"></i>
-                    <span class="link-title">Dashboard</span>
-                </a>
-            </li>
+            @if ( auth()->user()->role == 'admin' )
+                <li class="nav-item nav-category">Dashboard</li>
+                <li class="nav-item">
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Dashboard Startup</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Dashboard Monev 1</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Dashboard Monev 2</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Dashboard WRAP</span>
+                    </a>
+                </li>
+                <li class="nav-item nav-category">Data Master</li>
+                <li class="nav-item">
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Master Pengguna</span>
+                    </a>
+                </li>
+            @elseif ( auth()->user()->role == 'peserta' )
+                <li class="nav-item">
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Dashboard</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Profil Startup</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Voting Jadwal Mentoring</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Jadwal Mentoring</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Jadwal Bootcamp</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Sertifikat Monev</span>
+                    </a>
+                </li>
+            @endif
         </ul>
     </div>
 </nav>
