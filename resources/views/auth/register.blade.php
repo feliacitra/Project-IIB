@@ -13,8 +13,11 @@
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama Lengkap</label>
+                                    <label for="name" class="form-label">Nama Startup</label>
                                     <input type="text" class="form-control" id="name" name="name" :value="old('name')" required autofocus>
+                                    @error('name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Alamat Surel</label>
