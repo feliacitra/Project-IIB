@@ -30,4 +30,5 @@ Route::get('/changepassword', function () {
     return view('changepassword');
 });
 
+
 require __DIR__.'/auth.php';
