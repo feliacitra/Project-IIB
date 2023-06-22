@@ -19,6 +19,9 @@
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Alamat Surel</label>
                                     <input type="email" class="form-control" id="email" placeholder="Email" name="email" :value="old('email')" required>
+                                    @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Kata Sandi</label>
@@ -29,6 +32,9 @@
                                 <div class="mb-3">
                                     <label for="password_confirmation" class="form-label">Ulangi Kata Sandi</label>
                                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required >
+                                    @error('password')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div>
                                     <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 text-white">Masuk</button>

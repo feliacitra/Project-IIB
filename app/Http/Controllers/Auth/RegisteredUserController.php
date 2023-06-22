@@ -37,6 +37,9 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ],[
+            'email.unique' => 'Gagal disimpan, Email sudah digunakan oleh peserta lain.',
+            'password.confirmed' => 'Gagal disimpan, Kata Sandi Tidak Sama'
         ]);
 
         $user = User::create([
