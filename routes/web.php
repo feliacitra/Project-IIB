@@ -30,4 +30,6 @@ Route::get('/changepassword', function () {
     return view('changepassword');
 });
 
+Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');
+
 require __DIR__.'/auth.php';
