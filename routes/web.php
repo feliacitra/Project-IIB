@@ -32,7 +32,7 @@ Route::get('/changepassword', function () {
 });
 
 Route::get('/masteruser', function () {
-    return view('admin.masteruser');
+    return view('masterpengguna.masteruser');
 });
 
 Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');
