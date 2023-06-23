@@ -50,6 +50,7 @@ class LoginRequest extends FormRequest
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
+                'login' => 'Alamat surel dan kata sandi tidak sesuai',
             ]);
         }
 

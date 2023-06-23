@@ -85,7 +85,6 @@
                         <div class="text-center">
                             <p class="tx-16 fw-bolder">{{ auth()->user()->name }}</p>
                             <p class="tx-12 text-muted">{{ auth()->user()->email }}</p>
-                            <p class="tx-12 text-muted">{{ auth()->user()->role }}</p>
                         </div>
                     </div>
                     <ul class="list-unstyled p-1">
@@ -99,6 +98,12 @@
                             <a href="javascript:;" class="text-body ms-0">
                                 <i class="me-2 icon-md" data-feather="edit"></i>
                                 <span>Edit Profile</span>
+                            </a>
+                        </li>
+                        <li class="dropdown-item py-2">
+                            <a href="/changepassword" class="text-body ms-0">
+                                <i class="me-2 icon-md" data-feather="lock"></i>
+                                <span>Change Password</span>
                             </a>
                         </li>
                         <li class="dropdown-item py-2">

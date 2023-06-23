@@ -20,10 +20,20 @@ Route::get('/', function () {
 
 Route::get('/admin', function() {
     return view('admin.dashboard');
-})->name('admin');
+})->middleware(['auth', 'admin'])->name('admin');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::get('/changepassword', function () {
+    return view('changepassword');
+})->middleware(['auth'])->name('changepassword');
+
+Route::get('/access', function () {
+    return view('admin.access');
+})->middleware(['auth', 'admin'])->name('access');
+
+Route::post('/register',[RegisteredUserController::class, 'store']) ->name('register');
 
 require __DIR__.'/auth.php';
