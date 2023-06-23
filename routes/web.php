@@ -35,6 +35,10 @@ Route::get('/masteruser', function () {
     return view('masterpengguna.masteruser');
 });
 
+Route::get('/adduser', function () {
+    return view('masterpengguna.adduser');
+});
+
 Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');
 
 
