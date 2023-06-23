@@ -30,4 +30,8 @@ Route::get('/changepassword', function () {
     return view('changepassword');
 });
 
+Route::get('/masteruser', function () {
+    return view('admin.masteruser');
+});
+
 require __DIR__.'/auth.php';
