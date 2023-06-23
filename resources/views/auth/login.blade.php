@@ -19,6 +19,9 @@
                                     <div class="mb-3">
                                         <label for="userPassword" class="form-label">Kata Sandi</label>
                                         <input type="password" name="password" class="form-control" id="password" autocomplete="current-password" placeholder="Password" required>
+                                        @error('login')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                     <div class="form-check mb-3">
                                         <input type="checkbox" class="form-check-input" id="remember_me" name="remember">
