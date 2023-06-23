@@ -37,6 +37,14 @@
                         <span class="link-title">Master Pengguna</span>
                     </a>
                 </li>
+                <li class="nav-item nav-category">Hak Akses</li>
+                <li class="nav-item">
+                    <a href="{{ route('access') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Hak Akses</span>
+                    </a>
+                </li>
+
             @elseif ( auth()->user()->role == 'peserta' )
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">

@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 Route::get('/admin', function() {
     return view('admin.dashboard');
-})->name('admin');
+})->middleware(['auth', 'admin'])->name('admin');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -28,8 +28,12 @@ Route::get('/dashboard', function () {
 
 Route::get('/changepassword', function () {
     return view('changepassword');
-});
+})->middleware(['auth'])->name('changepassword');
 
-Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');
+Route::get('/access', function () {
+    return view('admin.access');
+})->middleware(['auth', 'admin'])->name('access');
+
+Route::post('/register',[RegisteredUserController::class, 'store']) ->name('register');
 
 require __DIR__.'/auth.php';
