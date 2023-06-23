@@ -31,6 +31,10 @@ Route::get('/changepassword', function () {
     return view('changepassword');
 });
 
+Route::get('/masteruser', function () {
+    return view('admin.masteruser');
+});
+
 Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');
 
 
