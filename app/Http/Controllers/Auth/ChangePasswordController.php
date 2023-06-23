@@ -12,23 +12,34 @@ class ChangePasswordController extends Controller
 {
 
     public function changePassword(Request $request){
-
-        // Check if new password match with confirm password
-        if($request->new_password != $request->new_password_confirm){
-            return back()->with("error", "Password and Confirm Password Doesn't match!");
-        }
+        $validation = $request->validate([
+            'old_password' => 'required',
+            'password' => [
+                'required',
+                'min:8',
+                'max:12',
+                'regex:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@$*(),.":])/',
+                'confirmed',
+            ],
+            ]
+        );
 
         // Check if password is match 
         if(!Hash::check($request->old_password, auth()->user()->password)){
-            return back()->with("error", "Old Password Doesn't match!");
+            return back()->withErrors("Old Password is Wrong!");
+        }
+
+        // Check if new password is match with old one
+        if($request->old_password == $request->password){
+            return back()->withErrors("New Password Must Be Different From Your Old Password");
         }
 
         // Update Password
         User::whereId(auth()->user()->id)->update([
-            'password' =>Hash::make($request->new_password)
+            'password' =>Hash::make($request->password)
         ]);
 
-        return back()->with("status", "Password Changed Successfully");
+        return back()->with("success", "Successfully Changed Your Password");
     }
 
 }
