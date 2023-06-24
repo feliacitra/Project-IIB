@@ -19,12 +19,12 @@
     <div class="pb-4">
         <p style="display: flex; align-items: flex-end;">
             <a href="/masterpengguna"><i data-feather="home" style="margin-right: 0.5rem;"></i></a>
-            Master Pengguna > Tambah
+            Master Pengguna > Edit
         </p>
     </div>
 
     <div class="container" style="background-color: #f2f2f2">
-        <div class="card-header text-center">Tambah Pengguna</div>
+        <div class="card-header text-center">Edit Pengguna</div>
         <div class="row mt-3">
             <div class="col-md-6">
                 <div class="card">
@@ -104,7 +104,7 @@
                             <textarea id="address" name="address" placeholder="Alamat" class="form-control" required></textarea>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Tambah</button>
+                        <button type="submit" class="btn btn-primary">Edit</button>
 
                     </form>
                 </div>

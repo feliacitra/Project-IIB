@@ -39,6 +39,16 @@ Route::get('/adduser', function () {
     return view('masterpengguna.adduser');
 });
 
+/* This is for detailuser, please modify based on the right source*/
+Route::get('/detailuser', function () {
+    return view('masterpengguna.detailuser');
+}); 
+
+/* This is for edituser, please modify based on the right source*/
+Route::get('/edituser', function () {
+    return view('masterpengguna.edituser');
+}); 
+
 Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');
 
 
