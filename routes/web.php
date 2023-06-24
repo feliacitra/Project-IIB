@@ -36,4 +36,5 @@ Route::get('/access', function () {
 
 Route::post('/register',[RegisteredUserController::class, 'store']) ->name('register');
 
+
 require __DIR__.'/auth.php';
