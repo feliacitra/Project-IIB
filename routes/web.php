@@ -28,13 +28,14 @@ Route::get('/dashboard', function () {
 
 Route::get('/changepassword', function () {
     return view('changepassword');
-})->middleware(['auth'])->name('changepassword');
+})->middleware(['auth'])->name('change-password');
 
 Route::get('/access', function () {
     return view('admin.access');
 })->middleware(['auth', 'admin'])->name('access');
 
-Route::post('/register',[RegisteredUserController::class, 'store']) ->name('register');
+
+Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');
 
 
 require __DIR__.'/auth.php';
