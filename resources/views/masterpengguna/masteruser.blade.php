@@ -20,9 +20,10 @@
 
     <!-- Button Tambah -->
     <div class="pb-2" style="display: flex; justify-content: flex-end;">
-        <button class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;"">
-            <i data-feather="plus" style="margin-right: 0.3rem;"></i>
+        <button class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
+            <a href="{{route('adduser')}}"><i data-feather="plus" style="margin-right: 0.3rem;"></i>
             TAMBAH
+            </a>
         </button>
     </div>
     <!-- Button Tambah -->

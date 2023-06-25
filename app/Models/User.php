@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -49,6 +50,6 @@ class User extends Authenticatable
      */
     public function user_detail(): HasOne
     {
-        return $this->hasOne(UserDetail::class, 'foreign_key');
+        return $this->hasOne(UserDetail::class, 'user_id');
     }
 }

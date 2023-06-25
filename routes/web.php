@@ -33,23 +33,24 @@ Route::get('/changepassword', function () {
 
 Route::get('/masteruser', function () {
     return view('masterpengguna.masteruser');
-});
+})->name('masteruser');
 
 Route::get('/adduser', function () {
     return view('masterpengguna.adduser');
-});
+})->name('adduser');
 
 /* This is for detailuser, please modify based on the right source*/
 Route::get('/detailuser', function () {
     return view('masterpengguna.detailuser');
-}); 
+})->name('detailuser');
 
 /* This is for edituser, please modify based on the right source*/
 Route::get('/edituser', function () {
     return view('masterpengguna.edituser');
-}); 
+})->name('edituser');
 
 Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');
+Route::post('/adduser', [App\Http\Controllers\MasterUser\AddUserController::class, 'store']) ->name('adduser');
 
 
 require __DIR__.'/auth.php';
