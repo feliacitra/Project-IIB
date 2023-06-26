@@ -78,6 +78,7 @@
         });
     });
 </script>
+@yield('extra-script')
 <script src="{{ asset('back/vendors/core/core.js') }}"></script>
 <!-- endinject -->
 

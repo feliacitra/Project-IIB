@@ -10,7 +10,7 @@
     </div>
     <div class="sidebar-body">
         <ul class="nav">
-            @if ( auth()->user()->role == 'admin' )
+            @if ( auth()->user()->role == '1' )
                 <li class="nav-item nav-category">Dashboard</li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
@@ -39,13 +39,16 @@
                 </li>
                 <li class="nav-item nav-category">Hak Akses</li>
                 <li class="nav-item">
-                    <a href="{{ route('access') }}" class="nav-link">
+                    <a href="{{ route('access.index') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Hak Akses</span>
                     </a>
                 </li>
+                @foreach ($features as $feature)
+                    <li class="nav-item nav-category">{{ $feature }}</li>
+                @endforeach
 
-            @elseif ( auth()->user()->role == 'peserta' )
+            @elseif ( auth()->user()->role == '2' )
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
