@@ -26,7 +26,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/changepassword', function () {
+Route::get('/change-password', function () {
     return view('changepassword');
 });
 
