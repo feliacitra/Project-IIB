@@ -14,26 +14,41 @@
             <div class="col-md-6">
                 <!-- Form ubah password -->
                 <div class="auth-form-wrapper p-4">
-                    @csrf
-                    <form method="" action="">
+                    <form method="post" action="{{ route('change-password') }}">
+                        @csrf <!-- {{ csrf_field() }} -->
+                        @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-block">   
+                            <strong>{{ $message }}</strong>
+                        </div>
+                        @endif
+                        @if ($message = Session::get('errors'))
+                        <div class="alert alert-danger alert-block">   
+                            @foreach ($errors->all() as $error)
+                                <strong>{{ $error }}</strong>
+                                <br>
+                            @endforeach
+                        </div>
+                        @endif
+                        
+                        {{-- <span class = "alert alert-danger alert-block">{{ $message }}</span> --}}
                         <!-- Password Sekarang -->
                         <div class="mb-3">
                             <label for="current-password" class="mb-1"><b>Password Sekarang</b></label>
-                            <input id="current-password" type="password" placeholder="Password Sekarang" class="form-control" required>
+                            <input id="current-password" name="old_password" type="password" placeholder="Password Sekarang" class="form-control" required>
                         </div>
                         <!-- Password Sekarang -->
 
                         <!-- Password Baru -->
                         <div class="mb-3">
                             <label for="new-password" class="mb-1"><b>Password Baru</b></label>
-                            <input id="new-password" type="password" placeholder="Password Baru" class="form-control" required>
+                            <input id="new-password" type="password" name="password" placeholder="Password Baru" class="form-control" required>
                         </div>
                         <!-- Password Baru -->
 
                         <!-- Ketik Ulang Password Baru -->
                         <div class="mb-3">
                             <label for="new-password" class="mb-1"><b>Ketik Ulang Password</b></label>
-                            <input id="new-password" type="password" placeholder="Ketik Ulang Password" class="form-control" required>
+                            <input id="new-password" name="password_confirmation" type="password" placeholder="Ketik Ulang Password" class="form-control" required>
                         </div>
                         <!-- Ketik Ulang Password Baru -->
 

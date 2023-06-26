@@ -26,12 +26,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-
-Route::get('/changepassword', function () {
+Route::get('/change-password', function () {
     return view('changepassword');
 });
-
-Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');
 
 
 require __DIR__.'/auth.php';
