@@ -39,6 +39,14 @@ Route::get('/access', [AccessController::class, 'index'])->middleware(['auth', '
 Route::post('/access', [AccessController::class, 'submit'])->middleware(['auth', 'admin'])->name('access.submit');
 Route::get('/access/reset', [AccessController::class, 'reset'])->middleware(['auth', 'admin'])->name('access.reset');
 
+Route::get('/masteruser', function () {
+    return view('masterpengguna.masteruser');
+});
+
+Route::get('/adduser', function () {
+    return view('masterpengguna.adduser');
+});
+
 Route::post('/register',[RegisteredUserController::class, 'store']) ->name('register');
 
 
