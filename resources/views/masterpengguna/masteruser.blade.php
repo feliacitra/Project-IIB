@@ -46,7 +46,12 @@
     </div>
 </div>
 <!-- Search Bar -->
-
+    <!-- Flash messages -->
+    @if (Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get('success') }}
+        </div>
+    @endif
     <!-- Users Table -->
     <div class="table-responsive-md">
         <table class="table">
@@ -64,17 +69,19 @@
 
             <!-- Table Body -->
             <tbody>
+            @foreach ($users as $user)
                 <tr>
-                    <th scope="row" class="text-center">1</th>
-                    <td>User</td>
-                    <td>user@email.com</td>
-                    <td>Peserta</td>
+                    <th scope="row" class="text-center">{{ $loop->iteration }}</th>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->position }}</td>
                     <td class="text-center">
-                        <a href=""><i data-feather="eye"></i></a>
-                        <a href=""><i data-feather="edit-2"></i></a>
-                        <a href=""><i data-feather="trash-2"></i></a>
+                        <a href="{{route('detailuser',$user->id)}}"><i data-feather="eye"></i></a>
+                        <a href="{{route('edituser',$user->id)}}"><i data-feather="edit-2"></i></a>
+                        <a href="{{ route('deleteuser', $user->id) }}" onclick="return confirm('Are you sure you want to delete this user?')"><i data-feather="trash-2"></i></a>
                     </td>
                 </tr>
+            @endforeach
             </tbody>
             <!-- Table Body -->
         </table>
