@@ -88,7 +88,7 @@
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="pengguna[]" class="form-check-input check-pengguna" id="pengguna">
+                                    <input type="checkbox" class="form-check-input check-pengguna" id="pengguna">
                                 </div>
                             </td>
                         </tr>
@@ -117,7 +117,7 @@
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="program-inkubasi[]" class="form-check-input check-program-inkubasi" id="program-inkubasi">
+                                    <input type="checkbox" class="form-check-input check-program-inkubasi" id="program-inkubasi">
                                 </div>
                             </td>
                         </tr>
@@ -146,7 +146,7 @@
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="kategori-startup[]" class="form-check-input check-kategori-startup" id="kategori-startup">
+                                    <input type="checkbox" class="form-check-input check-kategori-startup" id="kategori-startup">
                                 </div>
                             </td>
                         </tr>

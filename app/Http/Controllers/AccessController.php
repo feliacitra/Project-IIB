@@ -16,19 +16,25 @@ class AccessController extends Controller
         $kategoriStartup = $request->input('kategori-startup');
 
         $roleDb = Role::where('name', $role)->first();
-        foreach ($pengguna as $feature) {
-            $featureDb = Feature::where('name', $feature)->first();
-            $roleDb->features()->save($featureDb);
+        if ($pengguna) {
+            foreach ($pengguna as $feature) {
+                $featureDb = Feature::where('name', $feature)->first();
+                $roleDb->features()->save($featureDb);
+            }
         }
 
-        foreach ($programInkubasi as $feature) {
-            $featureDb = Feature::where('name', $feature)->first();
-            $roleDb->features()->save($featureDb);
+        if ($programInkubasi) {
+            foreach ($programInkubasi as $feature) {
+                $featureDb = Feature::where('name', $feature)->first();
+                $roleDb->features()->save($featureDb);
+            }
         }
 
-        foreach ($kategoriStartup as $feature) {
-            $featureDb = Feature::where('name', $feature)->first();
-            $roleDb->features()->save($featureDb);
+        if ($kategoriStartup) {
+            foreach ($kategoriStartup as $feature) {
+                $featureDb = Feature::where('name', $feature)->first();
+                $roleDb->features()->save($featureDb);
+            }
         }
 
         return redirect('/access');

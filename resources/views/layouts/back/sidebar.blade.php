@@ -44,9 +44,10 @@
                         <span class="link-title">Hak Akses</span>
                     </a>
                 </li>
-                @foreach ($features as $feature)
+                @foreach (get_access() as $feature)
                     <li class="nav-item nav-category">{{ $feature }}</li>
                 @endforeach
+                {{-- <li class="nav-item nav-category">{{ auth()->user()->role }}</li> --}}
 
             @elseif ( auth()->user()->role == '2' )
                 <li class="nav-item">

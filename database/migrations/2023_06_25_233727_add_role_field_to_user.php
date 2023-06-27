@@ -14,7 +14,7 @@ class AddRoleFieldToUser extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('role')->constrained('role');
+            $table->foreignId('role')->constrained('role')->default('2');
         });
     }
 
@@ -26,6 +26,7 @@ class AddRoleFieldToUser extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['role']);
             $table->dropColumn('role');
         });
     }
