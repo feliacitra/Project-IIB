@@ -25,14 +25,14 @@ Route::get('/admin', function() {
     return view('admin.dashboard');
 })->middleware(['auth', 'admin'])->name('admin');
 
-Route::get('/dashboard', function () {
-    View::share('features', ['example', 'test']);
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     View::share('features', ['example', 'test']);
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
-Route::get('/changepassword', function () {
-    return view('changepassword');
-})->middleware(['auth'])->name('change-password');
+// Route::get('/changepassword', function () {
+//     return view('changepassword');
+// })->middleware(['auth'])->name('change-password');
 
 
 Route::get('/access', [AccessController::class, 'index'])->middleware(['auth', 'admin'])->name('access.index');
@@ -48,6 +48,18 @@ Route::get('/adduser', function () {
 });
 
 Route::post('/register',[RegisteredUserController::class, 'store']) ->name('register');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        View::share('features', ['example', 'test']);
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::get('/changepassword', function () {
+        return view('changepassword');
+    })->name('change-password');
+
+});
 
 
 require __DIR__.'/auth.php';
