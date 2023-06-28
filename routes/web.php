@@ -43,6 +43,10 @@ Route::get('/startupcategory', function () {
     return view('Master-KategoriStartup.listKategoriStartup');
 })->name('startupcategory');
 
+Route::get('/civitas', function () {
+    return view('Master-Civitas.listCivitas');
+})->name('civitas');
+
 Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');
 
 
