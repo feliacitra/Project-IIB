@@ -63,7 +63,26 @@
 
             <!-- Table Body -->
             <tbody>
+                @foreach($users as $user)
                 <tr>
+                    <th scope="row" class="text-center">{{ $loop->iteration }}</th>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->roles->name }}</td>
+                    <td class="text-center">
+                        <a href=""><i data-feather="eye"></i></a>
+                        <a href=""><i data-feather="edit-2"></i></a>
+                        <a href=""><i data-feather="trash-2"></i></a>
+                    </td>
+                </tr>
+                @endforeach
+                {{-- @foreach ($roles as $role)
+                <tr>
+                    <th scope="row" class="text-center">{{ $loop->iteration }}</th>
+                    <td>{{ $role }}</td>
+                </tr>
+                @endforeach --}}
+                {{-- <tr>
                     <th scope="row" class="text-center">1</th>
                     <td>User</td>
                     <td>user@email.com</td>
@@ -73,7 +92,7 @@
                         <a href=""><i data-feather="edit-2"></i></a>
                         <a href=""><i data-feather="trash-2"></i></a>
                     </td>
-                </tr>
+                </tr> --}}
             </tbody>
             <!-- Table Body -->
         </table>

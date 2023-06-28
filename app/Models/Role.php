@@ -21,9 +21,9 @@ class Role extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function users(): HasMany
+    public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class, 'role');
     }
 
     /**

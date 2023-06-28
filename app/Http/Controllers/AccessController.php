@@ -43,7 +43,6 @@ class AccessController extends Controller
                 $roleDb->features()->save($featureDb);
             }
         }
-
         return redirect('/access')->with('success', 'Berhasil mengubah hak akses');
     }
 

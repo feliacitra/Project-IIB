@@ -32,7 +32,7 @@
                 </li>
                 <li class="nav-item nav-category">Data Master</li>
                 <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link">
+                    <a href="{{ route('master.pengguna') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Pengguna</span>
                     </a>
@@ -96,13 +96,19 @@
                         <span class="link-title">Hak Akses</span>
                     </a>
                 </li>
-                @foreach (get_access() as $feature)
+                {{-- @foreach (get_access() as $feature)
                     <li class="nav-item nav-category">{{ $feature }}</li>
-                @endforeach
+                @endforeach --}}
                 {{-- <li class="nav-item nav-category">{{ auth()->user()->role }}</li> --}}
 
             @else
-                <li class="nav-item">
+            <li class="nav-item nav-category">Data Master</li>
+            <li class="nav-item">
+                @foreach ($menus as $menu)
+                    {!! $menu !!}
+                @endforeach
+            </li>
+                {{-- <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Dashboard</span>
@@ -127,7 +133,11 @@
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Sertifikat Monev</span>
                     </a>
-                </li>
+                </li> --}}
+                {{-- @foreach (get_access() as $feature)
+                    <li class="nav-item nav-category">{{ $feature->name }}</li>
+                @endforeach --}}
+                {{-- <li class="nav-item nav-category">{{ get_access() }}</li> --}}
             @endif
         </ul>
     </div>
