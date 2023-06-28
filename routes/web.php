@@ -36,8 +36,12 @@ Route::get('/user', function () {
 });
 
 Route::get('/incubationprogram', function () {
-    return view('Master-ProgramInkubasi.listProgram');
+    return view('Master-ProgramInkubasi.listProgramInkubasi');
 })->name('incubationProgram');
+
+Route::get('/startupcategory', function () {
+    return view('Master-KategoriStartup.listKategoriStartup');
+})->name('startupcategory');
 
 Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');
 
