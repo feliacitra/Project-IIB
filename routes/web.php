@@ -34,17 +34,8 @@ Route::get('/admin', function() {
 //     return view('changepassword');
 // })->middleware(['auth'])->name('change-password');
 
-
-Route::post('/access', [AccessController::class, 'submit'])->middleware(['auth', 'admin'])->name('access.submit');
-Route::get('/access/reset', [AccessController::class, 'reset'])->middleware(['auth', 'admin'])->name('access.reset');
-Route::get('/access/reset/{role}', [AccessController::class, 'role_reset'])->middleware(['auth', 'admin'])->name('access.role-reset');
-
 Route::get('/masteruser', function () {
     return view('masterpengguna.masteruser');
-});
-
-Route::get('/adduser', function () {
-    return view('masterpengguna.adduser');
 });
 
 Route::post('/register',[RegisteredUserController::class, 'store']) ->name('register');
@@ -60,6 +51,13 @@ Route::middleware(['auth'])->group(function () {
     })->name('change-password');
     
     Route::get('/access', [AccessController::class, 'index'])->middleware(['admin'])->name('access.index');
+    Route::post('/access', [AccessController::class, 'submit'])->middleware(['admin'])->name('access.submit');
+    Route::get('/access/reset', [AccessController::class, 'reset'])->middleware(['admin'])->name('access.reset');
+    Route::get('/access/reset/{role}', [AccessController::class, 'role_reset'])->middleware(['admin'])->name('access.role-reset');
+
+    Route::get('/adduser', function () {
+        return view('masterpengguna.adduser');
+    });
 });
 
 
