@@ -31,9 +31,13 @@ Route::get('/changepassword', function () {
     return view('changepassword');
 });
 
-Route::get('/masteruser', function () {
-    return view('masterpengguna.masteruser');
+Route::get('/user', function () {
+    return view('Master-Pengguna.listUser');
 });
+
+Route::get('/incubationprogram', function () {
+    return view('Master-ProgramInkubasi.listProgram');
+})->name('incubationProgram');
 
 Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');
 
