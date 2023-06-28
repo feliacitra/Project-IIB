@@ -36,6 +36,58 @@
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Pengguna</span>
                     </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Master Program Inkubasi</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Master Kategori Startup</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Master Civitas</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Master Universitas</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Master Fakultas</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Master Program Studi</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Master Periode Pendaftaran</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Master Komponen Penilaian</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Master Tema Bootcamp</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Master Feedback</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Master Konten Monev</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Master Mata Kuliah</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Master Index Nilai Matkul</span>
+                    </a>
                 </li>
                 <li class="nav-item nav-category">Hak Akses</li>
                 <li class="nav-item">
@@ -49,7 +101,7 @@
                 @endforeach
                 {{-- <li class="nav-item nav-category">{{ auth()->user()->role }}</li> --}}
 
-            @elseif ( auth()->user()->role == '2' )
+            @else
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>

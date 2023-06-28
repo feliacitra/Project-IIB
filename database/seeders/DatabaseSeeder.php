@@ -97,6 +97,14 @@ class DatabaseSeeder extends Seeder
             'role' => $role->id,
         ];
 
+        $peserta = [
+            'name' => 'peserta',
+            'email' => 'peserta@gmail.com',
+            'password' => Hash::make('peserta'),
+            'role' => '2'
+        ];
+
         User::firstOrCreate(['name' => 'admin'], $admin);
+        User::firstOrCreate(['name' => 'peserta'], $peserta);
     }
 }

@@ -10,12 +10,19 @@ use App\Models\Feature;
 class AccessController extends Controller
 {
     public function submit(Request $request) {
+        $request->validate([
+                'role' => ['required']
+            ],[
+                'role.required' => 'Pilih salah satu role'
+            ]
+        );
+
         $role = $request->input('role');
         $pengguna = $request->input('pengguna');
         $programInkubasi = $request->input('program-inkubasi');
         $kategoriStartup = $request->input('kategori-startup');
 
-        $roleDb = Role::where('name', $role)->first();
+        $roleDb = Role::find($role);
         if ($pengguna) {
             foreach ($pengguna as $feature) {
                 $featureDb = Feature::where('name', $feature)->first();
@@ -37,7 +44,7 @@ class AccessController extends Controller
             }
         }
 
-        return redirect('/access');
+        return redirect('/access')->with('success', 'Berhasil mengubah hak akses');
     }
 
     public function index() {
@@ -49,6 +56,12 @@ class AccessController extends Controller
             $role->features()->detach();
         }
 
-        return redirect('/access');
+        return redirect('/access')->with('success', 'Berhasil mereset hak akses');
+    }
+
+    public function role_reset($role) {
+        Role::find($role)->features()->detach();
+
+        return redirect('/access')->with('success', 'Berhasil mereset hak akses role');
     }
 }

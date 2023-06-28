@@ -35,9 +35,9 @@ Route::get('/admin', function() {
 // })->middleware(['auth'])->name('change-password');
 
 
-Route::get('/access', [AccessController::class, 'index'])->middleware(['auth', 'admin'])->name('access.index');
 Route::post('/access', [AccessController::class, 'submit'])->middleware(['auth', 'admin'])->name('access.submit');
 Route::get('/access/reset', [AccessController::class, 'reset'])->middleware(['auth', 'admin'])->name('access.reset');
+Route::get('/access/reset/{role}', [AccessController::class, 'role_reset'])->middleware(['auth', 'admin'])->name('access.role-reset');
 
 Route::get('/masteruser', function () {
     return view('masterpengguna.masteruser');
@@ -54,11 +54,12 @@ Route::middleware(['auth'])->group(function () {
         View::share('features', ['example', 'test']);
         return view('dashboard');
     })->name('dashboard');
-
+    
     Route::get('/changepassword', function () {
         return view('changepassword');
     })->name('change-password');
-
+    
+    Route::get('/access', [AccessController::class, 'index'])->middleware(['admin'])->name('access.index');
 });
 
 

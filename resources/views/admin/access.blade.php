@@ -17,18 +17,31 @@
     @csrf
     <div class="container-fluid" style="background-color: #F0F0F0; height: 90%;">
         <div class="row d-flex justify-content-between align-items-center flex-wrap grid-margin">
+             @if ($message = Session::get('success'))
+                <div class="alert alert-success alert-block">   
+                    <strong>{{ $message }}</strong>
+                </div>
+            @endif
+            @if ($message = Session::get('errors'))
+                <div class="alert alert-danger alert-block">   
+                    @foreach ($errors->all() as $error)
+                        <strong>{{ $error }}</strong>
+                        <br>
+                    @endforeach
+                </div>
+            @endif
             <div class="col-md-6">
                 <div class="auth-form-wrapper p-4">
                         <!-- User Role -->
                         <div class="mb-3">
                             <select class="form-select" name="role" id="role-select">
                                 <option selected disabled>User Role</option>
-                                <option value="peserta">Peserta</option>
-                                <option value="penilai">Penilai</option>
-                                <option value="pemateri">Pemateri</option>
-                                <option value="mentor">Mentor</option>
-                                <option value="dosen">Dosen</option>
-                                <option value="management">Management</option>
+                                <option value="2">Peserta</option>
+                                <option value="3">Penilai</option>
+                                <option value="4">Pemateri</option>
+                                <option value="5">Mentor</option>
+                                <option value="6">Dosen</option>
+                                <option value="7">Management</option>
                             </select>
                         </div>
                         <!-- User Role -->
@@ -37,15 +50,19 @@
                 </div>
                 
                 <!-- Kolom syarat -->
-            <div class="col-md-3 p-4">
+            <div class="col-md-2 p-4">
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary px-4">Terapkan</button>
                 </div>
             </div>
-            <div class="col-md-3 p-4">
+            <div class="col-md-2 p-4">
+                <div class="mb-3">
+                    <a class="btn btn-primary" id="role-reset" href="{{ route('access.reset') }}/2">Reset Role Akses</a>
+                </div>
+            </div>
+            <div class="col-md-2 p-4">
                 <div class="mb-3">
                     <a class="btn btn-primary" href="{{ route('access.reset') }}">Reset Semua Akses</a>
-                    {{-- <button class="btn btn-primary px-4">Reset Semua Akses</button> --}}
                 </div>
             </div>
             <!-- Kolom syarat -->
@@ -180,6 +197,15 @@
             var isChecked = $(this).prop('checked');
             $('.check-kategori-startup').prop('checked', isChecked);
         });
+
+        $('#role-select').change(function() {
+            var value = $(this).val();
+            var href = $('#role-reset').attr('href');
+            href = href.slice(0, -1);
+
+            newHref = href + value;
+            $('#role-reset').attr('href', newHref);
+        })
     });
 </script>
 @endsection
