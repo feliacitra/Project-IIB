@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Role;
 
@@ -13,6 +14,9 @@ class MasterPenggunaController extends Controller
                     ->orderBy('updated_at')
                     ->with('roles')
                     ->get();
-        return view('masterpengguna.masteruser', compact('users'));
+        
+        $role = Auth::user()->role;
+        $features = Role::find($role)->features;
+        return view('masterpengguna.masteruser', compact('users', 'features'));
     }
 }

@@ -104,7 +104,7 @@
             @else
             <li class="nav-item nav-category">Data Master</li>
             <li class="nav-item">
-                @foreach ($menus as $menu)
+                @foreach (get_menu() as $menu)
                     {!! $menu !!}
                 @endforeach
             </li>

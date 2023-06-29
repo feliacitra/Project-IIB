@@ -19,12 +19,14 @@
     </div>
 
     <!-- Button Tambah -->
+    @if (isFeatureInside('pengguna-tambah', $features))    
     <div class="pb-2" style="display: flex; justify-content: flex-end;">
         <button class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;"">
             <i data-feather="plus" style="margin-right: 0.3rem;"></i>
             TAMBAH
         </button>
     </div>
+    @endif
     <!-- Button Tambah -->
 
 <!-- Search Bar -->
@@ -70,29 +72,18 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->roles->name }}</td>
                     <td class="text-center">
-                        <a href=""><i data-feather="eye"></i></a>
-                        <a href=""><i data-feather="edit-2"></i></a>
-                        <a href=""><i data-feather="trash-2"></i></a>
+                        @if (isFeatureInside('pengguna-lihat', $features))
+                            <a href=""><i data-feather="eye"></i></a>
+                        @endif
+                        @if (isFeatureInside('pengguna-ubah', $features))
+                            <a href=""><i data-feather="edit-2"></i></a>
+                        @endif
+                        @if (isFeatureInside('pengguna-hapus', $features))
+                            <a href=""><i data-feather="trash-2"></i></a>
+                        @endif
                     </td>
                 </tr>
                 @endforeach
-                {{-- @foreach ($roles as $role)
-                <tr>
-                    <th scope="row" class="text-center">{{ $loop->iteration }}</th>
-                    <td>{{ $role }}</td>
-                </tr>
-                @endforeach --}}
-                {{-- <tr>
-                    <th scope="row" class="text-center">1</th>
-                    <td>User</td>
-                    <td>user@email.com</td>
-                    <td>Peserta</td>
-                    <td class="text-center">
-                        <a href=""><i data-feather="eye"></i></a>
-                        <a href=""><i data-feather="edit-2"></i></a>
-                        <a href=""><i data-feather="trash-2"></i></a>
-                    </td>
-                </tr> --}}
             </tbody>
             <!-- Table Body -->
         </table>

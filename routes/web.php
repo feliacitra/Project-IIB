@@ -43,27 +43,7 @@ Route::post('/register',[RegisteredUserController::class, 'store']) ->name('regi
 
 Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/dashboard', function () {
-        $features = session('features');
-        $menu = array();
-        if (isSubStringInArray('pengguna', $features)) {
-            $menu[] = "<a href=\"" . route('master.pengguna') . " }}\" class=\"nav-link\">
-                            <i class=\"link-icon\" data-feather=\"box\"></i>
-                            <span class=\"link-title\">Master Pengguna</span>
-                        </a>";
-        }
-        if (isSubStringInArray('program-inkubasi', $features)) {
-            $menu[] = "<a href=\"" . route('master.pengguna') . " }}\" class=\"nav-link\">
-                            <i class=\"link-icon\" data-feather=\"box\"></i>
-                            <span class=\"link-title\">Master Program Inkubasi</span>
-                        </a>";
-        }
-        if (isSubStringInArray('kategori-startup', $features)) {
-            $menu[] = "<a href=\"" . route('master.pengguna') . " }}\" class=\"nav-link\">
-                            <i class=\"link-icon\" data-feather=\"box\"></i>
-                            <span class=\"link-title\">Master Kategori Startup</span>
-                        </a>";
-        }
-        return view('dashboard')->with('menus', $menu);
+        return view('dashboard');
     })->name('dashboard');
     
     Route::get('/changepassword', function () {
