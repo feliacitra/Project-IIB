@@ -64,6 +64,12 @@ Route::middleware(['auth', 'access'])->group(function () {
     })->name('master.pengguna.detail');
 
     Route::get('/master/pengguna', [MasterPenggunaController::class, 'index'])->name('master.pengguna');
+    
+    Route::post('/adduser', [App\Http\Controllers\MasterUser\AddUserController::class, 'store']) ->name('adduser');
+    Route::get('/masteruser', [App\Http\Controllers\MasterUser\MasterUserController::class, 'index']) ->name('masteruser');
+    Route::get('/detailuser/{user}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'show']) ->name('detailuser');
+    Route::get('/edituser/{user}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'edit']) ->name('edituser');
+    Route::get('/masteruser/{user}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'destroy'])->name('deleteuser');
 });
 
 /* This is for edituser, please modify based on the right source*/
@@ -71,11 +77,5 @@ Route::get('/edituser', function () {
     return view('masterpengguna.edituser');
 })->name('edituser');
 
-Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');
-Route::post('/adduser', [App\Http\Controllers\MasterUser\AddUserController::class, 'store']) ->name('adduser');
-Route::get('/masteruser', [App\Http\Controllers\MasterUser\MasterUserController::class, 'index']) ->name('masteruser');
-Route::get('/detailuser/{user}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'show']) ->name('detailuser');
-Route::get('/edituser/{user}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'edit']) ->name('edituser');
-Route::get('/masteruser/{user}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'destroy'])->name('deleteuser');
 
 require __DIR__.'/auth.php';
