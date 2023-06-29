@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
 use App\Models\Feature;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,7 +17,7 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $features = [
             [

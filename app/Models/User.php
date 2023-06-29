@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Role;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -22,11 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
-    ];
-
-    protected $attributes = [
-        'role' => 2,
+        'role',
     ];
 
     /**
@@ -55,7 +52,7 @@ class User extends Authenticatable
      */
     public function user_detail(): HasOne
     {
-        return $this->hasOne(UserDetail::class, 'foreign_key');
+        return $this->hasOne(UserDetail::class);
     }
 
     /**
