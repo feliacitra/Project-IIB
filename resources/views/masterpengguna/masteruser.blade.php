@@ -76,9 +76,9 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->position }}</td>
                     <td class="text-center">
-                        <a href="{{route('detailuser',$user->id)}}"><i data-feather="eye"></i></a>
-                        <a href="{{route('edituser',$user->id)}}"><i data-feather="edit-2"></i></a>
-                        <a href="{{ route('deleteuser', $user->id) }}" onclick="return confirm('Are you sure you want to delete this user?')"><i data-feather="trash-2"></i></a>
+                        <a href="{{route('detailuser',$user->name)}}"><i data-feather="eye"></i></a>
+                        <a href="{{route('edituser',$user->name)}}"><i data-feather="edit-2"></i></a>
+                        <a href="{{ route('deleteuser', $user->name) }}" onclick="return confirm('Are you sure you want to delete this user?')"><i data-feather="trash-2"></i></a>
                     </td>
                 </tr>
             @endforeach
