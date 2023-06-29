@@ -28,7 +28,7 @@ class MasterUserController extends Controller
 
     public function edit(User $user)
     {
-        return view('masterpengguna.edituser', compact('user'));
+        return view('masterpengguna.edituser', ["user" => $user]);
     }
 
     public function destroy(User $user)

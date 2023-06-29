@@ -1,5 +1,10 @@
 @extends('layouts.back.app')
 @section('content')
+
+    @php
+    use Illuminate\Support\Optional;
+    @endphp
+
     <style>
         .card-header {
             font-family: Verdana, Arial, sans-serif;
@@ -18,12 +23,15 @@
 
     <div class="pb-4">
         <p style="display: flex; align-items: flex-end;">
-            <a href="/masterpengguna"><i data-feather="home" style="margin-right: 0.5rem;"></i></a>
+            <a href="/masteruser"><i data-feather="home" style="margin-right: 0.5rem;"></i></a>
             Master Pengguna > Edit
         </p>
     </div>
 
     <div class="container" style="background-color: #f2f2f2">
+    <form method="post" action="/edituser/{{ $user->name }}">
+        @method('put')
+        @csrf
         <div class="card-header text-center">Edit Pengguna</div>
         <div class="row mt-3">
             <div class="col-md-6">
@@ -31,12 +39,12 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">Nama Lengkap</label>
-                            <input type="text" id="name" name="name" class="form-control" required>
+                            <input type="text" id="name" name="name" class="form-control" value="{{ old('name', $user->name) }}" required>
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="Email" class="form-control" required>
+                            <input type="email" id="email" name="email" placeholder="Email" class="form-control" value="{{ old('email', $user->email) }}" required>
                         </div>
 
                         <div class="form-group">
@@ -45,68 +53,54 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="posisition">Posisi</label>
+                            <label for="position">Posisi</label>
                             <div class="input-group">
-                                <select class="form-control" id="position" name="position">
-                                    <option value="" disabled selected>Pilih posisi</option>
-                                    <option value="Admin">Admin</option>
-                                    <option value="Dosen">Dosen</option>
-                                    <option value="Penilai">Penilai</option>
-                                    <option value="Management">Management</option>
-                                    <option value="Peserta">Peserta</option>
-                                    <option value="Mentor">Mentor</option>
+                                <select class="form-select" id="position" name="position">
+                                    <option value="" disabled>Pilih posisi</option>
+                                    <option value="Admin" {{ (old('position', $user->role) === 'admin') ? 'selected' : '' }}>Admin</option>
+                                    <option value="Dosen" {{ (old('position', $user->role) === 'dosen') ? 'selected' : '' }}>Dosen</option>
+                                    <option value="Penilai" {{ (old('position', $user->role) === 'penilai') ? 'selected' : '' }}>Penilai</option>
+                                    <option value="Management" {{ (old('position', $user->role) === 'management') ? 'selected' : '' }}>Management</option>
+                                    <option value="Peserta" {{ (old('position', $user->role) === 'peserta') ? 'selected' : '' }}>Peserta</option>
+                                    <option value="Mentor" {{ (old('position', $user->role) === 'mentor') ? 'selected' : '' }}>Mentor</option>
                                     <script src="path/to/bootstrap.min.js"></script>
                                 </select>
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Admin</a>
-                                        <a class="dropdown-item" href="#">Dosen</a>
-                                        <a class="dropdown-item" href="#">Penilai</a>
-                                        <a class="dropdown-item" href="#">Management</a>
-                                        <a class="dropdown-item" href="#">Peserta</a>
-                                        <a class="dropdown-item" href="#">Mentor</a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
+                        
 
                         <div class="form-group">
                             <label for="gender">Jenis Kelamin</label>
                             <div class="input-group">
-                                <select class="form-control" id="gender" name="gender">
+                                <select class="form-select" id="gender" name="gender">
                                     <option value="" disabled selected>Pilih jenis kelamin</option>
-                                    <option value="perempuan">Perempuan</option>
-                                    <option value="laki-laki">Laki-laki</option>
+                                    <option value="perempuan" {{ optional($user->user_detail)->ud_gender === 0 ? 'selected' : '' }}>Perempuan</option>
+                                    <option value="laki-laki" {{ optional($user->user_detail)->ud_gender === 1 ? 'selected' : '' }}>Laki-laki</option>
                                 </select>
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Perempuan</a>
-                                        <a class="dropdown-item" href="#">Laki-laki</a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
-
+                        
                         <div class="form-group">
                             <label for="birthdate">Tanggal Lahir</label>
-                            <input type="date" id="birthdate" name="birthdate" placeholder="Tanggal Lahir" class="form-control" required>
+                            <input type="date" id="birthdate" name="birthdate" placeholder="Tanggal Lahir" class="form-control" 
+                                   value="{{ old('birthdate', optional($user->user_detail)->ud_birthday ? date('Y-m-d', strtotime($user->user_detail->ud_birthday)) : null) }}"
+                                   required>
                         </div>
-
+                        
                         <div class="form-group">
                             <label for="phone">Nomor HP</label>
-                            <input type="tel" id="phone" name="phone" placeholder="Nomor HP" class="form-control" pattern="[0-9]+" required>
+                            <input type="tel" id="phone" name="phone" placeholder="Nomor HP" class="form-control" pattern="[0-9]+" 
+                                   value="{{ old('phone', $user->user_detail->ud_phone ?? '') }}" required>
                         </div>
-
+                        
                         <div class="form-group">
                             <label for="address">Alamat</label>
-                            <textarea id="address" name="address" placeholder="Alamat" class="form-control" required></textarea>
+                            <textarea id="address" name="address" placeholder="Alamat" class="form-control" required>{{ old('address') ?? ($user->user_detail ? $user->user_detail->ud_address : '') }}</textarea>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Edit</button>
 
-                    </form>
+                    
                 </div>
             </div>
         </div>
@@ -128,6 +122,7 @@
                 </div>
             </div>
         </div>
+    </form>
     </div>
 
 @endsection
