@@ -49,6 +49,8 @@ Route::get('/edituser', function () {
     return view('masterpengguna.edituser');
 })->name('edituser');
 
+/* Add middleware role use middleware('role:x') example middleware('role:admin') or middleware('role:admin,peserta') with no spaces */
+
 Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');
 Route::post('/adduser', [App\Http\Controllers\MasterUser\AddUserController::class, 'store']) ->name('adduser');
 Route::get('/masteruser', [App\Http\Controllers\MasterUser\MasterUserController::class, 'index'])->middleware('role:admin')->name('masteruser');

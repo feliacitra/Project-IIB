@@ -9,9 +9,15 @@ use Illuminate\Support\Facades\Session;
 class MasterUserController extends Controller
 {
     public function index(){
-        $users = User::all();
+        
+        $users = User::latest();
 
-        return view('masterpengguna.masteruser', compact('users'))->with('user', $users->first());
+        if (request('search')){
+            $users->where('name', 'like', '%'.request('search').'%')
+                ->orWhere('email', 'like', '%'.request('search').'%');
+        }
+
+        return view('masterpengguna.masteruser', ["users" => $users->get()]);
     }
 
     public function show(User $user)
