@@ -52,8 +52,11 @@
                                 <i class="fas fa-user-circle fa-10x"></i>
                             </div>
                             <div class="mb-3">
-                                <label for="image-upload" class="form-label">Unggah Foto Profil</label>
-                                <input class="form-control" type="file" id="image-upload" name="image-upload">
+                                <label for="image" class="form-label">Unggah Foto Profil</label>
+                                <input class="form-control" type="file" id="image" name="image">
+                                @error('image')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="name">Nama Lengkap</label>

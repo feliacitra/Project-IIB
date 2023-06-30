@@ -49,6 +49,18 @@ Route::get('/edituser', function () {
     return view('masterpengguna.edituser');
 })->name('edituser');
 
+/* This is for getting user's photo profile */
+Route::get('storage/{path}', function ($path) {
+    $filePath = storage_path('app/public/' . $path);
+
+    if (!file_exists($filePath)) {
+        abort(404);
+    }
+
+    return response()->file($filePath);
+})->where('path', '.*');
+
+
 /* Add middleware role use middleware('role:x') example middleware('role:admin') or middleware('role:admin,peserta') with no spaces */
 
 Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');

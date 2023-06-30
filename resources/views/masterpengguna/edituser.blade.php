@@ -29,13 +29,12 @@
     </div>
 
     <div class="container" style="background-color: #f2f2f2">
-    <form method="post" action="/edituser/{{ $user->name }}">
+    <form method="post" action="/edituser/{{ $user->name }}" enctype="multipart/form-data">
         @method('put')
         @csrf
-        <div class="card-header text-center">Edit Pengguna</div>
         <div class="row mt-3">
             <div class="col-md-6">
-                <div class="card">
+                <div class="card my-3">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">Nama Lengkap</label>
@@ -106,18 +105,27 @@
         </div>
 
         <div class="col-md-6">
-            <div class="card">
+            <div class="card my-3">
                 <div class="card-header"></div>
                 <div class="card-body">
                     <div class="form-group">
-                        <img id="profile-image" src="{{ asset('back/images/logo/user.png') }}" sizes="16x16" alt="Foto Profil" class="img-thumbnail">
+                        @if ($user->user_detail->ud_photo)
+                            <img id="profile-image" name="profile-image" src="{{ url('storage/' . str_replace('public/', '', $user->user_detail->ud_photo)) }}" sizes="16x16" alt="Foto Profil" class="img-thumbnail" style="width: 300px; height: 300px;">
+                        @else
+                            <img id="profile-image" name="profile-image" src="{{ asset('back/images/logo/user.png') }}" sizes="16x16" alt="Foto Profil" class="img-thumbnail" style="width: 300px; height: 300px;">
+                        @endif
                     </div>
                     <div class="form-group profile-icon">
                         <i class="fas fa-user-circle fa-10x"></i>
                     </div>
-                    <div class="form-group">
-                        <label for="profile-photo">Unggah Foto Profil</label>
-                        <input type="file" id="profile-photo" name="ud_photo" class="form-control-file">
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Unggah Foto Profil</label>
+                        <input class="form-control @error('ud_photo')
+                            is-invalid
+                        @enderror" type="file" id="image" name="ud_photo">
+                        @error('ud_photo')
+                        <div class="invalid-feedback">Must be an image</div>
+                        @enderror
                     </div>
                 </div>
             </div>

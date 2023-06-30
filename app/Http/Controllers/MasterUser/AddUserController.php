@@ -13,7 +13,7 @@ class AddUserController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'image-upload' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg|file|max:2048',
             'name' => 'required|unique:users',
             'email' => 'required|unique:users',
             'password' => 'required',
@@ -55,15 +55,14 @@ class AddUserController extends Controller
         $userDetail->ud_faculty = $request->input('faculty');
         $userDetail->ud_programstudy = $request->input('major');
 
-        if ($request->hasFile('image-upload')) {
-            $image = $request->file('image-upload');
-            $imagePath = $image->store('profile_photos', 'public');
+        if ($request->file('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('public/profile_photos');
             $userDetail->ud_photo = $imagePath;
         }
 
         $userDetail->save();
 
-        Session::flash('success', 'User has been added successfully.');
-        return redirect()->route('adduser');
+        return redirect()->route('masteruser')->with('success', 'User has been added successfully.');
     }
 }

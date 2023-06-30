@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\MasterUser;
 
 use App\Models\User;
+use App\Models\UserDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\UserDetail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class MasterUserController extends Controller
 {
@@ -47,7 +48,8 @@ class MasterUserController extends Controller
             'ud_gender' => 'required',
             'ud_birthday' => 'required',
             'ud_phone' => 'required',
-            'ud_address' => 'required'
+            'ud_address' => 'required',
+            'ud_photo' => 'image|mimes:jpeg,png,jpg|file|max:2048',
         ];
 
         if($request->name != $user->name){
@@ -66,6 +68,12 @@ class MasterUserController extends Controller
         $validatedUserData['password'] = Hash::make($validatedUserData['password']);
 
         $validatedUserDetailData = $request->validate($userDetailRules);
+
+        if ($user->user_detail->ud_photo != null) Storage::delete($user->user_detail->ud_photo);
+
+        if($request->file('ud_photo')){
+            $validatedUserDetailData['ud_photo'] = $request->file('ud_photo')->store('public/profile_photos');
+        }
 
         User::where('id', $user->id)->update($validatedUserData);
         UserDetail::where('ud_id', $user->user_detail->ud_id)->update($validatedUserDetailData);
