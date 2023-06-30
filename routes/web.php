@@ -52,10 +52,17 @@ Route::get('/edituser', function () {
 /* Add middleware role use middleware('role:x') example middleware('role:admin') or middleware('role:admin,peserta') with no spaces */
 
 Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');
+
 Route::post('/adduser', [App\Http\Controllers\MasterUser\AddUserController::class, 'store']) ->name('adduser');
+
 Route::get('/masteruser', [App\Http\Controllers\MasterUser\MasterUserController::class, 'index'])->middleware('role:admin')->name('masteruser');
+
 Route::get('/detailuser/{user:name}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'show']) ->middleware('role:admin')->name('detailuser');
+
 Route::get('/edituser/{user:name}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'edit']) ->middleware('role:admin')->name('edituser');
+
 Route::get('/masteruser/{user:name}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'destroy']) ->name('deleteuser');
+
+Route::put('/edituser/{user:name}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'update']) ->middleware('role:admin')->name('updateuser');
 
 require __DIR__.'/auth.php';

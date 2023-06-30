@@ -55,14 +55,14 @@
                         <div class="form-group">
                             <label for="position">Posisi</label>
                             <div class="input-group">
-                                <select class="form-select" id="position" name="position">
+                                <select class="form-select" id="position" name="role">
                                     <option value="" disabled>Pilih posisi</option>
-                                    <option value="Admin" {{ (old('position', $user->role) === 'admin') ? 'selected' : '' }}>Admin</option>
-                                    <option value="Dosen" {{ (old('position', $user->role) === 'dosen') ? 'selected' : '' }}>Dosen</option>
-                                    <option value="Penilai" {{ (old('position', $user->role) === 'penilai') ? 'selected' : '' }}>Penilai</option>
-                                    <option value="Management" {{ (old('position', $user->role) === 'management') ? 'selected' : '' }}>Management</option>
-                                    <option value="Peserta" {{ (old('position', $user->role) === 'peserta') ? 'selected' : '' }}>Peserta</option>
-                                    <option value="Mentor" {{ (old('position', $user->role) === 'mentor') ? 'selected' : '' }}>Mentor</option>
+                                    <option value="admin" {{ (old('position', $user->role) === 'admin') ? 'selected' : '' }}>Admin</option>
+                                    <option value="dosen" {{ (old('position', $user->role) === 'dosen') ? 'selected' : '' }}>Dosen</option>
+                                    <option value="penilai" {{ (old('position', $user->role) === 'penilai') ? 'selected' : '' }}>Penilai</option>
+                                    <option value="management" {{ (old('position', $user->role) === 'management') ? 'selected' : '' }}>Management</option>
+                                    <option value="peserta" {{ (old('position', $user->role) === 'peserta') ? 'selected' : '' }}>Peserta</option>
+                                    <option value="mentor" {{ (old('position', $user->role) === 'mentor') ? 'selected' : '' }}>Mentor</option>
                                     <script src="path/to/bootstrap.min.js"></script>
                                 </select>
                             </div>
@@ -72,30 +72,30 @@
                         <div class="form-group">
                             <label for="gender">Jenis Kelamin</label>
                             <div class="input-group">
-                                <select class="form-select" id="gender" name="gender">
+                                <select class="form-select" id="gender" name="ud_gender">
                                     <option value="" disabled selected>Pilih jenis kelamin</option>
-                                    <option value="perempuan" {{ optional($user->user_detail)->ud_gender === 0 ? 'selected' : '' }}>Perempuan</option>
-                                    <option value="laki-laki" {{ optional($user->user_detail)->ud_gender === 1 ? 'selected' : '' }}>Laki-laki</option>
+                                    <option value="0" {{ optional($user->user_detail)->ud_gender === 0 ? 'selected' : '' }}>Perempuan</option>
+                                    <option value="1" {{ optional($user->user_detail)->ud_gender === 1 ? 'selected' : '' }}>Laki-laki</option>
                                 </select>
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label for="birthdate">Tanggal Lahir</label>
-                            <input type="date" id="birthdate" name="birthdate" placeholder="Tanggal Lahir" class="form-control" 
+                            <input type="date" id="birthdate" name="ud_birthday" placeholder="Tanggal Lahir" class="form-control" 
                                    value="{{ old('birthdate', optional($user->user_detail)->ud_birthday ? date('Y-m-d', strtotime($user->user_detail->ud_birthday)) : null) }}"
                                    required>
                         </div>
                         
                         <div class="form-group">
                             <label for="phone">Nomor HP</label>
-                            <input type="tel" id="phone" name="phone" placeholder="Nomor HP" class="form-control" pattern="[0-9]+" 
+                            <input type="tel" id="phone" name="ud_phone" placeholder="Nomor HP" class="form-control" pattern="[0-9]+" 
                                    value="{{ old('phone', $user->user_detail->ud_phone ?? '') }}" required>
                         </div>
                         
                         <div class="form-group">
                             <label for="address">Alamat</label>
-                            <textarea id="address" name="address" placeholder="Alamat" class="form-control" required>{{ old('address') ?? ($user->user_detail ? $user->user_detail->ud_address : '') }}</textarea>
+                            <textarea id="address" name="ud_address" placeholder="Alamat" class="form-control" required>{{ old('address') ?? ($user->user_detail ? $user->user_detail->ud_address : '') }}</textarea>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Edit</button>
@@ -117,7 +117,7 @@
                     </div>
                     <div class="form-group">
                         <label for="profile-photo">Unggah Foto Profil</label>
-                        <input type="file" id="profile-photo" name="profile-photo" class="form-control-file">
+                        <input type="file" id="profile-photo" name="ud_photo" class="form-control-file">
                     </div>
                 </div>
             </div>
