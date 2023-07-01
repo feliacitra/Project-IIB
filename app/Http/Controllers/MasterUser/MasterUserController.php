@@ -69,10 +69,10 @@ class MasterUserController extends Controller
 
         $validatedUserDetailData = $request->validate($userDetailRules);
 
-        if ($user->user_detail->ud_photo != null) Storage::delete($user->user_detail->ud_photo);
+        if ($user->user_detail->ud_photo != null) Storage::delete('public/' . $user->user_detail->ud_photo);
 
         if($request->file('ud_photo')){
-            $validatedUserDetailData['ud_photo'] = $request->file('ud_photo')->store('public/profile_photos');
+            $validatedUserDetailData['ud_photo'] = $request->file('ud_photo')->store('profile_photos', 'public');
         }
 
         User::where('id', $user->id)->update($validatedUserData);

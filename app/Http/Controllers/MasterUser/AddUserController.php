@@ -38,7 +38,7 @@ class AddUserController extends Controller
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = bcrypt($request->input('password'));
-        $user->role = strtolower($request->input('position'));
+        $user->role = $request->input('position');
         $user->save();
 
         $userDetail = new UserDetail();
@@ -57,7 +57,7 @@ class AddUserController extends Controller
 
         if ($request->file('image')) {
             $image = $request->file('image');
-            $imagePath = $image->store('public/profile_photos');
+            $imagePath = $image->store('profile_photos', 'public');
             $userDetail->ud_photo = $imagePath;
         }
 

@@ -23,8 +23,8 @@
 
     <div class="pb-4">
         <p style="display: flex; align-items: flex-end;">
-            <a href="/masteruser"><i data-feather="home" style="margin-right: 0.5rem;"></i></a>
-            Master Pengguna > Edit
+            <a href="/masteruser"><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
+            <a href="/masteruser" style="color: black;">Master Pengguna</a> &nbsp;&gt;&nbsp; Edit Pengguna
         </p>
     </div>
 
@@ -57,11 +57,12 @@
                                 <select class="form-select" id="position" name="role">
                                     <option value="" disabled>Pilih posisi</option>
                                     <option value="admin" {{ (old('position', $user->role) === 'admin') ? 'selected' : '' }}>Admin</option>
-                                    <option value="dosen" {{ (old('position', $user->role) === 'dosen') ? 'selected' : '' }}>Dosen</option>
+                                    <option value="peserta" {{ (old('position', $user->role) === 'peserta') ? 'selected' : '' }}>Peserta</option>
+                                    <option value="pemateri" {{ (old('position', $user->role) === 'pemateri') ? 'selected' : '' }}>Pemateri</option>
                                     <option value="penilai" {{ (old('position', $user->role) === 'penilai') ? 'selected' : '' }}>Penilai</option>
                                     <option value="management" {{ (old('position', $user->role) === 'management') ? 'selected' : '' }}>Management</option>
-                                    <option value="peserta" {{ (old('position', $user->role) === 'peserta') ? 'selected' : '' }}>Peserta</option>
                                     <option value="mentor" {{ (old('position', $user->role) === 'mentor') ? 'selected' : '' }}>Mentor</option>
+                                    <option value="dosen" {{ (old('position', $user->role) === 'dosen') ? 'selected' : '' }}>Dosen</option>
                                     <script src="path/to/bootstrap.min.js"></script>
                                 </select>
                             </div>
@@ -109,8 +110,8 @@
                 <div class="card-header"></div>
                 <div class="card-body">
                     <div class="form-group">
-                        @if ($user->user_detail->ud_photo)
-                            <img id="profile-image" name="profile-image" src="{{ url('storage/' . str_replace('public/', '', $user->user_detail->ud_photo)) }}" sizes="16x16" alt="Foto Profil" class="img-thumbnail" style="width: 300px; height: 300px;">
+                        @if (optional($user->user_detail)->ud_photo)
+                            <img id="profile-image" name="profile-image" src="{{ url('storage/' . $user->user_detail->ud_photo) }}" sizes="16x16" alt="Foto Profil" class="img-thumbnail" style="width: 300px; height: 300px;">
                         @else
                             <img id="profile-image" name="profile-image" src="{{ asset('back/images/logo/user.png') }}" sizes="16x16" alt="Foto Profil" class="img-thumbnail" style="width: 300px; height: 300px;">
                         @endif

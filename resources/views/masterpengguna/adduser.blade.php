@@ -80,11 +80,13 @@
                                 <label for="position">Posisi</label>
                                 <select class="form-control" id="position" name="position">
                                     <option value="" disabled selected>Pilih posisi</option>
-                                    <option value="Admin">Admin</option>
-                                    <option value="Penilai">Penilai</option>
-                                    <option value="Management">Management</option>
-                                    <option value="Peserta">Peserta</option>
-                                    <option value="Mentor">Mentor</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="peserta">Peserta</option>
+                                    <option value="penilai">Penilai</option>
+                                    <option value="pemateri">Pemateri</option>
+                                    <option value="management">Management</option>
+                                    <option value="mentor">Mentor</option>
+                                    <option value="dosen">Dosen</option>
                                 </select>
                             </div>
                             <div class="form-group">
