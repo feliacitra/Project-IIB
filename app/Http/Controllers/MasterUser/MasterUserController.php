@@ -45,11 +45,11 @@ class MasterUserController extends Controller
         ];
 
         $userDetailRules = [
-            'ud_gender' => 'required',
-            'ud_birthday' => 'required',
-            'ud_phone' => 'required',
-            'ud_address' => 'required',
-            'ud_photo' => 'image|mimes:jpeg,png,jpg|file|max:2048',
+            'gender' => 'required',
+            'birthdate' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg|file|max:2048',
         ];
 
         if($request->name != $user->name){
@@ -60,29 +60,40 @@ class MasterUserController extends Controller
             $userRules['email'] = 'required|unique:users';
         }
 
-        if($request->password != $user->password){
-            $userRules['password'] = 'required|unique:users';
-        }
-
         $validatedUserData = $request->validate($userRules);
         $validatedUserData['password'] = Hash::make($validatedUserData['password']);
 
         $validatedUserDetailData = $request->validate($userDetailRules);
 
-        if ($user->user_detail->ud_photo != null) Storage::delete('public/' . $user->user_detail->ud_photo);
+        if($request->file('image')){
+            
+            if ($user->user_detail->ud_photo != null) Storage::delete('public/' . $user->user_detail->ud_photo);
 
-        if($request->file('ud_photo')){
-            $validatedUserDetailData['ud_photo'] = $request->file('ud_photo')->store('profile_photos', 'public');
+            $validatedUserDetailData['image'] = $request->file('image')->store('profile_photos', 'public');
         }
 
         User::where('id', $user->id)->update($validatedUserData);
-        UserDetail::where('ud_id', $user->user_detail->ud_id)->update($validatedUserDetailData);
+        UserDetail::where('ud_id', $user->user_detail->ud_id)->update([
+            'ud_gender' => $validatedUserDetailData['gender'],
+            'ud_birthday' => $validatedUserDetailData['birthdate'],
+            'ud_phone' => $validatedUserDetailData['phone'],
+            'ud_address' => $validatedUserDetailData['address'],
+            'ud_photo' => $validatedUserDetailData['image'] ?? $user->user_detail->ud_photo,
+        ]);
 
         return redirect('/masteruser')->with('success', 'User has been editted');
     }
 
     public function destroy(User $user)
     {
+        // User is deleting their own account
+        if ($user->id === auth()->id()) {
+            auth()->logout(); // Logout the user
+        }
+
+        // Delete the user's photo profile
+        if ($user->user_detail->ud_photo) Storage::delete('public/' . $user->user_detail->ud_photo);
+        
         // Delete the user
         $user->delete();
 
@@ -90,6 +101,10 @@ class MasterUserController extends Controller
         Session::flash('success', 'User deleted successfully');
 
         // Redirect back or to a different route
-        return redirect()->back();
+        if (auth()->check()) {
+            return redirect()->back();
+        } else {
+            return redirect('/login');
+        }
     }
 }

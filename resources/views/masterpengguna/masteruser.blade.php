@@ -12,7 +12,7 @@
     <div class="pb-4">
         <p style="display: flex; align-items: flex-end;">
             <!-- Home button -->
-            <a href="/dashboard"><i data-feather="home" style="margin-right: 0.5rem;"></i></a>
+            <a href="/dashboard"><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
             <!-- Home button -->
             Master Pengguna
         </p>

@@ -30,8 +30,8 @@ class AddUserController extends Controller
             'faculty' => 'required',
             'major' => 'required',
         ], [
-            'name.unique' => 'Gagal disimpan, Nama sudah digunakan oleh peserta lain.',
-            'email.unique' => 'Gagal disimpan, Email sudah digunakan oleh peserta lain.',
+            'name.unique' => 'Gagal disimpan, Nama sudah digunakan oleh pengguna lain.',
+            'email.unique' => 'Gagal disimpan, Email sudah digunakan oleh pengguna lain.',
         ]);
 
         $user = new User();
