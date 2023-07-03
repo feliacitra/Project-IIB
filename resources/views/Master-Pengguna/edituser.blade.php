@@ -23,13 +23,13 @@
 
     <div class="pb-4">
         <p style="display: flex; align-items: flex-end;">
-            <a href="/masteruser"><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
-            <a href="/masteruser" style="color: black;">Master Pengguna</a> &nbsp;&gt;&nbsp; Edit Pengguna
+            <a href="{{ route('master.pengguna') }}"><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
+            <a href="{{ route('master.pengguna') }}" style="color: black;">Master Pengguna</a> &nbsp;&gt;&nbsp; Tambah Pengguna
         </p>
     </div>
 
     <div class="container" style="background-color: #f2f2f2">
-    <form method="post" action="/edituser/{{ $user->name }}" enctype="multipart/form-data">
+    <form method="post" action="/master/pengguna/{{ $user->name }}/edit" enctype="multipart/form-data">
         @method('put')
         @csrf
         <div class="card-header text-center">Edit Pengguna</div>
@@ -65,14 +65,14 @@
                             <label for="role">Posisi</label>
                             <div class="input-group">
                                 <select class="form-select @error('role') is-invalid @enderror" id="role" name="role">
-                                    <option value="" disabled>Pilih posisi</option>
-                                    <option value="admin" {{ (old('role', $user->role) === 'admin') ? 'selected' : '' }}>Admin</option>
-                                    <option value="peserta" {{ (old('role', $user->role) === 'peserta') ? 'selected' : '' }}>Peserta</option>
-                                    <option value="pemateri" {{ (old('role', $user->role) === 'pemateri') ? 'selected' : '' }}>Pemateri</option>
-                                    <option value="penilai" {{ (old('role', $user->role) === 'penilai') ? 'selected' : '' }}>Penilai</option>
-                                    <option value="management" {{ (old('role', $user->role) === 'management') ? 'selected' : '' }}>Management</option>
-                                    <option value="mentor" {{ (old('role', $user->role) === 'mentor') ? 'selected' : '' }}>Mentor</option>
-                                    <option value="dosen" {{ (old('role', $user->role) === 'dosen') ? 'selected' : '' }}>Dosen</option>
+                                    <option value="" disabled selected>Pilih posisi</option>
+                                    <option value="1" {{ (old('role', $user->role) === 1) ? 'selected' : '' }}>Admin</option>
+                                    <option value="2" {{ (old('role', $user->role) === 2) ? 'selected' : '' }}>Peserta</option>
+                                    <option value="3" {{ (old('role', $user->role) === 3) ? 'selected' : '' }}>Pemateri</option>
+                                    <option value="4" {{ (old('role', $user->role) === 4) ? 'selected' : '' }}>Penilai</option>
+                                    <option value="5" {{ (old('role', $user->role) === 5) ? 'selected' : '' }}>Mentor</option>
+                                    <option value="6" {{ (old('role', $user->role) === 6) ? 'selected' : '' }}>Dosen</option>
+                                    <option value="7" {{ (old('role', $user->role) === 7) ? 'selected' : '' }}>Management</option>
                                     <script src="path/to/bootstrap.min.js"></script>
                                 </select>
                                 @error('role')

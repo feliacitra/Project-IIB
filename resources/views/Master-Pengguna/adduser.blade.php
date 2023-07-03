@@ -26,8 +26,8 @@
 
     <div class="pb-4">
         <p style="display: flex; align-items: flex-end;">
-            <a href="/masteruser"><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
-            <a href="/masteruser" style="color: black;">Master Pengguna</a> &nbsp;&gt;&nbsp; Tambah Pengguna
+            <a href="{{ route('master.pengguna') }}"><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
+            <a href="{{ route('master.pengguna') }}" style="color: black;">Master Pengguna</a> &nbsp;&gt;&nbsp; Tambah Pengguna
         </p>
     </div>
 
@@ -43,7 +43,7 @@
                             </div>
                         @endif
 
-                        <form id="add-user-form" method="POST" action="{{ route('adduser') }}" enctype="multipart/form-data">
+                        <form id="add-user-form" method="POST" action="{{ route('master.pengguna.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group" style="text-align: center" >
                                 <img id="profile-image" src="{{ asset('back/images/logo/user.png') }}" sizes="16x16" alt="Foto Profil" class="img-thumbnail" >
@@ -88,13 +88,13 @@
                                 <label for="position">Posisi</label>
                                 <select class="form-control @error('position') is-invalid @enderror" id="position" name="position">
                                     <option value="" disabled selected>Pilih posisi</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="peserta">Peserta</option>
-                                    <option value="penilai">Penilai</option>
-                                    <option value="pemateri">Pemateri</option>
-                                    <option value="management">Management</option>
-                                    <option value="mentor">Mentor</option>
-                                    <option value="dosen">Dosen</option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Peserta</option>
+                                    <option value="3">Penilai</option>
+                                    <option value="4">Pemateri</option>
+                                    <option value="5">Mentor</option>
+                                    <option value="6">Dosen</option>
+                                    <option value="7">Management</option>
                                 </select>
                                 @error('position')
                                     <div class="invalid-feedback">{{ $message }}</div>

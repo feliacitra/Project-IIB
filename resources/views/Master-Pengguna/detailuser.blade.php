@@ -18,8 +18,8 @@
 
     <div class="pb-4">
         <p style="display: flex; align-items: flex-end;">
-            <a href="/masteruser"><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
-            <a href="/masteruser" style="color: black;">Master Pengguna</a> &nbsp;&gt;&nbsp; Detail Pengguna
+            <a href="{{ route('master.pengguna') }}"><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
+            <a href="{{ route('master.pengguna') }}" style="color: black;">Master Pengguna</a> &nbsp;&gt;&nbsp; Tambah Pengguna
         </p>
     </div>
 
@@ -31,7 +31,7 @@
         <div class="card">
             <div class="card-body">
 
-                <h5 class="card-title">Foto Profil</h5>
+                <h5 class="card-title" style="margin-bottom: 25px;">Foto Profil</h5>
                 <!-- Show the profile user please change this -->
                 @if (optional($user->user_detail)->ud_photo)
                     <img src="{{ url('storage/' . $user->user_detail->ud_photo) }}" alt="Foto Profil" class="wd-200 ht-200 rounded-circle" style="margin-top: -5px; margin-bottom: 20px;">
@@ -46,7 +46,7 @@
                 <p class="card-text" style="margin-top: -10px; margin-bottom: 15px;">{{ $user->email ?? '-' }}</p>
 
                 <h5 class="card-title">Posisi</h5>
-                <p class="card-text" style="margin-top: -10px; margin-bottom: 15px;">{{ ucfirst($user->role) ?? '-' }}</p>
+                <p class="card-text" style="margin-top: -10px; margin-bottom: 15px;">{{ ucfirst($user->roles->name) ?? '-' }}</p>
 
                 <h5 class="card-title">Jenis Kelamin</h5>
                 <p class="card-text" style="margin-top: -10px; margin-bottom: 15px;">
