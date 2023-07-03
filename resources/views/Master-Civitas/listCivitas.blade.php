@@ -105,9 +105,9 @@
                             <input type="text" class="form-control rounded" id="namaCivitas" placeholder="Nama Civitas" style="margin-top: 1rem; width: 100%">
                             <!-- Input Nama civitas -->
 
-                            <!-- Input Deskripsi Program -->
-                            <textarea class="form-control rounded" id="deskripsiCivitas" cols="20" rows="10" placeholder="Deskripsi" style="margin-top: 1rem"></textarea>
-                            <!-- Input Deskripsi Program -->
+                            <!-- Input Keterangan Civitas -->
+                            <textarea class="form-control rounded" id="keteranganCivitas" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem"></textarea>
+                            <!-- Input Keterangan Civitas -->
 
                             <div class="row mt-4">
                                 <!--Button Simpan -->
@@ -148,7 +148,7 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div>
-                        <!-- Edit Nama Program -->
+                        <!-- View Nama Civitas -->
                         <input 
                         type="text" 
                         class="form-control rounded" 
@@ -157,11 +157,11 @@
                         style="margin-top: 1rem; width: 100%"
                         value="Current Civitas Name"
                         readonly>
-                        <!-- Edit Nama Program -->
+                        <!-- View Nama Civitas -->
 
-                        <!-- Edit Deskripsi Program -->
-                        <textarea class="form-control rounded" id="deskripsiCivitas" cols="20" rows="10" placeholder="Deskripsi" style="margin-top: 1rem;" readonly>Current program description.</textarea>
-                        <!-- Edit Deskripsi Program -->
+                        <!-- View Keterangan Civitas -->
+                        <textarea class="form-control rounded" id="keteranganCivitas" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;" readonly>Current keterangan civitas.</textarea>
+                        <!-- View Keterangan Civitas -->
 
                         <!--Button Kembali -->
                         <div class="col d-flex justify-content-end mt-4">
@@ -192,7 +192,7 @@
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
                         <form>
-                            <!-- Edit Nama Program -->
+                            <!-- Edit Nama Civitas -->
                             <input 
                                 type="text" 
                                 class="form-control rounded" 
@@ -200,20 +200,20 @@
                                 placeholder="Nama Civitas" 
                                 style="margin-top: 1rem; width: 100%"
                                 value="Current Civitas Name">
-                            <!-- Edit Nama Program -->
+                            <!-- Edit Nama Civitas -->
 
-                            <!-- Edit Deskripsi Civitas -->
+                            <!-- Edit Keterangan Civitas -->
                             <textarea class="form-control rounded" id="deskripsiCivitas" cols="20" rows="10" placeholder="Deskripsi" style="margin-top: 1rem;">Current program description.</textarea>
-                            <!-- Edit Deskripsi Civitas -->
+                            <!-- Edit Keterangan Civitas -->
 
                             <div class="row mt-4">
-                                <!--Button Simpan -->
+                                <!--Button Perbarui -->
                                 <div class="col">
                                     <button id="saveEdit" class="btn btn-primary">
                                         Perbarui
                                     </button>
                                 </div>
-                                <!--Button Simpan -->
+                                <!--Button Perbarui -->
 
                                 <!--Button Kembali -->
                                 <div class="col d-flex justify-content-end">
