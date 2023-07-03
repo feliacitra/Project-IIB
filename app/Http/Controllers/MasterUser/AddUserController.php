@@ -15,20 +15,12 @@ class AddUserController extends Controller
         $validatedData = $request->validate([
             'image' => 'image|mimes:jpeg,png,jpg|file|max:2048',
             'name' => 'required|unique:users',
-            'email' => 'required|unique:users',
+            'email' => 'required|email|unique:users',
             'password' => 'required',
-            'position' => 'required',
-            'gender' => 'required',
-            'place_of_birth' => 'required',
-            'birthdate' => 'required|date',
-            'phone' => 'required',
-            'address' => 'required',
-            'bank_name' => 'required',
-            'account_number' => 'required',
-            'education_level' => 'required',
-            'university' => 'required',
-            'faculty' => 'required',
-            'major' => 'required',
+            'position' => 'required|not_in:',
+            'birthdate' => 'nullable',
+            'phone' => 'nullable',
+            'account_number' => 'nullable',
         ], [
             'name.unique' => 'Gagal disimpan, Nama sudah digunakan oleh pengguna lain.',
             'email.unique' => 'Gagal disimpan, Email sudah digunakan oleh pengguna lain.',
@@ -44,7 +36,6 @@ class AddUserController extends Controller
         $userDetail = new UserDetail();
         $userDetail->user_id = $user->id;
         $userDetail->ud_address = $request->input('address');
-        $userDetail->ud_gender = $request->input('gender') === 'perempuan' ? 0 : 1;
         $userDetail->ud_phone = $request->input('phone');
         $userDetail->ud_birthday = $request->input('birthdate');
         $userDetail->ud_placeofbirth = $request->input('place_of_birth');
@@ -54,6 +45,16 @@ class AddUserController extends Controller
         $userDetail->ud_university = $request->input('university');
         $userDetail->ud_faculty = $request->input('faculty');
         $userDetail->ud_programstudy = $request->input('major');
+
+        $gender = $request->input('gender');
+
+        if ($gender === 'perempuan') {
+            $userDetail->ud_gender = 0;
+        } elseif ($gender === 'laki-laki') {
+            $userDetail->ud_gender = 1;
+        } else {
+            $userDetail->ud_gender = null;
+        }
 
         if ($request->file('image')) {
             $image = $request->file('image');
