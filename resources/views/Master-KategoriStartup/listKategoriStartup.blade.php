@@ -103,17 +103,9 @@
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
                         <form>
-                            <!-- Input Nama Program -->
-                            <input type="text" class="form-control rounded" id="namaProgram" placeholder="Nama Kategori" style="margin-top: 1rem; width: 100%">
-                            <!-- Input Nama Program -->
-
-                            <!-- Select Status -->
-                            <select name="statusSelect" id="status" class="form-control rounded" style="margin-top: 1rem;">
-                                <option value="none" class="text-muted">Status</option>
-                                <option value="aktif">AKTIF</option>
-                                <option value="tidakAktif">TIDAK AKTIF</option>
-                            </select>
-                            <!-- Select Status -->
+                            <!-- Input Nama Kategori -->
+                            <input type="text" class="form-control rounded" id="namaKategori" placeholder="Nama Kategori" style="margin-top: 1rem; width: 100%">
+                            <!-- Input Nama Kategori -->
 
                             <!-- Input Keterangan Kategori -->
                             <textarea class="form-control rounded" id="keteranganKategori" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem"></textarea>
@@ -162,24 +154,23 @@
                         <input 
                         type="text" 
                         class="form-control rounded" 
-                        id="namaKkategori" 
+                        id="namakategori" 
                         placeholder="Nama Program" 
                         style="margin-top: 1rem; width: 100%"
                         value="Current Category Name"
                         readonly>
                         <!-- View Nama Kategori -->
 
+                        <!-- View Keterangan Kategori -->
+                        <textarea class="form-control rounded" id="keteranganKategori" cols="20" rows="10" style="margin-top: 1rem;" readonly>Current program description.</textarea>
+                        <!-- View Keterangan Kategori -->
+
                         <!-- Select Status -->
                         <select name="statusSelect" id="status" class="form-control rounded" style="margin-top: 1rem;" disabled>
-                            <option value="none" class="text-muted">Status</option>
                             <option value="aktif">AKTIF</option>
                             <option value="tidakAktif">TIDAK AKTIF</option>
                         </select>
                         <!-- Select Status -->
-
-                        <!-- View Keterangan Kategori -->
-                        <textarea class="form-control rounded" id="keteranganKategori" cols="20" rows="10" style="margin-top: 1rem;" readonly>Current program description.</textarea>
-                        <!-- View Keterangan Kategori -->
 
                         <!--Button Kembali -->
                         <div class="col d-flex justify-content-end mt-4">
@@ -220,17 +211,16 @@
                                 value="Current Category Name">
                             <!-- Edit Nama Kategori -->
 
+                            <!-- Edit Keterangan Kategori -->
+                            <textarea class="form-control rounded" id="keteranganKategori" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;">Current program description.</textarea>
+                            <!-- Edit Keterangan Kategori -->
+
                             <!-- Select Status -->
                             <select name="statusSelect" id="status" class="form-control rounded" style="margin-top: 1rem;">
-                                <option value="none" class="text-muted">Status</option>
                                 <option value="aktif">AKTIF</option>
                                 <option value="tidakAktif">TIDAK AKTIF</option>
                             </select>
                             <!-- Select Status -->
-
-                            <!-- Edit Keterangan Kategori -->
-                            <textarea class="form-control rounded" id="keteranganKategori" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;">Current program description.</textarea>
-                            <!-- Edit Keterangan Kategori -->
 
                             <div class="row mt-4">
                                 <!--Button Simpan -->
