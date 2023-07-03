@@ -39,7 +39,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">Nama Lengkap</label>
-                            <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $user->name) }}" required>
+                            <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $user->name) }}">
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -47,7 +47,7 @@
 
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', $user->email) }}" required>
+                            <input type="email" id="email" name="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', $user->email) }}">
                             @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -55,7 +55,7 @@
 
                         <div class="form-group">
                             <label for="password">Password Sementara</label>
-                            <input type="password" id="password" name="password" placeholder="Password Sementara" class="form-control @error('password') is-invalid @enderror" required>
+                            <input type="password" id="password" name="password" placeholder="Password Sementara" class="form-control @error('password') is-invalid @enderror">
                             @error('password')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -64,7 +64,7 @@
                         <div class="form-group">
                             <label for="role">Posisi</label>
                             <div class="input-group">
-                                <select class="form-select" id="role" name="role">
+                                <select class="form-select @error('role') is-invalid @enderror" id="role" name="role">
                                     <option value="" disabled>Pilih posisi</option>
                                     <option value="admin" {{ (old('role', $user->role) === 'admin') ? 'selected' : '' }}>Admin</option>
                                     <option value="peserta" {{ (old('role', $user->role) === 'peserta') ? 'selected' : '' }}>Peserta</option>
@@ -75,6 +75,9 @@
                                     <option value="dosen" {{ (old('role', $user->role) === 'dosen') ? 'selected' : '' }}>Dosen</option>
                                     <script src="path/to/bootstrap.min.js"></script>
                                 </select>
+                                @error('role')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         
@@ -89,10 +92,15 @@
                                 </select>
                             </div>
                         </div>
-                        
+
+                        <div class="form-group">
+                            <label for="place_of_birth">Tempat Lahir</label>
+                            <input type="text" id="place_of_birth" name="place_of_birth" class="form-control" value="{{ old('place_of_birth', optional($user->user_detail)->ud_placeofbirth) }}">
+                        </div>
+
                         <div class="form-group">
                             <label for="birthdate">Tanggal Lahir</label>
-                            <input type="date" id="birthdate" name="birthdate" placeholder="Tanggal Lahir" class="form-control @error('birthdate') is-invalid @enderror" value="{{ old('birthdate', optional($user->user_detail)->ud_birthday ? date('Y-m-d', strtotime($user->user_detail->ud_birthday)) : null) }}" required>
+                            <input type="date" id="birthdate" name="birthdate" placeholder="Tanggal Lahir" class="form-control @error('birthdate') is-invalid @enderror" value="{{ old('birthdate', optional($user->user_detail)->ud_birthday ? date('Y-m-d', strtotime($user->user_detail->ud_birthday)) : null) }}">
                             @error('birthdate')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -100,7 +108,7 @@
                         
                         <div class="form-group">
                             <label for="phone">Nomor HP</label>
-                            <input type="tel" id="phone" name="phone" placeholder="Nomor HP" class="form-control @error('phone') is-invalid @enderror" pattern="[0-9]+" value="{{ old('phone', $user->user_detail->ud_phone ?? '') }}" required>
+                            <input type="tel" id="phone" name="phone" placeholder="Nomor HP" class="form-control @error('phone') is-invalid @enderror" pattern="[0-9]+" value="{{ old('phone', optional($user->user_detail)->ud_phone ?? '') }}">
                             @error('phone')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -108,10 +116,40 @@
                         
                         <div class="form-group">
                             <label for="address">Alamat</label>
-                            <textarea id="address" name="address" placeholder="Alamat" class="form-control @error('address') is-invalid @enderror" required>{{ old('address') ?? ($user->user_detail ? $user->user_detail->ud_address : '') }}</textarea>
-                            @error('address')
+                            <textarea id="address" name="address" placeholder="Alamat" class="form-control">{{ old('address') ?? ($user->user_detail ? $user->user_detail->ud_address : '') }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bank_name">Nama Bank</label>
+                            <input type="text" id="bank_name" name="bank_name" class="form-control" value="{{ old('bank_name', optional($user->user_detail)->ud_bank) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="account_number">Nomor Rekening</label>
+                            <input type="text" id="account_number" name="account_number" class="form-control @error('account_number') is-invalid @enderror" value="{{ old('account_number', optional($user->user_detail)->ud_accountnumber) }}">
+                            @error('account_number')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="education_level">Tingkat Pendidikan</label>
+                            <input type="text" id="education_level" name="education_level" class="form-control" value="{{ old('education_level', optional($user->user_detail)->ud_lasteducation) }}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="university">Universitas</label>
+                            <input type="text" id="university" name="university" class="form-control" value="{{ old('university', optional($user->user_detail)->ud_university) }}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="faculty">Fakultas</label>
+                            <input type="text" id="faculty" name="faculty" class="form-control" value="{{ old('faculty', optional($user->user_detail)->ud_faculty) }}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="major">Program Studi</label>
+                            <input type="text" id="major" name="major" class="form-control" value="{{ old('major', optional($user->user_detail)->ud_programstudy) }}">
                         </div>
 
                         <button type="submit" class="btn btn-primary">Edit</button>
@@ -135,9 +173,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="image" class="form-label">Unggah Foto Profil</label>
-                        <input class="form-control @error('image')
-                            is-invalid
-                        @enderror" type="file" id="image" name="image">
+                        <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image">
                         @error('image')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

@@ -50,11 +50,18 @@ class MasterUserController extends Controller
         ];
 
         $userDetailRules = [
-            'gender' => 'required',
-            'birthdate' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
+            'gender' => 'nullable',
+            'birthdate' => 'nullable',
+            'phone' => 'nullable',
+            'address' => 'nullable',
             'image' => 'image|mimes:jpeg,png,jpg|file|max:2048',
+            'place_of_birth' => 'nullable',
+            'account_number' => 'nullable',
+            'bank_name' => 'nullable',
+            'education_level' => 'nullable',
+            'university' => 'nullable',
+            'faculty' => 'nullable',
+            'major' => 'nullable',
         ];
 
         if($request->name != $user->name){
@@ -79,11 +86,18 @@ class MasterUserController extends Controller
 
         User::where('id', $user->id)->update($validatedUserData);
         UserDetail::where('ud_id', $user->user_detail->ud_id)->update([
-            'ud_gender' => $validatedUserDetailData['gender'],
-            'ud_birthday' => $validatedUserDetailData['birthdate'],
-            'ud_phone' => $validatedUserDetailData['phone'],
-            'ud_address' => $validatedUserDetailData['address'],
             'ud_photo' => $validatedUserDetailData['image'] ?? $user->user_detail->ud_photo,
+            'ud_address' => $validatedUserDetailData['address'],
+            'ud_gender' => $validatedUserDetailData['gender'] ?? null,
+            'ud_phone' => $validatedUserDetailData['phone'],
+            'ud_birthday' => $validatedUserDetailData['birthdate'],
+            'ud_placeofbirth' => $validatedUserDetailData['place_of_birth'],
+            'ud_accountnumber' => $validatedUserDetailData['account_number'],
+            'ud_bank' => $validatedUserDetailData['bank_name'],
+            'ud_lasteducation' => $validatedUserDetailData['education_level'],
+            'ud_university' => $validatedUserDetailData['university'],
+            'ud_faculty' => $validatedUserDetailData['faculty'],
+            'ud_programstudy' => $validatedUserDetailData['major'],
         ]);
 
         return redirect('/masteruser')->with('success', 'User has been editted');
