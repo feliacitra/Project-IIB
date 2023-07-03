@@ -104,11 +104,11 @@
                     <div class="input-group-lg rounded">
                         <form>
                             <!-- Input Nama Program -->
-                            <input type="text" class="form-control rounded" id="namaProgram" placeholder="Nama Program" style="margin-top: 1rem; width: 100%">
+                            <input type="text" class="form-control rounded" id="namaProgramInkubasi" placeholder="Nama Program" style="margin-top: 1rem; width: 100%">
                             <!-- Input Nama Program -->
 
                             <!-- Input Deskripsi Program -->
-                            <textarea class="form-control rounded" id="deskripsiProgram" cols="20" rows="10" placeholder="Deskripsi" style="margin-top: 1rem"></textarea>
+                            <textarea class="form-control rounded" id="deskripsiProgramInkubasi" cols="20" rows="10" placeholder="Deskripsi" style="margin-top: 1rem"></textarea>
                             <!-- Input Deskripsi Program -->
 
                             <div class="row mt-4">
@@ -150,7 +150,7 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div>
-                        <!-- Edit Nama Program -->
+                        <!-- View Nama Program -->
                         <input 
                         type="text" 
                         class="form-control rounded" 
@@ -159,11 +159,18 @@
                         style="margin-top: 1rem; width: 100%"
                         value="Current Program Name"
                         readonly>
-                        <!-- Edit Nama Program -->
+                        <!-- View Nama Program -->
 
-                        <!-- Edit Deskripsi Program -->
+                        <!-- View Deskripsi Program -->
                         <textarea class="form-control rounded" id="deskripsiProgram" cols="20" rows="10" placeholder="Deskripsi" style="margin-top: 1rem;" readonly>Current program description.</textarea>
-                        <!-- Edit Deskripsi Program -->
+                        <!-- View Deskripsi Program -->
+
+                        <!-- Select Status -->
+                        <select disabled class="form-control rounded" style="margin-top: 1rem;">
+                            <option value="aktif">AKTIF</option>
+                            <option value="tidakAktif">TIDAK AKTIF</option>
+                        </select>
+                        <!-- Select Status -->
 
                         <!--Button Kembali -->
                         <div class="col d-flex justify-content-end mt-4">
@@ -207,6 +214,13 @@
                             <!-- Edit Deskripsi Program -->
                             <textarea class="form-control rounded" id="deskripsiProgram" cols="20" rows="10" placeholder="Deskripsi" style="margin-top: 1rem;">Current program description.</textarea>
                             <!-- Edit Deskripsi Program -->
+
+                            <!-- Select Status -->
+                            <select name="statusSelect" id="status" class="form-control rounded" style="margin-top: 1rem;">
+                                <option value="aktif">AKTIF</option>
+                                <option value="tidakAktif">TIDAK AKTIF</option>
+                            </select>
+                            <!-- Select Status -->
 
                             <div class="row mt-4">
                                 <!--Button Simpan -->
