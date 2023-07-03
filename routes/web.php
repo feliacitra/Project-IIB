@@ -86,6 +86,10 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/master/university', function() {
         return view('Master-Universitas.listUniversitas');
     })->name('university');
+
+    Route::get('/master/faculty', function() {
+        return view('Master-Fakultas.listFakultas');
+    })->name('faculty');
 });
 
 /* This is for edituser, please modify based on the right source*/
