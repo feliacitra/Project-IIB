@@ -14,19 +14,19 @@ class MasterUserController extends Controller
 {
     public function index(){
         // $users = User::all();
-        $users = User::where('role', '!=', '1')
-                    ->orderBy('updated_at')
-                    ->with('roles')
-                    ->get();
+        // $users = User::where('role', '!=', '1')
+        //             ->orderBy('updated_at')
+        //             ->with('roles')
+        //             ->get();
         
-        // $users = User::latest();
+        $users = User::latest();
 
         if (request('search')){
             $users->where('name', 'like', '%'.request('search').'%')
                 ->orWhere('email', 'like', '%'.request('search').'%');
         }
 
-        return view('masterpengguna.masteruser', ["users" => $users->get()]);
+        return view('Master-Pengguna.listUser', ["users" => $users->get()]);
     }
 
     public function show(User $user)
