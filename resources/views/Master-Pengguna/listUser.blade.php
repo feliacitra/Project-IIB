@@ -75,7 +75,7 @@
                     <th scope="row" class="text-center">{{ $loop->iteration }}</th>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ ucfirst($user->role) }}</td>
+                    <td>{{ ucfirst($user->roles->name) }}</td>
                     <td class="text-center">
                         <a href="{{route('master.pengguna.detail',$user->name)}}"><i data-feather="eye"></i></a>
                         <a href="{{route('master.pengguna.edit',$user->name)}}"><i data-feather="edit-2"></i></a>
