@@ -3,6 +3,8 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use App\Models\Feature;
+
 
 class Authenticate extends Middleware
 {
