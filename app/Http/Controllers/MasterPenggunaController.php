@@ -17,6 +17,6 @@ class MasterPenggunaController extends Controller
         
         $role = Auth::user()->role;
         $features = Role::find($role)->features;
-        return view('masterpengguna.masteruser', compact('users', 'features'));
+        return view('Master-Pengguna.listUser', compact('users', 'features'));
     }
 }

@@ -70,6 +70,18 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/detailuser/{user}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'show']) ->name('detailuser');
     Route::get('/edituser/{user}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'edit']) ->name('edituser');
     Route::get('/masteruser/{user}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'destroy'])->name('deleteuser');
+
+    Route::get('/master/inkubasi', function() {
+        return view('Master-ProgramInkubasi.listProgramInkubasi');
+    })->name('incubationProgram');
+
+    Route::get('/master/startup', function() {
+        return view('Master-KategoriStartup.listKategoriStartup');
+    })->name('startupcategory');
+
+    Route::get('/master/civitas', function() {
+        return view('Master-Civitas.listCivitas');
+    })->name('civitas');
 });
 
 /* This is for edituser, please modify based on the right source*/
