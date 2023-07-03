@@ -12,19 +12,22 @@
     <div class="pb-4">
         <p style="display: flex; align-items: flex-end;">
             <!-- Home button -->
-            <a href="/dashboard"><i data-feather="home" style="margin-right: 0.5rem;"></i></a>
+            <a href="/dashboard"><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
             <!-- Home button -->
             Master Pengguna
         </p>
     </div>
 
     <!-- Button Tambah -->
+    @if (isFeatureInside('pengguna-tambah', $features))    
     <div class="pb-2" style="display: flex; justify-content: flex-end;">
-        <button class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;"">
-            <i data-feather="plus" style="margin-right: 0.3rem;"></i>
+        <button class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
+            <a href="{{route('adduser')}}"><i data-feather="plus" style="margin-right: 0.3rem;"></i>
             TAMBAH
+            </a>
         </button>
     </div>
+    @endif
     <!-- Button Tambah -->
 
 <!-- Search Bar -->
@@ -32,9 +35,9 @@
     <div class="pb-2">
         <div class="input-group rounded">
             <!-- Input Form -->
-            <form action="" class="position-relative">
+            <form action="/masteruser" class="position-relative">
                 
-                <input type="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
+                <input type="text" name="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
                 
                 <span class="position-absolute" style="top: 50%; left: 0.5rem; transform: translateY(-50%);">
                     <i data-feather="search"></i>
@@ -45,7 +48,13 @@
     </div>
 </div>
 <!-- Search Bar -->
-
+    <!-- Flash messages -->
+    @if (Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get('success') }}
+            <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <!-- Users Table -->
     <div class="table-responsive-md">
         <table class="table">
@@ -63,17 +72,29 @@
 
             <!-- Table Body -->
             <tbody>
+            @foreach ($users as $user)
                 <tr>
-                    <th scope="row" class="text-center">1</th>
-                    <td>User</td>
-                    <td>user@email.com</td>
-                    <td>Peserta</td>
+                    <th scope="row" class="text-center">{{ $loop->iteration }}</th>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->roles->name }}</td>
                     <td class="text-center">
-                        <a href=""><i data-feather="eye"></i></a>
-                        <a href=""><i data-feather="edit-2"></i></a>
-                        <a href=""><i data-feather="trash-2"></i></a>
+
+                        @if (isFeatureInside('pengguna-lihat', $features))
+                            <a href="{{route('detailuser',$user->id)}}"><i data-feather="eye"></i></a>
+                        @endif
+                        @if (isFeatureInside('pengguna-ubah', $features))
+                            <a href="{{route('edituser',$user->id)}}"><i data-feather="edit-2"></i></a>
+                        @endif
+                        @if (isFeatureInside('pengguna-hapus', $features))
+                            <a href="{{ route('deleteuser', $user->id) }}" onclick="return confirm('Are you sure you want to delete this user?')"><i data-feather="trash-2"></i></a>
+                        @endif
+                        {{-- <a href="{{route('detailuser',$user->name)}}"><i data-feather="eye"></i></a>
+                        <a href="{{route('edituser',$user->name)}}"><i data-feather="edit-2"></i></a>
+                        <a href="{{ route('deleteuser', $user->name) }}" onclick="return confirm('Are you sure you want to delete this user?')"><i data-feather="trash-2"></i></a> --}}
                     </td>
                 </tr>
+                @endforeach
             </tbody>
             <!-- Table Body -->
         </table>

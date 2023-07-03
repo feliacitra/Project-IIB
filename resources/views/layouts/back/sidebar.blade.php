@@ -10,7 +10,7 @@
     </div>
     <div class="sidebar-body">
         <ul class="nav">
-            @if ( auth()->user()->role == 'admin' )
+            @if ( auth()->user()->role == '1' )
                 <li class="nav-item nav-category">Dashboard</li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
@@ -32,91 +32,83 @@
                 </li>
                 <li class="nav-item nav-category">Data Master</li>
                 <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link">
+                    <a href="{{ route('master.pengguna') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Pengguna</span>
                     </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ route('incubationProgram') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Program Inkubasi</span>
                     </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ route('startupcategory') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Kategori Startup</span>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link">
+                    <a href="{{ route('civitas') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Civitas</span>
                     </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Universitas</span>
                     </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Fakultas</span>
                     </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Program Studi</span>
                     </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Periode Pendaftaran</span>
                     </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Komponen Penilaian</span>
                     </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Tema Bootcamp</span>
                     </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Feedback</span>
                     </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Konten Monev</span>
                     </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Mata Kuliah</span>
                     </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Index Nilai Matkul</span>
                     </a>
                 </li>
-            @elseif ( auth()->user()->role == 'peserta' )
+                <li class="nav-item nav-category">Hak Akses</li>
                 <li class="nav-item">
+                    <a href="{{ route('access.index') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Hak Akses</span>
+                    </a>
+                </li>
+                {{-- @foreach (get_access() as $feature)
+                    <li class="nav-item nav-category">{{ $feature }}</li>
+                @endforeach --}}
+                {{-- <li class="nav-item nav-category">{{ auth()->user()->role }}</li> --}}
+
+            @else
+            <li class="nav-item nav-category">Data Master</li>
+            <li class="nav-item">
+                @foreach (get_menu() as $menu)
+                    {!! $menu !!}
+                @endforeach
+            </li>
+                {{-- <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Dashboard</span>
@@ -141,7 +133,11 @@
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Sertifikat Monev</span>
                     </a>
-                </li>
+                </li> --}}
+                {{-- @foreach (get_access() as $feature)
+                    <li class="nav-item nav-category">{{ $feature->name }}</li>
+                @endforeach --}}
+                {{-- <li class="nav-item nav-category">{{ get_access() }}</li> --}}
             @endif
         </ul>
     </div>

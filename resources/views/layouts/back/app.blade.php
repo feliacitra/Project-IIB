@@ -78,6 +78,7 @@
         });
     });
 </script>
+@yield('extra-script')
 <script src="{{ asset('back/vendors/core/core.js') }}"></script>
 <!-- endinject -->
 
@@ -94,6 +95,8 @@
 <!-- Custom js for this page -->
 <script src="{{ asset('back/js/dashboard-light.js') }}"></script>
 <!-- End custom js for this page -->
+
+
 
 </body>
 </html>
