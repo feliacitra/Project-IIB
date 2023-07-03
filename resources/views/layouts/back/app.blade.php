@@ -96,5 +96,7 @@
 <script src="{{ asset('back/js/dashboard-light.js') }}"></script>
 <!-- End custom js for this page -->
 
+
+
 </body>
 </html>

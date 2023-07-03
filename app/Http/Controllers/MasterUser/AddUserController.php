@@ -13,7 +13,7 @@ class AddUserController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'image-upload' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg|file|max:2048',
             'name' => 'required|unique:users',
             'email' => 'required|unique:users',
             'password' => 'required',
@@ -30,8 +30,8 @@ class AddUserController extends Controller
             'faculty' => 'required',
             'major' => 'required',
         ], [
-            'name.unique' => 'Gagal disimpan, Nama sudah digunakan oleh peserta lain.',
-            'email.unique' => 'Gagal disimpan, Email sudah digunakan oleh peserta lain.',
+            'name.unique' => 'Gagal disimpan, Nama sudah digunakan oleh pengguna lain.',
+            'email.unique' => 'Gagal disimpan, Email sudah digunakan oleh pengguna lain.',
         ]);
 
         $user = new User();
@@ -55,15 +55,14 @@ class AddUserController extends Controller
         $userDetail->ud_faculty = $request->input('faculty');
         $userDetail->ud_programstudy = $request->input('major');
 
-        if ($request->hasFile('image-upload')) {
-            $image = $request->file('image-upload');
+        if ($request->file('image')) {
+            $image = $request->file('image');
             $imagePath = $image->store('profile_photos', 'public');
             $userDetail->ud_photo = $imagePath;
         }
 
         $userDetail->save();
 
-        Session::flash('success', 'User has been added successfully.');
-        return redirect()->route('adduser');
+        return redirect()->route('masteruser')->with('success', 'User has been added successfully.');
     }
 }

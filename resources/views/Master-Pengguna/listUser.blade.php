@@ -12,7 +12,7 @@
     <div class="pb-4">
         <p style="display: flex; align-items: flex-end;">
             <!-- Home button -->
-            <a href="/dashboard"><i data-feather="home" style="margin-right: 0.5rem;"></i></a>
+            <a href="/dashboard"><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
             <!-- Home button -->
             Master Pengguna
         </p>
@@ -35,9 +35,9 @@
     <div class="pb-2">
         <div class="input-group rounded">
             <!-- Input Form -->
-            <form action="" class="position-relative">
+            <form action="/masteruser" class="position-relative">
                 
-                <input type="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
+                <input type="text" name="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
                 
                 <span class="position-absolute" style="top: 50%; left: 0.5rem; transform: translateY(-50%);">
                     <i data-feather="search"></i>
@@ -52,6 +52,7 @@
     @if (Session::has('success'))
         <div class="alert alert-success" role="alert">
             {{ Session::get('success') }}
+            <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
     <!-- Users Table -->
@@ -78,6 +79,7 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->roles->name }}</td>
                     <td class="text-center">
+
                         @if (isFeatureInside('pengguna-lihat', $features))
                             <a href="{{route('detailuser',$user->id)}}"><i data-feather="eye"></i></a>
                         @endif
@@ -87,6 +89,9 @@
                         @if (isFeatureInside('pengguna-hapus', $features))
                             <a href="{{ route('deleteuser', $user->id) }}" onclick="return confirm('Are you sure you want to delete this user?')"><i data-feather="trash-2"></i></a>
                         @endif
+                        {{-- <a href="{{route('detailuser',$user->name)}}"><i data-feather="eye"></i></a>
+                        <a href="{{route('edituser',$user->name)}}"><i data-feather="edit-2"></i></a>
+                        <a href="{{ route('deleteuser', $user->name) }}" onclick="return confirm('Are you sure you want to delete this user?')"><i data-feather="trash-2"></i></a> --}}
                     </td>
                 </tr>
                 @endforeach
