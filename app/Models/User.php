@@ -45,6 +45,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $attributes = [
+        'role' => '2',
+    ];
+
     /**
      * Get the user_detail associated with the User
      *
