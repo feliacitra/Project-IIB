@@ -25,6 +25,10 @@ class UserDetail extends Model
         'ud_faculty',
     ];
 
+    protected $primaryKey = [
+        'ud_id'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

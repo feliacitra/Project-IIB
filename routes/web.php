@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\MasterPenggunaController;
+use App\Http\Controllers\MasterUser\MasterUserController;
+use App\Http\Controllers\MasterUser\AddUserController;
 use Illuminate\Support\Facades\View;
 
 /*
@@ -65,11 +67,11 @@ Route::middleware(['auth', 'access'])->group(function () {
 
     Route::get('/master/pengguna', [MasterPenggunaController::class, 'index'])->name('master.pengguna');
     
-    Route::post('/adduser', [App\Http\Controllers\MasterUser\AddUserController::class, 'store']) ->name('adduser');
-    Route::get('/masteruser', [App\Http\Controllers\MasterUser\MasterUserController::class, 'index']) ->name('masteruser');
-    Route::get('/detailuser/{user}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'show']) ->name('detailuser');
-    Route::get('/edituser/{user}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'edit']) ->name('edituser');
-    Route::get('/masteruser/{user}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'destroy'])->name('deleteuser');
+    // Route::post('/adduser', [AddUserController::class, 'store']) ->name('adduser');
+    // Route::get('/masteruser', [MasterUserController::class, 'index']) ->name('masteruser');
+    // Route::get('/detailuser/{user}', [MasterUserController::class, 'show']) ->name('detailuser');
+    // Route::get('/edituser/{user}', [MasterUserController::class, 'edit']) ->name('edituser');
+    // Route::get('/masteruser/{user}', [MasterUserController::class, 'destroy'])->name('deleteuser');
 
     Route::get('/master/inkubasi', function() {
         return view('Master-ProgramInkubasi.listProgramInkubasi');
@@ -103,18 +105,18 @@ Route::get('storage/{path}', function ($path) {
 
 /* Add middleware role use middleware('role:x') example middleware('role:admin') or middleware('role:admin,peserta') with no spaces */
 
-Route::post('/register',[App\Http\Controllers\Auth\RegisteredUserController::class, 'store']) ->name('register');
+Route::post('/register',[RegisteredUserController::class, 'store']) ->name('register');
 
-Route::post('/adduser', [App\Http\Controllers\MasterUser\AddUserController::class, 'store']) ->name('adduser');
+Route::post('/adduser', [AddUserController::class, 'store']) ->name('adduser');
 
-Route::get('/masteruser', [App\Http\Controllers\MasterUser\MasterUserController::class, 'index'])->middleware('role:admin')->name('masteruser');
+Route::get('/masteruser', [MasterUserController::class, 'index'])->name('masteruser');
 
-Route::get('/detailuser/{user:name}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'show']) ->middleware('role:admin')->name('detailuser');
+Route::get('/detailuser/{user:name}', [MasterUserController::class, 'show']) ->middleware('role:admin')->name('detailuser');
 
-Route::get('/edituser/{user:name}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'edit']) ->middleware('role:admin')->name('edituser');
+Route::get('/edituser/{user:id}', [MasterUserController::class, 'edit'])->name('edituser');
 
-Route::get('/masteruser/{user:name}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'destroy']) ->name('deleteuser');
+Route::get('/masteruser/{user:name}', [MasterUserController::class, 'destroy']) ->name('deleteuser');
 
-Route::put('/edituser/{user:name}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'update']) ->middleware('role:admin')->name('updateuser');
+Route::put('/edituser/{user:id}', [MasterUserController::class, 'update'])->name('updateuser');
 
 require __DIR__.'/auth.php';
