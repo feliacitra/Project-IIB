@@ -36,7 +36,7 @@
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Pengguna</span>
                     </a>
-                    <a href="{{ route('incubationProgram') }}" class="nav-link">
+                    <a href="{{ route('master.inkubasi') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Program Inkubasi</span>
                     </a>

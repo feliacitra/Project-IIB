@@ -2,72 +2,132 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MasterMember;
 use Illuminate\Http\Request;
 use App\Models\MasterProgramInkubasi;
-use Illuminate\Support\Facades\DB;
 
 
 class MasterProgramInkubasiController extends Controller
 {
+
+    public function index(){
+        $inkubasi = MasterProgramInkubasi::latest('updated_at');
+
+        if (request('search')){
+            $inkubasi->where('mpi_name', 'like', '%'.request('search').'%')
+                ->orWhere('mpi_description', 'like', '%'.request('search').'%');
+        }
+
+        return view('Master-ProgramInkubasi.listProgramInkubasi', [
+            "master_programinkubasi" => $inkubasi->get(),
+        ]);
+    }
+
+    public function create(){
+
+
+    }
+
+    public function store(Request $request){
+        $validatedData = $request->validate([
+            'addNamaInkubasi' => 'required|max:255|unique:master_programinkubasi,mpi_name',
+            'addDeskripsiInkubasi' => 'nullable',
+            'addStatus' => 'required',
+        ], [
+            'addNamaInkubasi.required' => 'Nama Program Inkubasi tidak boleh kosong',
+            'addNamaInkubasi.unique' => 'Nama Program Inkubasi sudah digunakan',
+        ]);
+
+        MasterProgramInkubasi::create([
+            'mpi_name' => $validatedData['addNamaInkubasi'],
+            'mpi_description' => $validatedData['addDeskripsiInkubasi'],
+            'mpi_type' => $validatedData['addStatus']
+        ]);
+
+        $nama = $request->input('addNamaInkubasi');
+
+        return redirect()->route('master.inkubasi')->with('success', "Program Inkubasi $nama berhasil ditambah");
+    }
+
+    public function show(MasterProgramInkubasi $masterProgramInkubasi)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\MasterProgramInkubasi  $masterProgramInkubasi
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(MasterProgramInkubasi $masterProgramInkubasi)
+    {
+        //
+    }
+
     //
-    public function tambah_program(Request $request){
+    // public function tambah_program(Request $request){
 
-        $this->validate(
-            $request, 
-            ['mpi_name' => 'unique:master_programinkubasi|required',
-             'mpi_description' => 'required',
-             'mpi_type' => 'required',],
-            ['mpi_name.unique' => 'The Incubation Program Name Has Already Been Taken!',
-             'mpi_name.required' => 'The Incubation Program Name Is Required!',
-             'mpi_description.required' => 'The Incubation Program Description Is Required!',
-            ]
+    //     $this->validate(
+    //         $request, 
+    //         ['mpi_name' => 'unique:master_programinkubasi|required',
+    //          'mpi_description' => 'required',
+    //          'mpi_type' => 'required',],
+    //         ['mpi_name.unique' => 'The Incubation Program Name Has Already Been Taken!',
+    //          'mpi_name.required' => 'The Incubation Program Name Is Required!',
+    //          'mpi_description.required' => 'The Incubation Program Description Is Required!',
+    //         ]
 
-        );
+    //     );
 
-        MasterProgramInkubasi::create($request->post());
-        return redirect()->route('incubationProgram')->with('success', 'Program telah ditambahkan');
-    }
+    //     MasterProgramInkubasi::create($request->post());
+    //     return redirect()->route('incubationProgram')->with('success', 'Program telah ditambahkan');
+    // }
 
-    public function destroy($id){
+    public function destroy(int $id)
+    {
+        $hasInkubasi = MasterMember::where('mpi_id', $id)->exists();
+        $Inkubasi = MasterProgramInkubasi::where('mpi_id', $id)->firstOrFail();
+        $name = $Inkubasi->mpi_name;
+
+        if ($hasInkubasi){
+            return redirect()->route('master.inkubasi')->with('error', "Program inkubasi $name tidak dapat dihapus karena terdapat pengguna yang terdaftar di Inkubasi tersebut");
+        }
         
-        DB::table('master_programinkubasi')->where('id',$id)->delete();
-        return redirect()->route('incubationProgram')->with('success', 'Program Telah Dihapus');
+        MasterProgramInkubasi::where('mpi_id', $id)->delete();
 
+        return redirect()->route('master.inkubasi')->with('success', "Program inkubasi $name berhasil dihapus");
     }
 
-    public function update(Request $request, $mpi_id){
+    public function update(Request $request, int $id){
 
-        $this->validate(
-            $request, 
-            ['mpi_name' => 'unique:master_programinkubasi|required',
-             'mpi_description' => 'required',
-             'mpi_type' => 'required',],
-            ['mpi_name.unique' => 'The Incubation Program Name Has Already Been Taken!',
-             'mpi_name.required' => 'The Incubation Program Name Is Required!',
-             'mpi_description.required' => 'The Incubation Program Description Is Required!',
-            ]
+        $mpi = MasterProgramInkubasi::where('mpi_id', $id)->firstOrFail();
+        $mpi_name = $mpi->mpi_name;
+        $mpi_name_request = $request->input('editNamaInkubasi');
 
-        );
+        $rules = [
+            'editNamaInkubasi' => 'required',
+            'editDeskripsiInkubasi' => 'nullable',
+            'editStatus' => 'required',
+        ];
 
-        $mpi = MasterProgramInkubasi::find($mpi_id);
-        $mpi->mpi_name = $request->mpi_name;
-        $mpi->mpi_description = $request->mpi_description;
-        $mpi->mpi_type = $request->mpi_type;
-        $mpi->save();
+        if ($request->input('editNamaInkubasi') != $mpi->mpi_name) {
+            $rules['editNamaInkubasi'] = 'required|unique:master_programinkubasi,mpi_name';
+        }
 
-        return redirect()->route('incubationProgram')->with('success', 'Program Berhasil Diupdate!');
+        $validatedData = $request->validate($rules, [
+            'editNamaInkubasi.required' => "Gagal memperbarui Program Inkubasi $mpi_name, Nama Program Inkubasi tidak boleh kosong",
+            'editNamaInkubasi.unique' => "Gagal memperbarui Program Inkubasi $mpi_name, Nama Program Inkubasi $mpi_name_request sudah digunakan",
+        ]);
+
+        MasterProgramInkubasi::where('mpi_id', $id)->update([
+            'mpi_name' => $validatedData['editNamaInkubasi'],
+            'mpi_description' => $validatedData['editDeskripsiInkubasi'],
+            'mpi_type' => $validatedData['editStatus'],
+        ]);
+
+        return redirect()->route('master.inkubasi')->with('success', "Program inkubasi $mpi_name_request berhasil diperbarui");
     }
 
-    public function search(Request $request){
-        // Get the search value from the request
-        $query = $request->q_search;
-    
-        $result = DB::table('master_programinkubasi')
-		->where('mpi_name','like',"%".$query."%")
-		->paginate();
-    
-        // Return the search view with the resluts compacted
-        return view('Master-ProgramInkubasi.listProgramInkubasi',['master_programinkubasi' => $result]);
-        // return redirect()->route('incubationProgram', ['master_programinkubasi' => $query])->with('success', 'Program Berhasil Diupdate!');
-    }
+ 
 }

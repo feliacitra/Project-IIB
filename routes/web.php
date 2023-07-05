@@ -73,18 +73,14 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/edituser/{user}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'edit']) ->name('edituser');
     Route::get('/masteruser/{user}', [\App\Http\Controllers\MasterUser\MasterUserController::class, 'destroy'])->name('deleteuser');
 
-    Route::get('/master/inkubasi', function() {
-        $master_programinkubasi = DB::table('master_programinkubasi')->get();
-        return view('Master-ProgramInkubasi.listProgramInkubasi',['master_programinkubasi'=>$master_programinkubasi]);
-    })->name('incubationProgram');
+    // Route::get('/master/inkubasi', function() {
+    //     $master_programinkubasi = DB::table('master_programinkubasi')->get();
+    //     return view('Master-ProgramInkubasi.listProgramInkubasi',['master_programinkubasi'=>$master_programinkubasi]);
+    // })->name('incubationProgram');
 
-    Route::post('/master/inkubasi', [MasterProgramInkubasiController::class, 'tambah_program'])->name('incubation-create');
-
-    Route::post('/master/inkubasi/update/{mpi_id}', [MasterProgramInkubasiController::class, 'update'])->name('incubation-update');
-    
-    Route::get('/master/inkubasi/hapus/{mpi_id}', [MasterProgramInkubasiController::class, 'destroy'])->name('incubation-delete');
-
-    Route::post('/master/inkubasi/search/', [MasterProgramInkubasiController::class, 'search'])->name('incubation-search');
+    Route::resource('/master/inkubasi', MasterProgramInkubasiController::class)->names([
+        'index' => 'master.inkubasi',
+    ])->except(['show', 'edit', 'create']);
 
     Route::get('/master/startup', function() {
         return view('Master-KategoriStartup.listKategoriStartup');

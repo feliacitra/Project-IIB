@@ -36,10 +36,9 @@
         <div class="pb-2">
             <div class="input-group rounded">
                 <!-- Input Form -->
-                <form action="{{ route('incubation-search') }}" method="post" class="position-relative">
-                    @csrf <!-- {{ csrf_field() }} -->
+                <form action="/master/inkubasi" class="position-relative">
                     
-                    <input type="search" name="q_search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
+                    <input type="search" name="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
                     
                     <span class="position-absolute" style="top: 50%; left: 0.5rem; transform: translateY(-50%);">
                         <i data-feather="search"></i>
@@ -50,6 +49,8 @@
         </div>
     </div>
     <!-- Search Bar -->
+
+    {{-- flash message --}}
     @if ($message = Session::get('success'))
     <div class="alert alert-success alert-block">   
         <strong>{{ $message }}</strong>
@@ -83,17 +84,17 @@
             <tbody>
                 @foreach ($master_programinkubasi as $mpi)
                 <tr>
-                    <th scope="row" class="text-center">{{ $mpi->id }}</th>
+                    <th scope="row" class="text-center">{{ $loop->iteration }}</th>
                     <td>{{ $mpi->mpi_name }}</td>
                     <td>{{ $mpi->mpi_description }}</td>
                     <td class="text-center">{{ $mpi->mpi_type }}</td>
                     <td class="text-center">
                         <!-- VIEW -->
-                        <a href="#viewIncubationProgram" onClick="oldData({{ json_encode($mpi) }})" class="lihat"><i data-feather="eye"></i></a>
+                        <a href="#viewIncubationProgram" data-name="{{ $mpi->mpi_name }}" data-description="{{ $mpi->mpi_description }}" data-type="{{ $mpi->mpi_type }}" class="lihat"><i data-feather="eye"></i></a>
                         <!-- EDIT -->
-                        <a href="#editIncubationProgram" onClick="oldData({{ json_encode($mpi) }})"><i data-feather="edit-2"></i></a>
+                        <a href="#editIncubationProgram" data-id="{{ $mpi->mpi_id }}" data-name="{{ $mpi->mpi_name }}" data-description="{{ $mpi->mpi_description }}" data-type="{{ $mpi->mpi_type }}"><i data-feather="edit-2"></i></a>
                         <!-- DELETE -->
-                        <a href="{{ route('incubation-delete', $mpi->id) }}" onClick="return confirm('Delete Incubation Program {{ $mpi->mpi_name }} ?')"><i data-feather="trash-2"></i></a>
+                        <a href="#deleteIncubationProgram" data-id="{{ $mpi->mpi_id }}"><i data-feather="trash-2"></i></a>
                     </td>
                 </tr>
                 @endforeach
@@ -120,18 +121,18 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
-                        <form action="{{ route('incubation-create') }}" method="POST">
+                        <form action="{{ route('master.inkubasi') }}" method="POST">
                             @csrf <!-- {{ csrf_field() }} -->
                             <!-- Input Nama Program -->
-                            <input type="text" name="mpi_name" class="form-control rounded" id="namaProgram" placeholder="Nama Program" style="margin-top: 1rem; width: 100%">
+                            <input type="text" name="addNamaInkubasi" class="form-control rounded" id="addNamaInkubasi" placeholder="Nama Program" style="margin-top: 1rem; width: 100%">
                             <!-- Input Nama Program -->
 
                             <!-- Input Deskripsi Program -->
-                            <textarea class="form-control rounded" name="mpi_description" id="deskripsiProgram" cols="20" rows="10" placeholder="Deskripsi" style="margin-top: 1rem"></textarea>
+                            <textarea class="form-control rounded" name="addDeskripsiInkubasi" id="addDeskripsiInkubasi" cols="20" rows="10" placeholder="Deskripsi" style="margin-top: 1rem"></textarea>
                             <!-- Input Deskripsi Program -->
 
                             {{-- Select Active Button --}}
-                            <select class="form-select" name="mpi_type" id="status" style="margin-top: 1rem">
+                            <select class="form-select" name="addStatus" id="addStatus" style="margin-top: 1rem">
                                 <option value="AKTIF">AKTIF</option>
                                 <option value="TIDAK AKTIF">TIDAK AKTIF</option>
                               </select>
@@ -179,13 +180,13 @@
                         <input 
                         type="text" 
                         class="form-control rounded" 
-                        id="detailNamaProgram" 
+                        id="detailNamaInkubasi" 
                         placeholder="Nama Program" 
                         style="margin-top: 1rem; width: 100%"
                         value=""
                         readonly>
                         <!-- Edit Deskripsi Program -->
-                        <textarea class="form-control rounded" id="detailDeskripsiProgram" cols="20" rows="10" placeholder="Deskripsi" style="margin-top: 1rem;" readonly></textarea>
+                        <textarea class="form-control rounded" id="detailDeskripsiInkubasi" cols="20" rows="10" placeholder="Deskripsi" style="margin-top: 1rem;" readonly></textarea>
 
                         {{-- Select Active Button --}}
                         <input type="text" class="form-control rounded" id="detailStatus" placeholder="Nama Program" style="margin-top: 1rem; width: 100%" value="" readonly>
@@ -219,25 +220,26 @@
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
                         <!-- Edit Nama Program -->
-                        <form action="{{ route('incubation-update', $mpi->id ?? '') }}" method="POST">
+                        <form action="/master/inkubasi/" method="POST" id="editForm">
                         @csrf <!-- {{ csrf_field() }} -->
+                        @method('PUT')
                             <input 
                             type="text" 
-                            name="mpi_name"
+                            name="editNamaInkubasi"
                             class="form-control rounded" 
-                            id="editNamaProgram" 
+                            id="editNamaInkubasi" 
                             placeholder="Nama Program" 
                             style="margin-top: 1rem; width: 100%"
                             value="">
                             <!-- Edit Nama Program -->
                             
                             <!-- Edit Deskripsi Program -->
-                            <textarea class="form-control rounded" name="mpi_description" id="editDeskripsiProgram" cols="20" rows="10" placeholder="Deskripsi" style="margin-top: 1rem;">Current program description.</textarea>
+                            <textarea class="form-control rounded" name="editDeskripsiInkubasi" id="editDeskripsiInkubasi" cols="20" rows="10" placeholder="Deskripsi" style="margin-top: 1rem;">Current program description.</textarea>
                             <!-- Edit Deskripsi Program -->
 
 
                             {{-- Select Active Button --}}
-                            <select class="form-select" name="mpi_type" id="editStatus" style="margin-top: 1rem">
+                            <select class="form-select" name="editStatus" id="editStatus" style="margin-top: 1rem">
                                 <option value="AKTIF">AKTIF</option>
                                 <option value="TIDAK AKTIF">TIDAK AKTIF</option>
                               </select>
@@ -265,46 +267,88 @@
         </div>
     <!-- EDIT -->
 
-    <!-- DELETE -->
-    {{-- <form action="{{ route('incubation-delete', $mpi->mpi_id) }}" method="post">
-    @csrf <!-- {{ csrf_field() }} --> --}}
-    <div class="overlay" id="deleteIncubationProgram">
-            <div class="wrapper" style="width: 25%">
-                <div class="content">
-                    <p class="text-center">
-                        Hapus program?
-                    </p>           
-                    <div class="row mt-4">
-                        <!--Button Ya -->
-                        <div class="col">
-                            <button type="submit" id="delete" class="btn btn-primary" style="width: 50%">
-                                Ya
-                            </button>
-                        </div>
-                        <!--Button Ya -->
-                        <!--Button Tidak -->
-                        <div class="col d-flex justify-content-end">
-                            <a href="#" class="button-link text-center" style="width: 50%">Tidak</a>
-                        </div>
-                        <!--Button Tidak -->
+     <!-- DELETE -->
+     <div class="overlay" id="deleteIncubationProgram">
+        <div class="wrapper" style="width: 25%">
+            <form action="/master/inkubasi/" method="POST" id="deleteForm">
+            @csrf
+            @method('DELETE')
+            <div class="content">
+                <p class="text-center">
+                    Hapus Program?
+                </p>
+
+                <input type="hidden" name="_method" value="DELETE">
+
+                <div class="row mt-4">
+                    <!--Button Ya -->
+                    <div class="col">
+                        <button type="submit" id="delete" class="btn btn-primary" style="width: 50%">
+                            Ya
+                        </button>
                     </div>
+                    <!--Button Ya -->
+
+                    <!--Button Tidak -->
+                    <div class="col d-flex justify-content-end">
+                        <a href="#" class="button-link text-center" style="width: 50%">Tidak</a>
+                    </div>
+                    <!--Button Tidak -->
                 </div>
             </div>
+            </form>
         </div>
-    {{-- </form> --}}
+    </div>
     <!-- DELETE -->
     <!-- POP-UP TAMBAH, VIEW, EDIT -->
-    @endsection
-
-<script>
-
-    function oldData(data){
-        document.querySelector('#detailNamaProgram').value = data.mpi_name;
-        document.querySelector('#editNamaProgram').value = data.mpi_name;
-        document.querySelector('#detailDeskripsiProgram').value = data.mpi_description;
-        document.querySelector('#editDeskripsiProgram').value = data.mpi_description;
-        document.querySelector('#detailStatus').value = data.mpi_type;
-        document.querySelector('#editStatus').value = data.mpi_type;
+    
+    <script>
+    function test(){
+        const viewLinks = document.querySelectorAll('a[href="#viewIncubationProgram"]');
+        console.log(viewLinks);
     }
+ const viewLinks = document.querySelectorAll('a[href="#viewIncubationProgram"]');
+ 
+ viewLinks.forEach(link => {
+        link.addEventListener('click', event => {
+            
+            const name = link.dataset.name;
+            const description = link.dataset.description;
+            const type = link.dataset.type;
+            
+            document.getElementById('detailNamaInkubasi').value = name;
+            document.getElementById('detailDeskripsiInkubasi').value = description;
+            document.getElementById('detailStatus').value = type;
+        });
+    });
 
+    const editLinks = document.querySelectorAll('a[href="#editIncubationProgram"]');
+    
+    editLinks.forEach(link => {
+        link.addEventListener('click', event => {
+            
+            const id = link.dataset.id;
+            const name = link.dataset.name;
+            const description = link.dataset.description;
+            const type = link.dataset.type;
+
+            document.getElementById('editNamaInkubasi').value = name;
+            document.getElementById('editDeskripsiInkubasi').value = description;
+            document.getElementById('editStatus').value = type;
+            
+            editForm.action = `/master/inkubasi/${id}`;
+        });
+    });
+    
+    const deleteLinks = document.querySelectorAll('a[href="#deleteIncubationProgram"]');
+    
+    deleteLinks.forEach(link => {
+        link.addEventListener('click', event => {
+            const id = link.dataset.id;
+
+            deleteForm.action = `/master/inkubasi/${id}`;
+        })
+    })
+    
 </script>
+    @endsection
