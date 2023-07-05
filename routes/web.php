@@ -84,6 +84,8 @@ Route::middleware(['auth', 'access'])->group(function () {
     
     Route::get('/master/inkubasi/hapus/{mpi_id}', [MasterProgramInkubasiController::class, 'destroy'])->name('incubation-delete');
 
+    Route::post('/master/inkubasi/search/', [MasterProgramInkubasiController::class, 'search'])->name('incubation-search');
+
     Route::get('/master/startup', function() {
         return view('Master-KategoriStartup.listKategoriStartup');
     })->name('startupcategory');

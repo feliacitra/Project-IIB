@@ -48,7 +48,7 @@ class MasterProgramInkubasiController extends Controller
             ]
 
         );
-        
+
         $mpi = MasterProgramInkubasi::find($mpi_id);
         $mpi->mpi_name = $request->mpi_name;
         $mpi->mpi_description = $request->mpi_description;
@@ -56,5 +56,18 @@ class MasterProgramInkubasiController extends Controller
         $mpi->save();
 
         return redirect()->route('incubationProgram')->with('success', 'Program Berhasil Diupdate!');
+    }
+
+    public function search(Request $request){
+        // Get the search value from the request
+        $query = $request->q_search;
+    
+        $result = DB::table('master_programinkubasi')
+		->where('mpi_name','like',"%".$query."%")
+		->paginate();
+    
+        // Return the search view with the resluts compacted
+        return view('Master-ProgramInkubasi.listProgramInkubasi',['master_programinkubasi' => $result]);
+        // return redirect()->route('incubationProgram', ['master_programinkubasi' => $query])->with('success', 'Program Berhasil Diupdate!');
     }
 }
