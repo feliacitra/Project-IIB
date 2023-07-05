@@ -89,7 +89,7 @@ class MasterUserController extends Controller
             'ud_birthday' => $validatedUserDetailData['birthdate'],
             'ud_phone' => $validatedUserDetailData['phone'],
             'ud_address' => $validatedUserDetailData['address'],
-            // 'ud_photo' => $validatedUserDetailData['image'] ?? $user->user_detail->ud_photo,
+            'ud_photo' => $validatedUserDetailData['image'] ?? $user->user_detail->ud_photo,
         ]);
 
         $image = $user->user_detail->ud_photo ?? null;

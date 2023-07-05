@@ -107,5 +107,12 @@ class DatabaseSeeder extends Seeder
 
         User::firstOrCreate(['name' => 'admin'], $admin);
         User::firstOrCreate(['name' => 'peserta'], $peserta);
+
+        $role = Role::find(1);
+        $features = Feature::all();
+
+        foreach ($features as $feature) {
+            $role->features()->attach($feature->id);
+        }
     }
 }
