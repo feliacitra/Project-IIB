@@ -36,6 +36,19 @@ class MasterProgramInkubasiController extends Controller
     }
 
     public function update(Request $request, $mpi_id){
+
+        $this->validate(
+            $request, 
+            ['mpi_name' => 'unique:master_programinkubasi|required',
+             'mpi_description' => 'required',
+             'mpi_type' => 'required',],
+            ['mpi_name.unique' => 'The Incubation Program Name Has Already Been Taken!',
+             'mpi_name.required' => 'The Incubation Program Name Is Required!',
+             'mpi_description.required' => 'The Incubation Program Description Is Required!',
+            ]
+
+        );
+        
         $mpi = MasterProgramInkubasi::find($mpi_id);
         $mpi->mpi_name = $request->mpi_name;
         $mpi->mpi_description = $request->mpi_description;
