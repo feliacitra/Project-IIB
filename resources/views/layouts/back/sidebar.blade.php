@@ -44,7 +44,7 @@
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Kategori Startup</span>
                     </a>
-                    <a href="{{ route('civitas') }}" class="nav-link">
+                    <a href="{{ route('master.civitas') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Civitas</span>
                     </a>
