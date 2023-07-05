@@ -34,9 +34,9 @@
         <div class="pb-2">
             <div class="input-group rounded">
                 <!-- Input Form -->
-                <form action="" class="position-relative">
+                <form action="/master/civitas" class="position-relative">
                     
-                    <input type="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
+                    <input type="text" name="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
                     
                     <span class="position-absolute" style="top: 50%; left: 0.5rem; transform: translateY(-50%);">
                         <i data-feather="search"></i>
@@ -210,7 +210,7 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
-                        <form action="/master/civitas/{{ $civ->mci_id }}" method="POST" id="editForm">
+                        <form action="/master/civitas/" method="POST" id="editForm">
 
                             @csrf
                             @method('PUT')
@@ -254,7 +254,7 @@
     <!-- DELETE -->
     <div class="overlay" id="deleteCivitas">
         <div class="wrapper" style="width: 25%">
-            <form action="/master/civitas/{{ $civ->mci_id }}" method="POST" id="deleteForm">
+            <form action="/master/civitas/" method="POST" id="deleteForm">
             @csrf
             @method('DELETE')
             <div class="content">

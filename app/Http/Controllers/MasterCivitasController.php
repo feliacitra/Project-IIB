@@ -15,8 +15,15 @@ class MasterCivitasController extends Controller
      */
     public function index()
     {
+        $civitas = MasterCivitas::latest('updated_at');
+
+        if (request('search')){
+            $civitas->where('mci_name', 'like', '%'.request('search').'%')
+                ->orWhere('mci_description', 'like', '%'.request('search').'%');
+        }
+
         return view('Master-Civitas.listCivitas', [
-            "civitas" => MasterCivitas::latest('updated_at')->get(),
+            "civitas" => $civitas->get(),
         ]);
     }
 
@@ -96,7 +103,7 @@ class MasterCivitasController extends Controller
             'editKeteranganCivitas' => 'nullable',
         ];
 
-        if ($request->input('editNamaCivitas') != $mci->mci_name_request) {
+        if ($request->input('editNamaCivitas') !== $mci->mci_name_request) {
             $rules['editNamaCivitas'] = 'required|unique:master_civitas,mci_name';
         }
 
