@@ -103,7 +103,7 @@ class MasterCivitasController extends Controller
             'editKeteranganCivitas' => 'nullable',
         ];
 
-        if ($request->input('editNamaCivitas') !== $mci->mci_name_request) {
+        if ($request->input('editNamaCivitas') != $mci->mci_name) {
             $rules['editNamaCivitas'] = 'required|unique:master_civitas,mci_name';
         }
 

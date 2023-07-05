@@ -36,5 +36,10 @@ class MasterCivitasSeeder extends Seeder
             'mci_name' => 'Dosen',
             'mci_description' => 'Dosen lorem ipsum',
         ]);
+
+        $civitas5 = MasterCivitas::factory()->create([
+            'mci_name' => 'Staff',
+            'mci_description' => 'Staff (untuk test delete, tidak ada member yg terhubung)',
+        ]);
     }
 }
