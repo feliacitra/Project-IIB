@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MasterCivitas;
+use App\Models\MasterMember;
 use Illuminate\Http\Request;
 
 class MasterCivitasController extends Controller
@@ -50,7 +51,9 @@ class MasterCivitasController extends Controller
             'mci_description' => $validatedData['addKeteranganCivitas'],
         ]);
 
-        return redirect()->route('master.civitas')->with('success', 'Civitas berhasil ditambah');
+        $nama = $request->input('addNamaCivitas');
+
+        return redirect()->route('master.civitas')->with('success', "Civitas $nama berhasil ditambah");
     }
 
     /**
@@ -85,19 +88,21 @@ class MasterCivitasController extends Controller
     public function update(Request $request, int $id)
     {
         $mci = MasterCivitas::where('mci_id', $id)->firstOrFail();
-        
+        $mci_name = $mci->mci_name;
+        $mci_name_request = $request->input('editNamaCivitas');
+
         $rules = [
             'editNamaCivitas' => 'required',
             'editKeteranganCivitas' => 'nullable',
         ];
 
-        if ($request->input('editNamaCivitas') != $mci->mci_name) {
+        if ($request->input('editNamaCivitas') != $mci->mci_name_request) {
             $rules['editNamaCivitas'] = 'required|unique:master_civitas,mci_name';
         }
 
         $validatedData = $request->validate($rules, [
-            'editNamaCivitas.required' => 'Nama civitas tidak boleh kosong',
-            'editNamaCivitas.unique' => 'Nama civitas sudah digunakan',
+            'editNamaCivitas.required' => "Gagal memperbarui civitas $mci_name, Nama civitas tidak boleh kosong",
+            'editNamaCivitas.unique' => "Gagal memperbarui civitas $mci_name, Nama civitas $mci_name_request sudah digunakan",
         ]);
 
         MasterCivitas::where('mci_id', $id)->update([
@@ -105,7 +110,7 @@ class MasterCivitasController extends Controller
             'mci_description' => $validatedData['editKeteranganCivitas'],
         ]);
 
-        return redirect()->route('master.civitas')->with('success', 'Civitas berhasil diperbarui');
+        return redirect()->route('master.civitas')->with('success', "Civitas $mci_name_request berhasil diperbarui");
     }
 
 
@@ -115,8 +120,18 @@ class MasterCivitasController extends Controller
      * @param  \App\Models\MasterCivitas  $masterCivitas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MasterCivitas $masterCivitas)
+    public function destroy(int $id)
     {
-        //
+        $hasCivitas = MasterMember::where('mci_id', $id)->exists();
+        $civitas = MasterCivitas::where('mci_id', $id)->firstOrFail();
+        $name = $civitas->mci_name;
+
+        if ($hasCivitas){
+            return redirect()->route('master.civitas')->with('error', "Civitas $name tidak dapat dihapus karena terdapat pengguna yang terdaftar di civitas tersebut");
+        }
+        
+        MasterCivitas::where('mci_id', $id)->delete();
+
+        return redirect()->route('master.civitas')->with('success', "Civitas $name berhasil dihapus");
     }
 }

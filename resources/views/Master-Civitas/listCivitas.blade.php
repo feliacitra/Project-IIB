@@ -54,7 +54,14 @@
             {{ Session::get('success') }}
             <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    @elseif ($errors->any())
+    @elseif (Session::has('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ Session::get('error') }}
+            <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if ($errors->any())
     <div class="alert alert-danger">
         {{ $errors->first() }}
         <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -90,7 +97,7 @@
                         <!-- EDIT -->
                         <a href="#editCivitas" data-id="{{ $civ->mci_id }}" data-name="{{ $civ->mci_name }}" data-description="{{ $civ->mci_description }}"><i data-feather="edit-2"></i></a>
                         <!-- DELETE -->
-                        <a href="#deleteCivitas"><i data-feather="trash-2"></i></a>
+                        <a href="#deleteCivitas" data-id="{{ $civ->mci_id }}"><i data-feather="trash-2"></i></a>
                     </td>
                 </tr>
 
@@ -247,15 +254,20 @@
     <!-- DELETE -->
     <div class="overlay" id="deleteCivitas">
         <div class="wrapper" style="width: 25%">
+            <form action="/master/civitas/{{ $civ->mci_id }}" method="POST" id="deleteForm">
+            @csrf
+            @method('DELETE')
             <div class="content">
                 <p class="text-center">
                     Hapus civitas?
                 </p>
 
+                <input type="hidden" name="_method" value="DELETE">
+
                 <div class="row mt-4">
                     <!--Button Ya -->
                     <div class="col">
-                        <button id="delete" class="btn btn-primary" style="width: 50%">
+                        <button type="submit" id="delete" class="btn btn-primary" style="width: 50%">
                             Ya
                         </button>
                     </div>
@@ -268,6 +280,7 @@
                     <!--Button Tidak -->
                 </div>
             </div>
+            </form>
         </div>
     </div>
     <!-- DELETE -->
@@ -302,6 +315,17 @@
                 editForm.action = `/master/civitas/${id}`;
             });
         });
+        
+        const deleteLinks = document.querySelectorAll('a[href="#deleteCivitas"]');
+
+        deleteLinks.forEach(link => {
+            link.addEventListener('click', event => {
+                const id = link.dataset.id;
+
+                deleteForm.action = `/master/civitas/${id}`;
+            })
+        })
+
     </script>
-    
+
 @endsection

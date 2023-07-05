@@ -15,6 +15,6 @@ class MasterMember extends Model
 
     public function civitas()
     {
-        return $this->belongsTo(MasterCivitas::class, 'mci_id');
+        return $this->belongsTo(MasterCivitas::class);
     }
 }
