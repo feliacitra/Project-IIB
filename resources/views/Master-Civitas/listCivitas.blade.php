@@ -118,19 +118,20 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
-                        <form>
+                        <form action="/master/civitas" method="POST">
+                            @csrf
                             <!-- Input Nama civitas -->
-                            <input type="text" class="form-control rounded" id="addNamaCivitas" placeholder="Nama Civitas" style="margin-top: 1rem; width: 100%">
+                            <input type="text" class="form-control rounded" id="addNamaCivitas" name="addNamaCivitas" placeholder="Nama Civitas" style="margin-top: 1rem; width: 100%">
                             <!-- Input Nama civitas -->
 
                             <!-- Input Keterangan Civitas -->
-                            <textarea class="form-control rounded" id="addKeteranganCivitas" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem"></textarea>
+                            <textarea class="form-control rounded" id="addKeteranganCivitas" name="addKeteranganCivitas" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem"></textarea>
                             <!-- Input Keterangan Civitas -->
 
                             <div class="row mt-4">
                                 <!--Button Simpan -->
                                 <div class="col">
-                                    <button id="simpanTambah" class="btn btn-primary">
+                                    <button type="submit" id="simpanTambah" class="btn btn-primary">
                                         Simpan
                                     </button>
                                 </div>

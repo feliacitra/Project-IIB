@@ -37,7 +37,20 @@ class MasterCivitasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'addNamaCivitas' => 'required|max:255|unique:master_civitas,mci_name',
+            'addKeteranganCivitas' => 'nullable'
+        ], [
+            'addNamaCivitas.required' => 'Nama civitas tidak boleh kosong',
+            'addNamaCivitas.unique' => 'Nama civitas sudah digunakan',
+        ]);
+
+        MasterCivitas::create([
+            'mci_name' => $validatedData['addNamaCivitas'],
+            'mci_description' => $validatedData['addKeteranganCivitas'],
+        ]);
+
+        return redirect()->route('master.civitas')->with('success', 'Civitas berhasil ditambah');
     }
 
     /**
