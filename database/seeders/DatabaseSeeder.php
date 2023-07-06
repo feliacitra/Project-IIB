@@ -105,6 +105,7 @@ class DatabaseSeeder extends Seeder
             'role' => '2'
         ];
 
+
         User::firstOrCreate(['name' => 'admin'], $admin);
         User::firstOrCreate(['name' => 'peserta'], $peserta);
     }

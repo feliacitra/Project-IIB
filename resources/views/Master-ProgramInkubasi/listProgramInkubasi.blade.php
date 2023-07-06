@@ -271,8 +271,8 @@
      <div class="overlay" id="deleteIncubationProgram">
         <div class="wrapper" style="width: 25%">
             <form action="/master/inkubasi/" method="POST" id="deleteForm">
-            @csrf
-            @method('DELETE')
+                @csrf <!-- {{ csrf_field() }} -->
+                @method('DELETE')
             <div class="content">
                 <p class="text-center">
                     Hapus Program?

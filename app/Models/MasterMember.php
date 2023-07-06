@@ -9,6 +9,8 @@ class MasterMember extends Model
 {
     use HasFactory;
 
+    protected $table = "master_members";
+
     protected $guarded = [
         'mm_id'
     ];

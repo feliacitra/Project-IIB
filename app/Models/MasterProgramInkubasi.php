@@ -9,6 +9,6 @@ class MasterProgramInkubasi extends Model
 {
     use HasFactory;
 
-    public $table = "master_programinkubasi";
+    protected $table = "master_programinkubasi";
     protected $fillable = ['mpi_name', 'mpi_description', 'mpi_type'];
 }
