@@ -101,7 +101,6 @@ class MasterPenggunaController extends Controller
         $userRules = [
             'name' => 'required',
             'email' => 'required',
-            'password' => 'required',
             'role' => 'required'
         ];
 
@@ -120,16 +119,15 @@ class MasterPenggunaController extends Controller
             'major' => 'nullable',
         ];
 
-        if($request->name != $user->name){
+        if($request->input('name') != $user->name){
             $userRules['name'] = 'required|unique:users';
         }
 
-        if($request->email != $user->email){
+        if($request->input('email') != $user->email){
             $userRules['email'] = 'required|unique:users';
         }
 
         $validatedUserData = $request->validate($userRules);
-        $validatedUserData['password'] = Hash::make($validatedUserData['password']);
 
         $validatedUserDetailData = $request->validate($userDetailRules);
 
