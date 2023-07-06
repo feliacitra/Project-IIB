@@ -20,7 +20,7 @@
 
     <!-- Button Tambah -->
     <div class="pb-2" style="display: flex; justify-content: flex-end;">
-        <a href="#addFaculty" class="button btn-primary">
+        <a href="#addStudyProgram" class="button btn-primary">
             <button id="openAddFaculty" class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
                 <i data-feather="plus" style="margin-right: 0.3rem;"></i>
                 TAMBAH
@@ -74,11 +74,11 @@
                     <td>Fakultas Informatika Telkom University lorem ipsum</td>
                     <td class="text-center">
                         <!-- VIEW -->
-                        <a href="#viewFaculty"><i data-feather="eye"></i></a>
+                        <a href="#viewStudyProgram"><i data-feather="eye"></i></a>
                         <!-- EDIT -->
-                        <a href="#editFaculty"><i data-feather="edit-2"></i></a>
+                        <a href="#editStudyProgram"><i data-feather="edit-2"></i></a>
                         <!-- DELETE -->
-                        <a href="#deleteFaculty"><i data-feather="trash-2"></i></a>
+                        <a href="#deleteStudyProgram"><i data-feather="trash-2"></i></a>
                     </td>
                 </tr>
             </tbody>
@@ -89,7 +89,7 @@
 
     <!-- POP-UP TAMBAH, VIEW, EDIT -->
     <!-- TAMBAH -->
-    <div class="overlay" id="addFaculty">
+    <div class="overlay" id="addStudyProgram">
         <div class="wrapper">
             <div class="row align-items-center">
                 <div class="col col-lg-9 col-md-8">
@@ -112,13 +112,20 @@
                             </select>
                             <!-- Select Nama Universitas -->
 
-                            <!-- Input Nama Fakultas -->
-                            <input type="text" class="form-control rounded" id="namaFakultas" placeholder="Nama Fakultas" style="margin-top: 1rem">
-                            <!-- Input Nama Fakultas -->
+                            <!-- Select Nama Fakultas -->
+                            <select class="form-control form-select" name="selectFaculty" id="university" style="margin-top: 1rem">
+                                <option value="select" class="text-muted">Nama Fakultas</option>
+                                <option value="informatika">S1 Informatika</option>
+                            </select>
+                            <!-- Select Nama Fakultas -->
 
-                            <!-- Input Keterangan Fakultas -->
-                            <textarea class="form-control rounded" id="keteranganFakultas" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem"></textarea>
-                            <!-- Input Keterangan Fakultas -->
+                            <!-- Input Nama Prodi -->
+                            <input type="text" class="form-control rounded" id="namaProdi" placeholder="Nama Program Studi" style="margin-top: 1rem">
+                            <!-- Input Nama Prodi -->
+
+                            <!-- Input Keterangan Prodi -->
+                            <textarea class="form-control rounded" id="keteranganProdi" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem"></textarea>
+                            <!-- Input Keterangan Prodi -->
 
                             <div class="row mt-4">
                                 <!--Button Simpan -->
@@ -144,11 +151,11 @@
     <!-- TAMBAH -->
 
     <!-- VIEW -->
-    <div class="overlay" id="viewFaculty">
+    <div class="overlay" id="viewStudyProgram">
         <div class="wrapper">
             <div class="row align-items-center">
                 <div class="col col-lg-9 col-md-8">
-                    <h4>Lihat Fakultas</h4>
+                    <h4>Lihat Program Studi</h4>
                 </div>
                 <div class="col col-lg-3 col-md-4 d-flex justify-content-end">
                     <!-- X button -->
@@ -165,21 +172,28 @@
                             <option value="telkomUniversity">Telkom University</option>
                         </select>
                         <!-- Nama Universitas -->
+
+                        <!-- Select Nama Fakultas -->
+                        <select class="form-control form-select" name="selectFaculty" id="university" style="margin-top: 1rem" disabled>
+                            <option value="select" class="text-muted">Nama Fakultas</option>
+                            <option value="informatika">S1 Informatika</option>
+                        </select>
+                        <!-- Select Nama Fakultas -->
                         
-                        <!-- View Nama Fakultas -->
+                        <!-- View Nama Prodi -->
                         <input 
                         type="text" 
                         class="form-control rounded" 
-                        id="namaFakultas" 
-                        placeholder="Nama Fakultas" 
+                        id="namaProdi" 
+                        placeholder="Nama Program Studi" 
                         style="margin-top: 1rem"
-                        value="Current Faculty Name"
+                        value="Current Study Program"
                         readonly>
-                        <!-- View Nama Fakultas -->
+                        <!-- View Nama Prodi -->
 
-                        <!-- View Keterangan Fakultas -->
-                        <textarea class="form-control rounded" id="keteranganFakultas" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;" readonly>Current faculty information.</textarea>
-                        <!-- View Keterangan Fakultas -->
+                        <!-- View Keterangan Prodi -->
+                        <textarea class="form-control rounded" id="keteranganProdi" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;" readonly>Current study program.</textarea>
+                        <!-- View Keterangan Prodi -->
 
                         <!--Button Kembali -->
                         <div class="col d-flex justify-content-end mt-4">
@@ -194,11 +208,11 @@
     <!-- VIEW -->
 
     <!-- EDIT -->
-    <div class="overlay" id="editFaculty">
+    <div class="overlay" id="editStudyProgram">
         <div class="wrapper">
             <div class="row align-items-center">
                 <div class="col col-lg-9 col-md-8">
-                    <h4>Edit Fakultas</h4>
+                    <h4>Edit Program Studi</h4>
                 </div>
                 <div class="col col-lg-3 col-md-4 d-flex justify-content-end">
                     <!-- X button -->
@@ -217,19 +231,26 @@
                             </select>
                             <!-- Select Nama Universitas -->
 
-                            <!-- Edit Nama Fakultas -->
+                            <!-- Select Nama Fakultas -->
+                            <select class="form-control form-select" name="selectFaculty" id="university" style="margin-top: 1rem">
+                                <option value="select" class="text-muted">Nama Fakultas</option>
+                                <option value="informatika">S1 Informatika</option>
+                            </select>
+                            <!-- Select Nama Fakultas -->
+
+                            <!-- Edit Nama Prodi -->
                             <input 
                                 type="text" 
                                 class="form-control rounded" 
-                                id="namaFakultas" 
-                                placeholder="Nama Fakultas" 
+                                id="namaProdi" 
+                                placeholder="Nama Program Studi" 
                                 style="margin-top: 1rem"
-                                value="Current Faculty Name">
-                            <!-- Edit Nama Fakultas -->
+                                value="Current Study Program">
+                            <!-- Edit Nama Prodi -->
 
-                            <!-- Edit Keterangan Fakultas -->
-                            <textarea class="form-control rounded" id="keteranganFakultas" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;">Current faculty information.</textarea>
-                            <!-- Edit Keterangan Fakultas -->
+                            <!-- Edit Keterangan Prodi -->
+                            <textarea class="form-control rounded" id="keteranganProdi" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;">Current faculty information.</textarea>
+                            <!-- Edit Keterangan Prodi -->
 
                             <div class="row mt-4">
                                 <!--Button Perbarui -->
@@ -255,11 +276,11 @@
     <!-- EDIT -->
 
     <!-- DELETE -->
-    <div class="overlay" id="deleteFaculty">
+    <div class="overlay" id="deleteStudyProgram">
         <div class="wrapper" style="width: 25%">
             <div class="content">
                 <p class="text-center">
-                    Hapus fakultas?
+                    Hapus program studi?
                 </p>
 
                 <div class="row mt-4">
