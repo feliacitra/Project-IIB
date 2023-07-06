@@ -14,8 +14,7 @@ use Illuminate\Support\Facades\Storage;
 class MasterPenggunaController extends Controller
 {
     public function index() {
-        $users = User::where('role', '!=', '1')
-                    ->latest('updated_at')
+        $users = User::latest('updated_at')
                     ->with('roles')
                     ->get();
         
