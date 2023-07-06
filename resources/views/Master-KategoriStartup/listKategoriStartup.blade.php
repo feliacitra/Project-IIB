@@ -111,6 +111,14 @@
                             <textarea class="form-control rounded" id="keteranganKategori" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem"></textarea>
                             <!-- Input Keterangan Kategori -->
 
+                            <!-- Select Status -->
+                            <select name="statusSelect" id="status" class="form-control form-select" style="margin-top: 1rem;">
+                                <option value="select" class="text-muted">Status</option>
+                                <option value="aktif">AKTIF</option>
+                                <option value="tidakAktif">TIDAK AKTIF</option>
+                            </select>
+                            <!-- Select Status -->
+
                             <div class="row mt-4">
                                 <!--Button Simpan -->
                                 <div class="col">
@@ -166,7 +174,8 @@
                         <!-- View Keterangan Kategori -->
 
                         <!-- Select Status -->
-                        <select name="statusSelect" id="status" class="form-control rounded" style="margin-top: 1rem;" disabled>
+                        <select name="statusSelect" id="status" class="form-control form-select" style="margin-top: 1rem;" disabled>
+                            <option value="select" class="text-muted">Status</option>
                             <option value="aktif">AKTIF</option>
                             <option value="tidakAktif">TIDAK AKTIF</option>
                         </select>
@@ -216,7 +225,8 @@
                             <!-- Edit Keterangan Kategori -->
 
                             <!-- Select Status -->
-                            <select name="statusSelect" id="status" class="form-control rounded" style="margin-top: 1rem;">
+                            <select name="statusSelect" id="status" class="form-control form-select" style="margin-top: 1rem;">
+                                <option value="select" class="text-muted">Status</option>
                                 <option value="aktif">AKTIF</option>
                                 <option value="tidakAktif">TIDAK AKTIF</option>
                             </select>
