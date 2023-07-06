@@ -91,7 +91,7 @@
         <div class="wrapper">
             <div class="row align-items-center">
                 <div class="col col-lg-9 col-md-8">
-                    <h4>Tambah Universitas</h4>
+                    <h4>Tambah Fakultas</h4>
                 </div>
                 <div class="col col-lg-3 col-md-4 d-flex justify-content-end">
                     <!-- X button -->
@@ -104,7 +104,7 @@
                     <div class="input-group-lg rounded">
                         <form>
                             <!-- Select Nama Universitas -->
-                            <select class="form-control" name="selectUniversity" id="university" style="margin-top: 1rem">
+                            <select class="form-control form-select" name="selectUniversity" id="university" style="margin-top: 1rem">
                                 <option value="select" class="text-muted">Nama Universitas</option>
                                 <option value="telkomUniversity">Telkom University</option>
                             </select>
@@ -158,7 +158,7 @@
                 <div class="container-fluid p-0">
                     <div>
                         <!-- Nama Universitas -->
-                        <select class="form-control" name="selectUniversity" id="university" style="margin-top: 1rem" disabled>
+                        <select class="form-control form-select" name="selectUniversity" id="university" style="margin-top: 1rem" disabled>
                             <option value="select" class="text-muted">Nama Universitas</option>
                             <option value="telkomUniversity">Telkom University</option>
                         </select>
@@ -209,7 +209,7 @@
                     <div class="input-group-lg rounded">
                         <form>
                             <!-- Select Nama Universitas -->
-                            <select class="form-control" name="selectUniversity" id="university" style="margin-top: 1rem">
+                            <select class="form-control form-select" name="selectUniversity" id="university" style="margin-top: 1rem">
                                 <option value="select" class="text-muted">Nama Universitas</option>
                                 <option value="telkomUniversity">Telkom University</option>
                             </select>
