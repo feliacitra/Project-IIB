@@ -4,11 +4,13 @@ namespace App\Http\Controllers\MasterUser;
 
 use App\Models\User;
 use App\Models\UserDetail;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class MasterUserController extends Controller
 {
@@ -26,7 +28,10 @@ class MasterUserController extends Controller
                 ->orWhere('email', 'like', '%'.request('search').'%');
         }
 
-        return view('masterpengguna.masteruser', ["users" => $users->get()]);
+        $role = Auth::user()->role;
+        $features = Role::find($role)->features;
+
+        return view('Master-Pengguna.listUser', ["users" => $users, "features" => $features]);
     }
 
     public function show(User $user)
@@ -37,7 +42,7 @@ class MasterUserController extends Controller
 
     public function edit(User $user)
     {
-        return view('masterpengguna.edituser', ["user" => $user]);
+        return view('Master-Pengguna.edituser', ["user" => $user]);
     }
 
     public function update(Request $request, User $user)
@@ -62,7 +67,7 @@ class MasterUserController extends Controller
         }
 
         if($request->email != $user->email){
-            $userRules['email'] = 'required|unique:users';
+            $userRules['email'] = 'required|unique:users';  
         }
 
         $validatedUserData = $request->validate($userRules);
@@ -76,15 +81,50 @@ class MasterUserController extends Controller
 
             $validatedUserDetailData['image'] = $request->file('image')->store('profile_photos', 'public');
         }
-
+        
         User::where('id', $user->id)->update($validatedUserData);
-        UserDetail::where('ud_id', $user->user_detail->ud_id)->update([
-            'ud_gender' => $validatedUserDetailData['gender'],
-            'ud_birthday' => $validatedUserDetailData['birthdate'],
-            'ud_phone' => $validatedUserDetailData['phone'],
-            'ud_address' => $validatedUserDetailData['address'],
-            'ud_photo' => $validatedUserDetailData['image'] ?? $user->user_detail->ud_photo,
-        ]);
+
+        // dd($user->id);
+        // dd($validatedUserDetailData['gender']);
+        // dd($validatedUserDetailData['birthdate']);
+        // dd($validatedUserDetailData['phone']);
+        // dd($validatedUserDetailData['address']);
+        // dd($validatedUserDetailData);
+
+        // $user_detial = UserDetail::firstOrNew(['ud_id' => 1]);
+        // $user_detail->fill($validatedUserDetailData);
+        // $user_detail->save();
+
+        // $user_detail = UserDetail::updateOrCreate(
+        //     ['user_id' => 1],
+        //     [
+        //         'ud_gender' => $validatedUserDetailData['gender'],
+        //         'ud_birthday' => $validatedUserDetailData['birthdate'],
+        //         'ud_phone' => $validatedUserDetailData['phone'],
+        //         'ud_address' => $validatedUserDetailData['address']
+        //     ]
+        // );
+
+        // if ($validatedUserDetailData['image']) {
+        //     UserDetail::where('user_id', $user->id)->update([
+        //         'ud_photo' => $validatedUserDetailData['image']
+        //     ]);
+        // }
+        // UserDetail::where('user_id', $user->id)->update([
+            // 'ud_gender' => $validatedUserDetailData['gender'],
+            // 'ud_birthday' => $validatedUserDetailData['birthdate'],
+            // 'ud_phone' => $validatedUserDetailData['phone'],
+            // 'ud_address' => $validatedUserDetailData['address'],
+        //     'ud_photo' => $validatedUserDetailData['image'] ?? $user->user_detail->ud_photo,
+        // ]);
+
+        // $image = $user->user_detail->ud_photo ?? null;
+
+        // if ($image) {
+        //     UserDetail::where('user_id', $user->id)->update([
+        //         'ud_photo' => $validatedUserDetailData['image'] ?? $image,
+        //     ]);
+        // }
 
         return redirect('/masteruser')->with('success', 'User has been editted');
     }
