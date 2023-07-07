@@ -133,12 +133,36 @@
                 @endforeach --}}
                 {{-- <li class="nav-item nav-category">{{ auth()->user()->role }}</li> --}}
 
-            @else
-            <li class="nav-item nav-category">Data Master</li>
+            @elseif ( auth()->user()->role == '2' )
+            {{-- <li class="nav-item nav-category">Data Master</li> --}}
             <li class="nav-item">
-                @foreach (get_menu() as $menu)
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Dashboard</span>
+                </a>
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Profil Startup</span>
+                </a>
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Voting Jadwal Mentoring</span>
+                </a>
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Jadwal Mentoring</span>
+                </a>
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Jadwal Bootcamp</span>
+                </a>
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Sertifikat Monev</span>
+                </a>
+                {{-- @foreach (get_menu() as $menu)
                     {!! $menu !!}
-                @endforeach
+                @endforeach --}}
             </li>
                 {{-- <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
