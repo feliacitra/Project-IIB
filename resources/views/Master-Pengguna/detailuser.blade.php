@@ -156,6 +156,7 @@
                                 <label for="major">Program Studi</label>
                                 <input type="text" id="major" name="major" class="form-control" value="{{ $user->user_detail?->ud_programstudy ?? '-' }}" readonly disabled>
                             </div>
+                            <button type="button" class="btn btn-primary" form="add-user-form" onclick="history.back()" style="background-color: grey; border-color: grey">Back</button>
                         </form>
                     </div>
                 </div>
