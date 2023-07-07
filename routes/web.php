@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AccessController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\MasterCivitasController;
 use App\Http\Controllers\MasterPenggunaController;
 use App\Http\Controllers\MasterUser\MasterUserController;
 use App\Http\Controllers\MasterUser\AddUserController;
+use App\Http\Controllers\MasterProgramInkubasiController;
 use Illuminate\Support\Facades\View;
 
 /*
@@ -78,9 +80,14 @@ Route::middleware(['auth', 'access'])->group(function () {
         'index' => 'master.civitas',
     ])->except(['show', 'edit', 'create']);
 
-    Route::get('/master/inkubasi', function() {
-        return view('Master-ProgramInkubasi.listProgramInkubasi');
-    })->name('incubationProgram');
+    // Route::get('/master/inkubasi', function() {
+    //     $master_programinkubasi = DB::table('master_programinkubasi')->get();
+    //     return view('Master-ProgramInkubasi.listProgramInkubasi',['master_programinkubasi'=>$master_programinkubasi]);
+    // })->name('incubationProgram');
+
+    Route::resource('/master/inkubasi', MasterProgramInkubasiController::class)->names([
+        'index' => 'master.inkubasi',
+    ])->except(['show', 'edit', 'create']);
 
     Route::get('/master/startup', function() {
         return view('Master-KategoriStartup.listKategoriStartup');
