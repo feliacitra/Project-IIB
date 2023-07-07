@@ -34,7 +34,7 @@
         <div class="input-group rounded">
             <!-- Input Form -->
             <form action="/master/pengguna" class="position-relative">
-                
+                @csrf
                 <input type="text" name="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
                 
                 <span class="position-absolute" style="top: 50%; left: 0.5rem; transform: translateY(-50%);">
