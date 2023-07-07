@@ -67,7 +67,7 @@ class MasterUserController extends Controller
         }
 
         if($request->email != $user->email){
-            $userRules['email'] = 'required|unique:users';
+            $userRules['email'] = 'required|unique:users';  
         }
 
         $validatedUserData = $request->validate($userRules);
@@ -82,23 +82,24 @@ class MasterUserController extends Controller
             $validatedUserDetailData['image'] = $request->file('image')->store('profile_photos', 'public');
         }
         
+        
 
-        User::where('id', $user->id)->update($validatedUserData);
-        UserDetail::where('user_id', $user->id)->update([
-            'ud_gender' => $validatedUserDetailData['gender'],
-            'ud_birthday' => $validatedUserDetailData['birthdate'],
-            'ud_phone' => $validatedUserDetailData['phone'],
-            'ud_address' => $validatedUserDetailData['address'],
-            'ud_photo' => $validatedUserDetailData['image'] ?? $user->user_detail->ud_photo,
-        ]);
+        // User::where('id', $user->id)->update($validatedUserData);
+        // UserDetail::where('user_id', $user->id)->update([
+        //     'ud_gender' => $validatedUserDetailData['gender'],
+        //     'ud_birthday' => $validatedUserDetailData['birthdate'],
+        //     'ud_phone' => $validatedUserDetailData['phone'],
+        //     'ud_address' => $validatedUserDetailData['address'],
+        //     'ud_photo' => $validatedUserDetailData['image'] ?? $user->user_detail->ud_photo,
+        // ]);
 
-        $image = $user->user_detail->ud_photo ?? null;
+        // $image = $user->user_detail->ud_photo ?? null;
 
-        if ($image) {
-            UserDetail::where('user_id', $user->id)->update([
-                'ud_photo' => $validatedUserDetailData['image'] ?? $image,
-            ]);
-        }
+        // if ($image) {
+        //     UserDetail::where('user_id', $user->id)->update([
+        //         'ud_photo' => $validatedUserDetailData['image'] ?? $image,
+        //     ]);
+        // }
 
         return redirect('/masteruser')->with('success', 'User has been editted');
     }
