@@ -169,6 +169,7 @@
                                 <input type="text" id="major" name="major" class="form-control" value="{{ old('major') }}">
                             </div>
                             <button type="submit" class="btn btn-primary" form="add-user-form">Tambah</button>
+                            <button type="button" class="btn btn-primary" form="add-user-form" onclick="history.back()" style="background-color: grey; border-color: grey">Kembali</button>
                         </form>
                     </div>
                 </div>

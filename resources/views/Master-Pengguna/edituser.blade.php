@@ -165,6 +165,7 @@
                                 <input type="text" id="major" name="major" placeholder="Program Studi" class="form-control" value="{{ old('major', optional($user->user_detail)->ud_programstudy) }}">
                             </div>
                             <button type="submit" class="btn btn-primary">Edit</button>
+                            <button type="button" class="btn btn-primary" form="add-user-form" onclick="history.back()" style="background-color: grey; border-color: grey">Kembali</button>
                         </form>
                     </div>
                 </div>
