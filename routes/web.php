@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AccessController;
+use App\Http\Controllers\MasterCivitasController;
 use App\Http\Controllers\MasterPenggunaController;
 use App\Http\Controllers\MasterUser\MasterUserController;
 use App\Http\Controllers\MasterUser\AddUserController;
@@ -73,6 +74,10 @@ Route::middleware(['auth', 'access'])->group(function () {
     // Route::get('/edituser/{user}', [MasterUserController::class, 'edit']) ->name('edituser');
     // Route::get('/masteruser/{user}', [MasterUserController::class, 'destroy'])->name('deleteuser');
 
+    Route::resource('/master/civitas', MasterCivitasController::class)->names([
+        'index' => 'master.civitas',
+    ])->except(['show', 'edit', 'create']);
+
     Route::get('/master/inkubasi', function() {
         return view('Master-ProgramInkubasi.listProgramInkubasi');
     })->name('incubationProgram');
@@ -81,9 +86,9 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Master-KategoriStartup.listKategoriStartup');
     })->name('startupcategory');
 
-    Route::get('/master/civitas', function() {
-        return view('Master-Civitas.listCivitas');
-    })->name('civitas');
+    // Route::get('/master/civitas', function() {
+    //     return view('Master-Civitas.listCivitas');
+    // })->name('civitas');
 });
 
 /* This is for edituser, please modify based on the right source*/
