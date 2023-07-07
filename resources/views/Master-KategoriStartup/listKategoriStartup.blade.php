@@ -54,7 +54,14 @@
             {{ Session::get('success') }}
             <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    @elseif ($errors->any())
+    @elseif (Session::has('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ Session::get('error') }}
+            <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if ($errors->any())
     <div class="alert alert-danger">
         {{ $errors->first() }}
         <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -262,6 +269,9 @@
     <!-- DELETE -->
     <div class="overlay" id="deleteStartupCategory">
         <div class="wrapper" style="width: 25%">
+            <form action="/master/kategori/startup" method="POST" id=deleteForm>
+            @csrf
+            @method('DELETE')
             <div class="content">
                 <p class="text-center">
                     Hapus kategori?
@@ -270,7 +280,7 @@
                 <div class="row mt-4">
                     <!--Button Ya -->
                     <div class="col">
-                        <button id="delete" class="btn btn-primary" style="width: 50%">
+                        <button type="submit" id="delete" class="btn btn-primary" style="width: 50%">
                             Ya
                         </button>
                     </div>
@@ -283,6 +293,7 @@
                     <!--Button Tidak -->
                 </div>
             </div>
+            </form>
         </div>
     </div>
     <!-- DELETE -->
@@ -320,5 +331,13 @@
                 editForm.action = `/master/kategori/startup/${id}`;
             });
         });
+
+        const deleteLinks = document.querySelectorAll('a[href="#deleteStartupCategory"]');
+        deleteLinks.forEach(link => {
+            link.addEventListener('click', event => {
+                const id = link.dataset.id;
+                deleteForm.action = `/master/kategori/startup/${id}`;
+            })
+        })
     </script>
 @endsection

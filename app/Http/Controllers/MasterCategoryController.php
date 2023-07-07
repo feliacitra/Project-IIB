@@ -126,8 +126,19 @@ class MasterCategoryController extends Controller
      * @param  \App\Models\MasterCategory  $masterCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MasterCategory $masterCategory)
+    public function destroy(int $id)
     {
-        //
+        // $hasCivitas = ::where('mc_id', $id)->exists();
+        
+        $category = MasterCategory::where('mc_id', $id)->firstOrFail();
+        $name = $category->mc_name;
+
+        // if ($hasCivitas){
+        //     return redirect()->route('master.civitas')->with('error', "Civitas $name tidak dapat dihapus karena terdapat pengguna yang terdaftar di civitas tersebut");
+        // }
+
+        MasterCategory::where('mc_id', $id)->delete();
+
+        return redirect()->route('master.kategori.startup')->with('success', "Kategori $name berhasil dihapus");
     }
 }
