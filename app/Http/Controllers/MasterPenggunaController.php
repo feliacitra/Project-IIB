@@ -15,9 +15,14 @@ class MasterPenggunaController extends Controller
 {
     public function index() {
         $users = User::latest('updated_at')
-                    ->with('roles')
-                    ->get();
-        
+            ->with('roles');
+
+        if (request('search')) {
+            $users = $users->where('name', 'like', '%' . request('search') . '%')
+                ->orWhere('email', 'like', '%' . request('search') . '%');
+        }
+
+        $users = $users->get();
         $role = Auth::user()->role;
         $features = Role::find($role)->features;
         return view('Master-Pengguna.listUser', compact('users', 'features'));

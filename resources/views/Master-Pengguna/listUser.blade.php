@@ -33,7 +33,7 @@
     <div class="pb-2">
         <div class="input-group rounded">
             <!-- Input Form -->
-            <form action="/masteruser" class="position-relative">
+            <form action="/master/pengguna" class="position-relative">
                 
                 <input type="text" name="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
                 
