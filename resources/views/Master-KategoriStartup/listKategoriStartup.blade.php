@@ -20,7 +20,7 @@
 
     <!-- Button Tambah -->
     <div class="pb-2" style="display: flex; justify-content: flex-end;">
-        <a href="#addStartUpCategory" class="button btn-primary">
+        <a href="#addStartupCategory" class="button btn-primary">
             <button id="openAddStartUpCategory" class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
                 <i data-feather="plus" style="margin-right: 0.3rem;"></i>
                 TAMBAH
@@ -120,7 +120,8 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
-                        <form>
+                        <form action="/master/kategori/startup" method="POST">
+                            @csrf
                             <!-- Input Nama Kategori -->
                             <input type="text" class="form-control rounded" id="addNamaKategori" name="addNamaKategori" placeholder="Nama Kategori" style="margin-top: 1rem; width: 100%">
                             <!-- Input Nama Kategori -->
@@ -131,7 +132,7 @@
 
                             <!-- Select Status -->
                             <select name="addStatusKategori" id="addStatusKategori" class="form-control form-select" style="margin-top: 1rem;">
-                                <option value="select" class="text-muted">Status</option>
+                                <option value="" class="text-muted">Status</option>
                                 <option value="AKTIF">AKTIF</option>
                                 <option value="TIDAK AKTIF">TIDAK AKTIF</option>
                             </select>
@@ -140,7 +141,7 @@
                             <div class="row mt-4">
                                 <!--Button Simpan -->
                                 <div class="col">
-                                    <button id="simpanTambah" class="btn btn-primary">
+                                    <button type="submit" id="simpanTambah" class="btn btn-primary">
                                         Simpan
                                     </button>
                                 </div>

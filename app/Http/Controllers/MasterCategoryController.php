@@ -44,7 +44,23 @@ class MasterCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'addNamaKategori' => 'required|max:255|unique:master_categories,mc_name',
+            'addKeteranganKategori' => 'nullable|max:255',
+            'addStatusKategori' => 'required',
+        ], [
+            'addNamaKategori.required' => 'Nama kategori tidak boleh kosong',
+            'addNamaKategori.unique' => 'Nama kategori sudah digunakan',
+            'addStatusKategori.required' => 'Status kategori tidak boleh kosong'
+        ]);
+
+        MasterCategory::create([
+            'mc_name' => $validatedData['addNamaKategori'],
+            'mc_description' => $validatedData['addKeteranganKategori'],
+            'mc_status' => $validatedData['addStatusKategori'],
+        ]);
+
+        return redirect()->route('master.kategori.startup')->with('success', 'Kategori berhasil ditambah');
     }
 
     /**
@@ -81,8 +97,8 @@ class MasterCategoryController extends Controller
         $category = MasterCategory::where('mc_id', $id)->firstOrFail();
 
         $rules = [
-            'editNamaKategori' => 'required',
-            'editKeteranganKategori' => 'nullable',
+            'editNamaKategori' => 'required|max:255',
+            'editKeteranganKategori' => 'nullable|max:255',
             'editStatusKategori' => 'required',
         ];
 
