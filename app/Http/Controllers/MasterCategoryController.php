@@ -60,7 +60,9 @@ class MasterCategoryController extends Controller
             'mc_status' => $validatedData['addStatusKategori'],
         ]);
 
-        return redirect()->route('master.kategori.startup')->with('success', 'Kategori berhasil ditambah');
+        $nama = $request->input('addNamaCivitas');
+
+        return redirect()->route('master.kategori.startup')->with('success', "Kategori $nama berhasil ditambah");
     }
 
     /**
@@ -107,8 +109,9 @@ class MasterCategoryController extends Controller
         }
 
         $validatedData = $request->validate($rules, [
-            'editNamaKategori.required' => 'Nama kategori tidak boleh kosong',
-            'editStatusKategori.required' => 'Status kategori tidak boleh kosong',
+            'editNamaKategori.required' => "Gagal memperbarui kategori $category->mc_name, Nama kategori tidak boleh kosong",
+            'editNamaKategori.unique' => "Gagal memperbarui kategori $category->mc_name, Nama kategori $category->mc_name sudah digunakan",
+            'editStatusKategori.required' => "Gagal memperbarui kategori $category->mc_name, Status kategori tidak boleh kosong",
         ]);
 
         MasterCategory::where('mc_id', $id)->update([
@@ -117,7 +120,7 @@ class MasterCategoryController extends Controller
             'mc_status' => $validatedData['editStatusKategori'],
         ]);
 
-        return redirect()->route('master.kategori.startup')->with('success', 'Kategori berhasil diperbarui');
+        return redirect()->route('master.kategori.startup')->with('success', "Kategori $category->mc_name berhasil diperbarui");
     }
 
     /**
