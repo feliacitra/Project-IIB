@@ -13,4 +13,8 @@ class MasterCivitas extends Model
         'mci_name',
         'mci_description',
     ];
+
+    public function member() {
+        return $this->hasMany(MasterMember::class);
+    }
 }

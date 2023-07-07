@@ -42,6 +42,8 @@
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Pengguna</span>
                     </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('master.inkubasi') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Program Inkubasi</span>
@@ -52,6 +54,8 @@
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Kategori Startup</span>
                     </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('master.civitas') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Civitas</span>

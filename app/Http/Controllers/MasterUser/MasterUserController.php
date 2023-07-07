@@ -82,14 +82,39 @@ class MasterUserController extends Controller
             $validatedUserDetailData['image'] = $request->file('image')->store('profile_photos', 'public');
         }
         
-        
+        User::where('id', $user->id)->update($validatedUserData);
 
-        // User::where('id', $user->id)->update($validatedUserData);
+        // dd($user->id);
+        // dd($validatedUserDetailData['gender']);
+        // dd($validatedUserDetailData['birthdate']);
+        // dd($validatedUserDetailData['phone']);
+        // dd($validatedUserDetailData['address']);
+        // dd($validatedUserDetailData);
+
+        // $user_detial = UserDetail::firstOrNew(['ud_id' => 1]);
+        // $user_detail->fill($validatedUserDetailData);
+        // $user_detail->save();
+
+        // $user_detail = UserDetail::updateOrCreate(
+        //     ['user_id' => 1],
+        //     [
+        //         'ud_gender' => $validatedUserDetailData['gender'],
+        //         'ud_birthday' => $validatedUserDetailData['birthdate'],
+        //         'ud_phone' => $validatedUserDetailData['phone'],
+        //         'ud_address' => $validatedUserDetailData['address']
+        //     ]
+        // );
+
+        // if ($validatedUserDetailData['image']) {
+        //     UserDetail::where('user_id', $user->id)->update([
+        //         'ud_photo' => $validatedUserDetailData['image']
+        //     ]);
+        // }
         // UserDetail::where('user_id', $user->id)->update([
-        //     'ud_gender' => $validatedUserDetailData['gender'],
-        //     'ud_birthday' => $validatedUserDetailData['birthdate'],
-        //     'ud_phone' => $validatedUserDetailData['phone'],
-        //     'ud_address' => $validatedUserDetailData['address'],
+            // 'ud_gender' => $validatedUserDetailData['gender'],
+            // 'ud_birthday' => $validatedUserDetailData['birthdate'],
+            // 'ud_phone' => $validatedUserDetailData['phone'],
+            // 'ud_address' => $validatedUserDetailData['address'],
         //     'ud_photo' => $validatedUserDetailData['image'] ?? $user->user_detail->ud_photo,
         // ]);
 
