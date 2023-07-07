@@ -40,7 +40,7 @@
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Program Inkubasi</span>
                     </a>
-                    <a href="{{ route('startupcategory') }}" class="nav-link">
+                    <a href="{{ route('master.kategori.startup') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Kategori Startup</span>
                     </a>
