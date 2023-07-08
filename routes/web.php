@@ -7,6 +7,8 @@ use App\Http\Controllers\AccessController;
 use App\Http\Controllers\MasterCivitasController;
 use App\Http\Controllers\MasterPenggunaController;
 use App\Http\Controllers\MasterProgramInkubasiController;
+use App\Http\Controllers\MasterCategoryController;
+use App\Models\MasterCategory;
 use Illuminate\Support\Facades\View;
 
 /*
@@ -79,9 +81,9 @@ Route::middleware(['auth', 'access'])->group(function () {
         'index' => 'master.inkubasi',
     ])->except(['show', 'edit', 'create']);
 
-    Route::get('/master/startup', function() {
-        return view('Master-KategoriStartup.listKategoriStartup');
-    })->name('startupcategory');
+    Route::resource('/master/kategori/startup', MasterCategoryController::class)->names([
+        'index' => 'master.kategori.startup',
+    ])->except(['show', 'edit', 'create']);
 
     // Route::get('/master/civitas', function() {
     //     return view('Master-Civitas.listCivitas');

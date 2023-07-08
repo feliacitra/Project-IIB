@@ -138,14 +138,15 @@ class MasterPenggunaController extends Controller
 
         if($request->file('image')){
             
-            if ($user->user_detail->ud_photo != null) Storage::delete('public/' . $user->user_detail->ud_photo);
+            if ($user->user_detail) {
+                if ($user->user_detail->ud_photo) Storage::delete('public/' . $user->user_detail->ud_photo);
+            }
 
             $validatedUserDetailData['image'] = $request->file('image')->store('profile_photos', 'public');
         }
 
         User::where('id', $user->id)->update($validatedUserData);
-        UserDetail::where('ud_id', $user->user_detail->ud_id)->update([
-            'ud_photo' => $validatedUserDetailData['image'] ?? $user->user_detail->ud_photo,
+        UserDetail::updateOrCreate(['user_id' => $user->id], [
             'ud_address' => $validatedUserDetailData['address'],
             'ud_gender' => $validatedUserDetailData['gender'] ?? null,
             'ud_phone' => $validatedUserDetailData['phone'],
@@ -158,6 +159,12 @@ class MasterPenggunaController extends Controller
             'ud_faculty' => $validatedUserDetailData['faculty'],
             'ud_programstudy' => $validatedUserDetailData['major'],
         ]);
+        
+        if (array_key_exists('image', $validatedUserDetailData)) {
+            UserDetail::where('user_id', $user->id)->update([
+                'ud_photo' => $validatedUserDetailData['image']
+            ]);
+        }
 
         return redirect()->route('master.pengguna')->with('success', 'User has been editted');
     }

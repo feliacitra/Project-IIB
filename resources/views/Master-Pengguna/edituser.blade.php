@@ -31,14 +31,7 @@
         </p>
     </div>
 
-<<<<<<< HEAD
-    <div class="container" style="background-color: #f2f2f2">
-    <form method="post" action="/edituser/{{ $user->id }}" enctype="multipart/form-data">
-        @method('put')
-        @csrf
-=======
     <div class="container-fluid" style="background-color: #f2f2f2">
->>>>>>> upstream/masterpengguna
         <div class="card-header text-center">Edit Pengguna</div>
         <div class="row mt-3">
             <div class="col-md-12">
