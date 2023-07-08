@@ -34,9 +34,9 @@
         <div class="pb-2">
             <div class="input-group rounded">
                 <!-- Input Form -->
-                <form action="/master/kategori/startup" class="position-relative">
+                <form action="{{ route('master.kategori.startup')}}" class="position-relative">
                     @csrf
-                    <input type="search" name="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
+                    <input value="{{ $keyword ?? '' }}" type="search" name="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
                     
                     <span class="position-absolute" style="top: 50%; left: 0.5rem; transform: translateY(-50%);">
                         <i data-feather="search"></i>
@@ -44,6 +44,14 @@
                 </form>
                 <!-- Input Form -->
             </div>
+        </div>
+        <div class="pb-2">
+            <a href="{{ route('master.kategori.startup') }}" class="button btn-primary">
+                <button class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
+                    <i data-feather="plus" style="margin-right: 0.3rem;"></i>
+                    RESET PENCARIAN
+                </button>
+            </a>
         </div>
     </div>
     <!-- Search Bar -->

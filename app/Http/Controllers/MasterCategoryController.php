@@ -22,6 +22,7 @@ class MasterCategoryController extends Controller
         }
 
         return view('Master-KategoriStartup.listKategoriStartup', [
+            "keyword" => request('search'),
             "categories" => $categories->get(),
         ]);
     }
