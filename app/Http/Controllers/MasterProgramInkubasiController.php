@@ -86,13 +86,13 @@ class MasterProgramInkubasiController extends Controller
 
     public function destroy(int $id)
     {
-        $hasInkubasi = MasterMember::where('mpi_id', $id)->exists();
+        // $hasInkubasi = MasterMember::where('mpi_id', $id)->exists();
         $Inkubasi = MasterProgramInkubasi::where('mpi_id', $id)->firstOrFail();
         $name = $Inkubasi->mpi_name;
         
-        if ($hasInkubasi){
-            return redirect()->route('master.inkubasi')->withErrors("Program inkubasi $name tidak dapat dihapus karena terdapat pengguna yang terdaftar di Inkubasi tersebut");
-        }
+        // if ($hasInkubasi){
+        //     return redirect()->route('master.inkubasi')->withErrors("Program inkubasi $name tidak dapat dihapus karena terdapat pengguna yang terdaftar di Inkubasi tersebut");
+        // }
         
         MasterProgramInkubasi::where('mpi_id', $id)->delete();
 
