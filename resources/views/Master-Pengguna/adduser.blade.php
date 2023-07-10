@@ -48,9 +48,9 @@
                             <div class="form-group" style="text-align: center" >
                                 <img id="profile-image" src="{{ asset('back/images/logo/user.png') }}" sizes="16x16" alt="Foto Profil" class="img-thumbnail" >
                             </div>
-                            <div class="form-group profile-icon">
+                            {{-- <div class="form-group profile-icon">
                                 <i class="fas fa-user-circle fa-10x"></i>
-                            </div>
+                            </div> --}}
 
                             <div class="mb-3">
                                 <label for="image" class="form-label">Unggah Foto Profil</label>
