@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Role;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -21,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -42,13 +45,27 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $attributes = [
+        'role' => '2',
+    ];
+
     /**
      * Get the user_detail associated with the User
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function user_detail(): HasOne
+    public function user_detail()
     {
-        return $this->hasOne(UserDetail::class, 'foreign_key');
+        return $this->hasOne(UserDetail::class);
+    }
+
+    /**
+     * Get the roles that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function roles()
+    {
+        return $this->belongsTo(Role::class, 'role');
     }
 }

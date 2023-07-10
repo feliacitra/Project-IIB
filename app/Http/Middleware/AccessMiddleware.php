@@ -5,8 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Role;
 
-class AdminMiddleware
+class AccessMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,16 +18,9 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check()) {
-            $request->session()->flash('features', ['example', 'feature']);
-            if (Auth::user()->role == '1') {
-                return $next($request);
-            } else {
-                return redirect('/dashboard')->with('message', 'Access Denied');
-            }
-        } else {
-            return redirect('/')->with('message', 'Login First');
-        }
-        
+        $role = Auth::user()->role;
+        $features = Role::find($role)->features;
+        session(['features' => $features]);
+        return $next($request);
     }
 }
