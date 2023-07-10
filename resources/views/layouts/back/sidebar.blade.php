@@ -18,81 +18,81 @@
                 <li class="nav-item nav-category">Dashboard</li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
+                        <i class="link-icon" data-feather="monitor"></i>
                         <span class="link-title">Dashboard Startup</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
+                        <i class="link-icon" data-feather="bar-chart-2"></i>
                         <span class="link-title">Dashboard Monev 1</span>
                     </a>    
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
+                        <i class="link-icon" data-feather="bar-chart"></i>
                         <span class="link-title">Dashboard Monev 2</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
+                        <i class="link-icon" data-feather="trending-up"></i>
                         <span class="link-title">Dashboard WRAP</span>
                     </a>
                 </li>
                 <li class="nav-item nav-category">Data Master</li>
                 <li class="nav-item">
                     <a href="{{ route('master.pengguna') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Pengguna</span>
+                        <i class="fa fa-users"></i>
+                        <span style="margin-left:12px">Master Pengguna</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('master.inkubasi') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Program Inkubasi</span>
+                        <i class="fa fa-sitemap"></i>
+                        <span style="margin-left:12px">Master Program Inkubasi</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('master.kategori.startup') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Kategori Startup</span>
+                        <i class="fa fa-rocket"></i>
+                        <span style="margin-left:15px">Master Kategori Startup</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('master.civitas') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Civitas</span>
+                        <i class="fa fa-address-card"></i>
+                        <span style="margin-left:14px">Master Civitas</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Universitas</span>
+                        <i class="fa fa-building"></i>
+                        <span style="margin-left:17px">Master Universitas</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Fakultas</span>
+                        <i class="fa fa-university"></i>
+                        <span style="margin-left:16px">Master Fakultas</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Program Studi</span>
+                        <i class="fa fa-graduation-cap"></i>
+                        <span style="margin-left:13px">Master Program Studi</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
+                        <i class="link-icon" data-feather="calendar"></i>
                         <span class="link-title">Master Periode Pendaftaran</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Komponen Penilaian</span>
+                        <i class="fa fa-check"></i>
+                        <span style="margin-left:17px">Master Komponen Penilaian</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -128,8 +128,8 @@
                 <li class="nav-item nav-category">Hak Akses</li>
                 <li class="nav-item">
                     <a href="{{ route('access.index') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Hak Akses</span>
+                        <i class="fa fa-cogs"></i>
+                        <span style="margin-left:15px">Hak Akses</span>
                     </a>
                 </li>
                 {{-- @foreach (get_access() as $feature)
