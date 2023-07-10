@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MasterUniversitas; 
 use App\Models\MasterMember; 
-
+use App\Models\MasterFakultas; 
 
 class MasterUniversitasController extends Controller
 {
@@ -59,7 +59,7 @@ class MasterUniversitasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\MasterProgramInkubasi  $masterProgramInkubasi
+     * @param  \App\Models\MasterUniversitas  $masterUniversitas
      * @return \Illuminate\Http\Response
      */
     public function edit(MasterUniversitas $masterUniversitas)
@@ -70,12 +70,17 @@ class MasterUniversitasController extends Controller
 
     public function destroy(int $id)
     {
-        $hasUniversitas = MasterMember::where('mu_id', $id)->exists();
+      $hasUniversitas = MasterMember::where('mu_id', $id)->exists();
+      $hasFakultas = MasterFakultas::where('mu_id', $id)->exists();
         $universitas = MasterUniversitas::where('mu_id', $id)->firstOrFail();
         $name = $universitas->mu_name;
         
         if ($hasUniversitas){
             return redirect()->route('master.universitas')->withErrors("Universitas $name tidak dapat dihapus karena terdapat pengguna yang terdaftar di universitas tersebut");
+        }
+
+        if ($hasFakultas){
+            return redirect()->route('master.universitas')->withErrors("Universitas $name tidak dapat dihapus karena terdapat fakultas yang terdaftar di universitas tersebut");
         }
         
         MasterUniversitas::where('mu_id', $id)->delete();
