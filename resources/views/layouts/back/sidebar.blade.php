@@ -1,12 +1,16 @@
 <!-- partial:partials/_sidebar.html -->
 <nav class="sidebar">
     <div class="sidebar-header">
-        <img class="sidebar-brand-image" src="{{ asset('back/images/logo/main_logo.png') }}" alt="main_logo" width="45%">
-        <div class="sidebar-toggler not-active">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+        <a href="/dashboard">
+            <img class="sidebar-brand-image" src="{{ asset('back/images/logo/main_logo.png') }}" alt="main_logo" width="55%"/>
+        </a>
+        <a>
+            <div class="sidebar-toggler active">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </a>
     </div>
     <div class="sidebar-body">
         <ul class="nav">
