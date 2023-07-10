@@ -9,6 +9,8 @@ class UserDetail extends Model
 {
     use HasFactory;
 
+    protected $table = 'user_details';
+
     protected $fillable = [
         'user_id',
         'ud_photo',
@@ -25,12 +27,15 @@ class UserDetail extends Model
         'ud_faculty',
     ];
 
-    protected $primaryKey = [
-        'ud_id'
-    ];
+    protected $primaryKey = 'ud_id';
 
     protected $dates = [
         'ud_birthday'
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'ud_birthday' => 'datetime'
     ];
 
     protected static function booted() {
