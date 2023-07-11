@@ -55,7 +55,14 @@
             {{ Session::get('success') }}
             <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    @elseif ($errors->any())
+    @elseif (Session::has('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ Session::get('error') }}
+            <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if ($errors->any())
     <div class="alert alert-danger">
         {{ $errors->first() }}
         <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -126,51 +133,52 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
-                        <form>
+                        <form action="/master/periode" method="POST">
+                            @csrf
                             <!-- Nama Periode -->
                             <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="namaPeriode" class="col-sm-3">Nama Periode</label>
+                                <label for="addNamaPeriode" class="col-sm-3">Nama Periode</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="namaPeriode" placeholder="Nama Periode">
+                                    <input type="text" class="form-control" id="addNamaPeriode" name="addNamaPeriode" placeholder="Nama Periode">
                                 </div>
                             </div>
                             <!-- Nama Periode -->
 
                             <!-- Tanggal Mulai -->
                             <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="tanggalMulai" class="col-sm-3">Tanggal Mulai</label>
+                                <label for="addTanggalMulai" class="col-sm-3">Tanggal Mulai</label>
                                 <div class="col-sm-9">
-                                    <input type="date" class="form-control" id="tangalMulai">
+                                    <input type="date" class="form-control" id="addTanggalMulai" name="addTanggalMulai">
                                 </div>
                             </div>
                             <!-- Tanggal Mulai -->
 
                             <!-- Tanggal Akhir -->
                             <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="tanggalAkhir" class="col-sm-3">Tanggal Akhir</label>
+                                <label for="addTanggalSelesai" class="col-sm-3">Tanggal Akhir</label>
                                 <div class="col-sm-9">
-                                    <input type="date" class="form-control" id="tangalAkhir">
+                                    <input type="date" class="form-control" id="addTanggalSelesai" name="addTanggalSelesai">
                                 </div>
                             </div>
                             <!-- Tanggal Akhir -->
 
                             <!-- Keterangan -->
                             <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="tanggalAkhir" class="col-sm-3">Keterangan</label>
+                                <label for="addKeteranganPeriode" class="col-sm-3">Keterangan</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" id="keteranganPeriode" cols="20" rows="5" placeholder="Keterangan"></textarea>
+                                    <textarea class="form-control" id="addKeteranganPeriode" name="addKeteranganPeriode" cols="20" rows="5" placeholder="Keterangan"></textarea>
                                 </div>
                             </div>
                             <!-- Keterangan -->
 
                             <!-- Status -->
                             <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="statusPeriode" class="col-sm-3">Status</label>
+                                <label for="addStatusPeriode" class="col-sm-3">Status</label>
                                 <div class="col-sm-9">
-                                    <select name="statusPeriose" id="status" class="form-control form-select">
+                                    <select name="addStatusPeriode" id="addStatusPeriode" class="form-control form-select">
                                         <option value="" class="text-muted">Pilih status</option>
-                                        <option value="AKTIF">AKTIF</option>
-                                        <option value="TIDAK AKTIF">TIDAK AKTIF</option>
+                                        <option value="1">AKTIF</option>
+                                        <option value="0">TIDAK AKTIF</option>
                                     </select>
                                 </div>
                             </div>
@@ -179,7 +187,7 @@
                             <div class="row mt-4">
                                 <!--Button Simpan -->
                                 <div class="col">
-                                    <button id="simpanTambah" class="btn btn-primary">
+                                    <button type="submit" id="simpanTambah" class="btn btn-primary">
                                         Simpan
                                     </button>
                                 </div>

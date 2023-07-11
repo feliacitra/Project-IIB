@@ -19,7 +19,7 @@ class MasterPeriode extends Migration
             $table->date('mpe_enddate');
             $table->string('mpe_name');
             $table->tinyInteger('mpe_status');
-            $table->string('mpe_description');
+            $table->string('mpe_description')->nullable();
             $table->timestamps();
         });
     }
