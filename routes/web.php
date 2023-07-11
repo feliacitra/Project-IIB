@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\MasterCivitasController;
 use App\Http\Controllers\MasterPenggunaController;
+use App\Http\Controllers\MasterPeriodeController;
 use App\Http\Controllers\MasterProgramInkubasiController;
 use App\Http\Controllers\MasterCategoryController;
 use App\Models\MasterCategory;
@@ -75,10 +76,25 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/master/civitas', function() {
         return view('Master-Civitas.listCivitas');
     })->name('civitas');
+    Route::get('/master/pengguna/add', [MasterPenggunaController::class, 'create'])->name('master.pengguna.add');
+    Route::post('/master/pengguna/add', [MasterPenggunaController::class, 'store'])->name('master.pengguna.store');
+    Route::get('/master/pengguna/{user:name}', [MasterPenggunaController::class, 'show'])->name('master.pengguna.detail');
+    Route::get('/master/pengguna/{user:name}/edit', [MasterPenggunaController::class, 'edit'])->name('master.pengguna.edit');
+    Route::put('/master/pengguna/{user:name}/edit', [MasterPenggunaController::class, 'update'])->name('master.pengguna.update');
+    Route::get('/master/pengguna/{user:name}/delete', [MasterPenggunaController::class, 'destroy'])->name('master.pengguna.delete');
 
     Route::resource('/master/civitas', MasterCivitasController::class)->names([
         'index' => 'master.civitas',
     ])->except(['show', 'edit', 'create']);
+
+    Route::resource('/master/periode', MasterPeriodeController::class)->names([
+        'index' => 'master.periode',
+    ])->except(['show', 'edit', 'create']);
+
+    // Route::get('/master/inkubasi', function() {
+    //     $master_programinkubasi = DB::table('master_programinkubasi')->get();
+    //     return view('Master-ProgramInkubasi.listProgramInkubasi',['master_programinkubasi'=>$master_programinkubasi]);
+    // })->name('incubationProgram');
 
     Route::resource('/master/inkubasi', MasterProgramInkubasiController::class)->names([
         'index' => 'master.inkubasi',

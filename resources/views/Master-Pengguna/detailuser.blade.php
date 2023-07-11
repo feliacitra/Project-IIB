@@ -52,9 +52,9 @@
                                     <img src="{{ asset('back/images/logo/user.png') }}" alt="Foto Profil" class="wd-200 ht-200 rounded-circle" style="margin-top: -5px; margin-bottom: 20px;">
                                 @endif
                             </div>
-                            <div class="form-group profile-icon">
+                            {{-- <div class="form-group profile-icon">
                                 <i class="fas fa-user-circle fa-10x"></i>
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <label for="name">Nama Lengkap</label>
                                 <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ $user->name }}" readonly disabled>
