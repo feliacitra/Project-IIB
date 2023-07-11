@@ -3,10 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Role;
-use App\Models\User;
 use App\Models\Feature;
-use Illuminate\Support\Str;
+use App\Models\MasterFakultas;
 use App\Models\MasterMember;
+use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;

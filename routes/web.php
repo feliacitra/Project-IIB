@@ -9,6 +9,7 @@ use App\Http\Controllers\MasterPenggunaController;
 use App\Http\Controllers\MasterProgramInkubasiController;
 use App\Http\Controllers\MasterCategoryController;
 use App\Models\MasterCategory;
+use App\Http\Controllers\MasterUniversitasController;
 use Illuminate\Support\Facades\View;
 
 /*
@@ -61,33 +62,29 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/access/reset/{role}', [AccessController::class, 'role_reset'])->name('access.role-reset');
 
     Route::get('/master/pengguna', [MasterPenggunaController::class, 'index'])->name('master.pengguna');
-    Route::get('/master/pengguna/add', [MasterPenggunaController::class, 'create'])->name('master.pengguna.add');
-    Route::post('/master/pengguna/add', [MasterPenggunaController::class, 'store'])->name('master.pengguna.store');
-    Route::get('/master/pengguna/{user:name}', [MasterPenggunaController::class, 'show'])->name('master.pengguna.detail');
-    Route::get('/master/pengguna/{user:name}/edit', [MasterPenggunaController::class, 'edit'])->name('master.pengguna.edit');
-    Route::put('/master/pengguna/{user:name}/edit', [MasterPenggunaController::class, 'update'])->name('master.pengguna.update');
-    Route::get('/master/pengguna/{user:name}/delete', [MasterPenggunaController::class, 'destroy'])->name('master.pengguna.delete');
+    
 
-    Route::resource('/master/civitas', MasterCivitasController::class)->names([
-        'index' => 'master.civitas',
+    Route::get('/master/inkubasi', function() {
+        return view('Master-ProgramInkubasi.listProgramInkubasi');
+    })->name('incubationProgram');
+
+    Route::get('/master/startup', function() {
+        return view('Master-KategoriStartup.listKategoriStartup');
+    })->name('startupcategory');
+
+    Route::get('/master/civitas', function() {
+        return view('Master-Civitas.listCivitas');
+    })->name('civitas');
+
+    // Route::get('/master/universitas', function() {
+    //     return view('Master-Universitas.listUniversitas');
+    // })->name('universitas');
+
+    Route::resource('/master/universitas', MasterUniversitasController::class)->names([
+        'index' => 'master.universitas',
     ])->except(['show', 'edit', 'create']);
 
-    // Route::get('/master/inkubasi', function() {
-    //     $master_programinkubasi = DB::table('master_programinkubasi')->get();
-    //     return view('Master-ProgramInkubasi.listProgramInkubasi',['master_programinkubasi'=>$master_programinkubasi]);
-    // })->name('incubationProgram');
 
-    Route::resource('/master/inkubasi', MasterProgramInkubasiController::class)->names([
-        'index' => 'master.inkubasi',
-    ])->except(['show', 'edit', 'create']);
-
-    Route::resource('/master/kategori/startup', MasterCategoryController::class)->names([
-        'index' => 'master.kategori.startup',
-    ])->except(['show', 'edit', 'create']);
-
-    // Route::get('/master/civitas', function() {
-    //     return view('Master-Civitas.listCivitas');
-    // })->name('civitas');
 });
 
 

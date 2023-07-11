@@ -60,9 +60,7 @@
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Civitas</span>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link">
+                    <a href="{{ route('master.universitas') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Universitas</span>
                     </a>

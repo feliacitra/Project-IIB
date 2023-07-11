@@ -24,7 +24,7 @@ class CreateMasterMembersTable extends Migration
             $table->string('mm_socialmedia')->nullable();
 
             /* Insert foreign key here */
-            $table->foreignId('mci_id')->nullable()->constrained('master_civitas', 'mci_id')->onDelete('restrict')->nullable();
+            $table->foreignId('mu_id')->nullable()->constrained('master_universitas', 'mu_id')->onDelete('restrict')->nullable();
             /* */
 
             $table->string('mm_npwp')->nullable();

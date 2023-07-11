@@ -9,8 +9,6 @@ class MasterMember extends Model
 {
     use HasFactory;
 
-    protected $table = "master_members";
-
     protected $guarded = [
         'mm_id'
     ];
@@ -18,10 +16,5 @@ class MasterMember extends Model
     public function civitas()
     {
         return $this->belongsTo(MasterCivitas::class);
-    }
-
-    public function programInkubasi()
-    {
-        return $this->belongsTo(MasterProgramInkubasi::class);
     }
 }
