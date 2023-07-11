@@ -119,7 +119,9 @@
                             data-description="{{ $period->mpe_description }}"
                         ><i data-feather="edit-2"></i></a>
                         <!-- DELETE -->
-                        <a href="#deletePeriod"><i data-feather="trash-2"></i></a>
+                        <a href="#deletePeriod"
+                            data-id="{{ $period->mpe_id }}"
+                        ><i data-feather="trash-2"></i></a>
                     </td>
                 </tr>
                 @endforeach
@@ -387,6 +389,9 @@
     <!-- DELETE -->
     <div class="overlay" id="deletePeriod">
         <div class="wrapper" style="width: 25%">
+            <form action="/master/periode" method="POST" id=deleteForm>
+            @csrf
+            @method('DELETE')
             <div class="content">
                 <p class="text-center">
                     Hapus periode?
@@ -395,7 +400,7 @@
                 <div class="row mt-4">
                     <!--Button Ya -->
                     <div class="col">
-                        <button id="delete" class="btn btn-primary" style="width: 50%">
+                        <button type="submit" id="delete" class="btn btn-primary" style="width: 50%">
                             Ya
                         </button>
                     </div>
@@ -408,6 +413,7 @@
                     <!--Button Tidak -->
                 </div>
             </div>
+            </form>
         </div>
     </div>
     <!-- DELETE -->
@@ -455,6 +461,14 @@
         });
     });
 
+    const deleteLinks = document.querySelectorAll('a[href="#deletePeriod"]');
+    
+    deleteLinks.forEach(link => {
+        link.addEventListener('click', event => {
+            const id = link.dataset.id;
+            deleteForm.action = `/master/periode/${id}`;
+        })
+    })
 </script>
 
 @endsection

@@ -151,8 +151,12 @@ class MasterPeriodeController extends Controller
      * @param  \App\Models\MasterPeriode  $masterPeriode
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MasterPeriode $masterPeriode)
+    public function destroy(int $id)
     {
-        //
+        $period = MasterPeriode::where('mpe_id', $id)->firstOrFail();
+        $name = $period->mpe_name;
+
+        MasterPeriode::where('mpe_id', $id)->delete();
+        return redirect()->route('master.periode')->with('success', "Periode $name berhasil dihapus");
     }
 }
