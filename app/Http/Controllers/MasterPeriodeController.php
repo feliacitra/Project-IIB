@@ -104,9 +104,45 @@ class MasterPeriodeController extends Controller
      * @param  \App\Models\MasterPeriode  $masterPeriode
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MasterPeriode $masterPeriode)
+    public function update(Request $request, int $id)
     {
-        //
+        $period = MasterPeriode::where('mpe_id', $id)->firstOrFail();
+
+        $rules = [
+            'editNamaPeriode' => 'required|max:255',
+            'editTanggalMulai' => 'required|date',
+            'editTanggalAkhir' => 'required|date',
+            'editKeteranganPeriode' => 'nullable',
+            'editStatusPeriode' => 'required',
+            
+        ];
+
+        if ($request->editNamaPeriode != $period->mpe_name)
+        {
+            $rules['editNamaPeriode'] = 'required|max:255|unique:master_periode,mpe_name';
+        }
+
+        $validatedData = $request->validate($rules, [
+            'required' => ':attribute tidak boleh kosong',
+            'unique' => ':attribute sudah digunakan',
+            'date' => ':attribute tidak valid',
+        ], [
+            'editNamaPeriode' => 'Nama periode',
+            'editTanggalMulai' => 'Tanggal mulai',
+            'editTanggalSelesai' => 'Tanggal akhir',
+            'editKeteranganPeriode' => 'Keterangan periode',
+            'editStatusPeriode' => 'Status periode',
+        ]);
+
+        MasterPeriode::where('mpe_id', $id)->update([
+            'mpe_name' => $validatedData['editNamaPeriode'],
+            'mpe_startdate' => $validatedData['editTanggalMulai'],
+            'mpe_enddate' => $validatedData['editTanggalAkhir'],
+            'mpe_description' => $validatedData['editKeteranganPeriode'],
+            'mpe_status' => $validatedData['editStatusPeriode'],
+        ]);
+
+        return redirect()->route('master.periode')->with('success', "Periode $period->mpe_name berhasil diperbarui");
     }
 
     /**

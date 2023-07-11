@@ -110,7 +110,14 @@
                             data-description="{{ $period->mpe_description }}"
                         ><i data-feather="eye"></i></a>
                         <!-- EDIT -->
-                        <a href="#editPeriod"><i data-feather="edit-2"></i></a>
+                        <a href="#editPeriod"
+                            data-id="{{ $period->mpe_id }}"
+                            data-name="{{ $period->mpe_name }}"
+                            data-startdate="{{ $period->mpe_startdate }}"
+                            data-enddate="{{ $period->mpe_enddate }}"
+                            data-status="{{ $period->mpe_status }}"
+                            data-description="{{ $period->mpe_description }}"
+                        ><i data-feather="edit-2"></i></a>
                         <!-- DELETE -->
                         <a href="#deletePeriod"><i data-feather="trash-2"></i></a>
                     </td>
@@ -302,51 +309,53 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
-                        <form>
+                        <form action="/master/periode" method="POST" id="editForm">
+                            @csrf
+                            @method('PUT')
                             <!-- Nama Periode -->
                             <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="namaPeriode" class="col-sm-3">Nama Periode</label>
+                                <label for="editNamaPeriode" class="col-sm-3">Nama Periode</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="namaPeriode" placeholder="Nama Periode" value="Period Name">
+                                    <input type="text" class="form-control" id="editNamaPeriode" name="editNamaPeriode" placeholder="Nama Periode"required>
                                 </div>
                             </div>
                             <!-- Nama Periode -->
 
                             <!-- Tanggal Mulai -->
                             <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="tanggalMulai" class="col-sm-3">Tanggal Mulai</label>
+                                <label for="editTanggalMulai" class="col-sm-3">Tanggal Mulai</label>
                                 <div class="col-sm-9">
-                                    <input type="date" class="form-control" id="tangalMulai">
+                                    <input type="date" class="form-control" id="editTanggalMulai" name="editTanggalMulai">
                                 </div>
                             </div>
                             <!-- Tanggal Mulai -->
 
                             <!-- Tanggal Akhir -->
                             <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="tanggalAkhir" class="col-sm-3">Tanggal Akhir</label>
+                                <label for="editTanggalAkhir" class="col-sm-3">Tanggal Akhir</label>
                                 <div class="col-sm-9">
-                                    <input type="date" class="form-control" id="tangalAkhir">
+                                    <input type="date" class="form-control" id="editTanggalAkhir" name="editTanggalAkhir">
                                 </div>
                             </div>
                             <!-- Tanggal Akhir -->
 
                             <!-- Keterangan -->
                             <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="tanggalAkhir" class="col-sm-3">Keterangan</label>
+                                <label for="editKeteranganPeriode" class="col-sm-3">Keterangan</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" id="keteranganPeriode" cols="20" rows="5" placeholder="Keterangan">lorem ipsum</textarea>
+                                    <textarea class="form-control" id="editKeteranganPeriode" name="editKeteranganPeriode" cols="20" rows="5" placeholder="Keterangan"></textarea>
                                 </div>
                             </div>
                             <!-- Keterangan -->
 
                             <!-- Status -->
                             <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="statusPeriode" class="col-sm-3">Status</label>
+                                <label for="editStatusPeriode" class="col-sm-3">Status</label>
                                 <div class="col-sm-9">
-                                    <select name="statusPeriose" id="status" class="form-control form-select">
+                                    <select id="editStatusPeriode" name="editStatusPeriode" class="form-control form-select">
                                         <option value="" class="text-muted">Pilih status</option>
-                                        <option value="AKTIF">AKTIF</option>
-                                        <option value="TIDAK AKTIF">TIDAK AKTIF</option>
+                                        <option value="1">AKTIF</option>
+                                        <option value="0">TIDAK AKTIF</option>
                                     </select>
                                 </div>
                             </div>
@@ -355,7 +364,7 @@
                             <div class="row mt-4">
                                 <!--Button Perbarui -->
                                 <div class="col">
-                                    <button id="saveEdit" class="btn btn-primary">
+                                    <button type="submit" id="saveEdit" class="btn btn-primary">
                                         Perbarui
                                     </button>
                                 </div>
@@ -423,6 +432,29 @@
             document.getElementById('viewTanggalAkhir').value = enddate;
         });
     });
+
+    const editLinks = document.querySelectorAll('a[href="#editPeriod"]');
+    
+    editLinks.forEach(link => {
+        link.addEventListener('click', event => {
+
+            const id = link.dataset.id;
+            const name = link.dataset.name;
+            const description = link.dataset.description;
+            const status = link.dataset.status;
+            const startdate = link.dataset.startdate;
+            const enddate = link.dataset.enddate;
+
+            document.getElementById('editNamaPeriode').value = name;
+            document.getElementById('editKeteranganPeriode').value = description;
+            document.getElementById('editStatusPeriode').value = status;
+            document.getElementById('editTanggalMulai').value = startdate;
+            document.getElementById('editTanggalAkhir').value = enddate;
+
+            editForm.action = `/master/periode/${id}`;
+        });
+    });
+
 </script>
 
 @endsection
