@@ -76,6 +76,18 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Master-Civitas.listCivitas');
     })->name('civitas');
 
+    Route::resource('/master/civitas', MasterCivitasController::class)->names([
+        'index' => 'master.civitas',
+    ])->except(['show', 'edit', 'create']);
+
+    Route::resource('/master/inkubasi', MasterProgramInkubasiController::class)->names([
+        'index' => 'master.inkubasi',
+    ])->except(['show', 'edit', 'create']);
+
+    Route::resource('/master/kategori/startup', MasterCategoryController::class)->names([
+        'index' => 'master.kategori.startup',
+    ])->except(['show', 'edit', 'create']);
+
     // Route::get('/master/universitas', function() {
     //     return view('Master-Universitas.listUniversitas');
     // })->name('universitas');

@@ -129,13 +129,13 @@ class MasterCivitasController extends Controller
      */
     public function destroy(int $id)
     {
-        $hasCivitas = MasterMember::where('mci_id', $id)->exists();
+        // $hasCivitas = MasterMember::where('mci_id', $id)->exists();
         $civitas = MasterCivitas::where('mci_id', $id)->firstOrFail();
         $name = $civitas->mci_name;
 
-        if ($hasCivitas){
-            return redirect()->route('master.civitas')->with('error', "Civitas $name tidak dapat dihapus karena terdapat pengguna yang terdaftar di civitas tersebut");
-        }
+        // if ($hasCivitas){
+        //     return redirect()->route('master.civitas')->with('error', "Civitas $name tidak dapat dihapus karena terdapat pengguna yang terdaftar di civitas tersebut");
+        // }
         
         MasterCivitas::where('mci_id', $id)->delete();
 
