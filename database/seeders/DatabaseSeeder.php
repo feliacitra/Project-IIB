@@ -116,7 +116,5 @@ class DatabaseSeeder extends Seeder
         foreach ($features as $feature) {
             $role->features()->attach($feature->id);
         }
-        $this->call(MasterCivitasSeeder::class);
-        MasterMember::factory()->count(5)->create();
     }
 }
