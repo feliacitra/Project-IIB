@@ -20,8 +20,8 @@
 
     <!-- Button Tambah -->
     <div class="pb-2" style="display: flex; justify-content: flex-end;">
-        <a href="#addUniversity" class="button btn-primary">
-            <button id="openAddUniversity" class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
+        <a href="#addPeriod" class="button btn-primary">
+            <button id="openAdd" class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
                 <i data-feather="plus" style="margin-right: 0.3rem;"></i>
                 TAMBAH
             </button>
@@ -74,11 +74,11 @@
                     <td class="text-center">AKTIF</td>
                     <td class="text-center">
                         <!-- VIEW -->
-                        <a href="#viewUniversity"><i data-feather="eye"></i></a>
+                        <a href="#viewPeriod"><i data-feather="eye"></i></a>
                         <!-- EDIT -->
-                        <a href="#editUniversity"><i data-feather="edit-2"></i></a>
+                        <a href="#editPeriod"><i data-feather="edit-2"></i></a>
                         <!-- DELETE -->
-                        <a href="#deleteUniversity"><i data-feather="trash-2"></i></a>
+                        <a href="#deletePeriod"><i data-feather="trash-2"></i></a>
                     </td>
                 </tr>
             </tbody>
@@ -89,7 +89,7 @@
 
 <!-- POP-UP TAMBAH, VIEW, EDIT -->
     <!-- TAMBAH -->
-    <div class="overlay" id="addUniversity">
+    <div class="overlay" id="addPeriod">
         <div class="wrapper">
             <div class="row align-items-center">
                 <div class="col col-lg-9 col-md-8">
@@ -178,7 +178,7 @@
     <!-- TAMBAH -->
 
     <!-- VIEW -->
-    <div class="overlay" id="viewUniversity">
+    <div class="overlay" id="viewPeriod">
         <div class="wrapper">
             <div class="row align-items-center">
                 <div class="col col-lg-9 col-md-8">
@@ -255,7 +255,7 @@
     <!-- VIEW -->
 
     <!-- EDIT -->
-    <div class="overlay" id="editUniversity">
+    <div class="overlay" id="editPeriod">
         <div class="wrapper">
             <div class="row align-items-center">
                 <div class="col col-lg-9 col-md-8">
@@ -344,7 +344,7 @@
     <!-- EDIT -->
 
     <!-- DELETE -->
-    <div class="overlay" id="deleteUniversity">
+    <div class="overlay" id="deletePeriod">
         <div class="wrapper" style="width: 25%">
             <div class="content">
                 <p class="text-center">
