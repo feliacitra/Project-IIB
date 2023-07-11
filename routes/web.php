@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\MasterCivitasController;
 use App\Http\Controllers\MasterPenggunaController;
+use App\Http\Controllers\MasterPeriodeController;
 use App\Http\Controllers\MasterProgramInkubasiController;
 use App\Http\Controllers\MasterCategoryController;
 use App\Models\MasterCategory;
@@ -72,6 +73,10 @@ Route::middleware(['auth', 'access'])->group(function () {
         'index' => 'master.civitas',
     ])->except(['show', 'edit', 'create']);
 
+    Route::resource('/master/periode', MasterPeriodeController::class)->names([
+        'index' => 'master.periode',
+    ])->except(['show', 'edit', 'create']);
+
     // Route::get('/master/inkubasi', function() {
     //     $master_programinkubasi = DB::table('master_programinkubasi')->get();
     //     return view('Master-ProgramInkubasi.listProgramInkubasi',['master_programinkubasi'=>$master_programinkubasi]);
@@ -84,14 +89,6 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::resource('/master/kategori/startup', MasterCategoryController::class)->names([
         'index' => 'master.kategori.startup',
     ])->except(['show', 'edit', 'create']);
-
-    Route::get('/master/registrationperiod', function() {
-        return view('Master-PeriodePendaftaran.listPeriodePendaftaran');
-    })->name('registrationperiod');
-
-    // Route::get('/master/civitas', function() {
-    //     return view('Master-Civitas.listCivitas');
-    // })->name('civitas');
 });
 
 

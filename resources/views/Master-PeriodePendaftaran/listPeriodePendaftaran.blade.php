@@ -1,5 +1,6 @@
 @extends('layouts.back.app')
 @section('content')
+
     <style>
         .table thead th {
             color: black;
@@ -48,6 +49,20 @@
     </div>
     <!-- Search Bar -->
 
+    <!-- Flash Message -->
+    @if (Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get('success') }}
+            <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @elseif ($errors->any())
+    <div class="alert alert-danger">
+        {{ $errors->first() }}
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+    <!-- Flash Message -->
+
     <!-- Users Table -->
     <div class="table-responsive-md">
         <table class="table">
@@ -66,12 +81,18 @@
 
             <!-- Table Body -->
             <tbody>
+                <?php
+                    use Carbon\Carbon;
+                    setlocale(LC_TIME, 'id_ID');
+                    Carbon::setLocale('id');
+                ?>
+                @foreach ($periods as $period)
                 <tr>
-                    <th scope="row" class="text-center">1</th>
-                    <td>Tahun 2023</td>
-                    <td>08 Januari 2023</td>
-                    <td>01 April 2023</td>
-                    <td class="text-center">AKTIF</td>
+                    <th scope="row" class="text-center">{{ $loop->iteration }}</th>
+                    <td>{{ $period->mpe_name }}</td>
+                    <td>{{ Carbon::parse($period->mpe_startdate)->isoFormat('D MMMM Y') }}</td>
+                    <td>{{ Carbon::parse($period->mpe_enddate)->isoFormat('D MMMM Y') }}</td>
+                    <td class="text-center">{{ $period->mpe_status == 0 ? 'TIDAK AKTIF' : ($period->mpe_status == 1 ? 'AKTIF' : 'INVALID') }}</td>
                     <td class="text-center">
                         <!-- VIEW -->
                         <a href="#viewPeriod"><i data-feather="eye"></i></a>
@@ -81,6 +102,7 @@
                         <a href="#deletePeriod"><i data-feather="trash-2"></i></a>
                     </td>
                 </tr>
+                @endforeach
             </tbody>
             <!-- Table Body -->
         </table>
