@@ -77,21 +77,6 @@ Route::middleware(['auth', 'access'])->group(function () {
     //     return view('Master-ProgramInkubasi.listProgramInkubasi',['master_programinkubasi'=>$master_programinkubasi]);
     // })->name('incubationProgram');
 
-    Route::get('/master/civitas', function() {
-        return view('Master-Civitas.listCivitas');
-    })->name('civitas');
-
-    Route::get('/master/university', function() {
-        return view('Master-Universitas.listUniversitas');
-    })->name('university');
-
-    Route::get('/master/faculty', function() {
-        return view('Master-Fakultas.listFakultas');
-    })->name('faculty');
-
-    Route::get('/master/studyprogram', function() {
-        return view('Master-ProgramStudi.listProdi');
-    })->name('studyprogram');
     Route::resource('/master/inkubasi', MasterProgramInkubasiController::class)->names([
         'index' => 'master.inkubasi',
     ])->except(['show', 'edit', 'create']);
@@ -99,6 +84,10 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::resource('/master/kategori/startup', MasterCategoryController::class)->names([
         'index' => 'master.kategori.startup',
     ])->except(['show', 'edit', 'create']);
+
+    Route::get('/master/registrationperiod', function() {
+        return view('Master-PeriodePendaftaran.listPeriodePendaftaran');
+    })->name('registrationperiod');
 
     // Route::get('/master/civitas', function() {
     //     return view('Master-Civitas.listCivitas');
