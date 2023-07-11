@@ -31,6 +31,6 @@ class MasterFakultas extends Migration
     public function down()
     {
         //
-        Schema::dropIfExist('master_fakultas');
+        Schema::dropIfExists('master_fakultas');
     }
 }
