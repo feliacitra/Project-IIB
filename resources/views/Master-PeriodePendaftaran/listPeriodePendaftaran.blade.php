@@ -102,7 +102,13 @@
                     <td class="text-center">{{ $period->mpe_status == 0 ? 'TIDAK AKTIF' : ($period->mpe_status == 1 ? 'AKTIF' : 'INVALID') }}</td>
                     <td class="text-center">
                         <!-- VIEW -->
-                        <a href="#viewPeriod"><i data-feather="eye"></i></a>
+                        <a href="#viewPeriod"
+                            data-name="{{ $period->mpe_name }}"
+                            data-startdate="{{ Carbon::parse($period->mpe_startdate)->isoFormat('D MMMM Y') }}"
+                            data-enddate="{{ Carbon::parse($period->mpe_enddate)->isoFormat('D MMMM Y') }}"
+                            data-status="{{ $period->mpe_status == 0 ? 'TIDAK AKTIF' : ($period->mpe_status == 1 ? 'AKTIF' : 'INVALID') }}"
+                            data-description="{{ $period->mpe_description }}"
+                        ><i data-feather="eye"></i></a>
                         <!-- EDIT -->
                         <a href="#editPeriod"><i data-feather="edit-2"></i></a>
                         <!-- DELETE -->
@@ -225,49 +231,45 @@
                     <div>
                         <!-- Nama Periode -->
                         <div class="form-group row align-items-center" style="margin-top: 1rem">
-                            <label for="namaPeriode" class="col-sm-3">Nama Periode</label>
+                            <label for="viewNamaPeriode" class="col-sm-3">Nama Periode</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="namaPeriode" placeholder="Nama Periode" readonly>
+                                <input type="text" class="form-control" id="viewNamaPeriode" name="viewNamaPeriode" placeholder="Nama Periode" readonly>
                             </div>
                         </div>
                         <!-- Nama Periode -->
 
                         <!-- Tanggal Mulai -->
                         <div class="form-group row align-items-center" style="margin-top: 1rem">
-                            <label for="tanggalMulai" class="col-sm-3">Tanggal Mulai</label>
+                            <label for="viewTanggalMulai" class="col-sm-3">Tanggal Mulai</label>
                             <div class="col-sm-9">
-                                <input type="date" class="form-control" id="tangalMulai" readonly>
+                                <input type="text" class="form-control" id="viewTanggalMulai" name="viewTanggalMulai" placeholder="Tanggal Mulai" readonly>
                             </div>
                         </div>
                         <!-- Tanggal Mulai -->
 
                         <!-- Tanggal Akhir -->
                         <div class="form-group row align-items-center" style="margin-top: 1rem">
-                            <label for="tanggalAkhir" class="col-sm-3">Tanggal Akhir</label>
+                            <label for="viewTanggalAkhir" class="col-sm-3">Tanggal Akhir</label>
                             <div class="col-sm-9">
-                                <input type="date" class="form-control" id="tangalAkhir" readonly>
+                                <input type="text" class="form-control" id="viewTanggalAkhir" name="viewTanggalAkhir" placeholder="Tanggal Akhir" readonly>
                             </div>
                         </div>
                         <!-- Tanggal Akhir -->
 
                         <!-- Keterangan -->
                         <div class="form-group row align-items-center" style="margin-top: 1rem">
-                            <label for="tanggalAkhir" class="col-sm-3">Keterangan</label>
+                            <label for="viewKeteranganPeriode" class="col-sm-3">Keterangan</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" id="keteranganPeriode" cols="20" rows="5" placeholder="Keterangan" readonly></textarea>
+                                <textarea class="form-control" id="viewKeteranganPeriode" name="viewKeteranganPeriode" cols="20" rows="5" placeholder="Keterangan" readonly></textarea>
                             </div>
                         </div>
                         <!-- Keterangan -->
 
                         <!-- Status -->
                         <div class="form-group row align-items-center" style="margin-top: 1rem">
-                            <label for="statusPeriode" class="col-sm-3">Status</label>
+                            <label for="viewStatusPeriode" class="col-sm-3">Status</label>
                             <div class="col-sm-9">
-                                <select name="statusPeriose" id="status" class="form-control form-select" disabled>
-                                    <option value="" class="text-muted">Pilih status</option>
-                                    <option value="AKTIF">AKTIF</option>
-                                    <option value="TIDAK AKTIF">TIDAK AKTIF</option>
-                                </select>
+                                <input type="text" class="form-control" id="viewStatusPeriode" name="viewStatusPeriode" placeholder="Tanggal Akhir" readonly>
                             </div>
                         </div>
                         <!-- Status -->
@@ -401,5 +403,26 @@
     </div>
     <!-- DELETE -->
 <!-- POP-UP TAMBAH, VIEW, EDIT -->
+
+<script>
+    const viewLinks = document.querySelectorAll('a[href="#viewPeriod"]');
+    
+    viewLinks.forEach(link => {
+        link.addEventListener('click', event => {
+
+            const name = link.dataset.name;
+            const description = link.dataset.description;
+            const status = link.dataset.status;
+            const startdate = link.dataset.startdate;
+            const enddate = link.dataset.enddate;
+
+            document.getElementById('viewNamaPeriode').value = name;
+            document.getElementById('viewKeteranganPeriode').value = description;
+            document.getElementById('viewStatusPeriode').value = status;
+            document.getElementById('viewTanggalMulai').value = startdate;
+            document.getElementById('viewTanggalAkhir').value = enddate;
+        });
+    });
+</script>
 
 @endsection
