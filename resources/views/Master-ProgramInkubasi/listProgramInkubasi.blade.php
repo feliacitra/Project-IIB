@@ -21,14 +21,16 @@
     </div>
 
     <!-- Button Tambah -->
-    <div class="pb-2" style="display: flex; justify-content: flex-end;">
-        <a href="#addIncubationProgram" class="button btn-primary">
-            <button id="openAddProgram" class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
-                <i data-feather="plus" style="margin-right: 0.3rem;"></i>
-                TAMBAH
-            </button>
-        </a>
-    </div>
+    @if (isFeatureInclude('program-inkubasi-tambah', session('features')))
+        <div class="pb-2" style="display: flex; justify-content: flex-end;">
+            <a href="#addIncubationProgram" class="button btn-primary">
+                <button id="openAddProgram" class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
+                    <i data-feather="plus" style="margin-right: 0.3rem;"></i>
+                    TAMBAH
+                </button>
+            </a>
+        </div>
+    @endif
     <!-- Button Tambah -->
 
     <!-- Search Bar -->
@@ -90,11 +92,17 @@
                     <td class="text-center">{{ $mpi->mpi_type }}</td>
                     <td class="text-center">
                         <!-- VIEW -->
-                        <a href="#viewIncubationProgram" data-name="{{ $mpi->mpi_name }}" data-description="{{ $mpi->mpi_description }}" data-type="{{ $mpi->mpi_type }}" class="lihat"><i data-feather="eye"></i></a>
+                        @if (isFeatureInclude('program-inkubasi-lihat', session('features')))
+                            <a href="#viewIncubationProgram" data-name="{{ $mpi->mpi_name }}" data-description="{{ $mpi->mpi_description }}" data-type="{{ $mpi->mpi_type }}" class="lihat"><i data-feather="eye"></i></a>
+                        @endif
                         <!-- EDIT -->
-                        <a href="#editIncubationProgram" data-id="{{ $mpi->mpi_id }}" data-name="{{ $mpi->mpi_name }}" data-description="{{ $mpi->mpi_description }}" data-type="{{ $mpi->mpi_type }}"><i data-feather="edit-2"></i></a>
+                        @if (isFeatureInclude('program-inkubasi-ubah', session('features')))
+                            <a href="#editIncubationProgram" data-id="{{ $mpi->mpi_id }}" data-name="{{ $mpi->mpi_name }}" data-description="{{ $mpi->mpi_description }}" data-type="{{ $mpi->mpi_type }}"><i data-feather="edit-2"></i></a>
+                        @endif
                         <!-- DELETE -->
-                        <a href="#deleteIncubationProgram" data-id="{{ $mpi->mpi_id }}"><i data-feather="trash-2"></i></a>
+                        @if (isFeatureInclude('program-inkubasi-hapus', session('features')))
+                            <a href="#deleteIncubationProgram" data-id="{{ $mpi->mpi_id }}"><i data-feather="trash-2"></i></a>
+                        @endif
                     </td>
                 </tr>
                 @endforeach

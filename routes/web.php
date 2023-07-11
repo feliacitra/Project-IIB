@@ -40,9 +40,9 @@ Route::get('/admin', function() {
 //     return view('changepassword');
 // })->middleware(['auth'])->name('change-password');
 
-Route::get('/masteruser', function () {
-    return view('masterpengguna.masteruser');
-})->name('masteruser');
+// Route::get('/masteruser', function () {
+//     return view('masterpengguna.masteruser');
+// })->name('masteruser');
 
 Route::post('/register',[RegisteredUserController::class, 'store']) ->name('register');
 
