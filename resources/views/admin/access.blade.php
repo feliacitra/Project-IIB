@@ -36,6 +36,7 @@
                         <div class="mb-3">
                             <select class="form-select" name="role" id="role-select">
                                 <option selected disabled>User Role</option>
+                                <option value="1">Admin</option>
                                 <option value="2">Peserta</option>
                                 <option value="3">Penilai</option>
                                 <option value="4">Pemateri</option>
@@ -167,6 +168,64 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr>
+                            <th>4</th>
+                            <td>Master Civitas</td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="civitas[]" class="form-check-input check-civitas" value="civitas-tambah">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="civitas[]" class="form-check-input check-civitas" value="civitas-ubah">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="civitas[]" class="form-check-input check-civitas" value="civitas-hapus">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="civitas[]" class="form-check-input check-civitas" value="civitas-lihat">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input check-civitas" id="civitas">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>5</th>
+                            <td>Master Universitas</td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="universitas[]" class="form-check-input check-universitas" value="universitas-tambah">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="universitas[]" class="form-check-input check-universitas" value="universitas-ubah">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="universitas[]" class="form-check-input check-universitas" value="universitas-hapus">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="universitas[]" class="form-check-input check-universitas" value="universitas-lihat">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input check-universitas" id="universitas">
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -196,6 +255,20 @@
 
             var isChecked = $(this).prop('checked');
             $('.check-kategori-startup').prop('checked', isChecked);
+        });
+
+        $('#civitas').change(function() {
+            event.preventDefault(); // Prevent default click behavior
+
+            var isChecked = $(this).prop('checked');
+            $('.check-civitas').prop('checked', isChecked);
+        });
+
+        $('#universitas').change(function() {
+            event.preventDefault(); // Prevent default click behavior
+
+            var isChecked = $(this).prop('checked');
+            $('.check-universitas').prop('checked', isChecked);
         });
 
         $('#role-select').change(function() {

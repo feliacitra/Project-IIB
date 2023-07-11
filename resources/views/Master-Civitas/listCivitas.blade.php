@@ -34,9 +34,9 @@
         <div class="pb-2">
             <div class="input-group rounded">
                 <!-- Input Form -->
-                <form action="" class="position-relative">
+                <form action="/master/civitas" class="position-relative">
                     
-                    <input type="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
+                    <input type="text" name="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
                     
                     <span class="position-absolute" style="top: 50%; left: 0.5rem; transform: translateY(-50%);">
                         <i data-feather="search"></i>
@@ -48,9 +48,30 @@
     </div>
     <!-- Search Bar -->
 
+    <!-- Flash Message -->
+    @if (Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get('success') }}
+            <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @elseif (Session::has('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ Session::get('error') }}
+            <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        {{ $errors->first() }}
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+    <!-- Flash Message -->
+
     <!-- Users Table -->
     <div class="table-responsive-md">
-        <table class="table">
+        <table class="table" id="datatable">
             <!-- Table Head -->
             <thead class="text-center" style="background-color: #f5f5f5">
                 <tr>
@@ -64,19 +85,23 @@
 
             <!-- Table Body -->
             <tbody>
+            @foreach ($civitas as $civ)
+                
                 <tr>
-                    <th scope="row" class="text-center">1</th>
-                    <td>Mahasiswa</td>
-                    <td>Mahasiswa lorem ipsum</td>
+                    <th scope="row" class="text-center">{{ $loop->iteration }}</th>
+                    <td>{{ $civ->mci_name }}</td>
+                    <td>{{ $civ->mci_description }}</td>
                     <td class="text-center">
                         <!-- VIEW -->
-                        <a href="#viewCivitas"><i data-feather="eye"></i></a>
+                        <a href="#viewCivitas" data-name="{{ $civ->mci_name }}" data-description="{{ $civ->mci_description }}"><i data-feather="eye"></i></a>
                         <!-- EDIT -->
-                        <a href="#editCivitas"><i data-feather="edit-2"></i></a>
+                        <a href="#editCivitas" data-id="{{ $civ->mci_id }}" data-name="{{ $civ->mci_name }}" data-description="{{ $civ->mci_description }}"><i data-feather="edit-2"></i></a>
                         <!-- DELETE -->
-                        <a href="#deleteCivitas"><i data-feather="trash-2"></i></a>
+                        <a href="#deleteCivitas" data-id="{{ $civ->mci_id }}"><i data-feather="trash-2"></i></a>
                     </td>
                 </tr>
+
+            @endforeach
             </tbody>
             <!-- Table Body -->
         </table>
@@ -100,19 +125,20 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
-                        <form>
+                        <form action="/master/civitas" method="POST">
+                            @csrf
                             <!-- Input Nama civitas -->
-                            <input type="text" class="form-control rounded" id="namaCivitas" placeholder="Nama Civitas" style="margin-top: 1rem; width: 100%">
+                            <input type="text" class="form-control rounded" id="addNamaCivitas" name="addNamaCivitas" placeholder="Nama Civitas" style="margin-top: 1rem; width: 100%">
                             <!-- Input Nama civitas -->
 
                             <!-- Input Keterangan Civitas -->
-                            <textarea class="form-control rounded" id="keteranganCivitas" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem"></textarea>
+                            <textarea class="form-control rounded" id="addKeteranganCivitas" name="addKeteranganCivitas" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem"></textarea>
                             <!-- Input Keterangan Civitas -->
 
                             <div class="row mt-4">
                                 <!--Button Simpan -->
                                 <div class="col">
-                                    <button id="simpanTambah" class="btn btn-primary">
+                                    <button type="submit" id="simpanTambah" class="btn btn-primary">
                                         Simpan
                                     </button>
                                 </div>
@@ -149,18 +175,11 @@
                 <div class="container-fluid p-0">
                     <div>
                         <!-- View Nama Civitas -->
-                        <input 
-                        type="text" 
-                        class="form-control rounded" 
-                        id="namaCivitas" 
-                        placeholder="Nama Civitas" 
-                        style="margin-top: 1rem; width: 100%"
-                        value="Current Civitas Name"
-                        readonly>
+                        <input type="text" class="form-control rounded" id="showNamaCivitas" placeholder="Nama Civitas" style="margin-top: 1rem; width: 100%" readonly>
                         <!-- View Nama Civitas -->
 
                         <!-- View Keterangan Civitas -->
-                        <textarea class="form-control rounded" id="keteranganCivitas" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;" readonly>Current keterangan civitas.</textarea>
+                        <textarea class="form-control rounded" id="showKeteranganCivitas" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;"></textarea>
                         <!-- View Keterangan Civitas -->
 
                         <!--Button Kembali -->
@@ -191,35 +210,38 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
-                        <form>
+                        <form action="/master/civitas/" method="POST" id="editForm">
+
+                            @csrf
+                            @method('PUT')
                             <!-- Edit Nama Civitas -->
-                            <input 
-                                type="text" 
-                                class="form-control rounded" 
-                                id="namaCivitas" 
-                                placeholder="Nama Civitas" 
-                                style="margin-top: 1rem; width: 100%"
-                                value="Current Civitas Name">
+                            <div class="form-group">
+                                <label style="margin-top: 1rem;">Nama Civitas</label>
+                                <input type="text" class="form-control rounded" id="editNamaCivitas" name="editNamaCivitas" placeholder="Nama Civitas" style="margin-top: 1rem; width: 100%">
+                            </div>
                             <!-- Edit Nama Civitas -->
 
                             <!-- Edit Keterangan Civitas -->
-                            <textarea class="form-control rounded" id="deskripsiCivitas" cols="20" rows="10" placeholder="Deskripsi" style="margin-top: 1rem;">Current program description.</textarea>
+                            <div class="form-group">
+                                <label style="margin-top: 1rem;">Keterangan</label>
+                                <textarea class="form-control rounded" id="editKeteranganCivitas" name="editKeteranganCivitas" cols="20" rows="10" placeholder="Deskripsi" style="margin-top: 1rem;"></textarea>
+                            </div>
                             <!-- Edit Keterangan Civitas -->
 
                             <div class="row mt-4">
                                 <!--Button Perbarui -->
                                 <div class="col">
-                                    <button id="saveEdit" class="btn btn-primary">
+                                    <button type="submit" id="saveEdit" class="btn btn-primary">
                                         Perbarui
                                     </button>
                                 </div>
                                 <!--Button Perbarui -->
 
-                                <!--Button Kembali -->
+                                <!--Button Back -->
                                 <div class="col d-flex justify-content-end">
                                     <a href="#" class="button-link">Kembali</a>
                                 </div>
-                                <!--Button Kembali -->
+                                <!--Button Back -->
                             </div>
                         </form>
                     </div>
@@ -232,15 +254,20 @@
     <!-- DELETE -->
     <div class="overlay" id="deleteCivitas">
         <div class="wrapper" style="width: 25%">
+            <form action="/master/civitas/" method="POST" id="deleteForm">
+            @csrf
+            @method('DELETE')
             <div class="content">
                 <p class="text-center">
                     Hapus civitas?
                 </p>
 
+                <input type="hidden" name="_method" value="DELETE">
+
                 <div class="row mt-4">
                     <!--Button Ya -->
                     <div class="col">
-                        <button id="delete" class="btn btn-primary" style="width: 50%">
+                        <button type="submit" id="delete" class="btn btn-primary" style="width: 50%">
                             Ya
                         </button>
                     </div>
@@ -253,10 +280,52 @@
                     <!--Button Tidak -->
                 </div>
             </div>
+            </form>
         </div>
     </div>
     <!-- DELETE -->
     <!-- POP-UP TAMBAH, VIEW, EDIT -->
 
+    <script>
+        const viewLinks = document.querySelectorAll('a[href="#viewCivitas"]');
     
+        viewLinks.forEach(link => {
+            link.addEventListener('click', event => {
+    
+                const name = link.dataset.name;
+                const description = link.dataset.description;
+    
+                document.getElementById('showNamaCivitas').value = name;
+                document.getElementById('showKeteranganCivitas').value = description;
+            });
+        });
+
+        const editLinks = document.querySelectorAll('a[href="#editCivitas"]');
+    
+        editLinks.forEach(link => {
+            link.addEventListener('click', event => {
+    
+                const id = link.dataset.id;
+                const name = link.dataset.name;
+                const description = link.dataset.description;
+    
+                document.getElementById('editNamaCivitas').value = name;
+                document.getElementById('editKeteranganCivitas').value = description;
+
+                editForm.action = `/master/civitas/${id}`;
+            });
+        });
+        
+        const deleteLinks = document.querySelectorAll('a[href="#deleteCivitas"]');
+
+        deleteLinks.forEach(link => {
+            link.addEventListener('click', event => {
+                const id = link.dataset.id;
+
+                deleteForm.action = `/master/civitas/${id}`;
+            })
+        })
+
+    </script>
+
 @endsection

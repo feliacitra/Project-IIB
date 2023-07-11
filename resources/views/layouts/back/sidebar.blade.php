@@ -1,12 +1,16 @@
 <!-- partial:partials/_sidebar.html -->
 <nav class="sidebar">
     <div class="sidebar-header">
-        <img class="sidebar-brand-image" src="{{ asset('back/images/logo/main_logo.png') }}" alt="main_logo" width="45%">
-        <div class="sidebar-toggler not-active">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+        <a href="/dashboard">
+            <img class="sidebar-brand-image" src="{{ asset('back/images/logo/main_logo.png') }}" alt="main_logo" width="55%"/>
+        </a>
+        <a>
+            <div class="sidebar-toggler active">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </a>
     </div>
     <div class="sidebar-body">
         <ul class="nav">
@@ -14,76 +18,108 @@
                 <li class="nav-item nav-category">Dashboard</li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
+                        <i class="link-icon" data-feather="monitor"></i>
                         <span class="link-title">Dashboard Startup</span>
                     </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
+                        <i class="link-icon" data-feather="bar-chart-2"></i>
                         <span class="link-title">Dashboard Monev 1</span>
-                    </a>
+                    </a>    
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
+                        <i class="link-icon" data-feather="bar-chart"></i>
                         <span class="link-title">Dashboard Monev 2</span>
                     </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
+                        <i class="link-icon" data-feather="trending-up"></i>
                         <span class="link-title">Dashboard WRAP</span>
                     </a>
                 </li>
                 <li class="nav-item nav-category">Data Master</li>
                 <li class="nav-item">
                     <a href="{{ route('master.pengguna') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Pengguna</span>
+                        <i class="fa fa-users"></i>
+                        <span style="margin-left:12px">Master Pengguna</span>
                     </a>
-                    <a href="{{ route('incubationProgram') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Program Inkubasi</span>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('master.inkubasi') }}" class="nav-link">
+                        <i class="fa fa-sitemap"></i>
+                        <span style="margin-left:12px">Master Program Inkubasi</span>
                     </a>
-                    <a href="{{ route('startupcategory') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Kategori Startup</span>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('master.kategori.startup') }}" class="nav-link">
+                        <i class="fa fa-rocket"></i>
+                        <span style="margin-left:15px">Master Kategori Startup</span>
                     </a>
-                    <a href="{{ route('civitas') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Civitas</span>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('master.civitas') }}" class="nav-link">
+                        <i class="fa fa-address-card"></i>
+                        <span style="margin-left:14px">Master Civitas</span>
                     </a>
-                    <a href="{{ route('university') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Universitas</span>
-                    </a>
-                    <a href="{{ route('faculty') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Fakultas</span>
-                    </a>
-                    <a href="{{ route('studyprogram') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Program Studi</span>
-                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
+                        <i class="fa fa-building"></i>
+                        <span style="margin-left:17px">Master Universitas</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="fa fa-university"></i>
+                        <span style="margin-left:16px">Master Fakultas</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="fa fa-graduation-cap"></i>
+                        <span style="margin-left:13px">Master Program Studi</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('dashboard') }}" class="nav-link">
+                        <i class="link-icon" data-feather="calendar"></i>
                         <span class="link-title">Master Periode Pendaftaran</span>
                     </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Komponen Penilaian</span>
+                        <i class="fa fa-check"></i>
+                        <span style="margin-left:17px">Master Komponen Penilaian</span>
                     </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Tema Bootcamp</span>
                     </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Feedback</span>
                     </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Konten Monev</span>
                     </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Mata Kuliah</span>
                     </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Index Nilai Matkul</span>
@@ -92,8 +128,8 @@
                 <li class="nav-item nav-category">Hak Akses</li>
                 <li class="nav-item">
                     <a href="{{ route('access.index') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Hak Akses</span>
+                        <i class="fa fa-cogs"></i>
+                        <span style="margin-left:15px">Hak Akses</span>
                     </a>
                 </li>
                 {{-- @foreach (get_access() as $feature)
@@ -101,13 +137,50 @@
                 @endforeach --}}
                 {{-- <li class="nav-item nav-category">{{ auth()->user()->role }}</li> --}}
 
+            {{-- @elseif ( auth()->user()->role == '2' ) --}}
             @else
-            <li class="nav-item nav-category">Data Master</li>
+            {{-- <li class="nav-item nav-category">Data Master</li> --}}
             <li class="nav-item">
-                @foreach (get_menu() as $menu)
-                    {!! $menu !!}
-                @endforeach
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Dashboard</span>
+                </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Profil Startup</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Voting Jadwal Mentoring</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Jadwal Mentoring</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Jadwal Bootcamp</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Sertifikat Monev</span>
+                </a>
+            </li>
+            @foreach (get_menu() as $menu)
+            <li class="nav-item">
+                {!! $menu !!}
+            </li>
+            @endforeach
                 {{-- <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>

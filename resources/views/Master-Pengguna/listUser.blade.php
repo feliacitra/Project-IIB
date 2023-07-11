@@ -12,21 +12,21 @@
     <div class="pb-4">
         <p style="display: flex; align-items: flex-end;">
             <!-- Home button -->
-            <a href="/dashboard"><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
+            <a href="/dashboard"><i data-feather="home" style="margin-right: 0.5rem;"></i></a>
             <!-- Home button -->
             Master Pengguna
         </p>
     </div>
 
     <!-- Button Tambah -->
-    @if (isFeatureInside('pengguna-tambah', $features))    
+    @if (isFeatureInside('pengguna-tambah', $features))
     <div class="pb-2" style="display: flex; justify-content: flex-end;">
         <button class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
-            <a href="{{route('adduser')}}"><i data-feather="plus" style="margin-right: 0.3rem;"></i>
+            <a href="{{route('master.pengguna.add')}}"><i data-feather="plus" style="margin-right: 0.3rem;"></i>
             TAMBAH
             </a>
         </button>
-    </div>
+    </div>    
     @endif
     <!-- Button Tambah -->
 
@@ -35,8 +35,8 @@
     <div class="pb-2">
         <div class="input-group rounded">
             <!-- Input Form -->
-            <form action="/masteruser" class="position-relative">
-                
+            <form action="/master/pengguna" class="position-relative">
+                @csrf
                 <input type="text" name="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
                 
                 <span class="position-absolute" style="top: 50%; left: 0.5rem; transform: translateY(-50%);">
@@ -77,24 +77,20 @@
                     <th scope="row" class="text-center">{{ $loop->iteration }}</th>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->roles->name }}</td>
+                    <td>{{ ucfirst($user->roles->name) }}</td>
                     <td class="text-center">
-
                         @if (isFeatureInside('pengguna-lihat', $features))
-                            <a href="{{route('detailuser',$user->id)}}"><i data-feather="eye"></i></a>
+                            <a href="{{route('master.pengguna.detail',$user->name)}}"><i data-feather="eye"></i></a>
                         @endif
                         @if (isFeatureInside('pengguna-ubah', $features))
-                            <a href="{{route('edituser',$user->id)}}"><i data-feather="edit-2"></i></a>
+                            <a href="{{route('master.pengguna.edit',$user->name)}}"><i data-feather="edit-2"></i></a>
                         @endif
                         @if (isFeatureInside('pengguna-hapus', $features))
-                            <a href="{{ route('deleteuser', $user->id) }}" onclick="return confirm('Are you sure you want to delete this user?')"><i data-feather="trash-2"></i></a>
+                            <a href="{{ route('master.pengguna.delete', $user->name) }}" onclick="return confirm('Are you sure you want to delete this user?')"><i data-feather="trash-2"></i></a>
                         @endif
-                        {{-- <a href="{{route('detailuser',$user->name)}}"><i data-feather="eye"></i></a>
-                        <a href="{{route('edituser',$user->name)}}"><i data-feather="edit-2"></i></a>
-                        <a href="{{ route('deleteuser', $user->name) }}" onclick="return confirm('Are you sure you want to delete this user?')"><i data-feather="trash-2"></i></a> --}}
                     </td>
                 </tr>
-                @endforeach
+            @endforeach
             </tbody>
             <!-- Table Body -->
         </table>
