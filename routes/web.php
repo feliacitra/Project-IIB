@@ -6,9 +6,11 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\MasterCivitasController;
 use App\Http\Controllers\MasterPenggunaController;
+use App\Http\Controllers\MasterPeriodeController;
 use App\Http\Controllers\MasterProgramInkubasiController;
 use App\Http\Controllers\MasterCategoryController;
 use App\Models\MasterCategory;
+use App\Http\Controllers\MasterUniversitasController;
 use Illuminate\Support\Facades\View;
 
 /*
@@ -40,9 +42,9 @@ Route::get('/admin', function() {
 //     return view('changepassword');
 // })->middleware(['auth'])->name('change-password');
 
-Route::get('/masteruser', function () {
-    return view('masterpengguna.masteruser');
-})->name('masteruser');
+// Route::get('/masteruser', function () {
+//     return view('masterpengguna.masteruser');
+// })->name('masteruser');
 
 Route::post('/register',[RegisteredUserController::class, 'store']) ->name('register');
 
@@ -61,6 +63,19 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/access/reset/{role}', [AccessController::class, 'role_reset'])->name('access.role-reset');
 
     Route::get('/master/pengguna', [MasterPenggunaController::class, 'index'])->name('master.pengguna');
+    
+
+    Route::get('/master/inkubasi', function() {
+        return view('Master-ProgramInkubasi.listProgramInkubasi');
+    })->name('incubationProgram');
+
+    Route::get('/master/startup', function() {
+        return view('Master-KategoriStartup.listKategoriStartup');
+    })->name('startupcategory');
+
+    Route::get('/master/civitas', function() {
+        return view('Master-Civitas.listCivitas');
+    })->name('civitas');
     Route::get('/master/pengguna/add', [MasterPenggunaController::class, 'create'])->name('master.pengguna.add');
     Route::post('/master/pengguna/add', [MasterPenggunaController::class, 'store'])->name('master.pengguna.store');
     Route::get('/master/pengguna/{user:name}', [MasterPenggunaController::class, 'show'])->name('master.pengguna.detail');
@@ -70,6 +85,10 @@ Route::middleware(['auth', 'access'])->group(function () {
 
     Route::resource('/master/civitas', MasterCivitasController::class)->names([
         'index' => 'master.civitas',
+    ])->except(['show', 'edit', 'create']);
+
+    Route::resource('/master/periode', MasterPeriodeController::class)->names([
+        'index' => 'master.periode',
     ])->except(['show', 'edit', 'create']);
 
     // Route::get('/master/inkubasi', function() {
@@ -85,9 +104,15 @@ Route::middleware(['auth', 'access'])->group(function () {
         'index' => 'master.kategori.startup',
     ])->except(['show', 'edit', 'create']);
 
-    // Route::get('/master/civitas', function() {
-    //     return view('Master-Civitas.listCivitas');
-    // })->name('civitas');
+    // Route::get('/master/universitas', function() {
+    //     return view('Master-Universitas.listUniversitas');
+    // })->name('universitas');
+
+    Route::resource('/master/universitas', MasterUniversitasController::class)->names([
+        'index' => 'master.universitas',
+    ])->except(['show', 'edit', 'create']);
+
+
 });
 
 

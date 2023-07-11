@@ -5,16 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MasterMember extends Model
+class MasterPeriode extends Model
 {
     use HasFactory;
 
     protected $guarded = [
-        'mm_id'
+        'mpe_id',
     ];
 
-    public function civitas()
-    {
-        return $this->belongsTo(MasterCivitas::class);
-    }
+    protected $table = 'master_periode';
 }

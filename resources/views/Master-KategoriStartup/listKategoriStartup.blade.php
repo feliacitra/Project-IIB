@@ -19,14 +19,16 @@
     </div>
 
     <!-- Button Tambah -->
-    <div class="pb-2" style="display: flex; justify-content: flex-end;">
-        <a href="#addStartupCategory" class="button btn-primary">
-            <button id="openAddStartUpCategory" class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
-                <i data-feather="plus" style="margin-right: 0.3rem;"></i>
-                TAMBAH
-            </button>
-        </a>
-    </div>
+    @if (isFeatureInclude('kategori-startup-tambah', session('features')))
+        <div class="pb-2" style="display: flex; justify-content: flex-end;">
+            <a href="#addStartupCategory" class="button btn-primary">
+                <button id="openAddStartUpCategory" class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
+                    <i data-feather="plus" style="margin-right: 0.3rem;"></i>
+                    TAMBAH
+                </button>
+            </a>
+        </div>
+    @endif
     <!-- Button Tambah -->
 
     <!-- Search Bar -->
@@ -103,11 +105,17 @@
                     <td class="text-center">{{ $category->mc_status }}</td>
                     <td class="text-center">
                         <!-- VIEW -->
-                        <a href="#viewStartupCategory" data-name="{{ $category->mc_name }}" data-description="{{ $category->mc_description }}" data-status="{{ $category->mc_status }}"><i data-feather="eye"></i></a>
+                        @if (isFeatureInclude('kategori-startup-lihat', session('features')))
+                            <a href="#viewStartupCategory" data-name="{{ $category->mc_name }}" data-description="{{ $category->mc_description }}" data-status="{{ $category->mc_status }}"><i data-feather="eye"></i></a>
+                        @endif
                         <!-- EDIT -->
-                        <a href="#editStartupCategory" data-id="{{ $category->mc_id }}" data-name="{{ $category->mc_name }}" data-description="{{ $category->mc_description }}" data-status="{{ $category->mc_status }}"><i data-feather="edit-2"></i></a>
+                        @if (isFeatureInclude('kategori-startup-ubah', session('features')))
+                            <a href="#editStartupCategory" data-id="{{ $category->mc_id }}" data-name="{{ $category->mc_name }}" data-description="{{ $category->mc_description }}" data-status="{{ $category->mc_status }}"><i data-feather="edit-2"></i></a>
+                        @endif
                         <!-- DELETE -->
-                        <a href="#deleteStartupCategory" data-id="{{ $category->mc_id }}"><i data-feather="trash-2"></i></a>
+                        @if (isFeatureInclude('kategori-startup-hapus', session('features')))
+                            <a href="#deleteStartupCategory" data-id="{{ $category->mc_id }}"><i data-feather="trash-2"></i></a>
+                        @endif
                     </td>
                 </tr>
 

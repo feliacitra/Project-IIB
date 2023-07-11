@@ -23,9 +23,9 @@ class MasterPenggunaController extends Controller
         }
 
         $users = $users->get();
-        $role = Auth::user()->role;
-        $features = Role::find($role)->features;
-        return view('Master-Pengguna.listUser', compact('users', 'features'));
+        // $role = Auth::user()->role;
+        // $features = Role::find($role)->features;
+        return view('Master-Pengguna.listUser', compact('users'));
     }
 
     public function create()

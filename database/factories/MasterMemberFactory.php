@@ -28,7 +28,7 @@ class MasterMemberFactory extends Factory
             'mm_email' => $faker->email,
             'mm_nim_nip' => $faker->numberBetween(1000000000000000000000000, 9999999999999999999999999),
             'mm_socialmedia' => $faker->userName,
-            'mci_id' => mt_rand(1, 4),
+            // 'mci_id' => mt_rand(1, 4),
             'mm_npwp' => null,
             'mm_cv' => null,
         ];
