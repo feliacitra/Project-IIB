@@ -9,6 +9,9 @@ class MasterUniversitas extends Model
 {
   use HasFactory;
 
+  protected $guarded = [
+    'mf_id'
+  ];
   protected $fillable = [
     'mu_name',
     'mu_description'

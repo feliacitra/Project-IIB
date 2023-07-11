@@ -9,8 +9,11 @@ class MasterFakultas extends Model
 {
   use HasFactory;
 
+  protected $guarded = [
+    'mf_id'
+  ];
   protected $fillable = [
     'mf_name',
-    'mf_description'
+    'mf_description',
   ];
 }
