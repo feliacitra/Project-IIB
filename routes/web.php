@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\MasterPenggunaController;
+use App\Http\Controllers\MasterUniversitasController;
 use Illuminate\Support\Facades\View;
 
 /*
@@ -83,13 +84,15 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Master-Civitas.listCivitas');
     })->name('civitas');
 
-    Route::get('/master/university', function() {
-        return view('Master-Universitas.listUniversitas');
-    })->name('university');
+    // Route::get('/master/universitas', function() {
+    //     return view('Master-Universitas.listUniversitas');
+    // })->name('universitas');
 
-    Route::get('/master/faculty', function() {
-        return view('Master-Fakultas.listFakultas');
-    })->name('faculty');
+    Route::resource('/master/universitas', MasterUniversitasController::class)->names([
+        'index' => 'master.universitas',
+    ])->except(['show', 'edit', 'create']);
+
+
 });
 
 /* This is for edituser, please modify based on the right source*/
