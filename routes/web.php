@@ -38,7 +38,7 @@ Route::get('/admin', function() {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
 
-// Route::get('/changepassword', function () {
+// Route::post('/changepassword', function () {
 //     return view('changepassword');
 // })->middleware(['auth'])->name('change-password');
 
@@ -53,7 +53,7 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
     
-    Route::get('/changepassword', function () {
+    Route::get('/change-password', function () {
         return view('changepassword');
     })->name('change-password');
     
