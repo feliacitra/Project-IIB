@@ -15,13 +15,13 @@ if (!function_exists('get_menu')) {
                         </a>";
         }
         if (isSubStringInArray('program-inkubasi', $features)) {
-            $menu[] = "<a href=\"" . route('master.pengguna') . " }}\" class=\"nav-link\">
+            $menu[] = "<a href=\"" . route('master.inkubasi') . "\" class=\"nav-link\">
                             <i class=\"link-icon\" data-feather=\"box\"></i>
                             <span class=\"link-title\">Master Program Inkubasi</span>
                         </a>";
         }
         if (isSubStringInArray('kategori-startup', $features)) {
-            $menu[] = "<a href=\"" . route('master.pengguna') . " }}\" class=\"nav-link\">
+            $menu[] = "<a href=\"" . route('master.kategori.startup') . "\" class=\"nav-link\">
                             <i class=\"link-icon\" data-feather=\"box\"></i>
                             <span class=\"link-title\">Master Kategori Startup</span>
                         </a>";
@@ -41,8 +41,8 @@ if (!function_exists('isSubStringInArray')) {
     }
 }
 
-if (!function_exists('isFeatureInside')) {
-    function isFeatureInside($string, $features) {
+if (!function_exists('isFeatureInclude')) {
+    function isFeatureInclude($string, $features) {
         foreach ($features as $feature) {
             if ($string == $feature->name) {
                 return true;
