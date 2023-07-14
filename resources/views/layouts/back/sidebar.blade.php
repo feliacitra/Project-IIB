@@ -52,7 +52,7 @@
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Universitas</span>
                     </a>
-                    <a href="{{ route('faculty') }}" class="nav-link">
+                    <a href="{{ route('faculty.index') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Master Fakultas</span>
                     </a>

@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class MasterUniversitas extends Model
 {
   use HasFactory;
+    protected $primaryKey = 'mu_id';
 
-  protected $fillable = [
+    protected $fillable = [
     'mu_name',
     'mu_description'
   ];

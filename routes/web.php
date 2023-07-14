@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\MasterPenggunaController;
 use App\Http\Controllers\MasterUniversitasController;
+use App\Http\Controllers\MasterFakultasController;
 use Illuminate\Support\Facades\View;
 
 /*
@@ -91,6 +92,13 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::resource('/master/universitas', MasterUniversitasController::class)->names([
         'index' => 'master.universitas',
     ])->except(['show', 'edit', 'create']);
+
+    Route::resource('fakultas', MasterFakultasController::class)->only(['index', 'store', 'update', 'destroy'])->names([
+        'index' => 'faculty.index',
+        'store' => 'faculty.store',
+        'update' => 'faculty.update',
+        'destroy' => 'faculty.destroy',
+    ]);
 
 
 });
