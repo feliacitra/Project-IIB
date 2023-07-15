@@ -69,6 +69,10 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Master-ProgramInkubasi.listProgramInkubasi');
     })->name('incubationProgram');
 
+    Route::get('/detail/profile', function () {
+        return view('profile.detailProfile');
+    })->name('detail-profile');
+
     Route::get('/master/startup', function() {
         return view('Master-KategoriStartup.listKategoriStartup');
     })->name('startupcategory');
