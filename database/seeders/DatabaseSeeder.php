@@ -83,6 +83,18 @@ class DatabaseSeeder extends Seeder
                 'name' => 'universitas-lihat',
             ],
             [
+                'name' => 'fakultas-tambah',
+            ],
+            [
+                'name' => 'fakultas-ubah',
+            ],
+            [
+                'name' => 'fakultas-hapus',
+            ],
+            [
+                'name' => 'fakultas-lihat',
+            ],
+            [
                 'name' => 'periode-pendaftaran-tambah',
             ],
             [

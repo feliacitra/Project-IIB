@@ -26,6 +26,30 @@ if (!function_exists('get_menu')) {
                             <span class=\"link-title\">Master Kategori Startup</span>
                         </a>";
         }
+        if (isSubStringInArray('civitas', $features)) {
+            $menu[] = "<a href=\"" . route('master.civitas') . "\" class=\"nav-link\">
+                            <i class=\"link-icon\" data-feather=\"box\"></i>
+                            <span class=\"link-title\">Master Civitas</span>
+                        </a>";
+        }
+        if (isSubStringInArray('universitas', $features)) {
+            $menu[] = "<a href=\"" . route('master.universitas') . "\" class=\"nav-link\">
+                            <i class=\"link-icon\" data-feather=\"box\"></i>
+                            <span class=\"link-title\">Master Universitas</span>
+                        </a>";
+        }
+        if (isSubStringInArray('fakultas', $features)) {
+            $menu[] = "<a href=\"" . route('faculty.index') . "\" class=\"nav-link\">
+                            <i class=\"link-icon\" data-feather=\"box\"></i>
+                            <span class=\"link-title\">Master Fakultas</span>
+                        </a>";
+        }
+        if (isSubStringInArray('periode-pendaftaran', $features)) {
+            $menu[] = "<a href=\"" . route('master.periode') . "\" class=\"nav-link\">
+                            <i class=\"link-icon\" data-feather=\"box\"></i>
+                            <span class=\"link-title\">Master Periode Pendaftaran</span>
+                        </a>";
+        }
         return $menu;
     }
 }
