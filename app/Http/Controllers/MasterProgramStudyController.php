@@ -6,6 +6,7 @@ use App\Models\MasterFakultas;
 use App\Models\MasterProgramStudy;
 use Illuminate\Http\Request;
 use App\Models\MasterUniversitas;
+use Illuminate\Validation\Rule;
 
 class MasterProgramStudyController extends Controller
 {
@@ -53,7 +54,12 @@ class MasterProgramStudyController extends Controller
         $validatedData = $request->validate([
             'addUniversity' => 'required',
             'addFaculty' => 'required|exists:master_fakultas,mf_id',
-            'addNamaProdi' => 'required|max:255|unique:master_programstudy,mps_name',
+            'addNamaProdi' => [
+                'required',
+                Rule::unique('master_programstudy', 'mps_name')->where(function ($query) use ($request) {
+                    return $query->where('mf_id', $request->input('addFaculty'));
+                }),
+            ],
             'addKeteranganProdi' => 'nullable',
         ], [
             'addFaculty.required' => 'Fakultas tidak boleh kosong',
