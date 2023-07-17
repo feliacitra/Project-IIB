@@ -17,12 +17,12 @@ class CheckUserRole
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle($request, Closure $next, ...$roles)
-{
-    if (! $request->user() || ! in_array($request->user()->role, $roles)) {
-        throw new NotFoundHttpException('Page not found');
-    }
+    {
+        if (! $request->user() || ! in_array($request->user()->role, $roles)) {
+            throw new NotFoundHttpException('Page not found');
+        }
 
-    return $next($request);
-}
+        return $next($request);
+    }
 
 }

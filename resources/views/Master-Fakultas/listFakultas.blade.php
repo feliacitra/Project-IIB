@@ -98,7 +98,7 @@
                         <!-- EDIT -->
                         <a href="#editFaculty" data-id="{{ $faculty->mf_id }}" data-university="{{ $faculty->university->mu_name }}" data-faculty="{{ $faculty->mf_name }}" data-description="{{ $faculty->mf_description }}"><i data-feather="edit-2"></i></a>
                         <!-- DELETE -->
-                        <a href="#deleteFaculty"><i data-feather="trash-2"></i></a>
+                        <a href="#deleteFaculty" data-id="{{ $faculty->mf_id }}" ><i data-feather="trash-2"></i></a>
                     </td>
                 </tr>
             @endforeach
@@ -187,7 +187,7 @@
                         <select class="form-control form-select" name="selectUniversity" id="viewUniversity" style="margin-top: 1rem" disabled>
                             <option value="select" class="text-muted">Nama Universitas</option>
                             @foreach ($universities as $university)
-                                <option value="{{ $university->mu_id }}" {{ $faculty->university->mu_name == $university->mu_name ? 'selected' : '' }}>
+                                <option value="{{ $university->mu_id }}">
                                     {{ $university->mu_name }}
                                 </option>
                             @endforeach
@@ -237,14 +237,14 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
-                        <form action="/fakultas/{{ $faculty->mf_id }}" method="post" id="editForm">
+                        <form action="#" method="post" id="editForm">
                             @csrf
                             @method('PUT')
                             <!-- Select Nama Universitas -->
-                            <select class="form-control form-select" name="editSelectUniversity" id="university" style="margin-top: 1rem">
+                            <select class="form-control form-select" name="editSelectUniversity" id="editUniversity" style="margin-top: 1rem">
                                 <option value="select" class="text-muted">Nama Universitas</option>
                                 @foreach ($universities as $university)
-                                    <option value="{{ $university->mu_id }}" {{ $faculty->university->mu_name == $university->mu_name ? 'selected' : '' }}>
+                                    <option value="{{ $university->mu_id }}">
                                         {{ $university->mu_name }}
                                     </option>
                                 @endforeach
@@ -292,7 +292,7 @@
     <!-- DELETE -->
     <div class="overlay" id="deleteFaculty">
         <div class="wrapper" style="width: 25%">
-            <form action="/fakultas/{{ $faculty->mf_id }}" method="POST" id="deleteForm">
+            <form action="#" method="POST" id="deleteForm">
                 @csrf
                 @method('DELETE')
             <div class="content">
@@ -327,9 +327,20 @@
         const viewLinks = document.querySelectorAll('a[href="#viewFaculty"]');
         viewLinks.forEach(link => {
             link.addEventListener('click', event => {
-
+                const university = link.dataset.university;
                 const faculty = link.dataset.faculty;
                 const description = link.dataset.description;
+
+                const universitySelect = document.getElementById('viewUniversity');
+                for (let i = 0; i < universitySelect.options.length; i++) {
+                    if (universitySelect.options[i].text === university) {
+                        universitySelect.options[i].selected = true;
+                        break;
+                    }
+                }
+
+                // document.getElementById('university').value = university;
+                // document.getElementById('university').dispatchEvent(new Event('change'));
 
                 document.getElementById('viewNamaFakultas').value = faculty;
                 document.getElementById('viewKeteranganFakultas').value = description;
@@ -341,8 +352,17 @@
             link.addEventListener('click', event => {
 
                 const id = link.dataset.id;
+                const university = link.dataset.university;
                 const faculty = link.dataset.faculty;
                 const description = link.dataset.description;
+
+                const universitySelect = document.getElementById('editUniversity');
+                for (let i = 0; i < universitySelect.options.length; i++) {
+                    if (universitySelect.options[i].text === university) {
+                        universitySelect.options[i].selected = true;
+                        break;
+                    }
+                }
 
                 document.getElementById('editNamaFakultas').value = faculty;
                 document.getElementById('editKeteranganFakultas').value = description;
@@ -351,11 +371,10 @@
             })
         })
 
-        const deleteLink = document.querySelectorAll('a[href="#deleteFakultas"]')
-        deleteLinks.forEach(link => {
+        const deleteLink = document.querySelectorAll('a[href="#deleteFaculty"]');
+        deleteLink.forEach(link => {
             link.addEventListener('click', event => {
                 const id = link.dataset.id;
-
                 deleteForm.action = `/fakultas/${id}`;
             })
         })

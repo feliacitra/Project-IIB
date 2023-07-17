@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class MasterUniversitas extends Migration
+class CreateMasterProgramInkubasiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class MasterUniversitas extends Migration
      */
     public function up()
     {
-      //
-            Schema::create('master_universitas', function (Blueprint $table) {
-            $table->id('mu_id');
-            $table->string('mu_name');
-            $table->string('mu_description')->nullable();
+        Schema::create('master_programinkubasi', function (Blueprint $table) {
+            $table->id('mpi_id');
+            $table->string('mpi_name');
+            $table->string('mpi_description')->nullable();
+            $table->string('mpi_type');
             $table->timestamps();
         });
-  
     }
 
     /**
@@ -30,7 +29,6 @@ class MasterUniversitas extends Migration
      */
     public function down()
     {
-            //
-      Schema::dropIfExists('master_universitas');
+        Schema::dropIfExists('master_programinkubasi');
     }
 }

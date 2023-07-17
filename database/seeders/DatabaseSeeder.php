@@ -2,13 +2,15 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
+use App\Models\Feature;
+use App\Models\MasterFakultas;
+use App\Models\MasterMember;
+use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Role;
-use App\Models\Feature;
-use App\Models\User;
-use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -56,6 +58,42 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'kategori-startup-lihat',
             ],
+            [
+                'name' => 'civitas-tambah',
+            ],
+            [
+                'name' => 'civitas-ubah',
+            ],
+            [
+                'name' => 'civitas-hapus',
+            ],
+            [
+                'name' => 'civitas-lihat',
+            ],
+            [
+                'name' => 'universitas-tambah',
+            ],
+            [
+                'name' => 'universitas-ubah',
+            ],
+            [
+                'name' => 'universitas-hapus',
+            ],
+            [
+                'name' => 'universitas-lihat',
+            ],
+            [
+                'name' => 'periode-pendaftaran-tambah',
+            ],
+            [
+                'name' => 'periode-pendaftaran-ubah',
+            ],
+            [
+                'name' => 'periode-pendaftaran-hapus',
+            ],
+            [
+                'name' => 'periode-pendaftaran-lihat',
+            ]
         ];
         $roles = [
             [
@@ -105,7 +143,15 @@ class DatabaseSeeder extends Seeder
             'role' => '2'
         ];
 
+
         User::firstOrCreate(['name' => 'admin'], $admin);
         User::firstOrCreate(['name' => 'peserta'], $peserta);
+
+        $role = Role::find(1);
+        $features = Feature::all();
+
+        foreach ($features as $feature) {
+            $role->features()->attach($feature->id);
+        }
     }
 }
