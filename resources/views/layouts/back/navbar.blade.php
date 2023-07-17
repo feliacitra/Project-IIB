@@ -103,7 +103,7 @@
                     </div>
                     <ul class="list-unstyled p-1">
                         <li class="dropdown-item py-2">
-                            <a href="{{ route('detail-profile') }}" class="text-body ms-0">
+                            <a href="{{route('detail-profile',auth()->user()->name)}}" class="text-body ms-0">
                                 <i class="me-2 icon-md" data-feather="user"></i>
                                 <span>Profile</span>
                             </a>

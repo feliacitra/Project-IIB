@@ -9,6 +9,7 @@ use App\Http\Controllers\MasterPenggunaController;
 use App\Http\Controllers\MasterPeriodeController;
 use App\Http\Controllers\MasterProgramInkubasiController;
 use App\Http\Controllers\MasterCategoryController;
+use App\Http\Controllers\UserProfileController;
 use App\Models\MasterCategory;
 use App\Http\Controllers\MasterUniversitasController;
 use Illuminate\Support\Facades\View;
@@ -69,9 +70,7 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Master-ProgramInkubasi.listProgramInkubasi');
     })->name('incubationProgram');
 
-    Route::get('/detail/profile', function () {
-        return view('profile.detailProfile');
-    })->name('detail-profile');
+    Route::get('/detail/profile/{user:name}', [UserProfileController::class, 'index'])->name('detail-profile');
 
     Route::get('/master/startup', function() {
         return view('Master-KategoriStartup.listKategoriStartup');
@@ -80,6 +79,7 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/master/civitas', function() {
         return view('Master-Civitas.listCivitas');
     })->name('civitas');
+
     Route::get('/master/pengguna/add', [MasterPenggunaController::class, 'create'])->name('master.pengguna.add');
     Route::post('/master/pengguna/add', [MasterPenggunaController::class, 'store'])->name('master.pengguna.store');
     Route::get('/master/pengguna/{user:name}', [MasterPenggunaController::class, 'show'])->name('master.pengguna.detail');

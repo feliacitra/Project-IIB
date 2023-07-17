@@ -37,92 +37,129 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <form id="add-user-form" method="" action="" enctype="multipart/form-data">
+                        @if (Session::has('success'))
+                        <div class="alert alert-success">
+                            {{ Session::get('success') }}
+                        </div>
+                        @endif
+                        <form id="user detail" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group" style="text-align: center" >
-                                <img id="profile-image" src="{{ asset('back/images/logo/user.png') }}" sizes="16x16" alt="Foto Profil" class="img-thumbnail" >
+                                @if (optional($user->user_detail)->ud_photo)
+                                    <img src="{{ url('storage/' . $user->user_detail->ud_photo) }}" alt="Foto Profil" class="wd-200 ht-200 rounded-circle" style="margin-top: -5px; margin-bottom: 20px;">
+                                @else
+                                    <img src="{{ asset('back/images/logo/user.png') }}" alt="Foto Profil" class="wd-200 ht-200 rounded-circle" style="margin-top: -5px; margin-bottom: 20px;">
+                                @endif
                             </div>
-                            {{-- <div class="form-group profile-icon">
-                                <i class="fas fa-user-circle fa-10x"></i>
-                            </div> --}}
-
-
                             <div class="form-group">
                                 <label for="name">Nama Lengkap</label>
-                                <input type="text" id="name" name="name" placeholder="Nama Lengkap" readonly class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email" placeholder="Email" readonly class="form-control">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="password">Password Sementara</label>
-                                <input type="password" id="password" name="password" readonly placeholder="Password Sementara" class="form-control">
+                                <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ $user->name }}" readonly disabled>
+                                @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="position">Posisi</label>
-                                <input type="text" id="position" name="position" readonly placeholder="Posisi" class="form-control">
+                                <select class="form-control @error('position') is-invalid @enderror" id="position" name="position" readonly disabled>
+                                    <option value="" disabled selected>Pilih posisi</option>
+                                    <option value="1" {{ $user->role == 1 ? 'selected' : '' }}>Admin</option>
+                                    <option value="2" {{ $user->role == 2 ? 'selected' : '' }}>Peserta</option>
+                                    <option value="3" {{ $user->role == 3 ? 'selected' : '' }}>Penilai</option>
+                                    <option value="4" {{ $user->role == 4 ? 'selected' : '' }}>Pemateri</option>
+                                    <option value="5" {{ $user->role == 5 ? 'selected' : '' }}>Mentor</option>
+                                    <option value="6" {{ $user->role == 6 ? 'selected' : '' }}>Dosen</option>
+                                    <option value="7" {{ $user->role == 7 ? 'selected' : '' }}>Management</option>
+                                </select>
+                                @error('position')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="position">Posisi</label>
+                                <select class="form-control @error('position') is-invalid @enderror" id="position" name="position" readonly disabled>
+                                    <option value="" disabled selected>Pilih posisi</option>
+                                    <option value="1" {{ $user->role == 1 ? 'selected' : '' }}>Admin</option>
+                                    <option value="2" {{ $user->role == 2 ? 'selected' : '' }}>Peserta</option>
+                                    <option value="3" {{ $user->role == 3 ? 'selected' : '' }}>Penilai</option>
+                                    <option value="4" {{ $user->role == 4 ? 'selected' : '' }}>Pemateri</option>
+                                    <option value="5" {{ $user->role == 5 ? 'selected' : '' }}>Mentor</option>
+                                    <option value="6" {{ $user->role == 6 ? 'selected' : '' }}>Dosen</option>
+                                    <option value="7" {{ $user->role == 7 ? 'selected' : '' }}>Management</option>
+                                </select>
+                                @error('position')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="gender">Jenis Kelamin</label>
-                                <input type="text" id="gender" name="gender" readonly placeholder="Jenis Kelamin" class="form-control">
+                                <select class="form-control" id="gender" name="gender" readonly disabled>
+                                    <option value="" disabled selected>-</option>
+                                    <option value="0" {{ $user->user_detail && $user->user_detail->ud_gender == 0 ? 'selected' : '' }}>Perempuan</option>
+                                    <option value="1" {{ $user->user_detail && $user->user_detail->ud_gender == 1 ? 'selected' : '' }}>Laki-laki</option>
+                                </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="place_of_birth">Tempat Lahir</label>
-                                <input type="text" readonly id="place_of_birth" name="place_of_birth" class="form-control" placeholder="Tempat Lahir">
+                                <input type="text" id="place_of_birth" name="place_of_birth" class="form-control" value="{{ $user->user_detail?->ud_placeofbirth ?? '-' }}" readonly disabled>
                             </div>
                             
                             <div class="form-group">
                                 <label for="birthdate">Tanggal Lahir</label>
-                                <input type="date" id="birthdate" readonly name="birthdate" placeholder="Tanggal Lahir" class="form-control">
+                                <input type="date" id="birthdate" name="birthdate" placeholder="Tanggal Lahir" class="form-control @error('birthdate') is-invalid @enderror" value="{{ $user->user_detail?->ud_birthday ?? '-' }}" readonly disabled>
+                                @error('birthdate')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="phone">Nomor HP</label>
-                                <input type="tel" id="phone" name="phone" readonly placeholder="Nomor HP" class="form-control">
+                                <input type="tel" id="phone" name="phone" placeholder="Nomor HP" class="form-control @error('phone') is-invalid @enderror" pattern="[0-9]+" value="{{ $user->user_detail?->ud_phone ?? '-' }}" readonly disabled>
+                                @error('phone')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="address">Alamat</label>
-                                <textarea id="address" name="address" readonly placeholder="Alamat" class="form-control" ></textarea>
+                                <textarea id="address" name="address" placeholder="Alamat" class="form-control" readonly disabled>{{ $user->user_detail?->ud_address ?? '-' }}</textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="bank_name">Nama Bank</label>
-                                <input type="text" id="bank_name" name="bank_name" readonly class="form-control" placeholder="Nama Bank">
+                                <input type="text" id="bank_name" name="bank_name" class="form-control" value="{{ $user->user_detail?->ud_bank ?? '-' }}" readonly disabled>
                             </div>
 
                             <div class="form-group">
                                 <label for="account_number">Nomor Rekening</label>
-                                <input type="text" id="account_number" name="account_number" readonly class="form-control" placeholder="Nomor Rekening">
+                                <input type="text" id="account_number" name="account_number" class="form-control @error('account_number') is-invalid @enderror" value="{{ $user->user_detail?->ud_accountnumber ?? '-' }}" readonly disabled>
+                                @error('account_number')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="education_level">Tingkat Pendidikan</label>
-                                <input type="text" id="education_level" name="education_level" readonly class="form-control" placeholder="Tingkat Pendidikan">
+                                <input type="text" id="education_level" name="education_level" class="form-control" value="{{ $user->user_detail?->ud_lasteducation ?? '-' }}" readonly disabled>
                             </div>
                             
                             <div class="form-group">
                                 <label for="university">Universitas</label>
-                                <input type="text" id="university" name="university" readonly class="form-control" placeholder="Universitas">
+                                <input type="text" id="university" name="university" class="form-control" value="{{ $user->user_detail?->ud_university ?? '-' }}" readonly disabled>
                             </div>
                             
                             <div class="form-group">
                                 <label for="faculty">Fakultas</label>
-                                <input type="text" id="faculty" name="faculty" readonly class="form-control" placeholder="Fakultas">
+                                <input type="text" id="faculty" name="faculty" class="form-control" value="{{ $user->user_detail?->ud_faculty ?? '-' }}" readonly disabled>
                             </div>
                             
                             <div class="form-group">
                                 <label for="major">Program Studi</label>
-                                <input type="text" id="major" readonly name="major" class="form-control" placeholder="Program Studi">
+                                <input type="text" id="major" name="major" class="form-control" value="{{ $user->user_detail?->ud_programstudy ?? '-' }}" readonly disabled>
                             </div>
-
-                            <button type="submit" class="btn btn-primary" form="add-user-form">Tambah</button>
                             <button type="button" class="btn btn-primary" form="add-user-form" onclick="history.back()" style="background-color: grey; border-color: grey">Kembali</button>
                         </form>
                     </div>
