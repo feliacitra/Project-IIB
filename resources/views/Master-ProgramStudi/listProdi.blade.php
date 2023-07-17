@@ -89,7 +89,12 @@
                     <td>{{ $prodi->mps_description }}</td>
                     <td class="text-center">
                         <!-- VIEW -->
-                        <a href="#viewStudyProgram"><i data-feather="eye"></i></a>
+                        <a href="#viewStudyProgram"
+                            data-university="{{ $prodi->faculty->university->mu_name }}"
+                            data-faculty="{{ $prodi->faculty->mf_name }}"
+                            data-name="{{ $prodi->mps_name }}"
+                            data-description="{{ $prodi->mps_description }}"
+                        ><i data-feather="eye"></i></a>
                         <!-- EDIT -->
                         <a href="#editStudyProgram"><i data-feather="edit-2"></i></a>
                         <!-- DELETE -->
@@ -134,7 +139,6 @@
                             <!-- Select Nama Fakultas -->
                             <select class="form-control form-select" name="addFaculty" id="addFaculty" style="margin-top: 1rem">
                                 <option value="select" class="text-muted">Nama Fakultas</option>
-                                <option value="informatika">S1 Informatika</option>
                             </select>
                             <!-- Select Nama Fakultas -->
 
@@ -186,32 +190,19 @@
                 <div class="container-fluid p-0">
                     <div>
                         <!-- Nama Universitas -->
-                        <select class="form-control form-select" name="selectUniversity" id="university" style="margin-top: 1rem" disabled>
-                            <option value="select" class="text-muted">Nama Universitas</option>
-                            <option value="telkomUniversity">Telkom University</option>
-                        </select>
+                        <input type="text" class="form-control rounded" name="viewUniversitas" id="viewUniversitas" placeholder="Nama Universitas" style="margin-top: 1rem" readonly>
                         <!-- Nama Universitas -->
 
                         <!-- Select Nama Fakultas -->
-                        <select class="form-control form-select" name="selectFaculty" id="university" style="margin-top: 1rem" disabled>
-                            <option value="select" class="text-muted">Nama Fakultas</option>
-                            <option value="informatika">S1 Informatika</option>
-                        </select>
+                        <input type="text" class="form-control rounded" name="viewFakultas" id="viewFakultas" placeholder="Nama Fakultas" style="margin-top: 1rem" readonly>
                         <!-- Select Nama Fakultas -->
                         
                         <!-- View Nama Prodi -->
-                        <input 
-                        type="text" 
-                        class="form-control rounded" 
-                        id="namaProdi" 
-                        placeholder="Nama Program Studi" 
-                        style="margin-top: 1rem"
-                        value="Current Study Program"
-                        readonly>
+                        <input type="text" class="form-control rounded" name="viewNamaProdi" id="viewNamaProdi" placeholder="Nama Program Studi" style="margin-top: 1rem" readonly>
                         <!-- View Nama Prodi -->
 
                         <!-- View Keterangan Prodi -->
-                        <textarea class="form-control rounded" id="keteranganProdi" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;" readonly>Current study program.</textarea>
+                        <textarea class="form-control rounded" name="viewKeteranganProdi" id="viewKeteranganProdi" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;" readonly></textarea>
                         <!-- View Keterangan Prodi -->
 
                         <!--Button Kembali -->
@@ -343,6 +334,22 @@
                 } else {
                     $('#addFaculty').empty();
                 }
+            });
+        });
+
+        const viewLinks = document.querySelectorAll('a[href="#viewStudyProgram"]');
+    
+        viewLinks.forEach(link => {
+            link.addEventListener('click', event => {
+                const name = link.dataset.name;
+                const description = link.dataset.description;
+                const university = link.dataset.university;
+                const faculty = link.dataset.faculty;
+                const enddate = link.dataset.enddate;
+                document.getElementById('viewNamaProdi').value = name;
+                document.getElementById('viewKeteranganProdi').value = description;
+                document.getElementById('viewUniversitas').value = university;
+                document.getElementById('viewFakultas').value = faculty;
             });
         });
     </script>
