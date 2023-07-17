@@ -66,12 +66,13 @@
 
             <!-- Table Body -->
             <tbody>
+                @foreach ($programStudi as $prodi)
                 <tr>
-                    <th scope="row" class="text-center">1</th>
-                    <td>Telkom University</td>
-                    <td>Fakultas Informatika</td>
-                    <td>S1 Informatika</td>
-                    <td>Fakultas Informatika Telkom University lorem ipsum</td>
+                    <th scope="row" class="text-center">{{ $loop->iteration }}</th>
+                    <td>{{ $prodi->faculty->university->mu_name }}</td>
+                    <td>{{ $prodi->faculty->mf_name }}</td>
+                    <td>{{ $prodi->mps_name }}</td>
+                    <td>{{ $prodi->mps_description }}</td>
                     <td class="text-center">
                         <!-- VIEW -->
                         <a href="#viewStudyProgram"><i data-feather="eye"></i></a>
@@ -81,6 +82,7 @@
                         <a href="#deleteStudyProgram"><i data-feather="trash-2"></i></a>
                     </td>
                 </tr>
+                @endforeach
             </tbody>
             <!-- Table Body -->
         </table>
@@ -104,33 +106,36 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
-                        <form>
+                        <form action="/master/prodi" method="POST">
+                            @csrf
                             <!-- Select Nama Universitas -->
-                            <select class="form-control form-select" name="selectUniversity" id="university" style="margin-top: 1rem">
+                            <select class="form-control form-select" name="addUniversity" id="addUniversity" style="margin-top: 1rem">
                                 <option value="select" class="text-muted">Nama Universitas</option>
-                                <option value="telkomUniversity">Telkom University</option>
+                                @foreach ($universities as $univ)
+                                    <option value="{{ $univ->mu_id }}">{{ $univ->mu_name }}</option>
+                                @endforeach
                             </select>
                             <!-- Select Nama Universitas -->
 
                             <!-- Select Nama Fakultas -->
-                            <select class="form-control form-select" name="selectFaculty" id="university" style="margin-top: 1rem">
+                            <select class="form-control form-select" name="addFaculty" id="addFaculty" style="margin-top: 1rem">
                                 <option value="select" class="text-muted">Nama Fakultas</option>
                                 <option value="informatika">S1 Informatika</option>
                             </select>
                             <!-- Select Nama Fakultas -->
 
                             <!-- Input Nama Prodi -->
-                            <input type="text" class="form-control rounded" id="namaProdi" placeholder="Nama Program Studi" style="margin-top: 1rem">
+                            <input type="text" class="form-control rounded" name="addNamaProdi" id="addNamaProdi" placeholder="Nama Program Studi" style="margin-top: 1rem">
                             <!-- Input Nama Prodi -->
 
                             <!-- Input Keterangan Prodi -->
-                            <textarea class="form-control rounded" id="keteranganProdi" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem"></textarea>
+                            <textarea class="form-control rounded" name="addKeteranganProdi" id="addKeteranganProdi" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem"></textarea>
                             <!-- Input Keterangan Prodi -->
 
                             <div class="row mt-4">
                                 <!--Button Simpan -->
                                 <div class="col">
-                                    <button id="simpanTambah" class="btn btn-primary">
+                                    <button type="submit" id="simpanTambah" class="btn btn-primary">
                                         Simpan
                                     </button>
                                 </div>
@@ -302,5 +307,29 @@
         </div>
     </div>
     <!-- DELETE -->
-    <!-- POP-UP TAMBAH, VIEW, EDIT -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#addUniversity').on('change', function() {
+                var universityId = $(this).val();
+                if (universityId) {
+                    $.ajax({
+                        url: '/master/prodi/' + universityId,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#addFaculty').empty();
+                            $('#addFaculty').append('<option value="" class="text-muted">Nama Fakultas</option>');
+                            $.each(data, function(key, value) {
+                                $('#addFaculty').append('<option value="' + value.mf_id + '">' + value.mf_name + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#addFaculty').empty();
+                }
+            });
+        });
+    </script>
 @endsection
