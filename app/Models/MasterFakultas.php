@@ -4,16 +4,32 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Testing\Fluent\Concerns\Has;
 
 class MasterFakultas extends Model
 {
-  use HasFactory;
+    use HasFactory;
+    protected $table = 'master_fakultas';
+    protected $primaryKey = 'mf_id';
+    protected $fillable =[
+        'mf_name',
+        'mu_id',
+        'mf_description',
+        'created_at',
+        'updated_at',
+    ];
+    protected $casts =[
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
-  protected $guarded = [
-    'mf_id'
-  ];
-  protected $fillable = [
-    'mf_name',
-    'mf_description',
-  ];
+    public function university()
+    {
+        return $this -> belongsTo(MasterUniversitas::class, 'mu_id', 'mu_id');
+    }
+
+    public function programstudy()
+    {
+        return $this->hasMany(MasterProgramStudy::class, 'mf_id', 'mf_id');
+    }
 }

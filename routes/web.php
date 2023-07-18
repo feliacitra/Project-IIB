@@ -9,8 +9,11 @@ use App\Http\Controllers\MasterPenggunaController;
 use App\Http\Controllers\MasterPeriodeController;
 use App\Http\Controllers\MasterProgramInkubasiController;
 use App\Http\Controllers\MasterCategoryController;
+use App\Http\Controllers\UserProfileController;
 use App\Models\MasterCategory;
 use App\Http\Controllers\MasterUniversitasController;
+use App\Http\Controllers\MasterFakultasController;
+use App\Http\Controllers\MasterProgramStudyController;
 use Illuminate\Support\Facades\View;
 
 /*
@@ -38,7 +41,7 @@ Route::get('/admin', function() {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
 
-// Route::get('/changepassword', function () {
+// Route::post('/changepassword', function () {
 //     return view('changepassword');
 // })->middleware(['auth'])->name('change-password');
 
@@ -53,7 +56,7 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
     
-    Route::get('/changepassword', function () {
+    Route::get('/change-password', function () {
         return view('changepassword');
     })->name('change-password');
     
@@ -69,6 +72,8 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Master-ProgramInkubasi.listProgramInkubasi');
     })->name('incubationProgram');
 
+    Route::get('/detail/profile/{user:name}', [UserProfileController::class, 'index'])->name('detail-profile');
+
     Route::get('/master/startup', function() {
         return view('Master-KategoriStartup.listKategoriStartup');
     })->name('startupcategory');
@@ -76,6 +81,7 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/master/civitas', function() {
         return view('Master-Civitas.listCivitas');
     })->name('civitas');
+
     Route::get('/master/pengguna/add', [MasterPenggunaController::class, 'create'])->name('master.pengguna.add');
     Route::post('/master/pengguna/add', [MasterPenggunaController::class, 'store'])->name('master.pengguna.store');
     Route::get('/master/pengguna/{user:name}', [MasterPenggunaController::class, 'show'])->name('master.pengguna.detail');
@@ -112,6 +118,18 @@ Route::middleware(['auth', 'access'])->group(function () {
         'index' => 'master.universitas',
     ])->except(['show', 'edit', 'create']);
 
+    Route::resource('fakultas', MasterFakultasController::class)->only(['index', 'store', 'update', 'destroy'])->names([
+        'index' => 'faculty.index',
+        'store' => 'faculty.store',
+        'update' => 'faculty.update',
+        'destroy' => 'faculty.destroy',
+    ]);
+
+    Route::resource('/master/prodi', MasterProgramStudyController::class)->names([
+        'index' => 'master.prodi',
+    ])->except(['show', 'edit', 'create', 'getFaculties']);
+
+    Route::get('/master/prodi/{university}', [MasterProgramStudyController::class, 'getFaculties']);
 
 });
 
