@@ -177,9 +177,13 @@ class MasterProgramStudyController extends Controller
      * @param  \App\Models\MasterProgramStudy  $masterProgramStudy
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MasterProgramStudy $masterProgramStudy)
+    public function destroy(int $id)
     {
-        //
+        $prodi = MasterProgramStudy::where('mps_id', $id)->firstOrFail();
+        $name =$prodi->mps_name;
+
+        MasterProgramStudy::where('mps_id', $id)->delete();
+        return redirect()->route('master.prodi')->with('success', "Prodi $name berhasil dihapus");
     }
 
     public function getFaculties(int $universityId)

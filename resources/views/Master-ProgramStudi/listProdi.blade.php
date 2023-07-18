@@ -34,9 +34,9 @@
         <div class="pb-2">
             <div class="input-group rounded">
                 <!-- Input Form -->
-                <form action="" class="position-relative">
-                    
-                    <input type="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
+                <form action="/master/prodi" class="position-relative">
+                    @csrf
+                    <input type="search" name="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
                     
                     <span class="position-absolute" style="top: 50%; left: 0.5rem; transform: translateY(-50%);">
                         <i data-feather="search"></i>
@@ -105,7 +105,9 @@
                             data-description="{{ $prodi->mps_description }}"
                         ><i data-feather="edit-2"></i></a>
                         <!-- DELETE -->
-                        <a href="#deleteStudyProgram"><i data-feather="trash-2"></i></a>
+                        <a href="#deleteStudyProgram"
+                            data-id="{{ $prodi->mps_id }}"
+                        ><i data-feather="trash-2"></i></a>
                     </td>
                 </tr>
                 @endforeach
@@ -292,6 +294,9 @@
     <!-- DELETE -->
     <div class="overlay" id="deleteStudyProgram">
         <div class="wrapper" style="width: 25%">
+            <form action="/master/prodi" method="POST" id="deleteForm">
+            @csrf
+            @method('DELETE')
             <div class="content">
                 <p class="text-center">
                     Hapus program studi?
@@ -300,7 +305,7 @@
                 <div class="row mt-4">
                     <!--Button Ya -->
                     <div class="col">
-                        <button id="delete" class="btn btn-primary" style="width: 50%">
+                        <button type="submit" id="delete" class="btn btn-primary" style="width: 50%">
                             Ya
                         </button>
                     </div>
@@ -313,6 +318,7 @@
                     <!--Button Tidak -->
                 </div>
             </div>
+            </form>
         </div>
     </div>
     <!-- DELETE -->
@@ -424,5 +430,14 @@
                 editForm.action = `/master/prodi/${id}`;
             });
         });
+
+        const deleteLinks = document.querySelectorAll('a[href="#deleteStudyProgram"]');
+    
+        deleteLinks.forEach(link => {
+            link.addEventListener('click', event => {
+                const id = link.dataset.id;
+                deleteForm.action = `/master/prodi/${id}`;
+            })
+        })
     </script>
 @endsection
