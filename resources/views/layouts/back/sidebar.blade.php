@@ -90,7 +90,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link">
+                    <a href="{{ route('penilaian') }}" class="nav-link">
                         <i class="fa fa-check"></i>
                         <span style="margin-left:17px">Master Komponen Penilaian</span>
                     </a>
