@@ -14,7 +14,7 @@
             <div class="col-md-6">
                 <!-- Form ubah password -->
                 <div class="auth-form-wrapper p-4">
-                    <form method="post" action="{{ route('change-password') }}">
+                    <form method="post" action="{{ route('change-password-post') }}">
                         @csrf <!-- {{ csrf_field() }} -->
                         @if ($message = Session::get('success'))
                         <div class="alert alert-success alert-block">   
