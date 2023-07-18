@@ -164,7 +164,9 @@ class MasterPeriodeController extends Controller
             'mpe_status' => $validatedData['editStatusPeriode'],
         ]);
 
-        return redirect()->route('master.periode')->with('success', "Periode $period->mpe_name berhasil diperbarui");
+        $name = $request->input('editNamaPeriode');
+
+        return redirect()->route('master.periode')->with('success', "Periode $name berhasil diperbarui");
     }
 
     /**

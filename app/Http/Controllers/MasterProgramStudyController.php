@@ -18,7 +18,7 @@ class MasterProgramStudyController extends Controller
     public function index()
     {
         $universities = MasterUniversitas::all();
-
+        $faculties = MasterFakultas::all();
         $programStudi = MasterProgramStudy::latest('updated_at')->with('faculty.university');
 
         if (request('search')){
@@ -30,6 +30,7 @@ class MasterProgramStudyController extends Controller
             "keyword" => request('search'),
             "programStudi" => $programStudi->get(),
             "universities" => $universities,
+            "faculties" => $faculties,
         ]);
     }
 
@@ -52,8 +53,6 @@ class MasterProgramStudyController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'addUniversity' => 'required',
-            'addFaculty' => 'required|exists:master_fakultas,mf_id',
             'addNamaProdi' => [
                 'required',
                 Rule::unique('master_programstudy', 'mps_name')->where(function ($query) use ($request) {
@@ -61,10 +60,22 @@ class MasterProgramStudyController extends Controller
                 }),
             ],
             'addKeteranganProdi' => 'nullable',
+            'addUniversity' => 'required',
+            'addFaculty' => [
+                'required',
+                'exists:master_fakultas,mf_id',
+                Rule::unique('master_programstudy', 'mf_id')->where(function ($query) use ($request) {
+                    return $query->where('mps_name', $request->input('editNamaProdi'));
+                }),
+            ],
         ], [
-            'addFaculty.required' => 'Fakultas tidak boleh kosong',
-            'addNamaProdi.required' => 'Nama program studi tidak boleh kosong',
-            'addNamaProdi.unique' => 'Nama program studi sudah digunakan',
+            'required' => ':attribute tidak boleh kosong',
+            'unique' => ':attribute sudah digunakan',
+        ], [
+            'addUniversity' => 'Nama universitas',
+            'addFaculty' => 'Nama fakultas',
+            'addNamaProdi' => 'Nama program studi',
+            'addKeteranganProdi' => 'Keterangan program studi',
         ]);
 
         MasterProgramStudy::create([
@@ -107,9 +118,57 @@ class MasterProgramStudyController extends Controller
      * @param  \App\Models\MasterProgramStudy  $masterProgramStudy
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MasterProgramStudy $masterProgramStudy)
+    public function update(Request $request, int $id)
     {
-        //
+        $prodi = MasterProgramStudy::where('mps_id', $id)->firstOrFail();
+
+        $rules = [
+            'editUniversitas' => 'required',
+            'editFakultas' => 'required|exists:master_fakultas,mf_id',
+            'editNamaProdi' => 'required|max:255',
+            'editKeteranganProdi' => 'required|max:255',
+        ];
+
+        if ($request->editNamaProdi != $prodi->mps_name)
+        {
+            $rules['editNamaProdi'] = [
+                'required',
+                Rule::unique('master_programstudy', 'mps_name')->where(function ($query) use ($request) {
+                    return $query->where('mf_id', $request->input('editFakultas'));
+                }),
+            ];
+        }
+
+        if ($request->editFakultas != $prodi->mf_id)
+        {
+            $rules['editFakultas'] = [
+                'required',
+                'exists:master_fakultas,mf_id',
+                Rule::unique('master_programstudy', 'mf_id')->where(function ($query) use ($request) {
+                    return $query->where('mps_name', $request->input('editNamaProdi'));
+                }),
+            ];
+        };
+
+        $validatedData = $request->validate($rules, [
+            'required' => ':attribute tidak boleh kosong',
+            'unique' => ':attribute sudah digunakan',
+        ], [
+            'editUniversitas' => 'Nama universitas',
+            'editFakultas' => 'Nama fakultas',
+            'editNamaProdi' => 'Nama program studi',
+            'editKeteranganProdi' => 'Keterangan program studi',
+        ]);
+
+        MasterProgramStudy::where('mps_id', $id)->update([
+            'mps_name' => $validatedData['editNamaProdi'],
+            'mps_description' => $validatedData['editKeteranganProdi'],
+            'mf_id' => $validatedData['editFakultas']
+        ]);
+
+        $name = $request->input('editNamaProdi');
+
+        return redirect()->route('master.prodi')->with('success', "Program studi $name berhasil diperbarui");
     }
 
     /**

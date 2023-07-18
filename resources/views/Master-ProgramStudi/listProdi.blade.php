@@ -96,7 +96,14 @@
                             data-description="{{ $prodi->mps_description }}"
                         ><i data-feather="eye"></i></a>
                         <!-- EDIT -->
-                        <a href="#editStudyProgram"><i data-feather="edit-2"></i></a>
+                        <a href="#editStudyProgram"
+                            data-id="{{ $prodi->mps_id }}"
+                            data-university="{{ $prodi->faculty->university->mu_name }}"
+                            data-univid="{{ $prodi->faculty->university->mu_id }}"
+                            data-faculty="{{ $prodi->faculty->mf_name }}"
+                            data-name="{{ $prodi->mps_name }}"
+                            data-description="{{ $prodi->mps_description }}"
+                        ><i data-feather="edit-2"></i></a>
                         <!-- DELETE -->
                         <a href="#deleteStudyProgram"><i data-feather="trash-2"></i></a>
                     </td>
@@ -233,39 +240,36 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
-                        <form>
+                        <form action="/master/prodi" method="POST" id="editForm">
+                            @csrf
+                            @method('PUT')
                             <!-- Select Nama Universitas -->
-                            <select class="form-control form-select" name="selectUniversity" id="university" style="margin-top: 1rem">
-                                <option value="select" class="text-muted">Nama Universitas</option>
-                                <option value="telkomUniversity">Telkom University</option>
+                            <select class="form-control form-select" name="editUniversitas" id="editUniversitas" style="margin-top: 1rem">
+                                <option value="" class="text-muted">Nama Universitas</option>
+                                @foreach ($universities as $univ)
+                                    <option value="{{ $univ->mu_id }}">{{ $univ->mu_name }}</option>
+                                @endforeach
                             </select>
                             <!-- Select Nama Universitas -->
 
                             <!-- Select Nama Fakultas -->
-                            <select class="form-control form-select" name="selectFaculty" id="university" style="margin-top: 1rem">
-                                <option value="select" class="text-muted">Nama Fakultas</option>
-                                <option value="informatika">S1 Informatika</option>
+                            <select class="form-control form-select" name="editFakultas" id="editFakultas" style="margin-top: 1rem">
+                                <option value="" class="text-muted">Nama Fakultas</option>
                             </select>
                             <!-- Select Nama Fakultas -->
 
                             <!-- Edit Nama Prodi -->
-                            <input 
-                                type="text" 
-                                class="form-control rounded" 
-                                id="namaProdi" 
-                                placeholder="Nama Program Studi" 
-                                style="margin-top: 1rem"
-                                value="Current Study Program">
+                            <input type="text" class="form-control rounded" name="editNamaProdi" id="editNamaProdi" placeholder="Nama Program Studi" style="margin-top: 1rem" value="Current Study Program">
                             <!-- Edit Nama Prodi -->
 
                             <!-- Edit Keterangan Prodi -->
-                            <textarea class="form-control rounded" id="keteranganProdi" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;">Current faculty information.</textarea>
+                            <textarea class="form-control rounded" name="editKeteranganProdi" id="editKeteranganProdi" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;">Current faculty information.</textarea>
                             <!-- Edit Keterangan Prodi -->
 
                             <div class="row mt-4">
                                 <!--Button Perbarui -->
                                 <div class="col">
-                                    <button id="saveEdit" class="btn btn-primary">
+                                    <button type="submit" id="saveEdit" class="btn btn-primary">
                                         Perbarui
                                     </button>
                                 </div>
@@ -337,6 +341,28 @@
             });
         });
 
+        $(document).ready(function() {
+            $('#editUniversitas').on('change', function() {
+                var universityId = $(this).val();
+                if (universityId) {
+                    $.ajax({
+                        url: '/master/prodi/' + universityId,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#editFakultas').empty();
+                            $('#editFakultas').append('<option value="" class="text-muted">Nama Fakultas</option>');
+                            $.each(data, function(key, value) {
+                                $('#editFakultas').append('<option value="' + value.mf_id + '">' + value.mf_name + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#editFakultas').empty();
+                }
+            });
+        });
+
         const viewLinks = document.querySelectorAll('a[href="#viewStudyProgram"]');
     
         viewLinks.forEach(link => {
@@ -350,6 +376,52 @@
                 document.getElementById('viewKeteranganProdi').value = description;
                 document.getElementById('viewUniversitas').value = university;
                 document.getElementById('viewFakultas').value = faculty;
+            });
+        });
+
+        const editLinks = document.querySelectorAll('a[href="#editStudyProgram"]');
+    
+        editLinks.forEach(link => {
+            link.addEventListener('click', event => {
+                $('#editFakultas').empty();
+                const id = link.dataset.id;
+                const name = link.dataset.name;
+                const description = link.dataset.description;
+                const university = link.dataset.university;
+                const univid = link.dataset.univid;
+                const faculty = link.dataset.faculty;
+                document.getElementById('editNamaProdi').value = name;
+                document.getElementById('editKeteranganProdi').value = description;
+
+                const universitySelect = document.getElementById('editUniversitas');
+                for (let i = 0; i < universitySelect.options.length; i++) {
+                    if (universitySelect.options[i].text === university) {
+                        universitySelect.options[i].selected = true;
+                        break;
+                    }
+                }
+
+                if (univid) {
+                    $.ajax({
+                        url: '/master/prodi/' + univid,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#editFakultas').append('<option value="" class="text-muted">Nama Fakultas</option>');
+                            $.each(data, function(key, value) {
+                                if (value.mf_name == faculty) {
+                                    $('#editFakultas').append('<option value="' + value.mf_id + '" selected>' + value.mf_name + '</option>');
+                                } else {
+                                    $('#editFakultas').append('<option value="' + value.mf_id + '">' + value.mf_name + '</option>');
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    $('#editFakultas').empty();
+                }
+
+                editForm.action = `/master/prodi/${id}`;
             });
         });
     </script>
