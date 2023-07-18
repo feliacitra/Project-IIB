@@ -49,7 +49,18 @@ class MasterPeriodeController extends Controller
         $validatedData = $request->validate([
             'addNamaPeriode' => 'required|max:255|unique:master_periode,mpe_name',
             'addTanggalMulai' => 'required|date',
-            'addTanggalSelesai' => 'required|date',
+            'addTanggalSelesai' => [
+                'required',
+                'date',
+                function ($attribute, $value, $fail) use ($request) {
+                    $startDate = $request->input('addTanggalMulai');
+                    $endDate = $request->input('addTanggalSelesai');
+
+                    if ($startDate >= $endDate) {
+                        $fail(':attribute tidak boleh kurang dari tanggal mulai');
+                    }
+                },
+            ],
             'addKeteranganPeriode' => 'nullable',
             'addStatusPeriode' => 'required',
         ], [
@@ -111,7 +122,18 @@ class MasterPeriodeController extends Controller
         $rules = [
             'editNamaPeriode' => 'required|max:255',
             'editTanggalMulai' => 'required|date',
-            'editTanggalAkhir' => 'required|date',
+            'editTanggalAkhir' => [
+                'required',
+                'date',
+                function ($attribute, $value, $fail) use ($request) {
+                    $startDate = $request->input('editTanggalMulai');
+                    $endDate = $request->input('editTanggalAkhir');
+
+                    if ($startDate >= $endDate) {
+                        $fail(':attribute tidak boleh kurang dari tanggal mulai');
+                    }
+                },
+            ],
             'editKeteranganPeriode' => 'nullable',
             'editStatusPeriode' => 'required',
             
@@ -129,7 +151,7 @@ class MasterPeriodeController extends Controller
         ], [
             'editNamaPeriode' => 'Nama periode',
             'editTanggalMulai' => 'Tanggal mulai',
-            'editTanggalSelesai' => 'Tanggal akhir',
+            'editTanggalAkhir' => 'Tanggal akhir',
             'editKeteranganPeriode' => 'Keterangan periode',
             'editStatusPeriode' => 'Status periode',
         ]);

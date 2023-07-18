@@ -67,8 +67,8 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('master.universitas') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Universitas</span>
+                        <i class="fa fa-building"></i>
+                        <span style="margin-left:17px">Master Universitas</span>
                     </a>
                 </li>
                 <li class="nav-item">

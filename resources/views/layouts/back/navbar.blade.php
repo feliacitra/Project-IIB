@@ -103,7 +103,7 @@
                     </div>
                     <ul class="list-unstyled p-1">
                         <li class="dropdown-item py-2">
-                            <a href="pages/general/profile.html" class="text-body ms-0">
+                            <a href="{{route('detail-profile',auth()->user()->name)}}" class="text-body ms-0">
                                 <i class="me-2 icon-md" data-feather="user"></i>
                                 <span>Profile</span>
                             </a>
@@ -115,7 +115,7 @@
                             </a>
                         </li>
                         <li class="dropdown-item py-2">
-                            <a href="/change-password" class="text-body ms-0">
+                            <a href="{{ route('change-password') }}" class="text-body ms-0">
                                 <i class="me-2 icon-md" data-feather="lock"></i>
                                 <span>Change Password</span>
                             </a>
