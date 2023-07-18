@@ -58,6 +58,54 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'kategori-startup-lihat',
             ],
+            [
+                'name' => 'civitas-tambah',
+            ],
+            [
+                'name' => 'civitas-ubah',
+            ],
+            [
+                'name' => 'civitas-hapus',
+            ],
+            [
+                'name' => 'civitas-lihat',
+            ],
+            [
+                'name' => 'universitas-tambah',
+            ],
+            [
+                'name' => 'universitas-ubah',
+            ],
+            [
+                'name' => 'universitas-hapus',
+            ],
+            [
+                'name' => 'universitas-lihat',
+            ],
+            [
+                'name' => 'fakultas-tambah',
+            ],
+            [
+                'name' => 'fakultas-ubah',
+            ],
+            [
+                'name' => 'fakultas-hapus',
+            ],
+            [
+                'name' => 'fakultas-lihat',
+            ],
+            [
+                'name' => 'periode-pendaftaran-tambah',
+            ],
+            [
+                'name' => 'periode-pendaftaran-ubah',
+            ],
+            [
+                'name' => 'periode-pendaftaran-hapus',
+            ],
+            [
+                'name' => 'periode-pendaftaran-lihat',
+            ]
         ];
         $roles = [
             [

@@ -32,11 +32,12 @@
     </div>
 
     <div class="container-fluid" style="background-color: #f2f2f2">
-        <div class="card-header text-center">Edit Pengguna</div>
+        {{-- <div class="card-header text-center">Edit Pengguna</div> --}}
         <div class="row mt-3">
-            <div class="col-md-12">
+            {{-- <div class="col-md-12"> --}}
                 <div class="card">
                     <div class="card-body">
+                        <h3 class="text-center mb-4" >Edit Pengguna</h3>
                         <form method="post" action="/master/pengguna/{{ $user->name }}/edit" enctype="multipart/form-data">
                             @method('put')
                             @csrf
@@ -169,7 +170,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
+            {{-- </div> --}}
+        {{-- </div> --}}
     </div>
 @endsection
