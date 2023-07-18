@@ -13,6 +13,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Models\MasterCategory;
 use App\Http\Controllers\MasterUniversitasController;
 use App\Http\Controllers\MasterFakultasController;
+use App\Http\Controllers\MasterProgramStudyController;
 use Illuminate\Support\Facades\View;
 
 /*
@@ -124,6 +125,11 @@ Route::middleware(['auth', 'access'])->group(function () {
         'destroy' => 'faculty.destroy',
     ]);
 
+    Route::resource('/master/prodi', MasterProgramStudyController::class)->names([
+        'index' => 'master.prodi',
+    ])->except(['show', 'edit', 'create', 'getFaculties']);
+
+    Route::get('/master/prodi/{university}', [MasterProgramStudyController::class, 'getFaculties']);
 
 });
 
