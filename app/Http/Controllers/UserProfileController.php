@@ -13,7 +13,7 @@ class UserProfileController extends Controller
         $user->load('user_detail');
         return view('profile.detailProfile', compact('user'));
     }
-
+    
     public function edit(User $user)
     {
         return view('profile.editProfile', ["user" => $user]);
@@ -83,7 +83,7 @@ class UserProfileController extends Controller
                 'ud_photo' => $validatedUserDetailData['image']
             ]);
         }
-        return redirect()->route('edit-profile')->with('success', 'User has been editted');
+        return redirect()->route('edit-profile', $user)->with('success', 'User has been editted');
     }
 
 }
