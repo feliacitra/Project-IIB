@@ -19,6 +19,7 @@
     </div>
 
     <!-- Button Tambah -->
+    @if (isFeatureInclude('universitas-tambah', session('features')))
     <div class="pb-2" style="display: flex; justify-content: flex-end;">
         <a href="#addUniversity" class="button btn-primary">
             <button id="openAddUniversity" class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
@@ -27,6 +28,7 @@
             </button>
         </a>
     </div>
+    @endif
     <!-- Button Tambah -->
 
     <!-- Search Bar -->
@@ -86,11 +88,17 @@
                     <td>{{ $mu->mu_description }}</td>
                     <td class="text-center">
                         <!-- VIEW -->
+                        @if (isFeatureInclude('universitas-lihat', session('features')))
                         <a href="#viewUniversitas" data-name="{{ $mu->mu_name }}" data-description="{{ $mu->mu_description }}" class="lihat"><i data-feather="eye"></i></a>
+                        @endif
                         <!-- EDIT -->
+                        @if (isFeatureInclude('universitas-ubah', session('features')))
                         <a href="#editUniversitas" data-id="{{ $mu->mu_id }}" data-name="{{ $mu->mu_name }}" data-description="{{ $mu->mu_description }}" ><i data-feather="edit-2"></i></a>
+                        @endif
                         <!-- DELETE -->
+                        @if (isFeatureInclude('universitas-hapus', session('features')))
                         <a href="#deleteUniversitas" data-id="{{ $mu->mu_id }}"><i data-feather="trash-2"></i></a>
+                        @endif
                     </td>
                 </tr>
                 @endforeach

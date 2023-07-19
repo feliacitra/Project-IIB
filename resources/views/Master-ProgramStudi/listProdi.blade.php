@@ -19,6 +19,7 @@
     </div>
 
     <!-- Button Tambah -->
+    @if (isFeatureInclude('program-studi-tambah', session('features')))
     <div class="pb-2" style="display: flex; justify-content: flex-end;">
         <a href="#addStudyProgram" class="button btn-primary">
             <button id="openAddFaculty" class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
@@ -27,6 +28,7 @@
             </button>
         </a>
     </div>
+    @endif
     <!-- Button Tambah -->
 
     <!-- Search Bar -->
@@ -89,13 +91,16 @@
                     <td>{{ $prodi->mps_description }}</td>
                     <td class="text-center">
                         <!-- VIEW -->
+                        @if (isFeatureInclude('program-studi-lihat', session('features')))
                         <a href="#viewStudyProgram"
                             data-university="{{ $prodi->faculty->university->mu_name }}"
                             data-faculty="{{ $prodi->faculty->mf_name }}"
                             data-name="{{ $prodi->mps_name }}"
                             data-description="{{ $prodi->mps_description }}"
                         ><i data-feather="eye"></i></a>
+                        @endif
                         <!-- EDIT -->
+                        @if (isFeatureInclude('program-studi-ubah', session('features')))
                         <a href="#editStudyProgram"
                             data-id="{{ $prodi->mps_id }}"
                             data-university="{{ $prodi->faculty->university->mu_name }}"
@@ -104,10 +109,13 @@
                             data-name="{{ $prodi->mps_name }}"
                             data-description="{{ $prodi->mps_description }}"
                         ><i data-feather="edit-2"></i></a>
+                        @endif
                         <!-- DELETE -->
+                        @if (isFeatureInclude('program-studi-hapus', session('features')))
                         <a href="#deleteStudyProgram"
                             data-id="{{ $prodi->mps_id }}"
                         ><i data-feather="trash-2"></i></a>
+                        @endif
                     </td>
                 </tr>
                 @endforeach
