@@ -24,7 +24,6 @@ class UserProfileController extends Controller
         $userRules = [
             'name' => 'required',
             'email' => 'required',
-            'role' => 'required'
         ];
 
         $userDetailRules = [
@@ -83,7 +82,8 @@ class UserProfileController extends Controller
                 'ud_photo' => $validatedUserDetailData['image']
             ]);
         }
-        return redirect()->route('edit-profile', $user)->with('success', 'User has been editted');
+        // return redirect()->route('edit-profile', $user)->with('success', 'User has been editted');
+        return redirect('/edit/profile/'.$request->name)->with('success', 'User has been editted');
     }
 
 }
