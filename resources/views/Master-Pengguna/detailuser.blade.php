@@ -106,7 +106,7 @@
 
                             <div class="form-group">
                                 <label for="birthdate">Tanggal Lahir</label>
-                                <input type="date" id="birthdate" name="birthdate" placeholder="Tanggal Lahir" class="form-control @error('birthdate') is-invalid @enderror" value="{{ $user->user_detail?->ud_birthday ?? '-' }}" readonly disabled>
+                                <input type="date" id="birthdate" readonly disabled name="birthdate" placeholder="Tanggal Lahir" class="form-control @error('birthdate') is-invalid @enderror" value="{{ old('birthdate', optional($user->user_detail)->ud_birthday ? date('Y-m-d', strtotime($user->user_detail->ud_birthday)) : null) }}">
                                 @error('birthdate')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
