@@ -29,6 +29,12 @@
         <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
+    @if (Session::has('errors'))
+    <div class="alert alert-errors" role="alert">
+        {{ Session::get('errors') }}
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
     <div class="pb-4">
         <p style="display: flex; align-items: flex-end;">
             <a href="{{ route('dashboard') }}"><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
@@ -78,23 +84,20 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="role">Posisi</label>
-                                <div class="input-group">
-                                <select class="form-select @error('role') is-invalid @enderror" id="role" name="role">
+                                <label for="position">Posisi</label>
+                                <select class="form-control @error('position') is-invalid @enderror" id="position" name="position" readonly disabled>
                                     <option value="" disabled selected>Pilih posisi</option>
-                                    <option value="1" {{ (old('role', $user->role) === 1) ? 'selected' : '' }}>Admin</option>
-                                    <option value="2" {{ (old('role', $user->role) === 2) ? 'selected' : '' }}>Peserta</option>
-                                    <option value="3" {{ (old('role', $user->role) === 3) ? 'selected' : '' }}>Penilai</option>
-                                    <option value="4" {{ (old('role', $user->role) === 4) ? 'selected' : '' }}>Pemateri</option>
-                                    <option value="5" {{ (old('role', $user->role) === 5) ? 'selected' : '' }}>Mentor</option>
-                                    <option value="6" {{ (old('role', $user->role) === 6) ? 'selected' : '' }}>Dosen</option>
-                                    <option value="7" {{ (old('role', $user->role) === 7) ? 'selected' : '' }}>Management</option>
-                                    <script src="path/to/bootstrap.min.js"></script>
+                                    <option value="1" {{ $user->role == 1 ? 'selected' : '' }}>Admin</option>
+                                    <option value="2" {{ $user->role == 2 ? 'selected' : '' }}>Peserta</option>
+                                    <option value="3" {{ $user->role == 3 ? 'selected' : '' }}>Penilai</option>
+                                    <option value="4" {{ $user->role == 4 ? 'selected' : '' }}>Pemateri</option>
+                                    <option value="5" {{ $user->role == 5 ? 'selected' : '' }}>Mentor</option>
+                                    <option value="6" {{ $user->role == 6 ? 'selected' : '' }}>Dosen</option>
+                                    <option value="7" {{ $user->role == 7 ? 'selected' : '' }}>Management</option>
                                 </select>
-                                @error('role')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @error('position')
+                                <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-                                </div>
                             </div>
 
                             <div class="form-group">
