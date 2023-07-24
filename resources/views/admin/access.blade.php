@@ -226,6 +226,64 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr>
+                            <th>6</th>
+                            <td>Master Fakultas</td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="fakultas[]" class="form-check-input check-fakultas" value="fakultas-tambah">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="fakultas[]" class="form-check-input check-fakultas" value="fakultas-ubah">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="fakultas[]" class="form-check-input check-fakultas" value="fakultas-hapus">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="fakultas[]" class="form-check-input check-fakultas" value="fakultas-lihat">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input check-fakultas" id="fakultas">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>7</th>
+                            <td>Master Periode Pendaftaran</td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="periode-pendaftaran[]" class="form-check-input check-periode-pendaftaran" value="periode-pendaftaran-tambah">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="periode-pendaftaran[]" class="form-check-input check-periode-pendaftaran" value="periode-pendaftaran-ubah">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="periode-pendaftaran[]" class="form-check-input check-periode-pendaftaran" value="periode-pendaftaran-hapus">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="periode-pendaftaran[]" class="form-check-input check-periode-pendaftaran" value="periode-pendaftaran-lihat">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input check-periode-pendaftaran" id="periode-pendaftaran">
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -269,6 +327,20 @@
 
             var isChecked = $(this).prop('checked');
             $('.check-universitas').prop('checked', isChecked);
+        });
+
+        $('#fakultas').change(function() {
+            event.preventDefault(); // Prevent default click behavior
+
+            var isChecked = $(this).prop('checked');
+            $('.check-fakultas').prop('checked', isChecked);
+        });
+
+        $('#periode-pendaftaran').change(function() {
+            event.preventDefault(); // Prevent default click behavior
+
+            var isChecked = $(this).prop('checked');
+            $('.check-periode-pendaftaran').prop('checked', isChecked);
         });
 
         $('#role-select').change(function() {

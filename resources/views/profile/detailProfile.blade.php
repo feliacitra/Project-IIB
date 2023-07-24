@@ -26,25 +26,24 @@
 
     <div class="pb-4">
         <p style="display: flex; align-items: flex-end;">
-            <a href="{{ route('master.pengguna') }}"><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
-            <a href="{{ route('master.pengguna') }}" style="color: black;">Master Pengguna</a> &nbsp;&gt;&nbsp; Detail Pengguna
+            <a href="{{ route('dashboard') }}"><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
+            <a href="" style="color: black;">Profile</a>
         </p>
     </div>
 
     <div class="container-fluid" style="background-color: #f2f2f2">
-        {{-- <div class="card-header text-center">Detail Pengguna</div> --}}
+        {{-- <div class="card-header text-center">Profile</div> --}}
         <div class="row mt-3">
             {{-- <div class="col-md-12"> --}}
                 <div class="card">
-                    <div class="card-body"> 
-                        <h3 class="text-center mb-4" >Detail Pengguna</h3>
+                    <div class="card-body">
+                        <h3 class="text-center mb-4" >Profile</h3>
                         @if (Session::has('success'))
-                            <div class="alert alert-success">
-                                {{ Session::get('success') }}
-                            </div>
+                        <div class="alert alert-success">
+                            {{ Session::get('success') }}
+                        </div>
                         @endif
-
-                        <form id="detail-user-form" enctype="multipart/form-data">
+                        <form id="user detail" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group" style="text-align: center" >
                                 @if (optional($user->user_detail)->ud_photo)
@@ -53,21 +52,10 @@
                                     <img src="{{ asset('back/images/logo/user.png') }}" alt="Foto Profil" class="wd-200 ht-200 rounded-circle" style="margin-top: -5px; margin-bottom: 20px;">
                                 @endif
                             </div>
-                            {{-- <div class="form-group profile-icon">
-                                <i class="fas fa-user-circle fa-10x"></i>
-                            </div> --}}
                             <div class="form-group">
                                 <label for="name">Nama Lengkap</label>
                                 <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ $user->name }}" readonly disabled>
                                 @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" value="{{ $user->email }}" readonly disabled>
-                                @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -98,15 +86,14 @@
                                 </select>
                             </div>
 
-
                             <div class="form-group">
                                 <label for="place_of_birth">Tempat Lahir</label>
                                 <input type="text" id="place_of_birth" name="place_of_birth" class="form-control" value="{{ $user->user_detail?->ud_placeofbirth ?? '-' }}" readonly disabled>
                             </div>
-
+                            
                             <div class="form-group">
                                 <label for="birthdate">Tanggal Lahir</label>
-                                <input type="date" id="birthdate" name="birthdate" placeholder="Tanggal Lahir" class="form-control @error('birthdate') is-invalid @enderror" value="{{ $user->user_detail?->ud_birthday ?? '-' }}" readonly disabled>
+                                <input type="date" id="birthdate" readonly disabled name="birthdate" placeholder="Tanggal Lahir" class="form-control @error('birthdate') is-invalid @enderror" value="{{ old('birthdate', optional($user->user_detail)->ud_birthday ? date('Y-m-d', strtotime($user->user_detail->ud_birthday)) : null) }}">
                                 @error('birthdate')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -142,17 +129,17 @@
                                 <label for="education_level">Tingkat Pendidikan</label>
                                 <input type="text" id="education_level" name="education_level" class="form-control" value="{{ $user->user_detail?->ud_lasteducation ?? '-' }}" readonly disabled>
                             </div>
-
+                            
                             <div class="form-group">
                                 <label for="university">Universitas</label>
                                 <input type="text" id="university" name="university" class="form-control" value="{{ $user->user_detail?->ud_university ?? '-' }}" readonly disabled>
                             </div>
-
+                            
                             <div class="form-group">
                                 <label for="faculty">Fakultas</label>
                                 <input type="text" id="faculty" name="faculty" class="form-control" value="{{ $user->user_detail?->ud_faculty ?? '-' }}" readonly disabled>
                             </div>
-
+                            
                             <div class="form-group">
                                 <label for="major">Program Studi</label>
                                 <input type="text" id="major" name="major" class="form-control" value="{{ $user->user_detail?->ud_programstudy ?? '-' }}" readonly disabled>

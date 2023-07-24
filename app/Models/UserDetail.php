@@ -38,12 +38,6 @@ class UserDetail extends Model
         'ud_birthday' => 'datetime'
     ];
 
-    protected static function booted() {
-        static::creating(function($model) {
-            $model->ud_photo = asset('back/images/logo/user.png');
-        });
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);

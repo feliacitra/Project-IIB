@@ -67,18 +67,18 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('master.universitas') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Master Universitas</span>
+                        <i class="fa fa-building"></i>
+                        <span style="margin-left:17px">Master Universitas</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link">
+                    <a href="{{ route('faculty.index') }}" class="nav-link">
                         <i class="fa fa-university"></i>
                         <span style="margin-left:16px">Master Fakultas</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link">
+                    <a href="{{ route('master.prodi') }}" class="nav-link">
                         <i class="fa fa-graduation-cap"></i>
                         <span style="margin-left:13px">Master Program Studi</span>
                     </a>
@@ -181,36 +181,6 @@
                 {!! $menu !!}
             </li>
             @endforeach
-                {{-- <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Dashboard</span>
-                    </a>
-                    <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Profil Startup</span>
-                    </a>
-                    <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Voting Jadwal Mentoring</span>
-                    </a>
-                    <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Jadwal Mentoring</span>
-                    </a>
-                    <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Jadwal Bootcamp</span>
-                    </a>
-                    <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">Sertifikat Monev</span>
-                    </a>
-                </li> --}}
-                {{-- @foreach (get_access() as $feature)
-                    <li class="nav-item nav-category">{{ $feature->name }}</li>
-                @endforeach --}}
-                {{-- <li class="nav-item nav-category">{{ get_access() }}</li> --}}
             @endif
         </ul>
     </div>
