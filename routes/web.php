@@ -99,6 +99,18 @@ Route::middleware(['auth', 'access'])->group(function () {
         'index' => 'master.periode',
     ])->except(['show', 'edit', 'create']);
 
+    Route::get('/master/penilaian', function() {
+        return view('Master-KomponenPenilaian.listKomponenPenilaian');
+    })->name('penilaian');
+
+    Route::get('/master/penilaian/editComponent', function() {
+        return view('Master-KomponenPenilaian.kelolaKomponenEdit');
+    })->name('editComponent');
+
+    Route::get('/master/penilaian/viewComponent', function() {
+        return view('Master-KomponenPenilaian.kelolaKomponenView');
+    })->name('viewComponent');
+
     // Route::get('/master/inkubasi', function() {
     //     $master_programinkubasi = DB::table('master_programinkubasi')->get();
     //     return view('Master-ProgramInkubasi.listProgramInkubasi',['master_programinkubasi'=>$master_programinkubasi]);
