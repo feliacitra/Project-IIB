@@ -13,6 +13,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Models\MasterCategory;
 use App\Http\Controllers\MasterUniversitasController;
 use App\Http\Controllers\MasterFakultasController;
+use App\Http\Controllers\MasterProgramStudyController;
 use Illuminate\Support\Facades\View;
 
 /*
@@ -72,6 +73,8 @@ Route::middleware(['auth', 'access'])->group(function () {
     })->name('incubationProgram');
 
     Route::get('/detail/profile/{user:name}', [UserProfileController::class, 'index'])->name('detail-profile');
+    Route::get('/edit/profile/{user:name}', [UserProfileController::class, 'edit'])->name('edit-profile');
+    Route::put('/edit/profile/{user:name}', [UserProfileController::class, 'update'])->name('update-profile');
 
     Route::get('/master/startup', function() {
         return view('Master-KategoriStartup.listKategoriStartup');
@@ -124,6 +127,11 @@ Route::middleware(['auth', 'access'])->group(function () {
         'destroy' => 'faculty.destroy',
     ]);
 
+    Route::resource('/master/prodi', MasterProgramStudyController::class)->names([
+        'index' => 'master.prodi',
+    ])->except(['show', 'edit', 'create', 'getFaculties']);
+
+    Route::get('/master/prodi/{university}', [MasterProgramStudyController::class, 'getFaculties']);
 
 });
 

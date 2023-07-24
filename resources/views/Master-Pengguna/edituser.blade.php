@@ -32,12 +32,13 @@
     </div>
 
     <div class="container-fluid" style="background-color: #f2f2f2">
-        <div class="card-header text-center">Edit Pengguna</div>
+        {{-- <div class="card-header text-center">Edit Pengguna</div> --}}
         <div class="row mt-3">
-            <div class="col-md-12">
+            {{-- <div class="col-md-12"> --}}
                 <div class="card">
                     <div class="card-body">
-                        <form method="post" action="/master/pengguna/{{ $user->name }}/edit" enctype="multipart/form-data">
+                        <h3 class="text-center mb-4" >Edit Pengguna</h3>
+                        <form method="post" action="/edit/profile/{{ $user->name }}" enctype="multipart/form-data">
                             @method('put')
                             @csrf
                             <div class="form-group" style="text-align: center" >
@@ -79,7 +80,7 @@
                                 <label for="role">Posisi</label>
                                 <div class="input-group">
                                 <select class="form-select @error('role') is-invalid @enderror" id="role" name="role">
-                                    <option value="" disabled selected>Pilih posisi</option>
+                                    <option value="" readonly selected>Pilih posisi</option>
                                     <option value="1" {{ (old('role', $user->role) === 1) ? 'selected' : '' }}>Admin</option>
                                     <option value="2" {{ (old('role', $user->role) === 2) ? 'selected' : '' }}>Peserta</option>
                                     <option value="3" {{ (old('role', $user->role) === 3) ? 'selected' : '' }}>Penilai</option>
@@ -169,7 +170,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
+            {{-- </div> --}}
+        {{-- </div> --}}
     </div>
 @endsection

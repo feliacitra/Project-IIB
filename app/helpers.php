@@ -50,6 +50,12 @@ if (!function_exists('get_menu')) {
                             <span class=\"link-title\">Master Periode Pendaftaran</span>
                         </a>";
         }
+        if (isSubStringInArray('program-studi', $features)) {
+            $menu[] = "<a href=\"" . route('master.prodi') . "\" class=\"nav-link\">
+                            <i class=\"link-icon\" data-feather=\"box\"></i>
+                            <span class=\"link-title\">Master Program Studi</span>
+                        </a>";
+        }
         return $menu;
     }
 }

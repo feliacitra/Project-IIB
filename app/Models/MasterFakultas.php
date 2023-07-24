@@ -22,7 +22,14 @@ class MasterFakultas extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-    public function university(){
-        return $this -> belongsTo(MasterUniversitas::class, 'mu_id');
+
+    public function university()
+    {
+        return $this -> belongsTo(MasterUniversitas::class, 'mu_id', 'mu_id');
+    }
+
+    public function programstudy()
+    {
+        return $this->hasMany(MasterProgramStudy::class, 'mf_id', 'mf_id');
     }
 }

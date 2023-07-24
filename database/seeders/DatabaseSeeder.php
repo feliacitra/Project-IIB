@@ -95,6 +95,18 @@ class DatabaseSeeder extends Seeder
                 'name' => 'fakultas-lihat',
             ],
             [
+                'name' => 'program-studi-tambah',
+            ],
+            [
+                'name' => 'program-studi-ubah',
+            ],
+            [
+                'name' => 'program-studi-hapus',
+            ],
+            [
+                'name' => 'program-studi-lihat',
+            ],
+            [
                 'name' => 'periode-pendaftaran-tambah',
             ],
             [
