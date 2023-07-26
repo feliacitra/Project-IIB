@@ -32,11 +32,12 @@
     </div>
 
     <div class="container-fluid" style="background-color: #f2f2f2">
-        <div class="card-header text-center">Tambah Pengguna</div>
+        {{-- <div class="card-header text-center">Tambah Pengguna</div> --}}
         <div class="row mt-3">
-            <div class="col-md-12">
+            {{-- <div class="col-md-12"> --}}
                 <div class="card">
                     <div class="card-body">
+                        <h3 class="text-center mb-4" >Tambah Pengguna</h3>
                         @if (Session::has('success'))
                             <div class="alert alert-success">
                                 {{ Session::get('success') }}
@@ -173,7 +174,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
+            {{-- </div> --}}
+        {{-- </div> --}}
     </div>
 @endsection

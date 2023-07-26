@@ -20,6 +20,7 @@
     </div>
 
     <!-- Button Tambah -->
+    @if (isFeatureInclude('periode-pendaftaran-tambah', session('features')))
     <div class="pb-2" style="display: flex; justify-content: flex-end;">
         <a href="#addPeriod" class="button btn-primary">
             <button id="openAdd" class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
@@ -28,6 +29,7 @@
             </button>
         </a>
     </div>
+    @endif
     <!-- Button Tambah -->
 
     <!-- Search Bar -->
@@ -102,6 +104,7 @@
                     <td class="text-center">{{ $period->mpe_status == 0 ? 'TIDAK AKTIF' : ($period->mpe_status == 1 ? 'AKTIF' : 'INVALID') }}</td>
                     <td class="text-center">
                         <!-- VIEW -->
+                        @if (isFeatureInclude('periode-pendaftaran-lihat', session('features')))
                         <a href="#viewPeriod"
                             data-name="{{ $period->mpe_name }}"
                             data-startdate="{{ Carbon::parse($period->mpe_startdate)->isoFormat('D MMMM Y') }}"
@@ -109,7 +112,9 @@
                             data-status="{{ $period->mpe_status == 0 ? 'TIDAK AKTIF' : ($period->mpe_status == 1 ? 'AKTIF' : 'INVALID') }}"
                             data-description="{{ $period->mpe_description }}"
                         ><i data-feather="eye"></i></a>
+                        @endif
                         <!-- EDIT -->
+                        @if (isFeatureInclude('periode-pendaftaran-ubah', session('features')))
                         <a href="#editPeriod"
                             data-id="{{ $period->mpe_id }}"
                             data-name="{{ $period->mpe_name }}"
@@ -118,10 +123,13 @@
                             data-status="{{ $period->mpe_status }}"
                             data-description="{{ $period->mpe_description }}"
                         ><i data-feather="edit-2"></i></a>
+                        @endif
                         <!-- DELETE -->
+                        @if (isFeatureInclude('periode-pendaftaran-hapus', session('features')))
                         <a href="#deletePeriod"
                             data-id="{{ $period->mpe_id }}"
                         ><i data-feather="trash-2"></i></a>
+                        @endif
                     </td>
                 </tr>
                 @endforeach

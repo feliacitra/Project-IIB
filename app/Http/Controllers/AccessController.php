@@ -21,6 +21,10 @@ class AccessController extends Controller
         $pengguna = $request->input('pengguna');
         $programInkubasi = $request->input('program-inkubasi');
         $kategoriStartup = $request->input('kategori-startup');
+        $civitas = $request->input('civitas');
+        $universitas = $request->input('universitas');
+        $fakultas = $request->input('fakultas');
+        $periodePendaftaran = $request->input('periode-pendaftaran');
 
         $roleDb = Role::find($role);
         if ($pengguna) {
@@ -43,6 +47,35 @@ class AccessController extends Controller
                 $roleDb->features()->save($featureDb);
             }
         }
+
+        if ($civitas) {
+            foreach ($civitas as $feature) {
+                $featureDb = Feature::where('name', $feature)->first();
+                $roleDb->features()->save($featureDb);
+            }
+        }
+        
+        if ($universitas) {
+            foreach ($universitas as $feature) {
+                $featureDb = Feature::where('name', $feature)->first();
+                $roleDb->features()->save($featureDb);
+            }
+        }
+        
+        if ($fakultas) {
+            foreach ($fakultas as $feature) {
+                $featureDb = Feature::where('name', $feature)->first();
+                $roleDb->features()->save($featureDb);
+            }
+        }
+        
+        if ($periodePendaftaran) {
+            foreach ($periodePendaftaran as $feature) {
+                $featureDb = Feature::where('name', $feature)->first();
+                $roleDb->features()->save($featureDb);
+            }
+        }
+        
         return redirect('/access')->with('success', 'Berhasil mengubah hak akses');
     }
 
