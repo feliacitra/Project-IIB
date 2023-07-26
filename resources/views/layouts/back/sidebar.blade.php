@@ -125,6 +125,15 @@
                         <span class="link-title">Master Index Nilai Matkul</span>
                     </a>
                 </li>
+
+                <li class="nav-item nav-category">Pendaftaran</li>
+                <li class="nav-item">
+                    <a href="{{ route('pendaftar') }}" class="nav-link">
+                        <i class="link-icon" data-feather="file-text"></i>
+                        <span class="link-title">Data Pendaftar</span>
+                    </a>
+                </li>
+
                 <li class="nav-item nav-category">Hak Akses</li>
                 <li class="nav-item">
                     <a href="{{ route('access.index') }}" class="nav-link">
