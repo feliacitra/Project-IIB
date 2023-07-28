@@ -33,21 +33,27 @@
         <div class="col-4 col-md-3 col-lg-2">
             <select name="pilihPeriode" id="periode" class="form-control form-select">
                 <option value="select" class="text-muted">Periode</option>
-                <option value="th2022">Tahun 2022</option>
+                @foreach ($periode as $item)
+                    <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }}</option>
+                @endforeach
             </select>
         </div>
 
         <div class="col-4 col-md-3 col-lg-2">
             <select name="pilihPeriode" id="periode" class="form-control form-select">
                 <option value="select" class="text-muted">Program Inkubasi</option>
-                <option value="th2022">Tahun 2022</option>
+                @foreach ($programInkubasi as $item)
+                    <option value="{{ $item->mpi_id }}">{{ $item->mpi_name }}</option>
+                @endforeach
             </select>
         </div>
 
         <div class="col-4 col-md-3 col-lg-2">
             <select name="pilihPeriode" id="periode" class="form-control form-select">
                 <option value="select" class="text-muted">Tahap Seleksi</option>
-                <option value="th2022">Tahun 2022</option>
+                <option value="assess">Self Assessment</option>
+                <option value="present">Presentasi</option>
+                <option value="eval">Desk Evaluation</option>
             </select>
         </div>
 
@@ -88,20 +94,22 @@
 
             <!-- Table Body -->
             <tbody>
-                <tr>
-                    <th scope="row" class="text-center">1</th>
-                    <td>Tahun 2022</td>
-                    <td>BTPIP</td>
-                    <td>Self Assessment</td>
-                    <td class="text-center">
-                        <!-- VIEW -->
-                        <a href="{{ route('viewComponent') }}"><i data-feather="eye"></i></a>
-                        <!-- EDIT -->
-                        <a href="{{ route('editComponent') }}"><i data-feather="plus-circle"></i></a>
-                        <!-- DELETE -->
-                        <a href="#deletePeriod"><i data-feather="trash-2"></i></a>
-                    </td>
-                </tr>
+                @foreach ($components as $item)
+                    <tr>
+                        <th scope="row" class="text-center">{{ $loop->iteration }}</th>
+                        <td>Tahun 2022</td>
+                        <td>BTPIP</td>
+                        <td>Self Assessment</td>
+                        <td class="text-center">
+                            <!-- VIEW -->
+                            <a href="{{ route('viewComponent') }}"><i data-feather="eye"></i></a>
+                            <!-- EDIT -->
+                            <a href="{{ route('editComponent') }}"><i data-feather="plus-circle"></i></a>
+                            <!-- DELETE -->
+                            <a href="#deletePeriod"><i data-feather="trash-2"></i></a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
             <!-- Table Body -->
         </table>
@@ -125,14 +133,16 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
-                        <form>
+                        <form method="POST" action="{{ route('penilaian.store') }}">
                             <!-- Nama Periode -->
                             <div class="form-group row align-items-center" style="margin-top: 1rem">
                                 <label for="namaPeriode" class="col-sm-4">Nama Periode</label>
                                 <div class="col-sm-8">
                                     <select name="pilihNamaPeriode" id="namaPeriode" class="form-control form-select">
                                         <option value="select" class="text-muted">Nama Periode</option>
-                                        <option value="th2022">Tahun 2022</option>
+                                        @foreach ($periode as $item)
+                                            <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -144,7 +154,9 @@
                                 <div class="col-sm-8">
                                     <select name="pilihProgramInkubasi" id="programInkubasi" class="form-control form-select">
                                         <option value="select" class="text-muted">Program Inkubasi</option>
-                                        <option value="btpip">BTPIP</option>
+                                        @foreach ($programInkubasi as $item)
+                                            <option value="{{ $item->mpi_id }}">{{ $item->mpi_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -156,7 +168,9 @@
                                 <div class="col-sm-8">
                                     <select name="pilihTahapanSeleksi" id="tahapanSeleksi" class="form-control form-select">
                                         <option value="select" class="text-muted">Tahapan Seleksi</option>
-                                        <option value="btpip">BTPIP</option>
+                                        <option value="assess">Self Assessment</option>
+                                        <option value="present">Presentasi</option>
+                                        <option value="eval">Desk Evaluation</option>
                                     </select>
                                 </div>
                             </div>

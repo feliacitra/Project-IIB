@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMasterComponentsTable extends Migration
+class CreateMasterQuestionrange extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateMasterComponentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('master_component', function (Blueprint $table) {
-            $table->id('mct_id');
+        Schema::create('master_questionrange', function (Blueprint $table) {
+            $table->id('mqr_id');
             $table->timestamps();
-            $table->tinyInteger('mct_step');
-            $table->foreignId('mpd_id')->constraint('master_periodeprogram')->onDelete('restrict');
+            $table->string('mqr_description');
+            $table->integer('mqr_poin');
+            $table->foreignId('mq_id')->constraint('master_question')->onDelete('restrict');
         });
     }
 
@@ -28,6 +29,6 @@ class CreateMasterComponentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('master_component');
+        Schema::dropIfExists('master_questionrange');
     }
 }
