@@ -22549,4 +22549,155 @@ div.tox .tox-dialog__body {
 .wizard.vertical > .actions > ul > li {
   margin: 0 0 0 0.7em;
 }
+
+.progressbar-container {
+  margin: 2rem auto 4rem auto;
+  position: relative;
+  z-index: 0;
+}
+
+.progressbar {
+  counter-reset: step;
+}
+
+.progressbar li {
+  list-style-type: none;
+  float: left;
+  width: 25%;
+  position: relative;
+  text-align: center;
+}
+
+.progressbar li:before {
+  content: counter(step);
+  counter-increment: step;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  border-radius: 50%;
+  border: 2px solid grey;
+  background-color: white;
+  display: block;
+  margin: 0 auto 10px auto;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.progressbar li:after {
+  content: '';
+  width: 100%;
+  height: 2px;
+  top: 17.5px;
+  left: -50%;
+  position: absolute;
+  background-color: grey;
+  z-index: 1;
+}
+
+.progressbar li:first-child:after {
+  content: none;
+}
+
+.progressbar li.success {
+  color: var(--bs-success);
+}
+
+.progressbar li.success:before {
+  color: white;
+  border-color: var(--bs-success);
+  background-color: var(--bs-success);
+}
+
+.progressbar li.success + li:after {
+  background-color: var(--bs-success);
+}
+
+.progressbar li.fail + li:after {
+  background-color: var(--bs-primary); /* Change the background color to red for the li:after */
+}
+
+.progressbar li.fail {
+  color: var(--bs-primary);
+}
+
+.progressbar li.fail:before {
+  color: white;
+  border-color: var(--bs-primary);
+  background-color: var(--bs-primary);
+}
+
+.progressbar .status {
+  border-radius: 1rem;
+  padding: 2px 5px;
+  margin: 10px auto 10px auto;
+}
+
+.status.success {
+  color: white;
+  width: 80px;
+  background-color: var(--bs-success);
+}
+
+.status.fail {
+  color: white;
+  width: 110px;
+  background-color: var(--bs-primary);
+}
+
+@media (max-width: 767px) {
+  .progressbar li {
+    list-style-type: none;
+    float: none;
+    width: 100%;
+    position: relative;
+    text-align: center;
+  }
+
+  .progressbar li:before {
+    position: relative;
+    z-index: 2;
+  }
+
+  .progressbar li:after {
+    content: '';
+    width: 2px;
+    height: calc(100% + 50px);
+    background-color: grey;
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+  }
+
+  .progressbar li.success p {
+    background-color: white;
+    height: 10%;
+    margin: 1rem auto 0 auto;
+  }
+
+  .progressbar li.fail p {
+    background-color: white;
+    height: 10%;
+    margin: 1rem auto 0 auto;
+  }
+
+  .progressbar li.success p.date {
+    background-color: white;
+    height: 10%;
+    margin: 0 auto 2rem auto;
+  }
+
+  .progressbar li.fail p.date {
+    background-color: white;
+    height: 10%;
+    margin: 0 auto 2rem auto;
+  }
+
+  .progressbar .status {
+    display: none;
+  }
+}
+
 /*# sourceMappingURL=../maps/demo1/style.css.map */
