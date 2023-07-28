@@ -11,4 +11,9 @@ class MasterProgramInkubasi extends Model
 
     protected $table = "master_programinkubasi";
     protected $fillable = ['mpi_name', 'mpi_description', 'mpi_type'];
+
+    public function masterPeriode()
+    {
+        return $this->belongsToMany(MasterPeriode::class);
+    }
 }

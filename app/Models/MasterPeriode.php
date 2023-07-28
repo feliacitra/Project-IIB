@@ -14,4 +14,9 @@ class MasterPeriode extends Model
     ];
 
     protected $table = 'master_periode';
+
+    public function masterProgramInkubasi()
+    {
+        return $this->belongsToMany(MasterProgramInkubasi::class);
+    }
 }

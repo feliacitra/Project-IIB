@@ -97,7 +97,7 @@
                 @foreach ($components as $item)
                     <tr>
                         <th scope="row" class="text-center">{{ $loop->iteration }}</th>
-                        <td>Tahun 2022</td>
+                        <td>{{ $item }}</td>
                         <td>BTPIP</td>
                         <td>Self Assessment</td>
                         <td class="text-center">
@@ -168,9 +168,9 @@
                                 <div class="col-sm-8">
                                     <select name="pilihTahapanSeleksi" id="tahapanSeleksi" class="form-control form-select">
                                         <option value="select" class="text-muted">Tahapan Seleksi</option>
-                                        <option value="assess">Self Assessment</option>
-                                        <option value="present">Presentasi</option>
-                                        <option value="eval">Desk Evaluation</option>
+                                        <option value="1">Self Assessment</option>
+                                        <option value="2">Presentasi</option>
+                                        <option value="3">Desk Evaluation</option>
                                     </select>
                                 </div>
                             </div>
