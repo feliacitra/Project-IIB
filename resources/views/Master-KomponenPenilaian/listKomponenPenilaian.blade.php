@@ -97,9 +97,15 @@
                 @foreach ($components as $item)
                     <tr>
                         <th scope="row" class="text-center">{{ $loop->iteration }}</th>
-                        <td>{{ $item }}</td>
-                        <td>BTPIP</td>
-                        <td>Self Assessment</td>
+                        <td>{{ $item->periodeProgram->masterPeriode->mpe_name }}</td>
+                        <td>{{ $item->periodeProgram->masterProgramInkubasi->mpi_name }}</td>
+                        @if ($item->mct_step == 1)
+                            <td>Self Assessment</td>
+                        @elseif ($item->mct_step == 2)
+                            <td>Presentasi</td>
+                        @else
+                            <td>Desk Evaluation</td>
+                        @endif
                         <td class="text-center">
                             <!-- VIEW -->
                             <a href="{{ route('viewComponent') }}"><i data-feather="eye"></i></a>
@@ -134,6 +140,7 @@
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
                         <form method="POST" action="{{ route('penilaian.store') }}">
+                            @csrf
                             <!-- Nama Periode -->
                             <div class="form-group row align-items-center" style="margin-top: 1rem">
                                 <label for="namaPeriode" class="col-sm-4">Nama Periode</label>

@@ -13,7 +13,7 @@ class MasterKomponenPenilaianController extends Controller
 {
     public function index()
     {
-        $components = MasterComponent::all();
+        $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->get();
         $periode = MasterPeriode::all();
         $programInkubasi = MasterProgramInkubasi::all();
 
@@ -37,12 +37,22 @@ class MasterKomponenPenilaianController extends Controller
 
         $periode = MasterPeriode::find($mpe_id);
         $programInkubasi = MasterProgramInkubasi::find($mpi_id);
+        
+        if (!$programInkubasi->masterPeriode->contains($mpe_id)) {
+            $programInkubasi->masterPeriode()->attach($mpe_id);
+        }
+        
+        
+        
+        $periodeProgram = MasterPeriodeProgram::where('mpe_id', $mpe_id)->where('mpi_id', $mpi_id)->first();
+        // dd($periodeProgram);
+        
+        $component = new MasterComponent;
+        
+        $component->mct_step = $tahap;
+        $component->mpd_id = $periodeProgram->mpd_id;
 
-        $periode->masterProgramInkubasi()->save($programInkubasi);
-
-        MasterComponent::create([
-            'mct_step' => $tahap
-        ]);
+        $component->save();
 
         return redirect()->route('master.penilaian');
 

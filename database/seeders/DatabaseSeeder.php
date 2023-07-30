@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\Role;
 use App\Models\Feature;
 use App\Models\MasterFakultas;
+use App\Models\MasterProgramInkubasi;
+use App\Models\MasterPeriode;
 use App\Models\MasterMember;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -177,5 +179,28 @@ class DatabaseSeeder extends Seeder
         foreach ($features as $feature) {
             $role->features()->attach($feature->id);
         }
+
+        $periode = [
+            'mpe_startdate' => '2023-07-01',
+            'mpe_enddate' => '2023-07-31',
+            'mpe_name' => '2023/2024 Ganjil',
+            'mpe_status' => 1,
+            'mpe_description' => 'Deskripsi'
+        ];
+        MasterPeriode::firstOrCreate(['mpe_name' => '2023/2024 Ganjil'], $periode);
+
+        $programInkubasi = [
+            'mpi_name' => 'Upward',
+            'mpi_description' => 'Deskripsi',
+            'mpi_type' => 'AKTIF'
+        ];
+        $contoh = [
+            'mpi_name' => 'Contoh',
+            'mpi_description' => 'Desc',
+            'mpi_type' => 'AKTIF'
+        ];
+        MasterProgramInkubasi::firstOrCreate(['mpi_name' => 'Upward'], $programInkubasi);
+        MasterProgramInkubasi::firstOrCreate(['mpi_name' => 'Contoh'], $contoh);
+
     }
 }

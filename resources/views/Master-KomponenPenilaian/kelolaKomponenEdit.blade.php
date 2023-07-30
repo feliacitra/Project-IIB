@@ -26,7 +26,7 @@
             <!-- Home button -->
             <a href="/dashboard"><i data-feather="home" style="margin-right: 0.5rem;"></i></a>
             <!-- Home button -->
-            <a href="{{ route('penilaian') }}">Master Komponen Penilaian</a>&nbsp;> Kelola Komponen
+            <a href="{{ route('master.penilaian') }}">Master Komponen Penilaian</a>&nbsp;> Kelola Komponen
         </p>
     </div>
 
