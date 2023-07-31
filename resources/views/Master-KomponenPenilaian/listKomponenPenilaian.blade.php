@@ -108,7 +108,7 @@
                         @endif
                         <td class="text-center">
                             <!-- VIEW -->
-                            <a href="{{ route('viewComponent') }}"><i data-feather="eye"></i></a>
+                            <a href="{{ route('viewComponent') }}/{{ $item->mct_id}}"><i data-feather="eye"></i></a>
                             <!-- EDIT -->
                             <a href="{{ route('editComponent') }}"><i data-feather="plus-circle"></i></a>
                             <!-- DELETE -->
