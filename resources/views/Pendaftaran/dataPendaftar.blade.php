@@ -83,7 +83,7 @@
                     <td class="text-center">On Progress</td>
                     <td class="text-center">
                         <!-- VIEW -->
-                        <a href="#viewData"><i data-feather="eye"></i></a>
+                        <a href="{{route ('dataStartup')}}"><i data-feather="eye"></i></a>
                     </td>
                 </tr>
             </tbody>
@@ -92,98 +92,17 @@
     </div>
     <!-- Users Table -->
 
-<!-- POP-UP VIEW-->
-    <div class="overlay" id="viewData">
-        <div class="wrapper">
-            <div class="row align-items-center">
-                <div class="col col-lg-9 col-md-8">
-                    <h4>Lihat Data</h4>
-                </div>
-                <div class="col col-lg-3 col-md-4 d-flex justify-content-end">
-                    <!-- X button -->
-                    <a href="#" class="close">&times;</a>
-                    <!-- X button -->
-                </div>
-            </div>
-            <div class="content">
-                <div class="container-fluid p-0">
-                    <div class="input-group-lg rounded">
-                        <form>
-                            <!-- Nama Periode -->
-                            <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="namaPeriode" class="col-sm-4">Periode</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="Tahun 2022" disabled>
-                                </div>
-                            </div>
-                            <!-- Nama Periode -->
+    <script>
+        $('.btnNext').click(function() {
+            const nextTabLinkEl = $('.nav-tabs .active').closest('li').next('li').find('a')[0];
+            const nextTab = new bootstrap.Tab(nextTabLinkEl);
+            nextTab.show();
+        });
 
-                            <!-- Nama Startup -->
-                            <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="namaPeriode" class="col-sm-4">Nama Startup</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="GoShop" disabled>
-                                </div>
-                            </div>
-                            <!-- Nama Startup -->
-
-                            <!-- Program Inkubasi -->
-                            <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="namaPeriode" class="col-sm-4">Program Inkubasi</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="BTPIP" disabled>
-                                </div>
-                            </div>
-                            <!-- Program Inkubasi -->
-
-                            <!-- Kategori -->
-                            <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="namaPeriode" class="col-sm-4">Kategori</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="SmartTech" disabled>
-                                </div>
-                            </div>
-                            <!-- Kategori -->
-
-                            <!-- DE -->
-                            <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="namaPeriode" class="col-sm-4">Desk Evaluation</label>
-                                <div class="col-sm-8">
-                                    <i data-feather="check"></i>
-                                </div>
-                            </div>
-                            <!-- DE -->
-
-                            <!-- Presentasi -->
-                            <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="namaPeriode" class="col-sm-4">Presentasi</label>
-                                <div class="col-sm-8">
-                                    <i data-feather="minus"></i>
-                                </div>
-                            </div>
-                            <!-- Presentasi -->
-
-                            <!-- Status -->
-                            <div class="form-group row align-items-center" style="margin-top: 1rem">
-                                <label for="namaPeriode" class="col-sm-4">Status</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="On Progress" disabled>
-                                </div>
-                            </div>
-                            <!-- Status -->
-                            
-                            <div class="row mt-4">
-                                <!--Button Kembali -->
-                                <div class="col d-flex justify-content-end">
-                                    <a href="#" class="button-link">Kembali</a>
-                                </div>
-                                <!--Button Kembali -->
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<!-- VIEW -->
+        $('.btnPrevious').click(function() {
+            const prevTabLinkEl = $('.nav-tabs .active').closest('li').prev('li').find('a')[0];
+            const prevTab = new bootstrap.Tab(prevTabLinkEl);
+            prevTab.show();
+        });
+    </script>
 @endsection

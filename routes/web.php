@@ -115,6 +115,10 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Pendaftaran.dataPendaftar');
     })->name('pendaftar');
 
+    Route::get('/master/datastartup', function() {
+        return view('Pendaftaran.dataStartup');
+    })->name('dataStartup');
+
     // Route::get('/master/inkubasi', function() {
     //     $master_programinkubasi = DB::table('master_programinkubasi')->get();
     //     return view('Master-ProgramInkubasi.listProgramInkubasi',['master_programinkubasi'=>$master_programinkubasi]);
