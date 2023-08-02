@@ -13,7 +13,7 @@ class MasterKomponenPenilaianController extends Controller
 {
     public function index()
     {
-        $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->get();
+        $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->first();
         $periode = MasterPeriode::all();
         $programInkubasi = MasterProgramInkubasi::all();
 
@@ -29,6 +29,12 @@ class MasterKomponenPenilaianController extends Controller
         return view('Master-KomponenPenilaian.listKomponenPenilaian', compact('components', 'periode', 'programInkubasi'));
     }
 
+    public function create($id)
+    {
+        $component = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $id)->get();
+        return view('Master-KomponenPenilaian.kelolaKomponenEdit', compact('component'));
+    }
+
     public function store(Request $request)
     {
         $mpe_id = $request->input('pilihNamaPeriode');
@@ -42,10 +48,7 @@ class MasterKomponenPenilaianController extends Controller
             $programInkubasi->masterPeriode()->attach($mpe_id);
         }
         
-        
-        
         $periodeProgram = MasterPeriodeProgram::where('mpe_id', $mpe_id)->where('mpi_id', $mpi_id)->first();
-        // dd($periodeProgram);
         
         $component = new MasterComponent;
         

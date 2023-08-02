@@ -10,6 +10,7 @@ class MasterComponent extends Model
     use HasFactory;
 
     protected $table = 'master_component';
+    protected $primaryKey = 'mct_id';
     protected $fillable = [
         'mct_id',
         'mct_step',

@@ -147,6 +147,8 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/master/prodi/{university}', [MasterProgramStudyController::class, 'getFaculties']);
 
     Route::get('/master/penilaian', [MasterKomponenPenilaianController::class, 'index'])->name('penilaian');
+    Route::get('/master/penilaian/{id}', [MasterKomponenPenilaianController::class, 'create'])->name('penilaian.create');
+    // Route::get('/master/penilaian/{id}', ['as' => 'penilaian.create', 'uses' => 'MasterKomponenPenilaianController@create']);
     Route::resource('/master/penilaian', MasterKomponenPenilaianController::class)->only(['index', 'store', 'update', 'destroy'])->names([
         'index' => 'master.penilaian',
         'store' => 'penilaian.store',

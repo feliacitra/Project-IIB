@@ -32,9 +32,15 @@
 
     <div class="container-fluid py-4 px-4" style="height: 100%">
         <div class="row">
-            <p class="col">Periode: Tahun 2022</p>
-            <p class="col">Tahap: Self Assessment</p>
-            <p class="col">Program Inkubasi: BTPIP</p>
+            <p class="col">Periode: {{ $component[0]->periodeProgram->masterPeriode->mpe_name }}</p>
+            @if ($component[0]->mct_step == 1)
+                <p class="col">Tahap: Self Assessment</p>
+            @elseif ($component[0]->mct_step == 2)
+                <p class="col">Tahap: Presentasi</p>
+            @else
+                <p class="col">Tahap: Desk Evaluation</p>
+            @endif
+            <p class="col">Program Inkubasi: {{ $component[0]->periodeProgram->masterProgramInkubasi->mpi_name }}</p>
         </div>
 
         <div class="form-group">
@@ -64,9 +70,11 @@
             </div>
 
             <div id="cardContainer">
-                <div class="card mt-2">
+                <!-- Card -->
+                {{-- <div class="card mt-2">
                     <div class="card-body">
-                        <input type="text" class="form-control" id="pertanyaan" placeholder="Pertanyaan">
+                        <input class="quest-num" type="hidden" name="num[]" value="0">
+                        <input name="pertanyaan[]" type="text" class="form-control" id="pertanyaan" placeholder="Pertanyaan">
     
                         <div class="d-flex justify-content-end mt-2" onclick="addRow()">
                             <button class="btn btn-primary py-0 px-1">
@@ -95,10 +103,10 @@
                                                 1
                                             </td>
                                             <td>
-                                                <input class="form-control" type="text" placeholder="Jawaban" value="Current jawaban">
+                                                <input name="jawaban[]" class="form-control" type="text" placeholder="Jawaban" value="Current jawaban">
                                             </td>
                                             <td>
-                                                <input class="form-control" type="text" placeholder="Nilai" value="80">
+                                                <input name="nilai[]" class="form-control" type="text" placeholder="Nilai" value="80">
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-end mt-2">
@@ -114,7 +122,7 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
 
@@ -146,6 +154,13 @@
             input.className = "form-control";
             input.id = "pertanyaan";
             input.placeholder = "Pertanyaan";
+            input.name = 'pertanyaan[]';
+
+            var hiddenInput = document.createElement("input");
+            hiddenInput.type = "hidden";
+            hiddenInput.className = "quest-num";
+            hiddenInput.name = "num[]";
+            hiddenInput.value = "0";
 
             /* Create button container */
             var buttonContainer = document.createElement("div");
@@ -167,6 +182,7 @@
 
             /* Append input pertanyaan & button container to card body */
             cardBody.appendChild(input);
+            cardBody.appendChild(hiddenInput);
             cardBody.appendChild(buttonContainer);
 
             /* Create table container */
@@ -314,6 +330,13 @@
             tableBody.appendChild(tableRow);
 
             feather.replace();
+
+            var questNumInput = this.closest('.card-body').querySelector('.quest-num');
+            
+            var currentValue = parseInt(questNumInput.value);
+            var newValue = currentValue + 1;
+
+            questNumInput.value = newValue;
         }
 
 
