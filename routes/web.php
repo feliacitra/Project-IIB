@@ -115,7 +115,7 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Pendaftaran.dataPendaftar');
     })->name('pendaftar');
 
-    Route::get('/master/datastartup', function() {
+    Route::get('/master/pendaftar/datastartup', function() {
         return view('Pendaftaran.dataStartup');
     })->name('dataStartup');
 

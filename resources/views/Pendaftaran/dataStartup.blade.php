@@ -30,7 +30,7 @@
             <!-- Home button -->
             <a href="/dashboard"><i data-feather="home" style="margin-right: 0.5rem;"></i></a>
             <!-- Home button -->
-            Data Startup
+            <a href="{{ route('pendaftar') }}">Data Pendaftar</a>&nbsp;> Data Startup
         </p>
     </div>
 
@@ -108,11 +108,14 @@
                             <label for="sosialMedia">Sosial Media</label>
                             <input type="text" class="form-control" id="sosialMedia" placeholder="Sosial Media" disabled>
 
-                            <label for="pitchDeck">Unggah Pitch Deck</label>
-                            <input class="form-control" type="file" id="pitchDeck" name="pitchDeck" disabled>
+                            <label for="pitchDeck">Pitch Deck</label> <br>
+                            <a href="#" class="btn btn-secondary" style="height: 2.3rem; width: 7rem; display: flex; align-items: center;" download>
+                                <i data-feather="download" style="margin-right: 8px;"></i>
+                                Download
+                            </a>
 
                             <div class="d-flex justify-content-end">
-                                <a class="btn btn-primary btnNext  mt-2">Selanjutnya</a>
+                                <a class="btn btn-primary btnNext mt-2">Selanjutnya</a>
                             </div>
                         </div>
                     </div>
@@ -179,8 +182,11 @@
                                         <label for="nimnip">NIM/NIP</label>
                                         <input type="text" class="form-control" id="nimnip" placeholder="NIM/NIP" disabled>
 
-                                        <label for="CV">Curricullum Vitae</label>
-                                        <input class="form-control" type="file" id="CV" name="CV">
+                                        <label for="CV">Curricullum Vitae</label> <br>
+                                        <a href="#" class="btn btn-secondary" style="height: 2.3rem; width: 7rem; display: flex; align-items: center;" download>
+                                            <i data-feather="download" style="margin-right: 8px;"></i>
+                                            Download
+                                        </a>
                                     </div>                            
                                 </div>
                             </div>
@@ -229,7 +235,7 @@
                         
                         <div class="d-flex justify-content-between mt-4">
                             <a class="btn btn-primary btnPrevious">Sebelumnya</a>
-                            <button class="btn btn-primary px-4">Daftar</button>
+                            <a href="{{route ('pendaftar')}}" class="btn btn-secondary px-4">Kembali</a>
                         </div>
                     </div>
                 </form>
