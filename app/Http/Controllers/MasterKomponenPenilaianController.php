@@ -7,13 +7,15 @@ use Illuminate\Http\Request;
 use App\Models\MasterPeriode;
 use App\Models\MasterProgramInkubasi;
 use App\Models\MasterComponent;
+use App\Models\MasterQuestion;
+use App\Models\MasterQuestionRange;
 use App\Models\MasterPeriodeProgram;
 
 class MasterKomponenPenilaianController extends Controller
 {
     public function index()
     {
-        $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->first();
+        $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->get();
         $periode = MasterPeriode::all();
         $programInkubasi = MasterProgramInkubasi::all();
 
@@ -32,7 +34,49 @@ class MasterKomponenPenilaianController extends Controller
     public function create($id)
     {
         $component = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $id)->get();
-        return view('Master-KomponenPenilaian.kelolaKomponenEdit', compact('component'));
+        return view('Master-KomponenPenilaian.kelolaKomponenEdit', compact('component', 'id'));
+    }
+
+    public function storeQuest(Request $request, $id)
+    {
+        $pertanyaan = $request->pertanyaan;
+        $jawaban = $request->jawaban;
+        $num = $request->num;
+        $nilai = $request->nilai;
+
+        $questions = array();
+
+        $data = [
+            'pertanyaan' => $pertanyaan,
+            'jawaban' => $jawaban,
+            'num' => $num,
+            'nilai' => $nilai
+        ];
+
+        $component = MasterComponent::find($id);
+
+        foreach ($pertanyaan as $quest) {
+            $question = MasterQuestion::create(['mq_question' => $quest, 'mct_id' => $id]);
+            // $question->component()->associate($component);
+            // $question->save();
+            $questions[] = $question;
+        }
+        
+        $start = 0;
+        for ($i=0; $i < count($num); $i++) { 
+            for ($j=$start; $j < $num[$i]; $j++) { 
+                $questionRange = MasterQuestionRange::create([
+                    'mqr_description' => $jawaban[$j],
+                    'mqr_poin' => $nilai[$j],
+                    'mq_id' => $questions[$i]->mq_id
+                ]);
+                $questionRange->question()->associate($questions[$i]);
+                $questionRange->save();
+            }
+            $start = $num[$i];
+        }
+
+        return redirect()->route('master.penilaian');
     }
 
     public function store(Request $request)

@@ -44,7 +44,8 @@
         </div>
 
         <div class="form-group">
-            <form action="" class="row align-items-center" style="margin-top: 1rem">
+            <form id="component-form" method="POST" action="{{ route('quest.store', $id) }}" class="row align-items-center" style="margin-top: 1rem">
+                @csrf
                 <div class="col-4 col-md-3 col-lg-2">
                     <select name="pilihPeriode" id="periode" class="form-control form-select">
                         <option value="select" class="text-muted">Periode</option>
@@ -57,77 +58,24 @@
                 </div>
     
                 <div class="col">
-                    <button class="btn btn-primary px-4 py-1">
+                    <button type="button" class="btn btn-primary px-4 py-1">
                         Salin
                     </button>
                 </div>
+                <div class="d-flex justify-content-end mt-2">
+                    <button type="button" class="btn btn-primary add-form py-0 px-1" onclick="addCard()">
+                        <i data-feather="plus"></i>
+                    </button>
+                </div>
+    
+                <div id="cardContainer">
+                </div>
             </form>
 
-            <div class="d-flex justify-content-end mt-2">
-                <button class="btn btn-primary add-form py-0 px-1" onclick="addCard()">
-                    <i data-feather="plus"></i>
-                </button>
-            </div>
-
-            <div id="cardContainer">
-                <!-- Card -->
-                {{-- <div class="card mt-2">
-                    <div class="card-body">
-                        <input class="quest-num" type="hidden" name="num[]" value="0">
-                        <input name="pertanyaan[]" type="text" class="form-control" id="pertanyaan" placeholder="Pertanyaan">
-    
-                        <div class="d-flex justify-content-end mt-2" onclick="addRow()">
-                            <button class="btn btn-primary py-0 px-1">
-                                <i data-feather="plus"></i>
-                            </button>
-                        </div>
-
-                        <div class="table-responsive-md mt-2">
-                            <table class="table">
-                                <!-- Table Head -->
-                                <thead class="text-center" style="background-color: #f5f5f5">
-                                    <tr>
-                                        <th scope="col" style="width: 5%;">#</th>
-                                        <th scope="col" style="width: 75%">JAWABAN</th>
-                                        <th scope="col" style="width: 15%">NILAI</th>
-                                        <th scope="col" style="width: 5%"></th>
-                                    </tr>
-                                </thead>
-                                <!-- Table Head -->
-    
-                                <!-- Table Body INSERT-->
-                                <div id="tableContainer">
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-center">
-                                                1
-                                            </td>
-                                            <td>
-                                                <input name="jawaban[]" class="form-control" type="text" placeholder="Jawaban" value="Current jawaban">
-                                            </td>
-                                            <td>
-                                                <input name="nilai[]" class="form-control" type="text" placeholder="Nilai" value="80">
-                                            </td>
-                                            <td>
-                                                <div class="d-flex justify-content-end mt-2">
-                                                    <button class="btn btn-primary add-form py-0 px-1" onclick="deleteRow()">
-                                                        <i data-feather="minus"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </div>
-                                <!-- Table Body -->
-                            </table>
-                        </div>
-                    </div>
-                </div> --}}
-            </div>
         </div>
 
         <div class="container text-center inner-bottom-button">
-            <button class="btn btn-primary px-4">
+            <button class="btn btn-primary px-4" onclick="submit()">
                 Simpan
             </button>
         </div>
@@ -168,6 +116,7 @@
 
             /* Create button */
             var button = document.createElement("button");
+            button.type = "button";
             button.className = "btn btn-primary py-0 px-1";
 
             /* Plus icon */
@@ -288,6 +237,7 @@
 
             var tableCell2 = document.createElement("td");
             var inputJawaban = document.createElement("input");
+            inputJawaban.name = "jawaban[]";
             inputJawaban.type = "text";
             inputJawaban.className = "form-control";
             inputJawaban.placeholder = "Jawaban";
@@ -295,6 +245,7 @@
 
             var tableCell3 = document.createElement("td");
             var inputNilai = document.createElement("input");
+            inputNilai.name = "nilai[]";
             inputNilai.type = "text";
             inputNilai.className = "form-control";
             inputNilai.placeholder = "Nilai";
@@ -341,6 +292,12 @@
 
 
         function deleteRow() {
+            var questNumInput = this.closest('.card-body').querySelector('.quest-num');
+            
+            var currentValue = parseInt(questNumInput.value);
+            var newValue = currentValue - 1;
+
+            questNumInput.value = newValue;
             // Get the table row to delete
             var tableRow = this.closest("tr");
 
@@ -349,16 +306,21 @@
 
             // Remove the row from the table body
             tableBody.removeChild(tableRow);
+
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            // Add onclick event handlers
-            var minusButtons = document.querySelectorAll("#cardContainer .btn.btn-primary.add-form.py-0.px-1");
-            for (var i = 0; i < minusButtons.length; i++) {
-                var minusButton = minusButtons[i];
-                minusButton.onclick = deleteRow;
-            }
-        });
+        function submit() {
+            document.getElementById('component-form').submit();
+        }
+
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     // Add onclick event handlers
+        //     var minusButtons = document.querySelectorAll("#cardContainer .btn.btn-primary.add-form.py-0.px-1");
+        //     for (var i = 0; i < minusButtons.length; i++) {
+        //         var minusButton = minusButtons[i];
+        //         minusButton.onclick = deleteRow;
+        //     }
+        // });
     </script>
 
 @endsection

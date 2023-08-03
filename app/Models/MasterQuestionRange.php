@@ -10,6 +10,15 @@ class MasterQuestionRange extends Model
     use HasFactory;
 
     protected $table = 'master_questionrange';
+    protected $primaryKey = 'mqr_id';
+
+    protected $fillable = [
+        'mqr_description'
+    ];
+
+    protected $attributes = [
+        'mqr_poin' => 0,
+    ];
 
     public function question()
     {

@@ -10,6 +10,7 @@ class MasterQuestion extends Model
     use HasFactory;
 
     protected $table = 'master_question';
+    protected $primaryKey = 'mq_id';
     protected $fillable = [
         'mq_question'
     ];
