@@ -116,8 +116,20 @@ Route::middleware(['auth', 'access'])->group(function () {
     })->name('pendaftar');
 
     Route::get('/master/pendaftar/datastartup', function() {
-        return view('Pendaftaran.dataStartup');
+        return view('Pendaftaran-DataPendaftar.dataStartup');
     })->name('dataStartup');
+
+    Route::get('/master/penilaianDE', function() {
+        return view('Pendaftaran-PenilaianDE.penilaianDE');
+    })->name('penilaianDE');
+
+    Route::get('/master/penilaianDE/viewnilai', function() {
+        return view('Pendaftaran-PenilaianDE.nilaiView');
+    })->name('viewnilai');
+
+    Route::get('/master/penilaianDE/editnilai', function() {
+        return view('Pendaftaran-PenilaianDE.nilaiEdit');
+    })->name('editnilai');
 
     // Route::get('/master/inkubasi', function() {
     //     $master_programinkubasi = DB::table('master_programinkubasi')->get();

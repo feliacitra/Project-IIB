@@ -133,6 +133,12 @@
                         <span class="link-title">Data Pendaftar</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('penilaianDE') }}" class="nav-link">
+                        <i class="link-icon" data-feather="edit"></i>
+                        <span class="link-title">Penilaian Desk Evaluation</span>
+                    </a>
+                </li>
 
                 <li class="nav-item nav-category">Hak Akses</li>
                 <li class="nav-item">
