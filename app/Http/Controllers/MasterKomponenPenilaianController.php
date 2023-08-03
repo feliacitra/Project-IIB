@@ -33,12 +33,23 @@ class MasterKomponenPenilaianController extends Controller
 
     public function create($id)
     {
-        $component = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $id)->get();
+        $component = MasterComponent::with('question', 'question.questionRange', 'periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $id)->first();
+        // dd($component);
         return view('Master-KomponenPenilaian.kelolaKomponenEdit', compact('component', 'id'));
+    }
+
+    public function show($id)
+    {
+        $component = MasterComponent::with('question', 'question.questionRange', 'periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $id)->first();
+        // dd($component->question);
+        // $question = MasterQuestion::with('questionRange')->where('mct_id', $id)->get();
+        // $questionRange = MasterQuestionRange::where('mq_id', $component->question->mq_id)->get();
+        return view('Master-KomponenPenilaian.kelolaKomponenView', compact('component'));
     }
 
     public function storeQuest(Request $request, $id)
     {
+        // dd($id);
         $pertanyaan = $request->pertanyaan;
         $jawaban = $request->jawaban;
         $num = $request->num;
@@ -55,8 +66,9 @@ class MasterKomponenPenilaianController extends Controller
 
         $component = MasterComponent::find($id);
 
+
         foreach ($pertanyaan as $quest) {
-            $question = MasterQuestion::create(['mq_question' => $quest, 'mct_id' => $id]);
+            $question = MasterQuestion::firstOrCreate(['mq_question' => $quest, 'mct_id' => $id]);
             // $question->component()->associate($component);
             // $question->save();
             $questions[] = $question;
@@ -65,7 +77,7 @@ class MasterKomponenPenilaianController extends Controller
         $start = 0;
         for ($i=0; $i < count($num); $i++) { 
             for ($j=$start; $j < $num[$i]; $j++) { 
-                $questionRange = MasterQuestionRange::create([
+                $questionRange = MasterQuestionRange::firstOrCreate([
                     'mqr_description' => $jawaban[$j],
                     'mqr_poin' => $nilai[$j],
                     'mq_id' => $questions[$i]->mq_id

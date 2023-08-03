@@ -149,6 +149,7 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/master/penilaian', [MasterKomponenPenilaianController::class, 'index'])->name('penilaian');
     Route::get('/master/penilaian/{id}', [MasterKomponenPenilaianController::class, 'create'])->name('penilaian.create');
     Route::post('/master/penilaian/{id}', [MasterKomponenPenilaianController::class, 'storeQuest'])->name('quest.store');
+    Route::get('/master/penilaian/detail/{id}', [MasterKomponenPenilaianController::class, 'show'])->name('penilaian.show');
     Route::resource('/master/penilaian', MasterKomponenPenilaianController::class)->only(['index', 'store', 'update', 'destroy'])->names([
         'index' => 'master.penilaian',
         'store' => 'penilaian.store',

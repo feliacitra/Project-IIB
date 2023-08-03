@@ -32,15 +32,15 @@
 
     <div class="container-fluid py-4 px-4" style="height: 100%">
         <div class="row">
-            <p class="col">Periode: {{ $component[0]->periodeProgram->masterPeriode->mpe_name }}</p>
-            @if ($component[0]->mct_step == 1)
+            <p class="col">Periode: {{ $component->periodeProgram->masterPeriode->mpe_name }}</p>
+            @if ($component->mct_step == 1)
                 <p class="col">Tahap: Self Assessment</p>
-            @elseif ($component[0]->mct_step == 2)
+            @elseif ($component->mct_step == 2)
                 <p class="col">Tahap: Presentasi</p>
             @else
                 <p class="col">Tahap: Desk Evaluation</p>
             @endif
-            <p class="col">Program Inkubasi: {{ $component[0]->periodeProgram->masterProgramInkubasi->mpi_name }}</p>
+            <p class="col">Program Inkubasi: {{ $component->periodeProgram->masterProgramInkubasi->mpi_name }}</p>
         </div>
 
         <div class="form-group">
@@ -69,6 +69,49 @@
                 </div>
     
                 <div id="cardContainer">
+                    @forelse($component->question as $question)
+                    <div class="card mt-2">
+                        <div class="card-body">
+                            <input type="text" class="form-control" id="pertanyaan" placeholder="{{ $question->mq_question }}" disabled>
+
+                            <div class="table-responsive-md mt-2">
+                                <table class="table">
+                                    <!-- Table Head -->
+                                    <thead class="text-center" style="background-color: #f5f5f5">
+                                        <tr>
+                                            <th scope="col" style="width: 5%;">#</th>
+                                            <th scope="col" style="width: 75%">JAWABAN</th>
+                                            <th scope="col" style="width: 15%">NILAI</th>
+                                            <th scope="col" style="width: 5%"></th>
+                                        </tr>
+                                    </thead>
+                                    <!-- Table Head -->
+        
+                                    <!-- Table Body INSERT-->
+                                    <div id="tableContainer">
+                                        <tbody>
+                                            @foreach($question->questionRange as $qr)
+                                            <tr>
+                                                <td class="text-center">
+                                                    {{ $loop->iteration }}
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" placeholder="Jawaban" value="{{ $qr->mqr_description }}" disabled>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" placeholder="Nilai" value="{{ $qr->mqr_poin }}" disabled>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </div>
+                                    <!-- Table Body -->
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    @empty
+                    @endforelse
                 </div>
             </form>
 

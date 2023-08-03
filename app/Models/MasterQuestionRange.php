@@ -13,7 +13,9 @@ class MasterQuestionRange extends Model
     protected $primaryKey = 'mqr_id';
 
     protected $fillable = [
-        'mqr_description'
+        'mqr_description',
+        'mqr_poin',
+        'mq_id'
     ];
 
     protected $attributes = [
@@ -22,6 +24,6 @@ class MasterQuestionRange extends Model
 
     public function question()
     {
-        return $this->belongsTo(MasterQuestion::class, 'mq_id', 'mq_id');
+        return $this->belongsTo(MasterQuestion::class, 'mq_id');
     }
 }

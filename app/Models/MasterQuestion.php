@@ -10,19 +10,20 @@ class MasterQuestion extends Model
     use HasFactory;
 
     protected $table = 'master_question';
-    protected $primaryKey = 'mq_id';
+    // protected $primaryKey = 'mq_id';
     protected $fillable = [
-        'mq_question'
+        'mq_question',
+        'mct_id'
     ];
 
     public function component()
     {
-        $this->belongsTo(MasterComponent::class, 'mct_id', 'mct_id');
+        return $this->belongsTo(MasterComponent::class, 'mct_id', 'mct_id');
     }
 
     public function questionRange()
     {
-        $this->hasMany(MasterQuestionRange::class, 'mq_id', 'mq_id');
+        return $this->hasMany(MasterQuestionRange::class, 'mq_id');
     }
 
 }
