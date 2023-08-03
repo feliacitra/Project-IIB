@@ -112,7 +112,7 @@ Route::middleware(['auth', 'access'])->group(function () {
     })->name('viewComponent');
 
     Route::get('/master/pendaftar', function() {
-        return view('Pendaftaran.dataPendaftar');
+        return view('Pendaftaran-DataPendaftar.dataPendaftar');
     })->name('pendaftar');
 
     Route::get('/master/pendaftar/datastartup', function() {

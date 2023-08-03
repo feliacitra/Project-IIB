@@ -10,6 +10,9 @@
         .action-icons a + a {
             margin-left: 10px;
         }
+        thead th {
+            text-align: center;
+        }
     </style>
 
     <div class="pb-2">

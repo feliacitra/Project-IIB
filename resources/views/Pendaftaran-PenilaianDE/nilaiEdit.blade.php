@@ -29,7 +29,7 @@
             <!-- Home button -->
             <a href="/dashboard"><i data-feather="home" style="margin-right: 0.5rem;"></i></a>
             <!-- Home button -->
-            <a href="{{ route('penilaianDE') }}">Penilaian Desk Evaluation</a>&nbsp;> Lihat Nilai
+            <a href="{{ route('penilaianDE') }}">Penilaian Desk Evaluation</a>&nbsp;> Nilai
         </p>
     </div>
 
@@ -65,16 +65,16 @@
                     <div class="card-body">
                         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aenean commodo ligula eget dolor. Aenean massa?</p>
                         <div class="radio mt-2">
-                            <input type="radio" id="1" name="lorem_radio" value="1" disabled>
+                            <input type="radio" id="1" name="lorem_radio" value="1">
                             <label for="1">Lorem lorem</label>
 
-                            <input type="radio" id="2" name="lorem_radio" value="2" disabled>
+                            <input type="radio" id="2" name="lorem_radio" value="2">
                             <label for="2">Lorem ipsum</label>
 
-                            <input type="radio" id="3" name="lorem_radio" value="3" disabled>
+                            <input type="radio" id="3" name="lorem_radio" value="3">
                             <label for="3">Dolor sit amet</label>
 
-                            <input type="radio" id="4" name="lorem_radio" value="4" disabled>
+                            <input type="radio" id="4" name="lorem_radio" value="4">
                             <label for="4">Consecteturer</label>
                         </div>
                     </div>
@@ -86,23 +86,27 @@
                     <div class="card-body">
                         <div class="row">
                             <label for="catatanTambahan" class="col col-md-2">Catatan Tambahan</label>
-                            <textarea class="form-control col" name="catatan" id="catatanTambahan" cols="10" rows="4" disabled></textarea>
+                            <textarea class="form-control col" name="catatan" id="catatanTambahan" cols="10" rows="4"></textarea>
                         </div>
 
                         <div class="radio mt-4">
-                            <input type="radio" id="lulus" name="kelulusan" value="Lulus" disabled>
+                            <input type="radio" id="lulus" name="kelulusan" value="Lulus">
                             <label for="lulus">Lulus</label>
 
-                            <input type="radio" id="tidakLulus" name="kelulusan" value="Tidak Lulus" disabled>
+                            <input type="radio" id="tidakLulus" name="kelulusan" value="Tidak Lulus">
                             <label for="tidakLulus">Tidak Lulus</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="text-center inner-bottom-button">
+                    <button class="btn btn-primary px-4" style="margin-right: 1rem;">
+                        Simpan
+                    </button>
                     <a href="{{route ('penilaianDE')}}" class="btn btn-secondary px-4">Kembali</a>
                 </div>
             </form>
         </div>
     </div>
+
 @endsection
