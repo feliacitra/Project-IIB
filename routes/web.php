@@ -177,6 +177,9 @@ Route::middleware(['auth', 'access'])->group(function () {
         'destroy' => 'penilaian.destroy'
     ]);
 
+    Route::get('/profile', function() {
+        return view('Penilai.profile');
+    })->name('profilePenilai');
 });
 
 

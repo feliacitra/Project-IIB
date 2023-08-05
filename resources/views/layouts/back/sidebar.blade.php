@@ -151,7 +151,25 @@
                     <li class="nav-item nav-category">{{ $feature }}</li>
                 @endforeach --}}
                 {{-- <li class="nav-item nav-category">{{ auth()->user()->role }}</li> --}}
-
+            @elseif ( auth()->user()->role == '3' )
+            <li class="nav-item">
+                <a href="{{ route('profilePenilai') }}" class="nav-link">
+                    <i class="link-icon" data-feather="user"></i>
+                    <span class="link-title">Profil Penilai</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Lihat Jadwal Presentasi</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Lihat Jadwal Monev</span>
+                </a>
+            </li>
             {{-- @elseif ( auth()->user()->role == '2' ) --}}
             @else
             {{-- <li class="nav-item nav-category">Data Master</li> --}}
