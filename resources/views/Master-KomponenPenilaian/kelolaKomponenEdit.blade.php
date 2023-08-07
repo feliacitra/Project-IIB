@@ -69,11 +69,58 @@
                 </div>
     
                 <div id="cardContainer">
+                    {{-- <div class="card mt-2" style="order: 1;">
+                        <div class="card-body">
+                            <input type="text" class="form-control" id="pertanyaan" placeholder="Pertanyaan" name="pertanyaan[]"><input type="hidden" class="quest-num" name="num[]" value="1">
+                            <div class="d-flex justify-content-end mt-2">
+                                <button type="button" class="btn btn-primary py-0 px-1 add-row-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="table-responsive-md mt-2">
+                                <table class="table">
+                                    <thead class="text-center" style="background-color: rgb(245, 245, 245);">
+                                        <tr>
+                                            <th scope="col" style="width: 5%;">#</th>
+                                            <th scope="col" style="width: 75%;">JAWABAN</th>
+                                            <th scope="col" style="width: 15%;">NILAI</th>
+                                            <th scope="col" style="width: 5%;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">#</td>
+                                            <td><input name="jawaban[]" type="text" class="form-control" placeholder="Jawaban"></td>
+                                            <td><input name="nilai[]" type="text" class="form-control" placeholder="Nilai"></td>
+                                            <td>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <button class="btn btn-primary add-form py-0 px-1" onclick="deleteRow()">
+                                                        <i data-feather="minus"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>                  --}}
                     @forelse($component->question as $question)
                     <div class="card mt-2">
                         <div class="card-body">
-                            <input type="text" class="form-control" id="pertanyaan" placeholder="{{ $question->mq_question }}" disabled>
-
+                            <input type="text" class="form-control" id="pertanyaan" placeholder="{{ $question->mq_question }}">
+                            <input type="hidden" name="num[]" class="quest-num" value="{{ count($question->questionRange )}}">
+                            <div class="d-flex justify-content-end mt-2">
+                                <button type="button" class="btn btn-primary py-0 px-1 add-row-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                </button>
+                            </div>
                             <div class="table-responsive-md mt-2">
                                 <table class="table">
                                     <!-- Table Head -->
@@ -96,11 +143,20 @@
                                                     {{ $loop->iteration }}
                                                 </td>
                                                 <td>
-                                                    <input class="form-control" type="text" placeholder="Jawaban" value="{{ $qr->mqr_description }}" disabled>
+                                                    <input class="form-control" type="text" placeholder="Jawaban" value="{{ $qr->mqr_description }}">
                                                 </td>
                                                 <td>
-                                                    <input class="form-control" type="text" placeholder="Nilai" value="{{ $qr->mqr_poin }}" disabled>
+                                                    <input class="form-control" type="text" placeholder="Nilai" value="{{ $qr->mqr_poin }}">
                                                 </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end mt-2">
+                                                        <button type="button" class="btn btn-primary add-form py-0 px-1 delete-row-button">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus">
+                                                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </td>                                                
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -139,6 +195,9 @@
             var cardBody = document.createElement("div");
             cardBody.className = "card-body";
 
+            // var inputContainer = document.createElement("div");
+            // inputContainer.className = "col-8 col-md-8 col-lg-6"
+
             /* Create input pertanyaan */
             var input = document.createElement("input");
             input.type = "text";
@@ -146,6 +205,13 @@
             input.id = "pertanyaan";
             input.placeholder = "Pertanyaan";
             input.name = 'pertanyaan[]';
+
+            // var buttonDelete = document.createElement("button");
+            // button.type = "button";
+            // button.className = "btn btn-primary py-0 px-1";
+
+            // inputContainer.appendChild(input);
+            // inputContainer.appendChild(buttonDelete);
 
             var hiddenInput = document.createElement("input");
             hiddenInput.type = "hidden";
@@ -356,14 +422,36 @@
             document.getElementById('component-form').submit();
         }
 
-        // document.addEventListener("DOMContentLoaded", function() {
+
+
+        document.addEventListener("DOMContentLoaded", function() {
         //     // Add onclick event handlers
         //     var minusButtons = document.querySelectorAll("#cardContainer .btn.btn-primary.add-form.py-0.px-1");
         //     for (var i = 0; i < minusButtons.length; i++) {
         //         var minusButton = minusButtons[i];
         //         minusButton.onclick = deleteRow;
         //     }
-        // });
+            // var addRowButton = document.getElementsByClassName('add-row-button');
+            // for (var i = 0; i < addRowButton.length; i++) {
+            //     addRowButton[i].addEventListener("click", addRow);
+            // }
+
+            var deleteRowButton = document.getElementsByClassName('delete-row-button');
+            for (var i = 0; i < deleteRowButton.length; i++) {
+                deleteRowButton[i].addEventListener("click", deleteRow);
+            }
+            
+            var cards = document.getElementsByClassName("card mt-2");
+            for (var i = 0; i < cards.length; i++) {
+                var button = cards[i].querySelector(".btn.btn-primary.py-0.px-1");
+                button.onclick = function() {
+                    addRow.call(this);
+                };
+            }
+
+        });
+
+
     </script>
 
 @endsection

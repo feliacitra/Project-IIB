@@ -112,7 +112,7 @@
                             <!-- EDIT -->
                             <a href="{{ route('penilaian.create', $item->mct_id) }}"><i data-feather="plus-circle"></i></a>
                             <!-- DELETE -->
-                            <a href="#deletePeriod"><i data-feather="trash-2"></i></a>
+                            <a href="{{ route('penilaian.destroy', $item->mct_id) }}"><i data-feather="trash-2"></i></a>
                         </td>
                     </tr>
                 @endforeach

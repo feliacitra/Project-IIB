@@ -116,4 +116,11 @@ class MasterKomponenPenilaianController extends Controller
         return redirect()->route('master.penilaian');
 
     }
+
+    public function destroy($id)
+    {
+        $komponen = MasterComponent::find($id);
+        $komponen->delete();
+        return redirect()->route('master.penilaian');
+    }
 }
