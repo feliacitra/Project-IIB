@@ -49,24 +49,36 @@ class MasterKomponenPenilaianController extends Controller
 
     public function storeQuest(Request $request, $id)
     {
-        // dd($id);
+        $komponen = MasterComponent::find($id);
+        if ($komponen != null) {
+            $questions = MasterQuestion::where('mct_id', $id)->get();
+            foreach ($questions as $question) {
+                $answers = MasterQuestionRange::where('mq_id', $question->id)->get();
+                foreach ($answers as $answer) {
+                    $answer->delete();
+                }
+                $question->delete();
+            }
+        }
+        
         $pertanyaan = $request->pertanyaan;
         $jawaban = $request->jawaban;
         $num = $request->num;
         $nilai = $request->nilai;
-
+        
         $questions = array();
-
+        
         $data = [
             'pertanyaan' => $pertanyaan,
             'jawaban' => $jawaban,
             'num' => $num,
             'nilai' => $nilai
         ];
-
+        
         $component = MasterComponent::find($id);
-
-
+        
+        // dd($num);
+        
         foreach ($pertanyaan as $quest) {
             $question = MasterQuestion::firstOrCreate(['mq_question' => $quest, 'mct_id' => $id]);
             // $question->component()->associate($component);
@@ -76,11 +88,11 @@ class MasterKomponenPenilaianController extends Controller
         
         $start = 0;
         for ($i=0; $i < count($num); $i++) { 
-            for ($j=$start; $j < $num[$i]; $j++) { 
+            for ($j=$start; $j < $num[$i]+$start; $j++) { 
                 $questionRange = MasterQuestionRange::firstOrCreate([
                     'mqr_description' => $jawaban[$j],
                     'mqr_poin' => $nilai[$j],
-                    'mq_id' => $questions[$i]->mq_id
+                    'mq_id' => $questions[$i]->id
                 ]);
                 $questionRange->question()->associate($questions[$i]);
                 $questionRange->save();
@@ -120,6 +132,14 @@ class MasterKomponenPenilaianController extends Controller
     public function destroy($id)
     {
         $komponen = MasterComponent::find($id);
+        $questions = MasterQuestion::where('mct_id', $id)->get();
+        foreach ($questions as $question) {
+            $answers = MasterQuestionRange::where('mq_id', $question->id)->get();
+            foreach ($answers as $answer) {
+                $answer->delete();
+            }
+            $question->delete();
+        }
         $komponen->delete();
         return redirect()->route('master.penilaian');
     }
