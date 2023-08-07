@@ -139,6 +139,12 @@
                         <span class="link-title">Penilaian Desk Evaluation</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('jadwalpresentasi') }}" class="nav-link">
+                        <i class="link-icon" data-feather="calendar"></i>
+                        <span class="link-title">Kelola Jadwal Presentasi</span>
+                    </a>
+                </li>
 
                 <li class="nav-item nav-category">Hak Akses</li>
                 <li class="nav-item">

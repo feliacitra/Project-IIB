@@ -112,25 +112,29 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Master-KomponenPenilaian.kelolaKomponenView');
     })->name('viewComponent');
 
-    Route::get('/master/pendaftar', function() {
+    Route::get('/pendaftar', function() {
         return view('Pendaftaran-DataPendaftar.dataPendaftar');
     })->name('pendaftar');
 
-    Route::get('/master/pendaftar/datastartup', function() {
+    Route::get('/pendaftar/datastartup', function() {
         return view('Pendaftaran-DataPendaftar.dataStartup');
     })->name('dataStartup');
 
-    Route::get('/master/penilaianDE', function() {
+    Route::get('/penilaianDE', function() {
         return view('Pendaftaran-PenilaianDE.penilaianDE');
     })->name('penilaianDE');
 
-    Route::get('/master/penilaianDE/viewnilai', function() {
+    Route::get('/penilaianDE/viewnilai', function() {
         return view('Pendaftaran-PenilaianDE.nilaiView');
     })->name('viewnilai');
 
-    Route::get('/master/penilaianDE/editnilai', function() {
+    Route::get('/penilaianDE/editnilai', function() {
         return view('Pendaftaran-PenilaianDE.nilaiEdit');
     })->name('editnilai');
+
+    Route::get('/jadwalpresentasi', function() {
+        return view('Pendaftaran-KelolaJadwalPresentasi.listJadwalPresentasi');
+    })->name('jadwalpresentasi');
 
     // Route::get('/master/inkubasi', function() {
     //     $master_programinkubasi = DB::table('master_programinkubasi')->get();
