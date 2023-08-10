@@ -47,18 +47,21 @@
             <form id="component-form" method="POST" action="{{ route('quest.store', $id) }}" class="row align-items-center" style="margin-top: 1rem">
                 @csrf
                 <div class="col-4 col-md-3 col-lg-2">
-                    <select name="pilihPeriode" id="periode" class="form-control form-select">
+                    <select id="pilihPeriode" name="pilihPeriode" id="periode" class="form-control form-select">
                         <option value="select" class="text-muted">Periode</option>
-                        <option value="th2022">Tahun 2022</option>
+                        @foreach ($periode as $item)
+                            <option value="{{ $item->periodeProgram->masterPeriode->mpe_id }}">{{ $item->periodeProgram->masterPeriode->mpe_name }}</option>
+                        @endforeach
                     </select>
                 </div>
     
-                <div class="col-4 col-md-3 col-lg-2">
+                <div id="jumlahData" class="col-4 col-md-3 col-lg-2">
                     <p>10 Data ditemukan</p>
                 </div>
     
                 <div class="col">
-                    <button type="button" class="btn btn-primary px-4 py-1">
+                    <button id="salin" type="button" class="btn btn-primary px-4 py-1">
+                        <input type="hidden" name="salin" >
                         Salin
                     </button>
                 </div>
@@ -72,8 +75,29 @@
                     @forelse($component->question as $question)
                     <div class="card mt-2">
                         <div class="card-body">
-                            <input type="text" class="form-control" id="pertanyaan" placeholder="{{ $question->mq_question }}" disabled>
-
+                            <div class="container-fluid border-0">
+                                <div class="row">
+                                    <div class="col-11">
+                                        <input type="text" class="form-control" name="pertanyaan[]" id="pertanyaan" placeholder="Pertanyaan" value="{{ $question->mq_question }}">
+                                    </div>
+                                    <div class="col-1">
+                                        <button type="button" class="btn btn-primary add-form py-0 px-1 delete-card-button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus">
+                                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="num[]" class="quest-num" value="{{ count($question->questionRange )}}">
+                            </div>
+                            <div class="d-flex justify-content-end mt-2">
+                                <button type="button" class="btn btn-primary py-0 px-1 add-row-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                </button>
+                            </div>
                             <div class="table-responsive-md mt-2">
                                 <table class="table">
                                     <!-- Table Head -->
@@ -96,11 +120,20 @@
                                                     {{ $loop->iteration }}
                                                 </td>
                                                 <td>
-                                                    <input class="form-control" type="text" placeholder="Jawaban" value="{{ $qr->mqr_description }}" disabled>
+                                                    <input class="form-control" name="jawaban[]" type="text" placeholder="Jawaban" value="{{ $qr->mqr_description }}">
                                                 </td>
                                                 <td>
-                                                    <input class="form-control" type="text" placeholder="Nilai" value="{{ $qr->mqr_poin }}" disabled>
+                                                    <input class="form-control" name="nilai[]" type="text" placeholder="Nilai" value="{{ $qr->mqr_poin }}">
                                                 </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end mt-2">
+                                                        <button type="button" class="btn btn-primary add-form py-0 px-1 delete-row-button">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus">
+                                                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </td>                                                
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -124,6 +157,16 @@
         </div>
     </div>
 
+    <form method="POST" action="{{ route('quest.copy', $id) }}" id="form-salin">
+        @csrf
+        <input type="hidden" name="periode" id="hiddenPeriode">
+    </form>
+
+    <ul id="periodeData">
+        @foreach ($periode as $item)
+            <li data-id="{{ $item->periodeProgram->masterPeriode->mpe_id }}" data-count="{{ count($item->question) }}"></li>
+        @endforeach
+    </ul>
     <script>
         function addCard() {
 
@@ -139,6 +182,9 @@
             var cardBody = document.createElement("div");
             cardBody.className = "card-body";
 
+            var inputContainer = document.createElement("div");
+            inputContainer.className = "col-8 col-md-8 col-lg-6"
+
             /* Create input pertanyaan */
             var input = document.createElement("input");
             input.type = "text";
@@ -146,6 +192,18 @@
             input.id = "pertanyaan";
             input.placeholder = "Pertanyaan";
             input.name = 'pertanyaan[]';
+
+            var buttonDelete = document.createElement("button");
+            buttonDelete.type = "button";
+            buttonDelete.className = "btn btn-primary py-0 px-1 delete-card-button";
+
+            var iconDelete = document.createElement("i");
+            iconDelete.setAttribute("data-feather", "minus");
+
+            buttonDelete.appendChild(iconDelete);
+
+            inputContainer.appendChild(input);
+            inputContainer.appendChild(buttonDelete);
 
             var hiddenInput = document.createElement("input");
             hiddenInput.type = "hidden";
@@ -160,7 +218,7 @@
             /* Create button */
             var button = document.createElement("button");
             button.type = "button";
-            button.className = "btn btn-primary py-0 px-1";
+            button.className = "btn btn-primary py-0 px-1 add-row-button";
 
             /* Plus icon */
             var icon = document.createElement("i");
@@ -173,7 +231,7 @@
             buttonContainer.appendChild(button);
 
             /* Append input pertanyaan & button container to card body */
-            cardBody.appendChild(input);
+            cardBody.appendChild(inputContainer);
             cardBody.appendChild(hiddenInput);
             cardBody.appendChild(buttonContainer);
 
@@ -256,12 +314,17 @@
             feather.replace();
 
             /* Retrieve the newly added button */
-            var newButton = card.querySelector(".btn.btn-primary.py-0.px-1");
+            var newButton = card.querySelector(".add-row-button");
+            var delButton = card.querySelector(".delete-card-button");
 
             /* Add onclick event to the new button */
             newButton.onclick = function() {
                 addRow.call(this);
             };
+
+            delButton.onclick = function() {
+                deleteCard.call(this);
+            }
         }
 
         var rowCount = 1; // Initialize the row count variable
@@ -300,7 +363,7 @@
 
             /* Create button */
             var buttonMinus = document.createElement("button");
-            buttonMinus.className = "btn btn-primary add-form py-0 px-1";
+            buttonMinus.className = "btn btn-primary add-form py-0 px-1 delete-row-button";
             buttonMinus.onclick = deleteRow;
 
             /* Minus icon */
@@ -352,18 +415,78 @@
 
         }
 
+        function deleteCard() {
+            var card = this.closest('.card.mt-2');
+            console.log(card);
+            var cardContainer = card.parentNode;
+            cardContainer.removeChild(card);
+        }
+
         function submit() {
             document.getElementById('component-form').submit();
         }
 
-        // document.addEventListener("DOMContentLoaded", function() {
-        //     // Add onclick event handlers
-        //     var minusButtons = document.querySelectorAll("#cardContainer .btn.btn-primary.add-form.py-0.px-1");
-        //     for (var i = 0; i < minusButtons.length; i++) {
-        //         var minusButton = minusButtons[i];
-        //         minusButton.onclick = deleteRow;
-        //     }
-        // });
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var deleteRowButton = document.getElementsByClassName('delete-row-button');
+            for (var i = 0; i < deleteRowButton.length; i++) {
+                deleteRowButton[i].addEventListener("click", deleteRow);
+            }
+            
+            var cards = document.getElementsByClassName("card mt-2");
+            for (var i = 0; i < cards.length; i++) {
+                var button = cards[i].querySelector(".add-row-button");
+                button.onclick = function() {
+                    addRow.call(this);
+                };
+
+                var deleteButton = cards[i].querySelector(".delete-card-button");
+                deleteButton.onclick = function() {
+                    deleteCard.call(this);
+                }
+            }
+
+            const selectPeriode = document.getElementById("pilihPeriode");
+            const hiddenPeriode = document.getElementById("hiddenPeriode");
+            const submitButton = document.getElementById("salin");
+            
+            // Add event listener to the button
+            submitButton.addEventListener("click", function() {
+                // Get the selected value from the select element
+                const selectedValue = selectPeriode.value;
+                
+                // Set the selected value to the hidden input field in the form
+                hiddenPeriode.value = selectedValue;
+                
+                // Submit the form
+                document.getElementById("form-salin").submit();
+            });
+
+            document.getElementById('pilihPeriode').addEventListener('change', function() {
+                var selectedValue = this.value;
+                var liElements = document.querySelectorAll("#periodeData li");
+
+                liElements.forEach(function(li) {
+                    var dataId = li.getAttribute('data-id');
+                    var dataCount = li.getAttribute('data-count');
+
+                    if (dataId === selectedValue) {
+                        var jumlahDataElement = document.getElementById('jumlahData');
+                        jumlahDataElement.querySelector('p').textContent = dataCount + ' Data ditemukan';
+                    }
+                });
+            });
+            
+
+            // var deleteCardButton = document.getElementsByClassName('delete-card-button');
+            // for (var i = 0; i < deleteCardButton.length; i++) {
+            //     deleteCardButton[i].addEventListener("click", deleteCard);
+            // }
+
+        });
+
+
     </script>
 
 @endsection
