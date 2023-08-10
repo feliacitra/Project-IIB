@@ -15,18 +15,52 @@ class MasterKomponenPenilaianController extends Controller
 {
     public function index()
     {
-        $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->get();
+        if (request('search')){
+            $step = -1;
+            $status = 0;
+            if (request('search') == 'Self Assessment') {
+                $step = 1;
+            } else if (request('search') == 'Presentasi') {
+                $step = 2;
+            } else {
+                $step = 3;
+            }
+
+            if (request('search') == 'AKTIF') {
+                $status = 1;
+            } else {
+                $status = 0;
+            }
+
+            // $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')
+            // ->where(function ($query) {
+            //     $query->orWhereHas('periodeProgram', function ($subquery) {
+            //         $subquery->orWhereHas('masterPeriode', function ($nestedSubquery) {
+            //             $nestedSubquery->where('mpe_name', 'like', '%'.request('search').'%')
+            //             ->orWhere('mpe_status', 'like', '%'.request('search').'%');
+            //         })->orWhereHas('masterProgramInkubasi', function ($nestedSubquery) {
+            //             $nestedSubquery->where('mpi_name', 'like', '%'.request('search').'%')
+            //             ->orWhere('mpi_description', 'like', '%'.request('search').'%');
+            //         });
+            //     });
+            // })->get();
+            $search = request('search');
+            $components = MasterComponent::where('mct_step', 'like', '%' . $search . '%')
+                ->orWhereHas('periodeProgram.masterPeriode.masterProgramInkubasi', function ($query) use ($search) {
+                    $query->where('mpi_name', 'like', '%' . $search . '%');
+                })
+                ->orWhereHas('periodeProgram.masterPeriode', function ($query) use ($search) {
+                    $query->where('mpe_name', 'like', '%' . $search . '%');
+                })
+                ->orWhereHas('question', function ($query) use ($search) {
+                    $query->where('mq_question', 'like', '%' . $search . '%');
+                })
+                ->get();
+        } else {
+            $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->get();
+        }
         $periode = MasterPeriode::all();
         $programInkubasi = MasterProgramInkubasi::all();
-
-        // if (request('search')) {
-        //     $searchTerm = request('search');
-
-        //     $components = $components->filter(function ($component) use ($searchTerm) {
-        //         return stripos($component->mf_name, $searchTerm) !== false
-        //             || stripos($component->mf_description, $searchTerm) !== false;
-        //     });
-        // }
 
         return view('Master-KomponenPenilaian.listKomponenPenilaian', compact('components', 'periode', 'programInkubasi'));
     }
@@ -34,8 +68,13 @@ class MasterKomponenPenilaianController extends Controller
     public function create($id)
     {
         $component = MasterComponent::with('question', 'question.questionRange', 'periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $id)->first();
-        // dd($component);
-        return view('Master-KomponenPenilaian.kelolaKomponenEdit', compact('component', 'id'));
+        $periode = MasterPeriode::whereHas('masterPeriodeProgram', function ($query) use ($component) {
+            $query->whereHas('component', function ($subquery) use ($component) {
+                $subquery->where('mct_step', $component->mct_step)
+                    ->where('mct_id', '!=', $component->mct_id);
+            });
+        })->get();
+        return view('Master-KomponenPenilaian.kelolaKomponenEdit', compact('component', 'periode', 'id'));
     }
 
     public function show($id)
@@ -61,6 +100,10 @@ class MasterKomponenPenilaianController extends Controller
             }
         }
         
+        if (!$request->filled('pertanyaan')) {
+            return redirect()->route('master.penilaian');
+        }
+
         $pertanyaan = $request->pertanyaan;
         $jawaban = $request->jawaban;
         $num = $request->num;
@@ -101,6 +144,10 @@ class MasterKomponenPenilaianController extends Controller
         }
 
         return redirect()->route('master.penilaian');
+    }
+
+    public function copyQuest(Request $request, $id) {
+
     }
 
     public function store(Request $request)

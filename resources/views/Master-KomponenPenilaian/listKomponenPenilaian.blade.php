@@ -62,9 +62,9 @@
                 <!-- Search Bar -->
                 <div class="input-group rounded">
                     <!-- Input Form -->
-                    <form action="" class="position-relative">
-                        
-                        <input type="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
+                    <form action="{{ route('master.penilaian') }}" class="position-relative">
+                        @csrf
+                        <input name="search" type="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
                         
                         <span class="position-absolute" style="top: 50%; left: 0.5rem; transform: translateY(-50%);">
                             <i data-feather="search"></i>
@@ -93,7 +93,7 @@
             <!-- Table Head -->
 
             <!-- Table Body -->
-            <tbody>
+            <tbody class="text-center">
                 @foreach ($components as $item)
                     <tr>
                         <th scope="row" class="text-center">{{ $loop->iteration }}</th>

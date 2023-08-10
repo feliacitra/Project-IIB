@@ -49,7 +49,9 @@
                 <div class="col-4 col-md-3 col-lg-2">
                     <select name="pilihPeriode" id="periode" class="form-control form-select">
                         <option value="select" class="text-muted">Periode</option>
-                        <option value="th2022">Tahun 2022</option>
+                        @foreach ($periode as $item)
+                        <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }}</option>
+                        @endforeach
                     </select>
                 </div>
     
@@ -58,7 +60,8 @@
                 </div>
     
                 <div class="col">
-                    <button type="button" class="btn btn-primary px-4 py-1">
+                    <button id="salin" type="button" class="btn btn-primary px-4 py-1">
+                        <input type="hidden" name="salin" >
                         Salin
                     </button>
                 </div>
@@ -72,8 +75,21 @@
                     @forelse($component->question as $question)
                     <div class="card mt-2">
                         <div class="card-body">
-                            <input type="text" class="form-control" name="pertanyaan[]" id="pertanyaan" placeholder="Pertanyaan" value="{{ $question->mq_question }}">
-                            <input type="hidden" name="num[]" class="quest-num" value="{{ count($question->questionRange )}}">
+                            <div class="container-fluid border-0">
+                                <div class="row">
+                                    <div class="col-11">
+                                        <input type="text" class="form-control" name="pertanyaan[]" id="pertanyaan" placeholder="Pertanyaan" value="{{ $question->mq_question }}">
+                                    </div>
+                                    <div class="col-1">
+                                        <button type="button" class="btn btn-primary add-form py-0 px-1 delete-card-button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus">
+                                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="num[]" class="quest-num" value="{{ count($question->questionRange )}}">
+                            </div>
                             <div class="d-flex justify-content-end mt-2">
                                 <button type="button" class="btn btn-primary py-0 px-1 add-row-button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
@@ -141,6 +157,9 @@
         </div>
     </div>
 
+    <form action="{{ route('quest.copy', $id) }}" id="form-salin">
+    <input type="hidden" name="periode">
+    </form>
     <script>
         function addCard() {
 
@@ -169,7 +188,7 @@
 
             var buttonDelete = document.createElement("button");
             buttonDelete.type = "button";
-            buttonDelete.className = "btn btn-primary py-0 px-1";
+            buttonDelete.className = "btn btn-primary py-0 px-1 delete-card-button";
 
             var iconDelete = document.createElement("i");
             iconDelete.setAttribute("data-feather", "minus");
@@ -192,7 +211,7 @@
             /* Create button */
             var button = document.createElement("button");
             button.type = "button";
-            button.className = "btn btn-primary py-0 px-1";
+            button.className = "btn btn-primary py-0 px-1 add-row-button";
 
             /* Plus icon */
             var icon = document.createElement("i");
@@ -288,12 +307,17 @@
             feather.replace();
 
             /* Retrieve the newly added button */
-            var newButton = card.querySelector(".btn.btn-primary.py-0.px-1");
+            var newButton = card.querySelector(".add-row-button");
+            var delButton = card.querySelector(".delete-card-button");
 
             /* Add onclick event to the new button */
             newButton.onclick = function() {
                 addRow.call(this);
             };
+
+            delButton.onclick = function() {
+                deleteCard.call(this);
+            }
         }
 
         var rowCount = 1; // Initialize the row count variable
@@ -332,7 +356,7 @@
 
             /* Create button */
             var buttonMinus = document.createElement("button");
-            buttonMinus.className = "btn btn-primary add-form py-0 px-1";
+            buttonMinus.className = "btn btn-primary add-form py-0 px-1 delete-row-button";
             buttonMinus.onclick = deleteRow;
 
             /* Minus icon */
@@ -384,6 +408,13 @@
 
         }
 
+        function deleteCard() {
+            var card = this.closest('.card.mt-2');
+            console.log(card);
+            var cardContainer = card.parentNode;
+            cardContainer.removeChild(card);
+        }
+
         function submit() {
             document.getElementById('component-form').submit();
         }
@@ -391,17 +422,6 @@
 
 
         document.addEventListener("DOMContentLoaded", function() {
-        //     // Add onclick event handlers
-        //     var minusButtons = document.querySelectorAll("#cardContainer .btn.btn-primary.add-form.py-0.px-1");
-        //     for (var i = 0; i < minusButtons.length; i++) {
-        //         var minusButton = minusButtons[i];
-        //         minusButton.onclick = deleteRow;
-        //     }
-            // var addRowButton = document.getElementsByClassName('add-row-button');
-            // for (var i = 0; i < addRowButton.length; i++) {
-            //     addRowButton[i].addEventListener("click", addRow);
-            // }
-
             var deleteRowButton = document.getElementsByClassName('delete-row-button');
             for (var i = 0; i < deleteRowButton.length; i++) {
                 deleteRowButton[i].addEventListener("click", deleteRow);
@@ -409,11 +429,27 @@
             
             var cards = document.getElementsByClassName("card mt-2");
             for (var i = 0; i < cards.length; i++) {
-                var button = cards[i].querySelector(".btn.btn-primary.py-0.px-1");
+                var button = cards[i].querySelector(".add-row-button");
                 button.onclick = function() {
                     addRow.call(this);
                 };
+
+                var deleteButton = cards[i].querySelector(".delete-card-button");
+                deleteButton.onclick = function() {
+                    deleteCard.call(this);
+                }
             }
+
+            var salinButton = document.getElementById('salin');
+            salinButton.addEventListener("click", function() {
+
+            });
+            
+
+            // var deleteCardButton = document.getElementsByClassName('delete-card-button');
+            // for (var i = 0; i < deleteCardButton.length; i++) {
+            //     deleteCardButton[i].addEventListener("click", deleteCard);
+            // }
 
         });
 
