@@ -47,7 +47,7 @@
             <form id="component-form" method="POST" action="{{ route('quest.store', $id) }}" class="row align-items-center" style="margin-top: 1rem">
                 @csrf
                 <div class="col-4 col-md-3 col-lg-2">
-                    <select name="pilihPeriode" id="periode" class="form-control form-select">
+                    <select id="pilihPeriode" name="pilihPeriode" id="periode" class="form-control form-select">
                         <option value="select" class="text-muted">Periode</option>
                         @foreach ($periode as $item)
                         <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }}</option>
@@ -157,8 +157,9 @@
         </div>
     </div>
 
-    <form action="{{ route('quest.copy', $id) }}" id="form-salin">
-    <input type="hidden" name="periode">
+    <form method="POST" action="{{ route('quest.copy', $id) }}" id="form-salin">
+        @csrf
+        <input type="hidden" name="periode" id="hiddenPeriode">
     </form>
     <script>
         function addCard() {
@@ -440,9 +441,20 @@
                 }
             }
 
-            var salinButton = document.getElementById('salin');
-            salinButton.addEventListener("click", function() {
-
+            const selectPeriode = document.getElementById("pilihPeriode");
+            const hiddenPeriode = document.getElementById("hiddenPeriode");
+            const submitButton = document.getElementById("salin");
+            
+            // Add event listener to the button
+            submitButton.addEventListener("click", function() {
+                // Get the selected value from the select element
+                const selectedValue = selectPeriode.value;
+                
+                // Set the selected value to the hidden input field in the form
+                hiddenPeriode.value = selectedValue;
+                
+                // Submit the form
+                document.getElementById("form-salin").submit();
             });
             
 

@@ -70,7 +70,10 @@ class MasterKomponenPenilaianController extends Controller
         $component = MasterComponent::with('question', 'question.questionRange', 'periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $id)->first();
         $periode = MasterPeriode::whereHas('masterPeriodeProgram', function ($query) use ($component) {
             $query->whereHas('component', function ($subquery) use ($component) {
-                $subquery->where('mct_step', $component->mct_step)
+                $subquery->whereHas('periodeProgram.masterProgramInkubasi', function ($nestedSubquery) use ($component) {
+                    $nestedSubquery->where('mpi_id', $component->periodeProgram->masterProgramInkubasi->mpi_id);
+                    })
+                    ->where('mct_step', $component->mct_step)
                     ->where('mct_id', '!=', $component->mct_id);
             });
         })->get();
@@ -147,7 +150,20 @@ class MasterKomponenPenilaianController extends Controller
     }
 
     public function copyQuest(Request $request, $id) {
-
+        $component = MasterComponent::with('question', 'question.questionRange', 'periodeProgram', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $id)->first();
+        $periode = $request->periode;
+        
+        $target = MasterComponent::with('question', 'question.questionRange')
+        ->whereHas('periodeProgram', function ($query) use ($component) {
+            $query->whereHas('masterProgramInkubasi', function ($subquery) use ($component) {
+                $subquery->where('mpi_id', $component->periodeProgram->masterProgramInkubasi->mpi_id);
+            });
+        })->where('mct_step', $component->mct_step)->first();
+        dd($target);
+        
+        // foreach ($target->question as $question) {
+            
+        // }
     }
 
     public function store(Request $request)
