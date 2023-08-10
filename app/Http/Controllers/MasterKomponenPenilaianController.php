@@ -68,15 +68,44 @@ class MasterKomponenPenilaianController extends Controller
     public function create($id)
     {
         $component = MasterComponent::with('question', 'question.questionRange', 'periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $id)->first();
-        $periode = MasterPeriode::whereHas('masterPeriodeProgram', function ($query) use ($component) {
-            $query->whereHas('component', function ($subquery) use ($component) {
-                $subquery->whereHas('periodeProgram.masterProgramInkubasi', function ($nestedSubquery) use ($component) {
-                    $nestedSubquery->where('mpi_id', $component->periodeProgram->masterProgramInkubasi->mpi_id);
-                    })
-                    ->where('mct_step', $component->mct_step)
-                    ->where('mct_id', '!=', $component->mct_id);
-            });
-        })->get();
+        // $periode = MasterPeriode::with('masterPeriodeProgram.component.question')->whereHas('masterPeriodeProgram', function ($query) use ($component) {
+        //     $query->whereHas('component', function ($subquery) use ($component) {
+        //         $subquery->whereHas('periodeProgram.masterProgramInkubasi', function ($nestedSubquery) use ($component) {
+        //             $nestedSubquery->where('mpi_id', $component->periodeProgram->masterProgramInkubasi->mpi_id);
+        //             })
+        //             ->where('mct_step', $component->mct_step)
+        //             ->where('mct_id', '!=', $component->mct_id);
+        //     });
+        // })->get();
+        // $periode = MasterPeriode::with('masterPeriodeProgram.component.question')
+        //     ->whereHas('masterPeriodeProgram', function ($query) use ($component) {
+        //         $query->whereHas('component', function ($subquery) use ($component) {
+        //             $subquery->whereHas('periodeProgram', function ($nestedSubquery) use ($component) {
+        //                 $nestedSubquery->whereHas('masterPeriode', function ($innerNestedSubquery) use ($component) {
+        //                     $innerNestedSubquery->where('mpe_id')
+        //                 })
+        //             })
+        //         })
+        //     })
+        // $periode = MasterPeriode::with('masterPeriodeProgram.component.question')
+        //     ->where('mpe_id', '!=', $component->periodeProgram->masterPeriode->mpe_id)
+        //     ->whereHas('masterPeriodeProgram.masterProgramInkubasi', function ($query) use ($component) {
+        //         $query->where('mpi_id', $component->periodeProgram->masterProgramInkubasi->mpi_id);
+        //     })
+        //     ->whereHas('masterPeriodeProgram.component', function ($query) use ($component) {
+        //         $query->where('mct_step', $component->mct_step);
+        //     })
+        //     ->get();
+        $periode = MasterComponent::with('periodeProgram.masterPeriode', 'question')
+            ->where('mct_step', $component->mct_step)
+            ->whereHas('periodeProgram.masterProgramInkubasi', function ($query) use ($component) {
+                $query->where('mpi_id', $component->periodeProgram->masterProgramInkubasi->mpi_id);
+            })
+            ->whereHas('periodeProgram.masterPeriode', function ($query) use ($component) {
+                $query->where('mpe_id', '!=', $component->periodeProgram->masterPeriode->mpe_id);
+            })
+            ->get();
+        // dd($periode);
         return view('Master-KomponenPenilaian.kelolaKomponenEdit', compact('component', 'periode', 'id'));
     }
 
@@ -159,11 +188,19 @@ class MasterKomponenPenilaianController extends Controller
                 $subquery->where('mpi_id', $component->periodeProgram->masterProgramInkubasi->mpi_id);
             });
         })->where('mct_step', $component->mct_step)->first();
-        dd($target);
+        // dd($target);
         
-        // foreach ($target->question as $question) {
-            
-        // }
+        foreach ($target->question as $question) {
+            $targetQuestion = MasterQuestion::firstOrCreate(['mq_question' => $question->mq_question, 'mct_id' => $component->mct_id]);
+            foreach ($question->questionRange as $qr) {
+                MasterQuestionRange::firstOrCreate([
+                    'mqr_description' => $qr->mqr_description,
+                    'mqr_poin' => $qr->mqr_poin,
+                    'mq_id' => $targetQuestion->id
+                ]);
+            }
+        }
+        return redirect()->route('penilaian.create', $id);
     }
 
     public function store(Request $request)

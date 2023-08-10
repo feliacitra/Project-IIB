@@ -50,12 +50,12 @@
                     <select id="pilihPeriode" name="pilihPeriode" id="periode" class="form-control form-select">
                         <option value="select" class="text-muted">Periode</option>
                         @foreach ($periode as $item)
-                        <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }}</option>
+                            <option value="{{ $item->periodeProgram->masterPeriode->mpe_id }}">{{ $item->periodeProgram->masterPeriode->mpe_name }}</option>
                         @endforeach
                     </select>
                 </div>
     
-                <div class="col-4 col-md-3 col-lg-2">
+                <div id="jumlahData" class="col-4 col-md-3 col-lg-2">
                     <p>10 Data ditemukan</p>
                 </div>
     
@@ -161,6 +161,12 @@
         @csrf
         <input type="hidden" name="periode" id="hiddenPeriode">
     </form>
+
+    <ul id="periodeData">
+        @foreach ($periode as $item)
+            <li data-id="{{ $item->periodeProgram->masterPeriode->mpe_id }}" data-count="{{ count($item->question) }}"></li>
+        @endforeach
+    </ul>
     <script>
         function addCard() {
 
@@ -455,6 +461,21 @@
                 
                 // Submit the form
                 document.getElementById("form-salin").submit();
+            });
+
+            document.getElementById('pilihPeriode').addEventListener('change', function() {
+                var selectedValue = this.value;
+                var liElements = document.querySelectorAll("#periodeData li");
+
+                liElements.forEach(function(li) {
+                    var dataId = li.getAttribute('data-id');
+                    var dataCount = li.getAttribute('data-count');
+
+                    if (dataId === selectedValue) {
+                        var jumlahDataElement = document.getElementById('jumlahData');
+                        jumlahDataElement.querySelector('p').textContent = dataCount + ' Data ditemukan';
+                    }
+                });
             });
             
 
