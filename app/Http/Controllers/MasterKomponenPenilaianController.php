@@ -98,9 +98,6 @@ class MasterKomponenPenilaianController extends Controller
         //     ->get();
         $periode = MasterComponent::with('periodeProgram.masterPeriode', 'question')
             ->where('mct_step', $component->mct_step)
-            ->whereHas('periodeProgram.masterProgramInkubasi', function ($query) use ($component) {
-                $query->where('mpi_id', $component->periodeProgram->masterProgramInkubasi->mpi_id);
-            })
             ->whereHas('periodeProgram.masterPeriode', function ($query) use ($component) {
                 $query->where('mpe_id', '!=', $component->periodeProgram->masterPeriode->mpe_id);
             })
