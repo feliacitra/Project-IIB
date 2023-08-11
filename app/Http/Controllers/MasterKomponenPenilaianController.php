@@ -180,7 +180,9 @@ class MasterKomponenPenilaianController extends Controller
         $periode = $request->periode;
         
         $target = MasterComponent::with('question', 'question.questionRange')
-        ->where('mct_step', $component->mct_step)->get();
+        ->where('mct_step', $component->mct_step)
+        ->where('mct_id', '!=', $component->mct_id)
+        ->get();
         // dd($target);
         
         // foreach ($target->question as $question) {
@@ -200,9 +202,10 @@ class MasterKomponenPenilaianController extends Controller
             if (count($tc->question) == 0) {
                 continue;
             }
-            // dd($tc->mct_id);
             foreach ($tc->question as $question) {
-                $targetQuestion = MasterQuestion::firstOrCreate(['mq_question' => $question->mq_question, 'mct_id' => $tc->mct_id]);
+                // dd($tc->mct_id);
+
+                $targetQuestion = MasterQuestion::firstOrCreate(['mq_question' => $question->mq_question, 'mct_id' => $component->mct_id]);
                 foreach ($question->questionRange as $qr) {
                     MasterQuestionRange::firstOrCreate([
                         'mqr_description' => $qr->mqr_description,
