@@ -180,21 +180,36 @@ class MasterKomponenPenilaianController extends Controller
         $periode = $request->periode;
         
         $target = MasterComponent::with('question', 'question.questionRange')
-        ->whereHas('periodeProgram', function ($query) use ($component) {
-            $query->whereHas('masterProgramInkubasi', function ($subquery) use ($component) {
-                $subquery->where('mpi_id', $component->periodeProgram->masterProgramInkubasi->mpi_id);
-            });
-        })->where('mct_step', $component->mct_step)->first();
+        ->where('mct_step', $component->mct_step)->get();
         // dd($target);
         
-        foreach ($target->question as $question) {
-            $targetQuestion = MasterQuestion::firstOrCreate(['mq_question' => $question->mq_question, 'mct_id' => $component->mct_id]);
-            foreach ($question->questionRange as $qr) {
-                MasterQuestionRange::firstOrCreate([
-                    'mqr_description' => $qr->mqr_description,
-                    'mqr_poin' => $qr->mqr_poin,
-                    'mq_id' => $targetQuestion->id
-                ]);
+        // foreach ($target->question as $question) {
+            // $targetQuestion = MasterQuestion::firstOrCreate(['mq_question' => $question->mq_question, 'mct_id' => $component->mct_id]);
+            // foreach ($question->questionRange as $qr) {
+            //     MasterQuestionRange::firstOrCreate([
+            //         'mqr_description' => $qr->mqr_description,
+            //         'mqr_poin' => $qr->mqr_poin,
+            //         'mq_id' => $targetQuestion->id
+            //     ]);
+            // }
+        // }
+        // dd($component->mct_id);
+        
+
+        foreach ($target as $tc) {
+            if (count($tc->question) == 0) {
+                continue;
+            }
+            // dd($tc->mct_id);
+            foreach ($tc->question as $question) {
+                $targetQuestion = MasterQuestion::firstOrCreate(['mq_question' => $question->mq_question, 'mct_id' => $tc->mct_id]);
+                foreach ($question->questionRange as $qr) {
+                    MasterQuestionRange::firstOrCreate([
+                        'mqr_description' => $qr->mqr_description,
+                        'mqr_poin' => $qr->mqr_poin,
+                        'mq_id' => $targetQuestion->id
+                    ]);
+                }
             }
         }
         return redirect()->route('penilaian.create', $id);
