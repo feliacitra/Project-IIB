@@ -1,21 +1,22 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\AccessController;
-use App\Http\Controllers\MasterCivitasController;
-use App\Http\Controllers\MasterPenggunaController;
-use App\Http\Controllers\MasterPeriodeController;
-use App\Http\Controllers\MasterProgramInkubasiController;
-use App\Http\Controllers\MasterCategoryController;
-use App\Http\Controllers\UserProfileController;
 use App\Models\MasterCategory;
-use App\Http\Controllers\MasterUniversitasController;
-use App\Http\Controllers\MasterFakultasController;
-use App\Http\Controllers\MasterProgramStudyController;
-use App\Http\Controllers\MasterKomponenPenilaianController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AccessController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\MasterCivitasController;
+use App\Http\Controllers\MasterPeriodeController;
+use App\Http\Controllers\MasterCategoryController;
+use App\Http\Controllers\MasterFakultasController;
+use App\Http\Controllers\MasterPenggunaController;
+use App\Http\Controllers\PenilaiProfileController;
+use App\Http\Controllers\MasterUniversitasController;
+use App\Http\Controllers\MasterProgramStudyController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\MasterProgramInkubasiController;
+use App\Http\Controllers\MasterKomponenPenilaianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,6 +113,26 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Master-KomponenPenilaian.kelolaKomponenView');
     })->name('viewComponent');
 
+    Route::get('/master/pendaftar', function() {
+        return view('Pendaftaran-DataPendaftar.dataPendaftar');
+    })->name('pendaftar');
+
+    Route::get('/master/pendaftar/datastartup', function() {
+        return view('Pendaftaran-DataPendaftar.dataStartup');
+    })->name('dataStartup');
+
+    Route::get('/master/penilaianDE', function() {
+        return view('Pendaftaran-PenilaianDE.penilaianDE');
+    })->name('penilaianDE');
+
+    Route::get('/master/penilaianDE/viewnilai', function() {
+        return view('Pendaftaran-PenilaianDE.nilaiView');
+    })->name('viewnilai');
+
+    Route::get('/master/penilaianDE/editnilai', function() {
+        return view('Pendaftaran-PenilaianDE.nilaiEdit');
+    })->name('editnilai');
+
     // Route::get('/master/inkubasi', function() {
     //     $master_programinkubasi = DB::table('master_programinkubasi')->get();
     //     return view('Master-ProgramInkubasi.listProgramInkubasi',['master_programinkubasi'=>$master_programinkubasi]);
@@ -158,6 +179,8 @@ Route::middleware(['auth', 'access'])->group(function () {
         'update' => 'penilaian.update'
     ]);
 
+    Route::get('/penilai/profil', [PenilaiProfileController::class, 'edit'])->name('penilai.profil.edit');
+    Route::put('/penilai/profil', [PenilaiProfileController::class, 'update'])->name('penilai.profil.update');
 });
 
 

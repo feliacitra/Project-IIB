@@ -125,6 +125,21 @@
                         <span class="link-title">Master Index Nilai Matkul</span>
                     </a>
                 </li>
+
+                <li class="nav-item nav-category">Pendaftaran</li>
+                <li class="nav-item">
+                    <a href="{{ route('pendaftar') }}" class="nav-link">
+                        <i class="link-icon" data-feather="file-text"></i>
+                        <span class="link-title">Data Pendaftar</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('penilaianDE') }}" class="nav-link">
+                        <i class="link-icon" data-feather="edit"></i>
+                        <span class="link-title">Penilaian Desk Evaluation</span>
+                    </a>
+                </li>
+
                 <li class="nav-item nav-category">Hak Akses</li>
                 <li class="nav-item">
                     <a href="{{ route('access.index') }}" class="nav-link">
@@ -136,7 +151,25 @@
                     <li class="nav-item nav-category">{{ $feature }}</li>
                 @endforeach --}}
                 {{-- <li class="nav-item nav-category">{{ auth()->user()->role }}</li> --}}
-
+            @elseif ( auth()->user()->role == '3' )
+            <li class="nav-item">
+                <a href="{{ route('penilai.profil.edit') }}" class="nav-link">
+                    <i class="link-icon" data-feather="user"></i>
+                    <span class="link-title">Profil Penilai</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Lihat Jadwal Presentasi</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Lihat Jadwal Monev</span>
+                </a>
+            </li>
             {{-- @elseif ( auth()->user()->role == '2' ) --}}
             @else
             {{-- <li class="nav-item nav-category">Data Master</li> --}}
