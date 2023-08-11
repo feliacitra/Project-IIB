@@ -56,7 +56,7 @@
                 </div>
     
                 <div id="jumlahData" class="col-4 col-md-3 col-lg-2">
-                    <p>10 Data ditemukan</p>
+                    <p>0 Data ditemukan</p>
                 </div>
     
                 <div class="col">
@@ -465,14 +465,19 @@
 
             document.getElementById('pilihPeriode').addEventListener('change', function() {
                 var selectedValue = this.value;
-                var liElements = document.querySelectorAll("#periodeData li");
+                var liElements = document.querySelectorAll('#periodeData li'); // Update selector
+                var jumlahDataElement = document.getElementById('jumlahData');
 
                 liElements.forEach(function(li) {
                     var dataId = li.getAttribute('data-id');
                     var dataCount = li.getAttribute('data-count');
+                    
+                    if (selectedValue === 'select') {
+                        jumlahDataElement.querySelector('p').textContent = '0 Data ditemukan';
+                        return; // Exit the loop since no matching value
+                    }
 
                     if (dataId === selectedValue) {
-                        var jumlahDataElement = document.getElementById('jumlahData');
                         jumlahDataElement.querySelector('p').textContent = dataCount + ' Data ditemukan';
                     }
                 });
