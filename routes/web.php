@@ -14,6 +14,7 @@ use App\Models\MasterCategory;
 use App\Http\Controllers\MasterUniversitasController;
 use App\Http\Controllers\MasterFakultasController;
 use Illuminate\Support\Facades\View;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +53,12 @@ Route::post('/register',[RegisteredUserController::class, 'store']) ->name('regi
 
 Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+    $periode = DB::table('master_periode')->where('mpe_status', '=', '1')->get();
+    $status=0;
+    if($periode->isNotEmpty()){
+        $status = Carbon::now()->between($periode[0]->mpe_startdate,$periode[0]->mpe_enddate);
+    }
+    return view('dashboard')->with(compact('periode','status'));
     })->name('dashboard');
     
     Route::get('/change-password', function () {

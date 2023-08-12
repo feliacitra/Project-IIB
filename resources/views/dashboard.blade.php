@@ -25,7 +25,9 @@
             <p class="mt-2" style="margin-left: 1.7rem">Ayo segera daftarkan startup anda!</p>
 
             <div class="text-center mt-4">
+                @if($status == 1)
                 <a href="{{ route('daftar') }}"><button class="btn btn-primary px-4">Daftar<i data-feather="send" class="m-0"></i></button></a>
+                @endif
             </div>
         </div>
     </div>
