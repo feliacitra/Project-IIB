@@ -1,21 +1,22 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\AccessController;
-use App\Http\Controllers\MasterCivitasController;
-use App\Http\Controllers\MasterPenggunaController;
-use App\Http\Controllers\MasterPeriodeController;
-use App\Http\Controllers\MasterProgramInkubasiController;
-use App\Http\Controllers\MasterCategoryController;
-use App\Http\Controllers\UserProfileController;
 use App\Models\MasterCategory;
-use App\Http\Controllers\MasterUniversitasController;
-use App\Http\Controllers\MasterFakultasController;
-use App\Http\Controllers\MasterProgramStudyController;
-use App\Http\Controllers\MasterKomponenPenilaianController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AccessController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\MasterCivitasController;
+use App\Http\Controllers\MasterPeriodeController;
+use App\Http\Controllers\MasterCategoryController;
+use App\Http\Controllers\MasterFakultasController;
+use App\Http\Controllers\MasterPenggunaController;
+use App\Http\Controllers\PenilaiProfileController;
+use App\Http\Controllers\MasterUniversitasController;
+use App\Http\Controllers\MasterProgramStudyController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\MasterProgramInkubasiController;
+use App\Http\Controllers\MasterKomponenPenilaianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -173,17 +174,17 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/master/penilaian', [MasterKomponenPenilaianController::class, 'index'])->name('penilaian');
     Route::get('/master/penilaian/{id}', [MasterKomponenPenilaianController::class, 'create'])->name('penilaian.create');
     Route::post('/master/penilaian/{id}', [MasterKomponenPenilaianController::class, 'storeQuest'])->name('quest.store');
+    Route::post('/master/penilaian/copy/{id}', [MasterKomponenPenilaianController::class, 'copyQuest'])->name('quest.copy');
     Route::get('/master/penilaian/detail/{id}', [MasterKomponenPenilaianController::class, 'show'])->name('penilaian.show');
-    Route::resource('/master/penilaian', MasterKomponenPenilaianController::class)->only(['index', 'store', 'update', 'destroy'])->names([
+    Route::get('/master/penilaian/delete/{id}', [MasterKomponenPenilaianController::class, 'destroy'])->name('penilaian.destroy');
+    Route::resource('/master/penilaian', MasterKomponenPenilaianController::class)->only(['index', 'store', 'update'])->names([
         'index' => 'master.penilaian',
         'store' => 'penilaian.store',
-        'update' => 'penilaian.update',
-        'destroy' => 'penilaian.destroy'
+        'update' => 'penilaian.update'
     ]);
 
-    Route::get('/profile', function() {
-        return view('Penilai.profile');
-    })->name('profilePenilai');
+    Route::get('/penilai/profil', [PenilaiProfileController::class, 'edit'])->name('penilai.profil.edit');
+    Route::put('/penilai/profil', [PenilaiProfileController::class, 'update'])->name('penilai.profil.update');
 });
 
 

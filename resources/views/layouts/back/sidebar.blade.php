@@ -159,7 +159,7 @@
                 {{-- <li class="nav-item nav-category">{{ auth()->user()->role }}</li> --}}
             @elseif ( auth()->user()->role == '3' )
             <li class="nav-item">
-                <a href="{{ route('profilePenilai') }}" class="nav-link">
+                <a href="{{ route('penilai.profil.edit') }}" class="nav-link">
                     <i class="link-icon" data-feather="user"></i>
                     <span class="link-title">Profil Penilai</span>
                 </a>
