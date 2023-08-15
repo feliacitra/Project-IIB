@@ -172,7 +172,7 @@ class MasterKomponenPenilaianController extends Controller
             $start = $num[$i];
         }
 
-        return redirect()->route('master.penilaian');
+        return redirect()->route('master.penilaian')->with('success', "Berhasil mengubah pertanyaan pada komponen");
     }
 
     public function copyQuest(Request $request, $id) {
@@ -240,7 +240,7 @@ class MasterKomponenPenilaianController extends Controller
 
         $component->save();
 
-        return redirect()->route('master.penilaian');
+        return redirect()->route('master.penilaian')->with('success', "Berhasil menambahkan komponen penilaian");
 
     }
 
