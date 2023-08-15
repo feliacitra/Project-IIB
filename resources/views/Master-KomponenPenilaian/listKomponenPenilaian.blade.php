@@ -29,53 +29,53 @@
     </div>
     <!-- Button Tambah -->
 
-    <div class="row">
-        <div class="col-4 col-md-3 col-lg-2">
-            <select name="pilihPeriode" id="periode" class="form-control form-select">
-                <option value="select" class="text-muted">Periode</option>
-                @foreach ($periode as $item)
-                    <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }}</option>
-                @endforeach
-            </select>
-        </div>
+    <!-- Input Form -->
+    <form action="{{ route('master.penilaian') }}" class="position-relative">
+        <div class="row">
+            <div class="col-4 col-md-3 col-lg-2">
+                <select name="pilihPeriode" id="periode" class="form-control form-select">
+                    <option value="select" class="text-muted">Periode</option>
+                    @foreach ($periode as $item)
+                        <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }}</option>
+                    @endforeach
+                </select>
+            </div>
 
-        <div class="col-4 col-md-3 col-lg-2">
-            <select name="pilihPeriode" id="periode" class="form-control form-select">
-                <option value="select" class="text-muted">Program Inkubasi</option>
-                @foreach ($programInkubasi as $item)
-                    <option value="{{ $item->mpi_id }}">{{ $item->mpi_name }}</option>
-                @endforeach
-            </select>
-        </div>
+            <div class="col-4 col-md-3 col-lg-2">
+                <select name="pilihProgram" id="periode" class="form-control form-select">
+                    <option value="select" class="text-muted">Program Inkubasi</option>
+                    @foreach ($programInkubasi as $item)
+                        <option value="{{ $item->mpi_id }}">{{ $item->mpi_name }}</option>
+                    @endforeach
+                </select>
+            </div>
 
-        <div class="col-4 col-md-3 col-lg-2">
-            <select name="pilihPeriode" id="periode" class="form-control form-select">
-                <option value="select" class="text-muted">Tahap Seleksi</option>
-                <option value="assess">Self Assessment</option>
-                <option value="present">Presentasi</option>
-                <option value="eval">Desk Evaluation</option>
-            </select>
-        </div>
+            <div class="col-4 col-md-3 col-lg-2">
+                <select name="pilihSeleksi" id="periode" class="form-control form-select">
+                    <option value="select" class="text-muted">Tahap Seleksi</option>
+                    <option value="1">Self Assessment</option>
+                    <option value="2">Presentasi</option>
+                    <option value="3">Desk Evaluation</option>
+                </select>
+            </div>
 
-        <div class="col d-flex justify-content-end">
-            <div class="pb-2">
-                <!-- Search Bar -->
-                <div class="input-group rounded">
-                    <!-- Input Form -->
-                    <form action="{{ route('master.penilaian') }}" class="position-relative">
+            <div class="col d-flex justify-content-end">
+                <div class="pb-2">
+                    <!-- Search Bar -->
+                    <div class="input-group rounded">
                         @csrf
                         <input name="search" type="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
                         
                         <span class="position-absolute" style="top: 50%; left: 0.5rem; transform: translateY(-50%);">
                             <i data-feather="search"></i>
                         </span>
-                    </form>
-                    <!-- Input Form -->
+                    </div>
+                    <!-- Search Bar -->
                 </div>
-                <!-- Search Bar -->
             </div>
         </div>
-    </div>
+    </form>
+    <!-- Input Form -->
 
     @if (Session::has('success'))
         <div class="alert alert-success" role="alert">
