@@ -165,8 +165,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link">
-                    <i class="link-icon" data-feather="box"></i>
+                <a href="{{ route('lihatjadwalpresentasi') }}" class="nav-link">
+                    <i class="link-icon" data-feather="calendar"></i>
                     <span class="link-title">Lihat Jadwal Presentasi</span>
                 </a>
             </li>

@@ -137,6 +137,18 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Pendaftaran-KelolaJadwalPresentasi.listJadwalPresentasi');
     })->name('jadwalpresentasi');
 
+    Route::get('/lihatjadwalpresentasi', function() {
+        return view('Penilai.lihatJadwalPresentasi');
+    })->name('lihatjadwalpresentasi');
+
+    Route::get('/lihatjadwalpresentasi/lihatnilai', function() {
+        return view('penilai.nilaiView');
+    })->name('lihatnilaipresentasi');
+
+    Route::get('/lihatjadwalpresentasi/editnilai', function() {
+        return view('penilai.nilaiEdit');
+    })->name('editnilaipresentasi');
+
     // Route::get('/master/inkubasi', function() {
     //     $master_programinkubasi = DB::table('master_programinkubasi')->get();
     //     return view('Master-ProgramInkubasi.listProgramInkubasi',['master_programinkubasi'=>$master_programinkubasi]);
