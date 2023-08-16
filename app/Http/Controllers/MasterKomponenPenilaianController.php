@@ -13,9 +13,31 @@ use App\Models\MasterPeriodeProgram;
 
 class MasterKomponenPenilaianController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $builder = MasterComponent::query();
+        if ($request->pilihPeriode != 'select') {
+            $pilihPeriode = request('pilihPeriode');
+            // dd($pilihPeriode);
+            $builder->orWhereHas('periodeProgram.masterPeriode', function ($query) use ($pilihPeriode) {
+                $query->where('mpe_id', 'like', '%' . $pilihPeriode . '%');
+            });
+        }
+
+        if ($request->pilihProgram != 'select') {
+            $pilihProgram = request('pilihProgram');
+            $builder->orWhereHas('periodeProgram.masterPeriode.masterProgramInkubasi', function ($query) use ($pilihProgram) {
+                $query->where('mpi_id', 'like', '%' . $pilihProgram . '%');
+            });
+        }
+
+        if ($request->pilihSeleksi != 'select') {
+            $pilihSeleksi = request('pilihSeleksi');
+            $builder->orWhere('mct_step', 'like', '%' . $pilihSeleksi . '%');
+        }
+
         if (request('search')){
+
             $step = -1;
             $status = 0;
             if (request('search') == 'Self Assessment') {
@@ -45,7 +67,7 @@ class MasterKomponenPenilaianController extends Controller
             //     });
             // })->get();
             $search = request('search');
-            $components = MasterComponent::where('mct_step', 'like', '%' . $search . '%')
+            $builder->orWhere('mct_step', 'like', '%' . $search . '%')
                 ->orWhereHas('periodeProgram.masterPeriode.masterProgramInkubasi', function ($query) use ($search) {
                     $query->where('mpi_name', 'like', '%' . $search . '%');
                 })
@@ -54,11 +76,9 @@ class MasterKomponenPenilaianController extends Controller
                 })
                 ->orWhereHas('question', function ($query) use ($search) {
                     $query->where('mq_question', 'like', '%' . $search . '%');
-                })
-                ->get();
-        } else {
-            $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->get();
+                });
         }
+        $components = $builder->get();
         $periode = MasterPeriode::all();
         $programInkubasi = MasterProgramInkubasi::all();
 
@@ -172,7 +192,7 @@ class MasterKomponenPenilaianController extends Controller
             $start = $num[$i];
         }
 
-        return redirect()->route('master.penilaian');
+        return redirect()->route('master.penilaian')->with('success', "Berhasil mengubah pertanyaan pada komponen");
     }
 
     public function copyQuest(Request $request, $id) {
@@ -240,7 +260,7 @@ class MasterKomponenPenilaianController extends Controller
 
         $component->save();
 
-        return redirect()->route('master.penilaian');
+        return redirect()->route('master.penilaian')->with('success', "Berhasil menambahkan komponen penilaian");
 
     }
 
