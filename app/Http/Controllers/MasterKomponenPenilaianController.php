@@ -16,28 +16,27 @@ class MasterKomponenPenilaianController extends Controller
     public function index(Request $request)
     {
         $builder = MasterComponent::query();
-        if ($request->pilihPeriode != 'select') {
+        if ($request->has('pilihPeriode') && $request->pilihPeriode != 'select') {
             $pilihPeriode = request('pilihPeriode');
-            // dd($pilihPeriode);
             $builder->orWhereHas('periodeProgram.masterPeriode', function ($query) use ($pilihPeriode) {
                 $query->where('mpe_id', 'like', '%' . $pilihPeriode . '%');
             });
         }
 
-        if ($request->pilihProgram != 'select') {
+        if ($request->has('pilihProgram') && $request->pilihProgram != 'select') {
             $pilihProgram = request('pilihProgram');
             $builder->orWhereHas('periodeProgram.masterPeriode.masterProgramInkubasi', function ($query) use ($pilihProgram) {
                 $query->where('mpi_id', 'like', '%' . $pilihProgram . '%');
             });
         }
 
-        if ($request->pilihSeleksi != 'select') {
+        if ($request->has('pilihSeleksi') && $request->pilihSeleksi != 'select') {
+            dd(request('search'));
             $pilihSeleksi = request('pilihSeleksi');
             $builder->orWhere('mct_step', 'like', '%' . $pilihSeleksi . '%');
         }
 
         if (request('search')){
-
             $step = -1;
             $status = 0;
             if (request('search') == 'Self Assessment') {
