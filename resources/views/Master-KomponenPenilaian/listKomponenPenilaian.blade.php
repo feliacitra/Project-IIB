@@ -30,32 +30,40 @@
     <!-- Button Tambah -->
 
     <!-- Input Form -->
-    <form action="{{ route('master.penilaian') }}" class="position-relative">
+    <form id="search-form" action="{{ route('master.penilaian') }}" class="position-relative">
         <div class="row">
             <div class="col-4 col-md-3 col-lg-2">
                 <select name="pilihPeriode" id="periode" class="form-control form-select">
                     <option value="select" class="text-muted">Periode</option>
                     @foreach ($periode as $item)
-                        <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }}</option>
+                        @if ($pilihPeriode == $item->mpe_id)
+                            <option selected value="{{ $item->mpe_id }}">{{ $item->mpe_name }}</option>
+                        @else
+                            <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>
 
             <div class="col-4 col-md-3 col-lg-2">
-                <select name="pilihProgram" id="periode" class="form-control form-select">
+                <select name="pilihProgram" id="program" class="form-control form-select">
                     <option value="select" class="text-muted">Program Inkubasi</option>
                     @foreach ($programInkubasi as $item)
-                        <option value="{{ $item->mpi_id }}">{{ $item->mpi_name }}</option>
+                        @if ($pilihProgram == $item->mpi_id)
+                            <option selected value="{{ $item->mpi_id }}">{{ $item->mpi_name }}</option>    
+                        @else
+                            <option value="{{ $item->mpi_id }}">{{ $item->mpi_name }}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>
 
             <div class="col-4 col-md-3 col-lg-2">
-                <select name="pilihSeleksi" id="periode" class="form-control form-select">
+                <select name="pilihSeleksi" id="seleksi" class="form-control form-select">
                     <option value="select" class="text-muted">Tahap Seleksi</option>
-                    <option value="1">Self Assessment</option>
-                    <option value="2">Presentasi</option>
-                    <option value="3">Desk Evaluation</option>
+                    <option @if ($pilihSeleksi == "1") selected @endif value="1">Self Assessment</option>
+                    <option @if ($pilihSeleksi == "2") selected @endif value="2">Presentasi</option>
+                    <option @if ($pilihSeleksi == "3") selected @endif value="3">Desk Evaluation</option>
                 </select>
             </div>
 
@@ -246,4 +254,20 @@
         </div>
     </div>
     <!-- DELETE -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const periodeSelect = document.getElementById("periode");
+            const programSelect = document.getElementById("program");
+            const seleksiSelect = document.getElementById("seleksi");
+            const form = document.getElementById("search-form");
+
+            periodeSelect.addEventListener("change", handleSubmit);
+            programSelect.addEventListener("change", handleSubmit);
+            seleksiSelect.addEventListener("change", handleSubmit);
+
+            function handleSubmit() {
+                form.submit();
+            }
+        });
+    </script>
 @endsection
