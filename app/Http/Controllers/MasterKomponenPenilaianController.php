@@ -15,25 +15,28 @@ class MasterKomponenPenilaianController extends Controller
 {
     public function index(Request $request)
     {
+        $pilihPeriode = '';
+        $pilihProgram = '';
+        $pilihSeleksi = '';
         $builder = MasterComponent::query();
         if ($request->has('pilihPeriode') && $request->pilihPeriode != 'select') {
             $pilihPeriode = request('pilihPeriode');
-            $builder->orWhereHas('periodeProgram.masterPeriode', function ($query) use ($pilihPeriode) {
-                $query->where('mpe_id', 'like', '%' . $pilihPeriode . '%');
+            $builder->whereHas('periodeProgram.masterPeriode', function ($query) use ($pilihPeriode) {
+                $query->where('master_periode.mpe_id', 'like', '%' . $pilihPeriode . '%');
             });
         }
 
         if ($request->has('pilihProgram') && $request->pilihProgram != 'select') {
             $pilihProgram = request('pilihProgram');
-            $builder->orWhereHas('periodeProgram.masterPeriode.masterProgramInkubasi', function ($query) use ($pilihProgram) {
-                $query->where('mpi_id', 'like', '%' . $pilihProgram . '%');
+            // dd($pilihProgram);
+            $builder->whereHas('periodeProgram.masterProgramInkubasi', function ($query) use ($pilihProgram) {
+                $query->where('master_programinkubasi.mpi_id', 'like', '%' . $pilihProgram . '%');
             });
         }
 
         if ($request->has('pilihSeleksi') && $request->pilihSeleksi != 'select') {
-            dd(request('search'));
             $pilihSeleksi = request('pilihSeleksi');
-            $builder->orWhere('mct_step', 'like', '%' . $pilihSeleksi . '%');
+            $builder->where('master_component.mct_step', 'like', '%' . $pilihSeleksi . '%');
         }
 
         if (request('search')){
@@ -77,11 +80,11 @@ class MasterKomponenPenilaianController extends Controller
                     $query->where('mq_question', 'like', '%' . $search . '%');
                 });
         }
-        $components = $builder->get();
+        $components = $builder->orderBy('mct_step', 'asc')->get();
         $periode = MasterPeriode::all();
         $programInkubasi = MasterProgramInkubasi::all();
 
-        return view('Master-KomponenPenilaian.listKomponenPenilaian', compact('components', 'periode', 'programInkubasi'));
+        return view('Master-KomponenPenilaian.listKomponenPenilaian', compact('components', 'periode', 'programInkubasi', 'pilihPeriode', 'pilihProgram', 'pilihSeleksi'));
     }
 
     public function create($id)
@@ -252,12 +255,20 @@ class MasterKomponenPenilaianController extends Controller
         
         $periodeProgram = MasterPeriodeProgram::where('mpe_id', $mpe_id)->where('mpi_id', $mpi_id)->first();
         
-        $component = new MasterComponent;
-        
-        $component->mct_step = $tahap;
-        $component->mpd_id = $periodeProgram->mpd_id;
+        $component = MasterComponent::firstOrCreate([
+            'mct_step' => $tahap,
+            'mpd_id' => $periodeProgram->mpd_id
+        ]);
 
-        $component->save();
+        if (!$component->wasRecentlyCreated) {
+            return redirect()->route('master.penilaian')->with('error', "Komponen sudah terdaftar");
+        }
+        // $component = new MasterComponent;
+        
+        // $component->mct_step = $tahap;
+        // $component->mpd_id = $periodeProgram->mpd_id;
+
+        // $component->save();
 
         return redirect()->route('master.penilaian')->with('success', "Berhasil menambahkan komponen penilaian");
 
