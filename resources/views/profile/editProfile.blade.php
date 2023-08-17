@@ -23,27 +23,33 @@
             max-height: 100%;
         }
     </style>
-
+    @if (Session::has('success'))
+    <div class="alert alert-success" role="alert">
+        {{ Session::get('success') }}
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+    @if (Session::has('errors'))
+    <div class="alert alert-errors" role="alert">
+        {{ Session::get('errors') }}
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
     <div class="pb-4">
         <p style="display: flex; align-items: flex-end;">
             <a href="{{ route('dashboard') }}"><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
-            <a href="" style="color: black;">Profile</a>
+            <a href="" style="color: black;">Edit Profile</a>
         </p>
     </div>
 
     <div class="container-fluid" style="background-color: #f2f2f2">
-        {{-- <div class="card-header text-center">Profile</div> --}}
+        <div class="card-header text-center">Edit Profile</div>
         <div class="row mt-3">
-            {{-- <div class="col-md-12"> --}}
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="text-center mb-4" >Profile</h3>
-                        @if (Session::has('success'))
-                        <div class="alert alert-success">
-                            {{ Session::get('success') }}
-                        </div>
-                        @endif
-                        <form id="user detail" enctype="multipart/form-data">
+                        <form method="post" action="/edit/profile/{{ $user->name }}" enctype="multipart/form-data">
+                            @method('put')
                             @csrf
                             <div class="form-group" style="text-align: center" >
                                 @if (optional($user->user_detail)->ud_photo)
@@ -52,10 +58,27 @@
                                     <img src="{{ asset('back/images/logo/user.png') }}" alt="Foto Profil" class="wd-200 ht-200 rounded-circle" style="margin-top: -5px; margin-bottom: 20px;">
                                 @endif
                             </div>
+
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Unggah Foto Profil</label>
+                                <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image">
+                                @error('image')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="form-group">
                                 <label for="name">Nama Lengkap</label>
-                                <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ $user->name }}" readonly disabled>
+                                <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ $user->name }}">
                                 @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', $user->email) }}">
+                                @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -79,21 +102,23 @@
 
                             <div class="form-group">
                                 <label for="gender">Jenis Kelamin</label>
-                                <select class="form-control" id="gender" name="gender" readonly disabled>
-                                    <option value="" disabled selected>-</option>
-                                    <option value="0" {{ $user->user_detail && $user->user_detail->ud_gender == 0 ? 'selected' : '' }}>Perempuan</option>
-                                    <option value="1" {{ $user->user_detail && $user->user_detail->ud_gender == 1 ? 'selected' : '' }}>Laki-laki</option>
+                                <div class="input-group">
+                                    <select class="form-select" id="gender" name="gender">
+                                        <option value="" disabled selected>Pilih jenis kelamin</option>
+                                        <option value="0" {{ optional($user->user_detail)->ud_gender === 0 ? 'selected' : '' }}>Perempuan</option>
+                                        <option value="1" {{ optional($user->user_detail)->ud_gender === 1 ? 'selected' : '' }}>Laki-laki</option>
                                 </select>
+                                </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="place_of_birth">Tempat Lahir</label>
-                                <input type="text" id="place_of_birth" name="place_of_birth" class="form-control" value="{{ $user->user_detail?->ud_placeofbirth ?? '-' }}" readonly disabled>
+                                <input type="text" id="place_of_birth" name="place_of_birth" placeholder="Tempat Lahir" class="form-control" value="{{ old('place_of_birth', optional($user->user_detail)->ud_placeofbirth) }}">
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="birthdate">Tanggal Lahir</label>
-                                <input type="date" id="birthdate" readonly disabled name="birthdate" placeholder="Tanggal Lahir" class="form-control @error('birthdate') is-invalid @enderror" value="{{ old('birthdate', optional($user->user_detail)->ud_birthday ? date('Y-m-d', strtotime($user->user_detail->ud_birthday)) : null) }}">
+                                <input type="date" id="birthdate" name="birthdate" placeholder="Tanggal Lahir" class="form-control @error('birthdate') is-invalid @enderror" value="{{ old('birthdate', optional($user->user_detail)->ud_birthday ? date('Y-m-d', strtotime($user->user_detail->ud_birthday)) : null) }}">
                                 @error('birthdate')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -101,7 +126,7 @@
 
                             <div class="form-group">
                                 <label for="phone">Nomor HP</label>
-                                <input type="tel" id="phone" name="phone" placeholder="Nomor HP" class="form-control @error('phone') is-invalid @enderror" pattern="[0-9]+" value="{{ $user->user_detail?->ud_phone ?? '-' }}" readonly disabled>
+                                <input type="tel" id="phone" name="phone" placeholder="Nomor HP" class="form-control @error('phone') is-invalid @enderror" pattern="[0-9]+" value="{{ old('phone', optional($user->user_detail)->ud_phone ?? '') }}">
                                 @error('phone')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -109,17 +134,17 @@
 
                             <div class="form-group">
                                 <label for="address">Alamat</label>
-                                <textarea id="address" name="address" placeholder="Alamat" class="form-control" readonly disabled>{{ $user->user_detail?->ud_address ?? '-' }}</textarea>
+                                <textarea id="address" name="address" placeholder="Alamat" class="form-control">{{ old('address') ?? ($user->user_detail ? $user->user_detail->ud_address : '') }}</textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="bank_name">Nama Bank</label>
-                                <input type="text" id="bank_name" name="bank_name" class="form-control" value="{{ $user->user_detail?->ud_bank ?? '-' }}" readonly disabled>
+                                <input type="text" id="bank_name" name="bank_name" placeholder="Nama Bank" class="form-control" value="{{ old('bank_name', optional($user->user_detail)->ud_bank) }}">
                             </div>
 
                             <div class="form-group">
                                 <label for="account_number">Nomor Rekening</label>
-                                <input type="text" id="account_number" name="account_number" class="form-control @error('account_number') is-invalid @enderror" value="{{ $user->user_detail?->ud_accountnumber ?? '-' }}" readonly disabled>
+                                <input type="text" id="account_number" name="account_number" placeholder="Nomor Rekening" class="form-control @error('account_number') is-invalid @enderror" value="{{ old('account_number', optional($user->user_detail)->ud_accountnumber) }}">
                                 @error('account_number')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -127,28 +152,29 @@
 
                             <div class="form-group">
                                 <label for="education_level">Tingkat Pendidikan</label>
-                                <input type="text" id="education_level" name="education_level" class="form-control" value="{{ $user->user_detail?->ud_lasteducation ?? '-' }}" readonly disabled>
+                                <input type="text" id="education_level" name="education_level" placeholder="Tingkat Pendidikan" class="form-control" value="{{ old('education_level', optional($user->user_detail)->ud_lasteducation) }}">
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="university">Universitas</label>
-                                <input type="text" id="university" name="university" class="form-control" value="{{ $user->user_detail?->ud_university ?? '-' }}" readonly disabled>
+                                <input type="text" id="university" name="university" placeholder="Universitas" class="form-control" value="{{ old('university', optional($user->user_detail)->ud_university) }}">
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="faculty">Fakultas</label>
-                                <input type="text" id="faculty" name="faculty" class="form-control" value="{{ $user->user_detail?->ud_faculty ?? '-' }}" readonly disabled>
+                                <input type="text" id="faculty" name="faculty" placeholder="Fakultas" class="form-control" value="{{ old('faculty', optional($user->user_detail)->ud_faculty) }}">
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="major">Program Studi</label>
-                                <input type="text" id="major" name="major" class="form-control" value="{{ $user->user_detail?->ud_programstudy ?? '-' }}" readonly disabled>
+                                <input type="text" id="major" name="major" placeholder="Program Studi" class="form-control" value="{{ old('major', optional($user->user_detail)->ud_programstudy) }}">
                             </div>
+                            <button type="submit" class="btn btn-primary">Edit</button>
                             <button type="button" class="btn btn-primary" form="add-user-form" onclick="history.back()" style="background-color: grey; border-color: grey">Kembali</button>
                         </form>
                     </div>
                 </div>
-            {{-- </div> --}}
-        {{-- </div> --}}
+            </div>
+        </div>
     </div>
 @endsection

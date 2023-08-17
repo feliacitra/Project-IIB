@@ -9,7 +9,7 @@
         }
     </style>
 
-    <div class="pb-4">
+    <div class="pb-2">
         <p style="display: flex; align-items: flex-end;">
             <!-- Home button -->
             <a href="/dashboard"><i data-feather="home" style="margin-right: 0.5rem;"></i></a>
@@ -21,12 +21,13 @@
     <!-- Button Tambah -->
     @if (isFeatureInclude('pengguna-tambah', session('features')))
     <div class="pb-2" style="display: flex; justify-content: flex-end;">
-        <button class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
-            <a href="{{route('master.pengguna.add')}}"><i data-feather="plus" style="margin-right: 0.3rem;"></i>
-            TAMBAH
-            </a>
-        </button>
-    </div>    
+        <a href="{{route('master.pengguna.add')}}" class="button btn-primary">
+            <button id="openAdd" class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
+                <i data-feather="plus" style="margin-right: 0.3rem;"></i>
+                TAMBAH
+            </button>
+        </a>
+    </div>
     @endif
     <!-- Button Tambah -->
 

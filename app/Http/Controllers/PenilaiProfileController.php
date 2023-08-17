@@ -5,29 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UserDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class UserProfileController extends Controller
+class PenilaiProfileController extends Controller
 {
-    public function index(User $user) {
-        $user->load('user_detail');
-        return view('profile.detailProfile', compact('user'));
-    }
-    
-    public function edit(User $user)
+    public function edit()
     {
-        return view('profile.editProfile', ["user" => $user]);
+        $user = Auth::user();
+        return view('Penilai.profile', compact('user'));
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
+        $user = Auth::user();
+        
         $userRules = [
             'name' => 'required',
             'email' => 'required',
         ];
 
         $userDetailRules = [
-            'gender' => 'nullable',
+            'gender' => 'required',
             'birthdate' => 'nullable',
             'phone' => 'nullable',
             'address' => 'nullable',
@@ -54,12 +53,11 @@ class UserProfileController extends Controller
         $validatedUserDetailData = $request->validate($userDetailRules);
 
         if($request->file('image')){
-            
-            if ($user->user_detail) {
-                if ($user->user_detail->ud_photo) Storage::delete('public/' . $user->user_detail->ud_photo);
+            if($user->user_detail->ud_photo){
+                Storage::delete('public/'.$user->user_detail->ud_photo);
             }
 
-            $validatedUserDetailData['image'] = $request->file('image')->store('profile_photos', 'public');
+            $validatedUserDetailData['image'] = $request->file('image')->store('profile_photos','public');
         }
 
         User::where('id', $user->id)->update($validatedUserData);
@@ -82,8 +80,7 @@ class UserProfileController extends Controller
                 'ud_photo' => $validatedUserDetailData['image']
             ]);
         }
-        // return redirect()->route('edit-profile', $user)->with('success', 'User has been editted');
-        return redirect('/edit/profile/'.$request->name)->with('success', 'User has been editted');
-    }
 
+        return redirect('/penilai/profil')->with('success', 'Profil telah diedit');
+    }
 }

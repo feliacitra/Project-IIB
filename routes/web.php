@@ -1,20 +1,22 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\AccessController;
-use App\Http\Controllers\MasterCivitasController;
-use App\Http\Controllers\MasterPenggunaController;
-use App\Http\Controllers\MasterPeriodeController;
-use App\Http\Controllers\MasterProgramInkubasiController;
-use App\Http\Controllers\MasterCategoryController;
-use App\Http\Controllers\UserProfileController;
 use App\Models\MasterCategory;
-use App\Http\Controllers\MasterUniversitasController;
-use App\Http\Controllers\MasterFakultasController;
-use App\Http\Controllers\MasterProgramStudyController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AccessController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\MasterCivitasController;
+use App\Http\Controllers\MasterPeriodeController;
+use App\Http\Controllers\MasterCategoryController;
+use App\Http\Controllers\MasterFakultasController;
+use App\Http\Controllers\MasterPenggunaController;
+use App\Http\Controllers\PenilaiProfileController;
+use App\Http\Controllers\MasterUniversitasController;
+use App\Http\Controllers\MasterProgramStudyController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\MasterProgramInkubasiController;
+use App\Http\Controllers\MasterKomponenPenilaianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +75,8 @@ Route::middleware(['auth', 'access'])->group(function () {
     })->name('incubationProgram');
 
     Route::get('/detail/profile/{user:name}', [UserProfileController::class, 'index'])->name('detail-profile');
+    Route::get('/edit/profile/{user:name}', [UserProfileController::class, 'edit'])->name('edit-profile');
+    Route::put('/edit/profile/{user:name}', [UserProfileController::class, 'update'])->name('update-profile');
 
     Route::get('/master/startup', function() {
         return view('Master-KategoriStartup.listKategoriStartup');
@@ -96,6 +100,38 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::resource('/master/periode', MasterPeriodeController::class)->names([
         'index' => 'master.periode',
     ])->except(['show', 'edit', 'create']);
+
+    // Route::get('/master/penilaian', function() {
+    //     return view('Master-KomponenPenilaian.listKomponenPenilaian');
+    // })->name('penilaian');
+
+    Route::get('/master/penilaian/editComponent', function() {
+        return view('Master-KomponenPenilaian.kelolaKomponenEdit');
+    })->name('editComponent');
+
+    Route::get('/master/penilaian/viewComponent', function() {
+        return view('Master-KomponenPenilaian.kelolaKomponenView');
+    })->name('viewComponent');
+
+    Route::get('/master/pendaftar', function() {
+        return view('Pendaftaran-DataPendaftar.dataPendaftar');
+    })->name('pendaftar');
+
+    Route::get('/master/pendaftar/datastartup', function() {
+        return view('Pendaftaran-DataPendaftar.dataStartup');
+    })->name('dataStartup');
+
+    Route::get('/master/penilaianDE', function() {
+        return view('Pendaftaran-PenilaianDE.penilaianDE');
+    })->name('penilaianDE');
+
+    Route::get('/master/penilaianDE/viewnilai', function() {
+        return view('Pendaftaran-PenilaianDE.nilaiView');
+    })->name('viewnilai');
+
+    Route::get('/master/penilaianDE/editnilai', function() {
+        return view('Pendaftaran-PenilaianDE.nilaiEdit');
+    })->name('editnilai');
 
     // Route::get('/master/inkubasi', function() {
     //     $master_programinkubasi = DB::table('master_programinkubasi')->get();
@@ -131,6 +167,20 @@ Route::middleware(['auth', 'access'])->group(function () {
 
     Route::get('/master/prodi/{university}', [MasterProgramStudyController::class, 'getFaculties']);
 
+    Route::get('/master/penilaian', [MasterKomponenPenilaianController::class, 'index'])->name('penilaian');
+    Route::get('/master/penilaian/{id}', [MasterKomponenPenilaianController::class, 'create'])->name('penilaian.create');
+    Route::post('/master/penilaian/{id}', [MasterKomponenPenilaianController::class, 'storeQuest'])->name('quest.store');
+    Route::post('/master/penilaian/copy/{id}', [MasterKomponenPenilaianController::class, 'copyQuest'])->name('quest.copy');
+    Route::get('/master/penilaian/detail/{id}', [MasterKomponenPenilaianController::class, 'show'])->name('penilaian.show');
+    Route::get('/master/penilaian/delete/{id}', [MasterKomponenPenilaianController::class, 'destroy'])->name('penilaian.destroy');
+    Route::resource('/master/penilaian', MasterKomponenPenilaianController::class)->only(['index', 'store', 'update'])->names([
+        'index' => 'master.penilaian',
+        'store' => 'penilaian.store',
+        'update' => 'penilaian.update'
+    ]);
+
+    Route::get('/penilai/profil', [PenilaiProfileController::class, 'edit'])->name('penilai.profil.edit');
+    Route::put('/penilai/profil', [PenilaiProfileController::class, 'update'])->name('penilai.profil.update');
 });
 
 

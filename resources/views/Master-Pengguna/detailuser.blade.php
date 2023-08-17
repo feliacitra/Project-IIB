@@ -32,11 +32,12 @@
     </div>
 
     <div class="container-fluid" style="background-color: #f2f2f2">
-        <div class="card-header text-center">Detail Pengguna</div>
+        {{-- <div class="card-header text-center">Detail Pengguna</div> --}}
         <div class="row mt-3">
-            <div class="col-md-12">
+            {{-- <div class="col-md-12"> --}}
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body"> 
+                        <h3 class="text-center mb-4" >Detail Pengguna</h3>
                         @if (Session::has('success'))
                             <div class="alert alert-success">
                                 {{ Session::get('success') }}
@@ -105,7 +106,7 @@
 
                             <div class="form-group">
                                 <label for="birthdate">Tanggal Lahir</label>
-                                <input type="date" id="birthdate" name="birthdate" placeholder="Tanggal Lahir" class="form-control @error('birthdate') is-invalid @enderror" value="{{ $user->user_detail?->ud_birthday ?? '-' }}" readonly disabled>
+                                <input type="date" id="birthdate" readonly disabled name="birthdate" placeholder="Tanggal Lahir" class="form-control @error('birthdate') is-invalid @enderror" value="{{ old('birthdate', optional($user->user_detail)->ud_birthday ? date('Y-m-d', strtotime($user->user_detail->ud_birthday)) : null) }}">
                                 @error('birthdate')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -160,7 +161,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
+            {{-- </div> --}}
+        {{-- </div> --}}
     </div>
 @endsection
