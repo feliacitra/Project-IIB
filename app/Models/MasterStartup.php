@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Startup extends Model
+class MasterStartup extends Model
 {
     use HasFactory;
-    protected $table = 'startup';
+    protected $table = 'master_startup';
     protected $primaryKey = 'ms_id';
     protected $fillable =[
         'ms_startdate',

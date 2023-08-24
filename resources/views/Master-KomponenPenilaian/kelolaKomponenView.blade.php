@@ -32,6 +32,7 @@
 
     <div class="container-fluid py-4 px-4" style="height: 100%">
         <div class="row">
+            {{-- @dd($component) --}}
             <p class="col">Periode: {{ $component->periodeProgram->masterPeriode->mpe_name }}</p>
             @if ($component->mct_step == 1)
                 <td>Tahap: Self Assessment</td>

@@ -37,7 +37,7 @@
             Daftar Startup
         </p>
     </div>
-
+    <form action="{{ route('startup.store') }}" method="post">
     <div class="container-fluid mt-2">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -57,11 +57,11 @@
         <div class="tab-content" id="nav-tabContent">
             {{-- Identitas --}}
             <div class="tab-pane fade show active" id="nav-identitas" role="tabpanel" aria-labelledby="nav-identitas-tab">
-                <form class="p-3">
-                    <div class="row">
+                    @csrf
+                    <div class="row p-3" >
                         <div class="col">
                             <label for="programInkubasi">Program Inkubasi</label>
-                            <select id="programInkubasi" class="form-control form-select">
+                            <select id="programInkubasi" class="form-control form-select" name="programStartup">
                                 <option value="" class="text-muted">Program Inkubasi</option>
                                 @foreach ($incubations as $incubation)
                                     <option value="{{ $incubation->mpi_id }}">{{ $incubation->mpi_name }}</option>
@@ -69,7 +69,7 @@
                             </select>
 
                             <label for="kategori">Kategori</label>
-                            <select id="kategori" class="form-control form-select">
+                            <select id="kategori" class="form-control form-select" name="kategori">
                                 <option value="" class="text-muted">Kategori</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->mc_id }}">{{ $category->mc_name }}</option>
@@ -77,42 +77,42 @@
                             </select>
 
                             <label for="namaStartup">Nama Startup</label>
-                            <input type="text" class="form-control" id="namaStartup" placeholder="Nama Startup">
+                            <input type="text" class="form-control" id="namaStartup" name="namaStartup" placeholder="Nama Startup">
 
                             <label for="deskripsi">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" cols="30" rows="3" placeholder="Deskripsi"></textarea>
+                            <textarea class="form-control" id="deskripsi" cols="30" rows="3" name="deskripsi" placeholder="Deskripsi"></textarea>
                             
                             <label for="tahunDidirikan">Tahun Didirikan</label>
-                            <input type="text" class="form-control" id="tahunDidirikan" placeholder="YYYY">
+                            <input type="text" class="form-control" id="tahunDidirikan" name="tahunDidirikan" placeholder="YYYY">
 
                             <label for="alamat">Alamat</label>
-                            <textarea class="form-control" id="alamat" cols="30" rows="3" placeholder="Alamat"></textarea>
+                            <textarea class="form-control" id="alamat" cols="30" rows="3" name="alamat" placeholder="Alamat"></textarea>
 
                             <label for="legalitas">Legalitas</label>
-                            <input type="text" class="form-control" id="legalitas" placeholder="Legalitas">
+                            <input type="text" class="form-control" id="legalitas" name="legalitas" placeholder="Legalitas">
 
                             <label for="sumberPendanaan">Sumber Pendanaan</label>
-                            <input type="text" class="form-control" id="sumberPendanaan" placeholder="Sumber Pendanaan">
+                            <input type="text" class="form-control" id="sumberPendanaan" name="sumberPendanaan" placeholder="Sumber Pendanaan">
 
                             <label for="pendapatanTahunan">Pendapatan Tahunan</label>
-                            <input type="text" class="form-control" id="pendapatanTahunan" placeholder="Pendapatan Tahunan">
+                            <input type="text" class="form-control" id="pendapatanTahunan" name="pendapatanTahunan" placeholder="Pendapatan Tahunan">
 
                             <label for="areaFokusBisnis">Area Fokus Bisnis</label>
-                            <textarea class="form-control" id="areaFokusBisnis" cols="30" rows="3" placeholder="Area Fokus Bisnis"></textarea>
+                            <textarea class="form-control" id="areaFokusBisnis" cols="30" rows="3" name="areaFokusBisnis" placeholder="Area Fokus Bisnis"></textarea>
                         </div>
 
                         <div class="col">
                             <label for="kontakStartup">Kontak Startup</label>
-                            <input type="text" class="form-control" id="kontakStartup" placeholder="Kontak Startup">
+                            <input type="text" class="form-control" id="kontakStartup" name="kontakStartup" placeholder="Kontak Startup">
 
                             <label for="emailStartup">Email Startup</label>
                             <input type="email" class="form-control" id="emailStartup" name="emailStartup" placeholder="EmailStartup">
 
                             <label for="website">Website</label>
-                            <input type="text" class="form-control" id="website" placeholder="Website">
+                            <input type="text" class="form-control" id="website" name="website" placeholder="Website">
 
                             <label for="sosialMedia">Sosial Media</label>
-                            <input type="text" class="form-control" id="sosialMedia" placeholder="Sosial Media">
+                            <input type="text" class="form-control" id="sosialMedia" name="sosialMedia" placeholder="Sosial Media">
 
                             <label for="pitchDeck">Unggah Pitch Deck</label>
                             <input class="form-control" type="file" id="pitchDeck" name="pitchDeck">
@@ -122,13 +122,11 @@
                             </div>
                         </div>
                     </div>
-                </form>
             </div>
             {{-- Identitas --}}
 
             {{-- Anggota --}}
             <div class="tab-pane fade" id="nav-anggota" role="tabpanel" aria-labelledby="nav-anggota-tab">
-                <form>
                     <!-- + button -->
                     <div class="px-3 pt-3" style="display: flex; justify-content: flex-end;">
                         <button id="plus-button" class="btn btn-primary py-1 px-1" type="button" onclick="addCard()"><i data-feather="plus"></i></button>
@@ -145,27 +143,27 @@
                                 <div class="row">
                                     <div class="col">
                                         <label for="namaLengkap">Nama Lengkap</label>
-                                        <input type="text" class="form-control" id="namaLengkap" placeholder="Nama Lengkap">
+                                        <input type="text" class="form-control" id="namaLengkap" name="namaLengkap[]" placeholder="Nama Lengkap">
 
                                         <label for="nik">NIK</label>
-                                        <input type="text" class="form-control" id="nik" placeholder="NIK">
+                                        <input type="text" class="form-control" id="nik" name="nik[]" placeholder="NIK">
 
                                         <label for="jabatan">Jabatan</label>
-                                        <input type="text" class="form-control" id="jabatan" placeholder="Jabatan">
+                                        <input type="text" class="form-control" id="jabatan" name="jabatan[]" placeholder="Jabatan">
 
                                         <label for="nomorHP">Nomor HP</label>
-                                        <input type="text" class="form-control" id="nomorHP" placeholder="Nomor HP">
+                                        <input type="text" class="form-control" id="nomorHP" name="nomorHp[]" placeholder="Nomor HP">
 
                                         <label for="email">Email</label>
-                                        <input type="email" id="email" name="email" class="form-control" placeholder="Email">
+                                        <input type="email" id="email" name="email[]" class="form-control" placeholder="Email">
 
                                         <label for="mediaSosial">Media Sosial</label>
-                                        <input type="text" class="form-control" id="mediaSosial" placeholder="Media Sosial">
+                                        <input type="text" class="form-control" id="mediaSosial" name="mediaSosial[]" placeholder="Media Sosial">
                                     </div>
 
                                     <div class="col">
                                         <label for="civitasTELU">Civitas Telkom University</label>
-                                        <select id="civitasTELU" class="form-control form-select">
+                                        <select id="civitasTELU" class="form-control form-select" name="civitasTelu[]">
                                             <option value="" class="text-muted">Civitas Telkom University</option>
                                             @foreach($societies as $society)
                                                 <option value="{{ $society->mci_id }}">{{ $society->mci_name }}</option>
@@ -173,7 +171,7 @@
                                         </select>
 
                                         <label for="universitas">Universitas</label>
-                                        <select id="universitas" class="form-control form-select">
+                                        <select id="universitas" class="form-control form-select" name="universitas[]">
                                             <option value="" class="text-muted">Universitas</option>
                                             @foreach($universities as $university)
                                                 <option value="{{ $university->mu_id }}">{{ $university->mu_name }}</option>
@@ -181,7 +179,7 @@
                                         </select>
 
                                         <label for="fakultas">Fakultas</label>
-                                        <select id="fakultas" class="form-control form-select">
+                                        <select id="fakultas" class="form-control form-select" name="fakultas[]">
                                             <option value="" class="text-muted">Fakultas</option>
                                             @foreach($faculties as $faculty)
                                                 <option value="{{ $faculty->mf_id }}">{{ $faculty->mf_name }}</option>
@@ -189,7 +187,7 @@
                                         </select>
 
                                         <label for="prodi">Program Studi</label>
-                                        <select id="prodi" class="form-control form-select">
+                                        <select id="prodi" class="form-control form-select" name="prodi[]">
                                             <option value="" class="text-muted">Program Studi</option>
                                             @foreach($studyPrograms as $studyProgram)
                                                 <option value="{{ $studyProgram->mps_id }}">{{ $studyProgram->mps_name }}</option>
@@ -197,10 +195,10 @@
                                         </select>
 
                                         <label for="nimnip">NIM/NIP</label>
-                                        <input type="text" class="form-control" id="nimnip" placeholder="NIM/NIP">
+                                        <input type="text" class="form-control" id="nimnip" name="nimNip[]" placeholder="NIM/NIP">
 
                                         <label for="CV">Curricullum Vitae</label>
-                                        <input class="form-control" type="file" id="CV" name="CV">
+                                        <input class="form-control" type="file" id="CV" name="cv[]">
                                     </div>                            
                                 </div>
                             </div>
@@ -210,32 +208,23 @@
                             <a class="btn btn-primary btnNext">Selanjutnya</a>
                         </div>
                     </div>
-                </form>
             </div>
             {{-- Anggota --}}
 
             {{-- Self Assessment --}}
             <div class="tab-pane fade" id="nav-selfAssessment" role="tabpanel" aria-labelledby="nav-assessment-tab">
-                <form action="">
                     <div class="p-3">
                         <h5 class="text-center mb-3">Self Assessment</h5>
-                        <div class="card">
+                        <div id="questions" class="card">
                             @foreach($questions as $question)
                                 <div class="card-body">
                                     <p>{{ $question->mq_question }}</p>
+                                    @foreach($question->questionRange as $index => $qr )
                                     <div class="radio mt-2">
-                                        <input type="radio" id="html" name="fav_language" value="HTML">
-                                        <label for="html">Lorem lorem</label>
-
-                                        <input type="radio" id="css" name="fav_language" value="CSS">
-                                        <label for="css">Lorem ipsum</label>
-
-                                        <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-                                        <label for="javascript">Dolor sit amet</label>
-
-                                        <input type="radio" id="consecteturer" name="fav_language" value="Consecteturer">
-                                        <label for="consecteturer">Consecteturer</label>
-                                    </div>
+                                        <input type="radio" id="pilihan-{{ $index }}" name="pilihan" value="{{ $qr->mqr_poin }}">
+                                        <label for="pilihan-{{ $index }}" >{{ $qr->mqr_description }}</label>
+                                    </div>     
+                                    @endforeach
                                 </div>
                             @endforeach
                         </div>
@@ -251,7 +240,7 @@
                         
                         <div class="d-flex justify-content-between mt-4">
                             <a class="btn btn-primary btnPrevious">Sebelumnya</a>
-                            <button class="btn btn-primary px-4">Daftar</button>
+                            <button type="submit" class="btn btn-primary px-4">Daftar</button>
                         </div>
                     </div>
                 </form>
@@ -261,6 +250,63 @@
     </div>
 
     <script>
+
+        $("#programInkubasi").change(function (){
+            // get self assesment based by program inkubasi
+            var e = document.getElementById("programInkubasi");
+            var program = e.options[e.selectedIndex].value;
+            console.log(program);
+            var test = "";
+
+            // question and answer
+            var questions = {!! json_encode($questions->toArray(), JSON_HEX_TAG) !!};
+            var questionRange = {!! json_encode($questionRange->toArray(), JSON_HEX_TAG) !!};
+            var incubations = {!! json_encode($incubations->toArray(), JSON_HEX_TAG) !!};
+            
+
+            // create new radio
+            let questEl = document.getElementById('questions');
+            let filterQuestions = questions.filter((question) => question.mct_id === program);
+            console.log(questions);
+            // questions.forEach(question => {
+            //     // console.log(question);
+            //     questEl.appendChild(addQuestion(question));
+            // });
+           
+        })
+
+        function addQuestion(question){
+            let cardEl = document.createElement('div');
+            cardEl.classList.add('card-body')
+
+            let questionEl = document.createElement('p');
+            questionEl.textContent = question['mq_question'];
+            cardEl.appendChild(questionEl);
+
+            //syarol copo emang
+            question['question_range'].forEach((value, index) => {
+                let divEl = document.createElement('div');
+                divEl.classList.add('radio');
+                divEl.classList.add('mt-2');
+                
+                let inputEl = document.createElement('input');
+                inputEl.setAttribute('type', 'radio');
+                inputEl.setAttribute('id', 'nama-' + index);
+                inputEl.setAttribute('name', 'nama-' + index);
+                inputEl.value = value['mqr_poin'];
+                divEl.appendChild(inputEl);
+
+                let labelEl = document.createElement('label');
+                labelEl.setAttribute('for', 'nama-' + index);
+                labelEl.textContent = value['mqr_description'];
+                divEl.appendChild(labelEl);
+
+                cardEl.appendChild(divEl);
+            });
+
+            return cardEl;
+        }
+
         function addCard() {
             var container = document.querySelector("#nav-anggota .p-3");
 

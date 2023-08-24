@@ -13,7 +13,7 @@ class CreateStartupTable extends Migration
      */
     public function up()
     {
-        Schema::create('startup', function (Blueprint $table) {
+        Schema::create('master_startup', function (Blueprint $table) {
             $table->id();
             $table->date('ms_startdate');
             $table->date('ms_enddate')->nullable();

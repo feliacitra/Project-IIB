@@ -144,8 +144,9 @@ Route::middleware(['auth', 'access'])->group(function () {
         'destroy' => 'faculty.destroy',
     ]);
 
-    Route::resource('startuo', \App\Http\Controllers\StartupController::class)->only(['index'])->names([
-        'index' => 'startup.index'
+    Route::resource('startup', \App\Http\Controllers\StartupController::class)->only(['index', 'store'])->names([
+        'index' => 'startup.index',
+        'store' => 'startup.store',
     ]);
 
     Route::resource('/master/prodi', MasterProgramStudyController::class)->names([
