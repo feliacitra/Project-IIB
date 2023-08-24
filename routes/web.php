@@ -144,6 +144,10 @@ Route::middleware(['auth', 'access'])->group(function () {
         'destroy' => 'faculty.destroy',
     ]);
 
+    Route::resource('startuo', \App\Http\Controllers\StartupController::class)->only(['index'])->names([
+        'index' => 'startup.index'
+    ]);
+
     Route::resource('/master/prodi', MasterProgramStudyController::class)->names([
         'index' => 'master.prodi',
     ])->except(['show', 'edit', 'create', 'getFaculties']);

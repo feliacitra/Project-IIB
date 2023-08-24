@@ -25,7 +25,7 @@
             <p class="mt-2" style="margin-left: 1.7rem">Ayo segera daftarkan startup anda!</p>
 
             <div class="text-center mt-4">
-                <a href="{{ route('daftar') }}"><button class="btn btn-primary px-4">Daftar<i data-feather="send" class="m-0"></i></button></a>
+                <a href="{{ route('startup.index') }}"><button class="btn btn-primary px-4">Daftar<i data-feather="send" class="m-0"></i></button></a>
             </div>
         </div>
     </div>

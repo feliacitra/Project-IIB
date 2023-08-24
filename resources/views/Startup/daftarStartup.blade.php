@@ -63,15 +63,17 @@
                             <label for="programInkubasi">Program Inkubasi</label>
                             <select id="programInkubasi" class="form-control form-select">
                                 <option value="" class="text-muted">Program Inkubasi</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
+                                @foreach ($incubations as $incubation)
+                                    <option value="{{ $incubation->mpi_id }}">{{ $incubation->mpi_name }}</option>
+                                @endforeach
                             </select>
 
                             <label for="kategori">Kategori</label>
                             <select id="kategori" class="form-control form-select">
                                 <option value="" class="text-muted">Kategori</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->mc_id }}">{{ $category->mc_name }}</option>
+                                @endforeach
                             </select>
 
                             <label for="namaStartup">Nama Startup</label>
@@ -165,29 +167,33 @@
                                         <label for="civitasTELU">Civitas Telkom University</label>
                                         <select id="civitasTELU" class="form-control form-select">
                                             <option value="" class="text-muted">Civitas Telkom University</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
+                                            @foreach($societies as $society)
+                                                <option value="{{ $society->mci_id }}">{{ $society->mci_name }}</option>
+                                            @endforeach
                                         </select>
 
                                         <label for="universitas">Universitas</label>
                                         <select id="universitas" class="form-control form-select">
                                             <option value="" class="text-muted">Universitas</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
+                                            @foreach($universities as $university)
+                                                <option value="{{ $university->mu_id }}">{{ $university->mu_name }}</option>
+                                            @endforeach
                                         </select>
 
                                         <label for="fakultas">Fakultas</label>
                                         <select id="fakultas" class="form-control form-select">
                                             <option value="" class="text-muted">Fakultas</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
+                                            @foreach($faculties as $faculty)
+                                                <option value="{{ $faculty->mf_id }}">{{ $faculty->mf_name }}</option>
+                                            @endforeach
                                         </select>
 
                                         <label for="prodi">Program Studi</label>
                                         <select id="prodi" class="form-control form-select">
                                             <option value="" class="text-muted">Program Studi</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
+                                            @foreach($studyPrograms as $studyProgram)
+                                                <option value="{{ $studyProgram->mps_id }}">{{ $studyProgram->mps_name }}</option>
+                                            @endforeach
                                         </select>
 
                                         <label for="nimnip">NIM/NIP</label>
@@ -214,22 +220,24 @@
                     <div class="p-3">
                         <h5 class="text-center mb-3">Self Assessment</h5>
                         <div class="card">
-                            <div class="card-body">
-                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aenean commodo ligula eget dolor. Aenean massa?</p>
-                                <div class="radio mt-2">
-                                    <input type="radio" id="html" name="fav_language" value="HTML">
-                                    <label for="html">Lorem lorem</label>
+                            @foreach($questions as $question)
+                                <div class="card-body">
+                                    <p>{{ $question->mq_question }}</p>
+                                    <div class="radio mt-2">
+                                        <input type="radio" id="html" name="fav_language" value="HTML">
+                                        <label for="html">Lorem lorem</label>
 
-                                    <input type="radio" id="css" name="fav_language" value="CSS">
-                                    <label for="css">Lorem ipsum</label>
+                                        <input type="radio" id="css" name="fav_language" value="CSS">
+                                        <label for="css">Lorem ipsum</label>
 
-                                    <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-                                    <label for="javascript">Dolor sit amet</label>
+                                        <input type="radio" id="javascript" name="fav_language" value="JavaScript">
+                                        <label for="javascript">Dolor sit amet</label>
 
-                                    <input type="radio" id="consecteturer" name="fav_language" value="Consecteturer">
-                                    <label for="consecteturer">Consecteturer</label>
+                                        <input type="radio" id="consecteturer" name="fav_language" value="Consecteturer">
+                                        <label for="consecteturer">Consecteturer</label>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
 
                         <div class="card">
