@@ -50,7 +50,7 @@ class StartupController extends Controller
             'mm_position' => $request->jabatan[$i],
             'mm_phone' => $request->nomorHp[$i],
             'mm_email' => $request->email[$i],
-            'mm_nim_nip' => $request->nimnip[$i],
+            'mm_nim_nip' => $request->nimNip[$i],
             'mm_socialmedia' => $request->mediaSosial[$i],
             'mu_id' => $request->universitas[$i],
             'mf_id' => $request->fakultas[$i],
@@ -61,6 +61,8 @@ class StartupController extends Controller
     }
 
     MasterStartup::create([
+        'ms_startdate'=> "2023-08-24",
+        'ms_enddate'=> "2023-08-24",
         'ms_pks' => $request->programStartup,
         'ms_phone' => $request->kontakStartup,
         'ms_name' => $request->namaStartup,
@@ -69,6 +71,11 @@ class StartupController extends Controller
         'ms_socialmedia' => $request->sosialMedia,
         'ms_legal' => $request->legalitas,
         'ms_pitchdeck' => $request->pitchDeck,
+        'ms_proposal'=>"",
+        'mm_id'=>"1",
+        'user_id'=>"1",
+        'mpd_id'=>"1",
+        'ms_status'=>"1",
     ]);
     }
 }
