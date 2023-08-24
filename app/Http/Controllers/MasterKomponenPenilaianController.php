@@ -13,8 +13,32 @@ use App\Models\MasterPeriodeProgram;
 
 class MasterKomponenPenilaianController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $pilihPeriode = '';
+        $pilihProgram = '';
+        $pilihSeleksi = '';
+        $builder = MasterComponent::query();
+        if ($request->has('pilihPeriode') && $request->pilihPeriode != 'select') {
+            $pilihPeriode = request('pilihPeriode');
+            $builder->whereHas('periodeProgram.masterPeriode', function ($query) use ($pilihPeriode) {
+                $query->where('master_periode.mpe_id', 'like', '%' . $pilihPeriode . '%');
+            });
+        }
+
+        if ($request->has('pilihProgram') && $request->pilihProgram != 'select') {
+            $pilihProgram = request('pilihProgram');
+            // dd($pilihProgram);
+            $builder->whereHas('periodeProgram.masterProgramInkubasi', function ($query) use ($pilihProgram) {
+                $query->where('master_programinkubasi.mpi_id', 'like', '%' . $pilihProgram . '%');
+            });
+        }
+
+        if ($request->has('pilihSeleksi') && $request->pilihSeleksi != 'select') {
+            $pilihSeleksi = request('pilihSeleksi');
+            $builder->where('master_component.mct_step', 'like', '%' . $pilihSeleksi . '%');
+        }
+
         if (request('search')){
             $step = -1;
             $status = 0;
@@ -45,7 +69,7 @@ class MasterKomponenPenilaianController extends Controller
             //     });
             // })->get();
             $search = request('search');
-            $components = MasterComponent::where('mct_step', 'like', '%' . $search . '%')
+            $builder->orWhere('mct_step', 'like', '%' . $search . '%')
                 ->orWhereHas('periodeProgram.masterPeriode.masterProgramInkubasi', function ($query) use ($search) {
                     $query->where('mpi_name', 'like', '%' . $search . '%');
                 })
@@ -54,15 +78,13 @@ class MasterKomponenPenilaianController extends Controller
                 })
                 ->orWhereHas('question', function ($query) use ($search) {
                     $query->where('mq_question', 'like', '%' . $search . '%');
-                })
-                ->get();
-        } else {
-            $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->get();
+                });
         }
+        $components = $builder->orderBy('mct_step', 'asc')->get();
         $periode = MasterPeriode::all();
         $programInkubasi = MasterProgramInkubasi::all();
 
-        return view('Master-KomponenPenilaian.listKomponenPenilaian', compact('components', 'periode', 'programInkubasi'));
+        return view('Master-KomponenPenilaian.listKomponenPenilaian', compact('components', 'periode', 'programInkubasi', 'pilihPeriode', 'pilihProgram', 'pilihSeleksi'));
     }
 
     public function create($id)
@@ -172,7 +194,7 @@ class MasterKomponenPenilaianController extends Controller
             $start = $num[$i];
         }
 
-        return redirect()->route('master.penilaian');
+        return redirect()->route('master.penilaian')->with('success', "Berhasil mengubah pertanyaan pada komponen");
     }
 
     public function copyQuest(Request $request, $id) {
@@ -233,14 +255,22 @@ class MasterKomponenPenilaianController extends Controller
         
         $periodeProgram = MasterPeriodeProgram::where('mpe_id', $mpe_id)->where('mpi_id', $mpi_id)->first();
         
-        $component = new MasterComponent;
+        $component = MasterComponent::firstOrCreate([
+            'mct_step' => $tahap,
+            'mpd_id' => $periodeProgram->mpd_id
+        ]);
+
+        if (!$component->wasRecentlyCreated) {
+            return redirect()->route('master.penilaian')->with('error', "Komponen sudah terdaftar");
+        }
+        // $component = new MasterComponent;
         
-        $component->mct_step = $tahap;
-        $component->mpd_id = $periodeProgram->mpd_id;
+        // $component->mct_step = $tahap;
+        // $component->mpd_id = $periodeProgram->mpd_id;
 
-        $component->save();
+        // $component->save();
 
-        return redirect()->route('master.penilaian');
+        return redirect()->route('master.penilaian')->with('success', "Berhasil menambahkan komponen penilaian");
 
     }
 
