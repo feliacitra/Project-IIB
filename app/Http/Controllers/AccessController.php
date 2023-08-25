@@ -88,7 +88,8 @@ class AccessController extends Controller
     }
 
     public function index() {
-        return view('admin.access');
+        $role_feature = Role::with('features')->get();
+        return view('admin.access', compact('role_feature'));
     }
 
     public function reset() {

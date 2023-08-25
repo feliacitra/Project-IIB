@@ -313,12 +313,20 @@
                                 </div>
                             </td>
                         </tr>
+                        @foreach ($role_feature as $item)
+                            <tr>{{ $item->id }}</tr><br>
+                            @foreach ($item->features as $feat)
+                                <tr>{{ $feat->name }}</tr>
+                                <br><br>
+                            @endforeach
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </form>
+{{-- <form action="" method="get"></form> --}}
 @endsection
 @section('extra-script')
 <script>
