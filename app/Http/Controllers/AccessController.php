@@ -25,6 +25,7 @@ class AccessController extends Controller
         $universitas = $request->input('universitas');
         $fakultas = $request->input('fakultas');
         $periodePendaftaran = $request->input('periode-pendaftaran');
+        $komponenPenilaian = $request->input('komponen-penilaian');
 
         $roleDb = Role::find($role);
         if ($pengguna) {
@@ -71,6 +72,13 @@ class AccessController extends Controller
         
         if ($periodePendaftaran) {
             foreach ($periodePendaftaran as $feature) {
+                $featureDb = Feature::where('name', $feature)->first();
+                $roleDb->features()->save($featureDb);
+            }
+        }
+
+        if ($komponenPenilaian) {
+            foreach ($komponenPenilaian as $feature) {
                 $featureDb = Feature::where('name', $feature)->first();
                 $roleDb->features()->save($featureDb);
             }

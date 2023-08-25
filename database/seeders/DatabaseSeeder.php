@@ -119,7 +119,19 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'periode-pendaftaran-lihat',
-            ]
+            ],
+            [
+                'name' => 'komponen-penilaian-tambah',
+            ],
+            [
+                'name' => 'komponen-penilaian-ubah',
+            ],
+            [
+                'name' => 'komponen-penilaian-hapus',
+            ],
+            [
+                'name' => 'komponen-penilaian-lihat',
+            ],
         ];
         $roles = [
             [
