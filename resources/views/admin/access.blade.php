@@ -284,12 +284,49 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr>
+                            <th>8</th>
+                            <td>Master Komponen Penilaian</td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="komponen-penilaian[]" class="form-check-input check-komponen-penilaian" value="komponen-penilaian-tambah">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="komponen-penilaian[]" class="form-check-input check-komponen-penilaian" value="komponen-penilaian-ubah">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="komponen-penilaian[]" class="form-check-input check-komponen-penilaian" value="komponen-penilaian-hapus">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="komponen-penilaian[]" class="form-check-input check-komponen-penilaian" value="komponen-penilaian-lihat">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input check-komponen-penilaian" id="komponen-penilaian">
+                                </div>
+                            </td>
+                        </tr>
+                        @foreach ($role_feature as $item)
+                            <tr>{{ $item->id }}</tr><br>
+                            @foreach ($item->features as $feat)
+                                <tr>{{ $feat->name }}</tr>
+                                <br><br>
+                            @endforeach
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </form>
+{{-- <form action="" method="get"></form> --}}
 @endsection
 @section('extra-script')
 <script>
@@ -341,6 +378,13 @@
 
             var isChecked = $(this).prop('checked');
             $('.check-periode-pendaftaran').prop('checked', isChecked);
+        });
+
+        $('#komponen-penilaian').change(function() {
+            event.preventDefault(); // Prevent default click behavior
+
+            var isChecked = $(this).prop('checked');
+            $('.check-komponen-penilaian').prop('checked', isChecked);
         });
 
         $('#role-select').change(function() {

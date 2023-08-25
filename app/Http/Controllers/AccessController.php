@@ -25,6 +25,7 @@ class AccessController extends Controller
         $universitas = $request->input('universitas');
         $fakultas = $request->input('fakultas');
         $periodePendaftaran = $request->input('periode-pendaftaran');
+        $komponenPenilaian = $request->input('komponen-penilaian');
 
         $roleDb = Role::find($role);
         if ($pengguna) {
@@ -75,12 +76,20 @@ class AccessController extends Controller
                 $roleDb->features()->save($featureDb);
             }
         }
+
+        if ($komponenPenilaian) {
+            foreach ($komponenPenilaian as $feature) {
+                $featureDb = Feature::where('name', $feature)->first();
+                $roleDb->features()->save($featureDb);
+            }
+        }
         
         return redirect('/access')->with('success', 'Berhasil mengubah hak akses');
     }
 
     public function index() {
-        return view('admin.access');
+        $role_feature = Role::with('features')->get();
+        return view('admin.access', compact('role_feature'));
     }
 
     public function reset() {
