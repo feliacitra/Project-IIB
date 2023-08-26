@@ -38,6 +38,7 @@
         </p>
     </div>
     <form action="{{ route('startup.store') }}" method="post">
+    <input type="hidden" name="userid" value="{{ Auth::user()->id }}" />
     <div class="container-fluid mt-2">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -63,8 +64,8 @@
                             <label for="programInkubasi">Program Inkubasi</label>
                             <select id="programInkubasi" class="form-control form-select" name="programStartup">
                                 <option value="" class="text-muted">Program Inkubasi</option>
-                                @foreach ($incubations as $incubation)
-                                    <option value="{{ $incubation->mpi_id }}">{{ $incubation->mpi_name }}</option>
+                                @foreach ($components as $item)
+                                    <option value="{{ $item->periodeProgram->masterProgramInkubasi->mpi_id }}">{{ $item->periodeProgram->masterProgramInkubasi->mpi_name }}</option>
                                 @endforeach
                             </select>
 
@@ -216,8 +217,10 @@
                     <div class="p-3">
                         <h5 class="text-center mb-3">Self Assessment</h5>
                         <div id="questions" class="card">
-                            @foreach($questions as $question)
+                            @foreach($components as $item)
+                            @foreach($item->question as $question)
                                 <div class="card-body">
+                                    {{-- @dd($question) --}}
                                     <p>{{ $question->mq_question }}</p>
                                     @foreach($question->questionRange as $index => $qr )
                                     <div class="radio mt-2">
@@ -226,6 +229,7 @@
                                     </div>     
                                     @endforeach
                                 </div>
+                            @endforeach
                             @endforeach
                         </div>
 
@@ -248,64 +252,62 @@
             {{-- Self Assessment --}}
         </div>
     </div>
-
     <script>
+
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+        });
 
         $("#programInkubasi").change(function (){
             // get self assesment based by program inkubasi
             var e = document.getElementById("programInkubasi");
             var program = e.options[e.selectedIndex].value;
             console.log(program);
-            var test = "";
-
-            // question and answer
-            var questions = {!! json_encode($questions->toArray(), JSON_HEX_TAG) !!};
-            var questionRange = {!! json_encode($questionRange->toArray(), JSON_HEX_TAG) !!};
-            var incubations = {!! json_encode($incubations->toArray(), JSON_HEX_TAG) !!};
-            
-
-            // create new radio
-            let questEl = document.getElementById('questions');
-            let filterQuestions = questions.filter((question) => question.mct_id === program);
-            console.log(questions);
-            // questions.forEach(question => {
-            //     // console.log(question);
-            //     questEl.appendChild(addQuestion(question));
-            // });
-           
-        })
-
-        function addQuestion(question){
-            let cardEl = document.createElement('div');
-            cardEl.classList.add('card-body')
-
-            let questionEl = document.createElement('p');
-            questionEl.textContent = question['mq_question'];
-            cardEl.appendChild(questionEl);
-
-            //syarol copo emang
-            question['question_range'].forEach((value, index) => {
-                let divEl = document.createElement('div');
-                divEl.classList.add('radio');
-                divEl.classList.add('mt-2');
-                
-                let inputEl = document.createElement('input');
-                inputEl.setAttribute('type', 'radio');
-                inputEl.setAttribute('id', 'nama-' + index);
-                inputEl.setAttribute('name', 'nama-' + index);
-                inputEl.value = value['mqr_poin'];
-                divEl.appendChild(inputEl);
-
-                let labelEl = document.createElement('label');
-                labelEl.setAttribute('for', 'nama-' + index);
-                labelEl.textContent = value['mqr_description'];
-                divEl.appendChild(labelEl);
-
-                cardEl.appendChild(divEl);
+            // window.location.href = '/startup/'+program;
+            $.ajax({
+                url:"{{ route('startup.store') }}",
+                method:'POST',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    // 'program_id' : program
+                }
             });
 
-            return cardEl;
-        }
+        })
+      
+
+        // function addQuestion(question){
+        //     let cardEl = document.createElement('div');
+        //     cardEl.classList.add('card-body')
+
+        //     let questionEl = document.createElement('p');
+        //     questionEl.textContent = question['mq_question'];
+        //     cardEl.appendChild(questionEl);
+
+        //     question['question_range'].forEach((value, index) => {
+        //         let divEl = document.createElement('div');
+        //         divEl.classList.add('radio');
+        //         divEl.classList.add('mt-2');
+                
+        //         let inputEl = document.createElement('input');
+        //         inputEl.setAttribute('type', 'radio');
+        //         inputEl.setAttribute('id', 'nama-' + index);
+        //         inputEl.setAttribute('name', 'nama-' + index);
+        //         inputEl.value = value['mqr_poin'];
+        //         divEl.appendChild(inputEl);
+
+        //         let labelEl = document.createElement('label');
+        //         labelEl.setAttribute('for', 'nama-' + index);
+        //         labelEl.textContent = value['mqr_description'];
+        //         divEl.appendChild(labelEl);
+
+        //         cardEl.appendChild(divEl);
+        //     });
+
+        //     return cardEl;
+        // }
 
         function addCard() {
             var container = document.querySelector("#nav-anggota .p-3");

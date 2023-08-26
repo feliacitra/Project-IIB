@@ -148,6 +148,7 @@ Route::middleware(['auth', 'access'])->group(function () {
         'index' => 'startup.index',
         'store' => 'startup.store',
     ]);
+    Route::post('/startup/set/', [StartupController::class, 'setInkubasi'])->name('startup.setInkubasi');
 
     Route::resource('/master/prodi', MasterProgramStudyController::class)->names([
         'index' => 'master.prodi',

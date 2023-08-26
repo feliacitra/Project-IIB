@@ -32,4 +32,9 @@ class MasterStartup extends Model
         'mpd_id',
         'ms_status'
     ];
+
+    public function masterMember()
+    {
+        return $this->hasMany(MasterMember::class, 'mm_id');
+    }
 }

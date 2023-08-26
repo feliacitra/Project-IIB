@@ -13,6 +13,7 @@ use App\Models\MasterQuestion;
 use App\Models\MasterQuestionRange;
 use App\Models\MasterStartup;
 use App\Models\MasterUniversitas;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use MasterPeriode;
 
@@ -25,9 +26,9 @@ class StartupController extends Controller
         $universities = MasterUniversitas::all();
         $faculties = MasterFakultas::all();
         $studyPrograms = MasterProgramStudy::all();
-        $questions = MasterQuestion::all();
-        $questionRange=MasterQuestionRange::all();
-        $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->get();
+        // $questions = MasterQuestion::all();
+        // $questionRange=MasterQuestionRange::all();
+        $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi','question', 'question.questionRange')->get();
         return view('Startup.daftarStartup', compact(
             'incubations',
             'categories',
@@ -35,8 +36,6 @@ class StartupController extends Controller
             'universities',
             'faculties',
             'studyPrograms',
-            'questions',
-            'questionRange',
             'components'));
     }
 
@@ -61,21 +60,27 @@ class StartupController extends Controller
     }
 
     MasterStartup::create([
-        'ms_startdate'=> "2023-08-24",
-        'ms_enddate'=> "2023-08-24",
+        'ms_startdate'=> Carbon::now(),
         'ms_pks' => $request->programStartup,
         'ms_phone' => $request->kontakStartup,
         'ms_name' => $request->namaStartup,
         'ms_address' => $request->alamat,
         'ms_website' => $request->website,
-        'ms_socialmedia' => $request->sosialMedia,
+        'ms_socialmedia' => $request->sosialMedia,      
         'ms_legal' => $request->legalitas,
         'ms_pitchdeck' => $request->pitchDeck,
         'ms_proposal'=>"",
         'mm_id'=>"1",
-        'user_id'=>"1",
+        'user_id'=>$request->userid,
         'mpd_id'=>"1",
         'ms_status'=>"1",
     ]);
+    }
+
+    public function setInkubasi(Request $request){
+        dd($request);
+        // $component = MasterComponent::with('question', 'question.questionRange', 'periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $request->id)->first();
+        return view('Startup.daftarStartup', compact('component'));
+        // return \Response::json($request);
     }
 }

@@ -75,6 +75,11 @@
 <!-- core:js -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     $(document).ready(function() {
         $('#logout-btn').click(function() {
             event.preventDefault(); // Prevent default click behavior
