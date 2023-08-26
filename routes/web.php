@@ -66,6 +66,7 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::post('/access', [AccessController::class, 'submit'])->name('access.submit');
     Route::get('/access/reset', [AccessController::class, 'reset'])->name('access.reset');
     Route::get('/access/reset/{role}', [AccessController::class, 'role_reset'])->name('access.role-reset');
+    Route::post('/access/role', [AccessController::class, 'role_index'])->name('access.role');
 
     Route::get('/master/pengguna', [MasterPenggunaController::class, 'index'])->name('master.pengguna');
     
