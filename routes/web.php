@@ -15,6 +15,7 @@ use App\Http\Controllers\MasterUniversitasController;
 use App\Http\Controllers\MasterFakultasController;
 use App\Http\Controllers\MasterProgramStudyController;
 use App\Http\Controllers\MasterKomponenPenilaianController;
+use App\Http\Controllers\StartupController;
 use Illuminate\Support\Facades\View;
 
 /*

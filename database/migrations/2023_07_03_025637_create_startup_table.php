@@ -14,7 +14,7 @@ class CreateStartupTable extends Migration
     public function up()
     {
         Schema::create('master_startup', function (Blueprint $table) {
-            $table->id();
+            $table->id('ms_id');
             $table->date('ms_startdate');
             $table->date('ms_enddate')->nullable();
             $table->string('ms_pks')->nullable();
@@ -30,14 +30,14 @@ class CreateStartupTable extends Migration
             $table->tinyInteger('mt_riset')->nullable();
             $table->string('ms_proposal');
             $table->string('ms_pithdeck')->nullable();
-            $table->unsignedBigInteger('mm_id');
+            // $table->unsignedBigInteger('mm_id');
             $table->string('ms_npwp')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('mpd_id');
             $table->tinyInteger('ms_status');
             $table->timestamps();
 
-            $table->foreign('mm_id')->references('mm_id')->on('master_members');
+            // $table->foreign('mm_id')->references('mm_id')->on('master_members');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

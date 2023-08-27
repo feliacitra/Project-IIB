@@ -39,6 +39,9 @@
     </div>
     <form action="{{ route('startup.store') }}" method="post">
     <input type="hidden" name="userid" value="{{ Auth::user()->id }}" />
+    {{-- periode masih hard code, ambil dari respond data dashboard --}}
+    <input type="hidden" name="mpdid" value="{{ $components[0]->periodeProgram->mpd_id }}" />
+    {{-- @dd($components[0]->periodeProgram->mpd_id) --}}
     <div class="container-fluid mt-2">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -65,7 +68,7 @@
                             <select id="programInkubasi" class="form-control form-select" name="programStartup">
                                 <option value="" class="text-muted">Program Inkubasi</option>
                                 @foreach ($components as $item)
-                                    <option value="{{ $item->periodeProgram->masterProgramInkubasi->mpi_id }}">{{ $item->periodeProgram->masterProgramInkubasi->mpi_name }}</option>
+                                    <option value="{{ $item->mct_id }}">{{ $item->periodeProgram->masterProgramInkubasi->mpi_name }}</option>
                                 @endforeach
                             </select>
 
@@ -217,20 +220,7 @@
                     <div class="p-3">
                         <h5 class="text-center mb-3">Self Assessment</h5>
                         <div id="questions" class="card">
-                            @foreach($components as $item)
-                            @foreach($item->question as $question)
-                                <div class="card-body">
-                                    {{-- @dd($question) --}}
-                                    <p>{{ $question->mq_question }}</p>
-                                    @foreach($question->questionRange as $index => $qr )
-                                    <div class="radio mt-2">
-                                        <input type="radio" id="pilihan-{{ $index }}" name="pilihan" value="{{ $qr->mqr_poin }}">
-                                        <label for="pilihan-{{ $index }}" >{{ $qr->mqr_description }}</label>
-                                    </div>     
-                                    @endforeach
-                                </div>
-                            @endforeach
-                            @endforeach
+                         {{-- Question Here --}}
                         </div>
 
                         <div class="card">
@@ -267,47 +257,53 @@
             console.log(program);
             // window.location.href = '/startup/'+program;
             $.ajax({
-                url:"{{ route('startup.store') }}",
+                url:"{{ route('startup.setInkubasi') }}",
                 method:'POST',
                 data: {
                     '_token': '{{ csrf_token() }}',
-                    // 'program_id' : program
+                    'program_id' : program
+                },
+                success: function (data) {
+                    console.log(data);
+                    let questionEl = document.getElementById('questions');
+                    questionEl.innerHTML = '';
+                    data.question.forEach((question, index) => {
+                        questionEl.appendChild(addQuestion(question, index));
+                    });
                 }
             });
-
         })
       
 
-        // function addQuestion(question){
-        //     let cardEl = document.createElement('div');
-        //     cardEl.classList.add('card-body')
+        function addQuestion(question, index){
+            let cardEl = document.createElement('div');
+            cardEl.classList.add('card-body')
 
-        //     let questionEl = document.createElement('p');
-        //     questionEl.textContent = question['mq_question'];
-        //     cardEl.appendChild(questionEl);
+            let questionEl = document.createElement('p');
+            questionEl.textContent = question['mq_question'];
+            cardEl.appendChild(questionEl);
 
-        //     question['question_range'].forEach((value, index) => {
-        //         let divEl = document.createElement('div');
-        //         divEl.classList.add('radio');
-        //         divEl.classList.add('mt-2');
-                
-        //         let inputEl = document.createElement('input');
-        //         inputEl.setAttribute('type', 'radio');
-        //         inputEl.setAttribute('id', 'nama-' + index);
-        //         inputEl.setAttribute('name', 'nama-' + index);
-        //         inputEl.value = value['mqr_poin'];
-        //         divEl.appendChild(inputEl);
+            let divEl = document.createElement('div');
+            divEl.classList.add('radio');
+            divEl.classList.add('mt-2');
+            question['question_range'].forEach((value, questIdx) => {
+                let inputEl = document.createElement('input');
+                inputEl.setAttribute('type', 'radio');
+                inputEl.setAttribute('id', `answers-${questIdx}-${index}`);
+                inputEl.setAttribute('name', `answers[${index}]`);
+                inputEl.value = value['mqr_id'];
+                divEl.appendChild(inputEl);
 
-        //         let labelEl = document.createElement('label');
-        //         labelEl.setAttribute('for', 'nama-' + index);
-        //         labelEl.textContent = value['mqr_description'];
-        //         divEl.appendChild(labelEl);
+                let labelEl = document.createElement('label');
+                labelEl.setAttribute('for', `answers-${questIdx}-${index}`);
+                labelEl.textContent = value['mqr_description'];
+                divEl.appendChild(labelEl);
 
-        //         cardEl.appendChild(divEl);
-        //     });
+                cardEl.appendChild(divEl);
+            });
 
-        //     return cardEl;
-        // }
+            return cardEl;
+        }
 
         function addCard() {
             var container = document.querySelector("#nav-anggota .p-3");
