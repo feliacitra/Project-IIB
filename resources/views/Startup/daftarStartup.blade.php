@@ -61,48 +61,6 @@
         <div class="tab-content" id="nav-tabContent">
             {{-- Identitas --}}
             <div class="tab-pane fade show active" id="nav-identitas" role="tabpanel" aria-labelledby="nav-identitas-tab">
-<<<<<<< HEAD
-                <form class="p-3">
-                    <div class="row">
-                        <div class="col">
-                            <label for="programInkubasi">Program Inkubasi</label>
-                            <select id="programInkubasi" class="form-control form-select">
-                                <option value="" class="text-muted">Program Inkubasi</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-
-                            <label for="kategori">Kategori</label>
-                            <select id="kategori" class="form-control form-select">
-                                <option value="" class="text-muted">Kategori</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-
-                            <label for="namaStartup">Nama Startup</label>
-                            <input type="text" class="form-control" id="namaStartup" placeholder="Nama Startup">
-
-                            <label for="deskripsi">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" cols="30" rows="3" placeholder="Deskripsi"></textarea>
-                            
-                            <label for="tahunDidirikan">Tahun Didirikan</label>
-                            <input type="text" class="form-control" id="tahunDidirikan" placeholder="YYYY">
-
-                            <label for="alamat">Alamat</label>
-                            <textarea class="form-control" id="alamat" cols="30" rows="3" placeholder="Alamat"></textarea>
-
-                            <label for="legalitas">Legalitas</label>
-                            <input type="text" class="form-control" id="legalitas" placeholder="Legalitas">
-
-                            <label for="sumberPendanaan">Sumber Pendanaan</label>
-                            <input type="text" class="form-control" id="sumberPendanaan" placeholder="Sumber Pendanaan">
-
-                            <label for="pendapatanTahunan">Pendapatan Tahunan</label>
-                            <input type="text" class="form-control" id="pendapatanTahunan" placeholder="Pendapatan Tahunan">
-
-                            <label for="areaFokusBisnis">Area Fokus Bisnis</label>
-                            <textarea class="form-control" id="areaFokusBisnis" cols="30" rows="3" placeholder="Area Fokus Bisnis"></textarea>
-=======
                     @csrf
                     <div class="row p-3" >
                         <div class="col">
@@ -145,32 +103,23 @@
 
                             <label for="areaFokusBisnis">Area Fokus Bisnis</label>
                             <textarea class="form-control" id="areaFokusBisnis" cols="30" rows="3" name="areaFokusBisnis" placeholder="Area Fokus Bisnis"></textarea>
->>>>>>> upstream/daftarStartup
+
                         </div>
 
                         <div class="col">
                             <label for="kontakStartup">Kontak Startup</label>
-<<<<<<< HEAD
-                            <input type="text" class="form-control" id="kontakStartup" placeholder="Kontak Startup">
-=======
                             <input type="text" class="form-control" id="kontakStartup" name="kontakStartup" placeholder="Kontak Startup">
->>>>>>> upstream/daftarStartup
+
 
                             <label for="emailStartup">Email Startup</label>
                             <input type="email" class="form-control" id="emailStartup" name="emailStartup" placeholder="EmailStartup">
 
                             <label for="website">Website</label>
-<<<<<<< HEAD
-                            <input type="text" class="form-control" id="website" placeholder="Website">
-
-                            <label for="sosialMedia">Sosial Media</label>
-                            <input type="text" class="form-control" id="sosialMedia" placeholder="Sosial Media">
-=======
                             <input type="text" class="form-control" id="website" name="website" placeholder="Website">
 
                             <label for="sosialMedia">Sosial Media</label>
                             <input type="text" class="form-control" id="sosialMedia" name="sosialMedia" placeholder="Sosial Media">
->>>>>>> upstream/daftarStartup
+
 
                             <label for="pitchDeck">Unggah Pitch Deck</label>
                             <input class="form-control" type="file" id="pitchDeck" name="pitchDeck">
@@ -180,19 +129,13 @@
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
-                </form>
-=======
->>>>>>> upstream/daftarStartup
+
             </div>
             {{-- Identitas --}}
 
             {{-- Anggota --}}
             <div class="tab-pane fade" id="nav-anggota" role="tabpanel" aria-labelledby="nav-anggota-tab">
-<<<<<<< HEAD
-                <form>
-=======
->>>>>>> upstream/daftarStartup
+
                     <!-- + button -->
                     <div class="px-3 pt-3" style="display: flex; justify-content: flex-end;">
                         <button id="plus-button" class="btn btn-primary py-1 px-1" type="button" onclick="addCard()"><i data-feather="plus"></i></button>
@@ -209,24 +152,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <label for="namaLengkap">Nama Lengkap</label>
-<<<<<<< HEAD
-                                        <input type="text" class="form-control" id="namaLengkap" placeholder="Nama Lengkap">
 
-                                        <label for="nik">NIK</label>
-                                        <input type="text" class="form-control" id="nik" placeholder="NIK">
-
-                                        <label for="jabatan">Jabatan</label>
-                                        <input type="text" class="form-control" id="jabatan" placeholder="Jabatan">
-
-                                        <label for="nomorHP">Nomor HP</label>
-                                        <input type="text" class="form-control" id="nomorHP" placeholder="Nomor HP">
-
-                                        <label for="email">Email</label>
-                                        <input type="email" id="email" name="email" class="form-control" placeholder="Email">
-
-                                        <label for="mediaSosial">Media Sosial</label>
-                                        <input type="text" class="form-control" id="mediaSosial" placeholder="Media Sosial">
-=======
                                         <input type="text" class="form-control" id="namaLengkap" name="namaLengkap[]" placeholder="Nama Lengkap">
 
                                         <label for="nik">NIK</label>
@@ -243,45 +169,11 @@
 
                                         <label for="mediaSosial">Media Sosial</label>
                                         <input type="text" class="form-control" id="mediaSosial" name="mediaSosial[]" placeholder="Media Sosial">
->>>>>>> upstream/daftarStartup
                                     </div>
 
                                     <div class="col">
                                         <label for="civitasTELU">Civitas Telkom University</label>
-<<<<<<< HEAD
-                                        <select id="civitasTELU" class="form-control form-select">
-                                            <option value="" class="text-muted">Civitas Telkom University</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                        </select>
 
-                                        <label for="universitas">Universitas</label>
-                                        <select id="universitas" class="form-control form-select">
-                                            <option value="" class="text-muted">Universitas</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                        </select>
-
-                                        <label for="fakultas">Fakultas</label>
-                                        <select id="fakultas" class="form-control form-select">
-                                            <option value="" class="text-muted">Fakultas</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                        </select>
-
-                                        <label for="prodi">Program Studi</label>
-                                        <select id="prodi" class="form-control form-select">
-                                            <option value="" class="text-muted">Program Studi</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                        </select>
-
-                                        <label for="nimnip">NIM/NIP</label>
-                                        <input type="text" class="form-control" id="nimnip" placeholder="NIM/NIP">
-
-                                        <label for="CV">Curricullum Vitae</label>
-                                        <input class="form-control" type="file" id="CV" name="CV">
-=======
                                         <select id="civitasTELU" class="form-control form-select" name="civitasTelu[]">
                                             <option value="" class="text-muted">Civitas Telkom University</option>
                                             @foreach($societies as $society)
@@ -318,7 +210,6 @@
 
                                         <label for="CV">Curricullum Vitae</label>
                                         <input class="form-control" type="file" id="CV" name="cv[]">
->>>>>>> upstream/daftarStartup
                                     </div>                            
                                 </div>
                             </div>
@@ -328,42 +219,16 @@
                             <a class="btn btn-primary btnNext">Selanjutnya</a>
                         </div>
                     </div>
-<<<<<<< HEAD
-                </form>
-=======
->>>>>>> upstream/daftarStartup
+
             </div>
             {{-- Anggota --}}
 
             {{-- Self Assessment --}}
             <div class="tab-pane fade" id="nav-selfAssessment" role="tabpanel" aria-labelledby="nav-assessment-tab">
-<<<<<<< HEAD
-                <form action="">
-                    <div class="p-3">
-                        <h5 class="text-center mb-3">Self Assessment</h5>
-                        <div class="card">
-                            <div class="card-body">
-                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aenean commodo ligula eget dolor. Aenean massa?</p>
-                                <div class="radio mt-2">
-                                    <input type="radio" id="html" name="fav_language" value="HTML">
-                                    <label for="html">Lorem lorem</label>
-
-                                    <input type="radio" id="css" name="fav_language" value="CSS">
-                                    <label for="css">Lorem ipsum</label>
-
-                                    <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-                                    <label for="javascript">Dolor sit amet</label>
-
-                                    <input type="radio" id="consecteturer" name="fav_language" value="Consecteturer">
-                                    <label for="consecteturer">Consecteturer</label>
-                                </div>
-                            </div>
-=======
                     <div class="p-3">
                         <h5 class="text-center mb-3">Self Assessment</h5>
                         <div id="questions" class="card">
                          {{-- Question Here --}}
->>>>>>> upstream/daftarStartup
                         </div>
 
                         <div class="card">
@@ -377,11 +242,8 @@
                         
                         <div class="d-flex justify-content-between mt-4">
                             <a class="btn btn-primary btnPrevious">Sebelumnya</a>
-<<<<<<< HEAD
-                            <button class="btn btn-primary px-4">Daftar</button>
-=======
+
                             <button type="submit" class="btn btn-primary px-4">Daftar</button>
->>>>>>> upstream/daftarStartup
                         </div>
                     </div>
                 </form>
@@ -389,10 +251,6 @@
             {{-- Self Assessment --}}
         </div>
     </div>
-<<<<<<< HEAD
-
-    <script>
-=======
     <script>
 
         $.ajaxSetup({
@@ -456,7 +314,6 @@
             return cardEl;
         }
 
->>>>>>> upstream/daftarStartup
         function addCard() {
             var container = document.querySelector("#nav-anggota .p-3");
 
