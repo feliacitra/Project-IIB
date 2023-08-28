@@ -36,13 +36,27 @@
                         <div class="mb-3">
                             <select class="form-select" name="role" id="role-select">
                                 <option selected disabled>User Role</option>
-                                <option value="1">Admin</option>
-                                <option value="2">Peserta</option>
-                                <option value="3">Penilai</option>
-                                <option value="4">Pemateri</option>
-                                <option value="5">Mentor</option>
-                                <option value="6">Dosen</option>
-                                <option value="7">Management</option>
+                                <option value="1" @if (session('role') == '1')
+                                    selected
+                                @endif>Admin</option>
+                                <option value="2" @if (session('role') == '2')
+                                    selected
+                                @endif>Peserta</option>
+                                <option value="3" @if (session('role') == '3')
+                                    selected
+                                @endif>Penilai</option>
+                                <option value="4" @if (session('role') == '4')
+                                    selected
+                                @endif>Pemateri</option>
+                                <option value="5" @if (session('role') == '5')
+                                    selected
+                                @endif>Mentor</option>
+                                <option value="6" @if (session('role') == '6')
+                                    selected
+                                @endif>Dosen</option>
+                                <option value="7" @if (session('role') == '7')
+                                    selected
+                                @endif>Management</option>
                             </select>
                         </div>
                         <!-- User Role -->
@@ -58,7 +72,7 @@
             </div>
             <div class="col-md-2 p-4">
                 <div class="mb-3">
-                    <a class="btn btn-primary" id="role-reset" href="{{ route('access.reset') }}/2">Reset Role Akses</a>
+                    <a class="btn btn-primary" id="role-reset" href="{{ route('access.reset') }}/{{ isset($role) ? $role : '2' }}">Reset Role Akses</a>
                 </div>
             </div>
             <div class="col-md-2 p-4">
@@ -289,7 +303,15 @@
                             <td>Master Komponen Penilaian</td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="komponen-penilaian[]" class="form-check-input check-komponen-penilaian" value="komponen-penilaian-tambah">
+                                    <input type="checkbox" name="komponen-penilaian[]" class="form-check-input check-komponen-penilaian" value="komponen-penilaian-tambah"
+                                    @if (session()->has('features'))
+                                        @foreach (session('features') as $item)
+                                            @if ($item->name == 'komponen-penilaian-tambah')
+                                                selected
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
@@ -313,20 +335,16 @@
                                 </div>
                             </td>
                         </tr>
-                        @foreach ($role_feature as $item)
-                            <tr>{{ $item->id }}</tr><br>
-                            @foreach ($item->features as $feat)
-                                <tr>{{ $feat->name }}</tr>
-                                <br><br>
-                            @endforeach
-                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </form>
-{{-- <form action="" method="get"></form> --}}
+<form id="role-form" action="{{ route('access.role') }}" method="POST">
+    @csrf
+<input type="hidden" name="role">
+</form>
 @endsection
 @section('extra-script')
 <script>
@@ -394,7 +412,12 @@
 
             newHref = href + value;
             $('#role-reset').attr('href', newHref);
+            var selectedValue = $(this).val();
+            $('#role-form input[name="role"]').val(selectedValue);
+            $('#role-form').submit();
         })
+
+        
     });
 </script>
 @endsection
