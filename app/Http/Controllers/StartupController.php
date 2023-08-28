@@ -53,7 +53,6 @@ class StartupController extends Controller
                 'ms_socialmedia' => $request->sosialMedia,      
                 'ms_legal' => $request->legalitas,
                 'ms_pitchdeck' => $request->pitchDeck,
-                'ms_proposal'=>"",
                 'user_id'=>$request->userid,
                 'mpd_id'=>'1',
                 'ms_status'=>"1",
