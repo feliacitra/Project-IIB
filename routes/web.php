@@ -1,7 +1,10 @@
 <?php
 
 use App\Models\MasterCategory;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\MasterUniversitasController;
+use App\Http\Controllers\MasterProgramStudyController;
+use App\Http\Controllers\MasterKomponenPenilaianController;
+use App\Http\Controllers\StartupController;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccessController;
@@ -12,11 +15,8 @@ use App\Http\Controllers\MasterCategoryController;
 use App\Http\Controllers\MasterFakultasController;
 use App\Http\Controllers\MasterPenggunaController;
 use App\Http\Controllers\PenilaiProfileController;
-use App\Http\Controllers\MasterUniversitasController;
-use App\Http\Controllers\MasterProgramStudyController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\MasterProgramInkubasiController;
-use App\Http\Controllers\MasterKomponenPenilaianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -147,6 +147,10 @@ Route::middleware(['auth', 'access'])->group(function () {
         'index' => 'master.kategori.startup',
     ])->except(['show', 'edit', 'create']);
 
+    Route::get('/daftar', function() {
+        return view('Startup.daftarStartup');
+    })->name('daftar');
+
     // Route::get('/master/universitas', function() {
     //     return view('Master-Universitas.listUniversitas');
     // })->name('universitas');
@@ -161,6 +165,12 @@ Route::middleware(['auth', 'access'])->group(function () {
         'update' => 'faculty.update',
         'destroy' => 'faculty.destroy',
     ]);
+
+    Route::resource('startup', \App\Http\Controllers\StartupController::class)->only(['index', 'store'])->names([
+        'index' => 'startup.index',
+        'store' => 'startup.store',
+    ]);
+    Route::post('/startup/set/', [StartupController::class, 'setInkubasi'])->name('startup.setInkubasi');
 
     Route::resource('/master/prodi', MasterProgramStudyController::class)->names([
         'index' => 'master.prodi',
