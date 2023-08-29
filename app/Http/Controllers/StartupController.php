@@ -7,6 +7,7 @@ use App\Models\MasterCivitas;
 use App\Models\MasterComponent;
 use App\Models\MasterFakultas;
 use App\Models\MasterMember;
+use App\Models\MasterPeriodeProgram;
 use App\Models\MasterProgramInkubasi;
 use App\Models\MasterProgramStudy;
 use App\Models\MasterQuestion;
@@ -41,7 +42,7 @@ class StartupController extends Controller
     }
 
     public function store(Request $request){
-            @dd($request);
+            dd($request);
             
             MasterStartup::create([
                 'ms_startdate'=> Carbon::now(),
@@ -54,10 +55,16 @@ class StartupController extends Controller
                 'ms_legal' => $request->legalitas,
                 'ms_pitchdeck' => $request->pitchDeck,
                 'user_id'=>$request->userid,
-                'mpd_id'=>'1',
+                'ms_yearly_income' => $request->pendapatanTahunan,
+                'ms_year_founded' => $request->tahunDidirikan,
+                'ms_focus_area' => $request->areaFokusBisnis,
+                'ms_funding_sources' => $request->sumberPendanaan,
+                'mpd_id'=> $request->mpdid,
                 'ms_status'=>"1",
             ]);
-            // dd(MasterStartup::where('ms_name', $request->namaStartup)->first()->get('ms_id'));
+            // dd(MasterStartup::where('ms_name', $request->namaStartup)->get()->first()['ms_id']);
+
+        
 
         for($i=0; $i< count($request->namaLengkap); $i++){
             MasterMember::create([
@@ -73,25 +80,30 @@ class StartupController extends Controller
                 'mps_id' => $request->prodi[$i],
                 'mci_id' => $request->civitasTelu[$i],
                 'mm_cv' => $request->cv[$i],
-                'ms_id' => MasterStartup::where('ms_name', $request->namaStartup)->first()->get('ms_id'),
+                'ms_id' => MasterStartup::where('ms_name', $request->namaStartup)->get()->first()['ms_id'],
             ]);
         }
 
+        // dd(count($request->answers));
         $score = 0;
-        for($i =0; $i < count($request->mqr_id); $i++){
-            $point = RegistationAnswer::where('mqr_id', $request->mqr_id[$i])->first()->get('mqr_poin');
-            $score += $point;
+        for($i =0; $i < count($request->answers); $i++){
+            $point = MasterQuestionRange::where('mqr_id', $request->answers[$i])->get();
+            $subset = $point->map(function($point){
+                return collect($point->toArray())->only(['mqr_poin'])->all();
+            });
+            $score += (int)$subset[0]["mqr_poin"];
         }
+        $finalScore = (int)$score / (int)count($request->answers);
         
 
         RegistationAnswer::create([
             'user_id' => $request->userid,
-            'ra_score' => $score,
+            'ra_score' => $finalScore,
         ]);
 
+        return view('dashboard');
     }
 
-    
 
     public function setInkubasi(Request $request){
         $component = MasterComponent::with('question', 'question.questionRange', 'periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $request->program_id)->first();
