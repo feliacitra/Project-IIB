@@ -42,7 +42,7 @@ class StartupController extends Controller
     }
 
     public function store(Request $request){
-            dd($request);
+            // dd($request);
             
             MasterStartup::create([
                 'ms_startdate'=> Carbon::now(),
@@ -84,7 +84,6 @@ class StartupController extends Controller
             ]);
         }
 
-        // dd(count($request->answers));
         $score = 0;
         for($i =0; $i < count($request->answers); $i++){
             $point = MasterQuestionRange::where('mqr_id', $request->answers[$i])->get();
@@ -95,7 +94,8 @@ class StartupController extends Controller
         }
         $finalScore = (int)$score / (int)count($request->answers);
         
-
+        
+        dd($finalScore);
         RegistationAnswer::create([
             'user_id' => $request->userid,
             'ra_score' => $finalScore,

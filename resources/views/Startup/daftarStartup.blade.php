@@ -256,9 +256,9 @@
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
-        });
+            });
 
-        function onChangeDropdownUniversitas(event){
+            function onChangeDropdownUniversitas(event){
             console.log(event.target);
             let randomId = generateId(6);
             let randomId2 = generateId(6);
