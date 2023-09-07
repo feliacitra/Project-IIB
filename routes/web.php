@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AccessController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MasterCivitasController;
 use App\Http\Controllers\MasterPenggunaController;
 use App\Http\Controllers\MasterPeriodeController;
@@ -55,15 +56,12 @@ Route::get('/admin', function() {
 Route::post('/register',[RegisteredUserController::class, 'store']) ->name('register');
 
 Route::middleware(['auth', 'access'])->group(function () {
-    Route::get('/dashboard', function () {
-    $periode = DB::table('master_periode')->where('mpe_status', '=', '1')->get();
-    $status=0;
-    if($periode->isNotEmpty()){
-        $status = Carbon::now()->between($periode[0]->mpe_startdate,$periode[0]->mpe_enddate);
-    }
-    return view('dashboard')->with(compact('periode','status'));
-    })->name('dashboard');
+
+    // Route::get('/dashboard', function () {
+    // })->name('dashboard');
     
+    Route::get('/dashboard/{id}', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::get('/change-password', function () {
         return view('changepassword');
     })->name('change-password');
