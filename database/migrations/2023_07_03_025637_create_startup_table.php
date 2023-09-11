@@ -35,6 +35,7 @@ class CreateStartupTable extends Migration
             $table->string('ms_focus_area')->nullable();
             // $table->unsignedBigInteger('mm_id');
             $table->string('ms_npwp')->nullable();
+            $table->string('ms_pitchdeck')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('mpd_id');
             $table->tinyInteger('ms_status');

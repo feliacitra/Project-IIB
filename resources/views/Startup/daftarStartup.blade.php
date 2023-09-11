@@ -29,6 +29,7 @@
         }
     </style>
 
+{{-- @dd($components) --}}
     <div class="pb-2">
         <p style="display: flex; align-items: flex-end;">
             <!-- Home button -->
@@ -37,7 +38,7 @@
             Daftar Startup
         </p>
     </div>
-    <form action="{{ route('startup.store') }}" method="post">
+    <form action="{{ route('startup.store') }}" method="post" enctype="multipart/form-data">
     <input type="hidden" name="userid" value="{{ Auth::user()->id }}" />
     {{-- periode masih hard code, ambil dari respond data dashboard --}}
     <input type="hidden" name="mpdid" value="{{ $components[0]->periodeProgram->mpd_id }}" />

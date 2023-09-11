@@ -132,9 +132,9 @@ Route::middleware(['auth', 'access'])->group(function () {
         'index' => 'master.kategori.startup',
     ])->except(['show', 'edit', 'create']);
 
-    Route::get('/daftar', function() {
-        return view('Startup.daftarStartup');
-    })->name('daftar');
+    // Route::get('/daftar', function() {
+    //     return view('Startup.daftarStartup');
+    // })->name('daftar');
 
     // Route::get('/master/universitas', function() {
     //     return view('Master-Universitas.listUniversitas');

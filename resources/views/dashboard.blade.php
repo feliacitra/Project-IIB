@@ -27,7 +27,7 @@
 
             <div class="text-center mt-4">
                 @if($status == 1)
-                <a href="{{ route('daftar') }}"><button class="btn btn-primary px-4">Daftar<i data-feather="send" class="m-0"></i></button></a>
+                <a href="{{ route('startup.index') }}"><button class="btn btn-primary px-4">Daftar<i data-feather="send" class="m-0"></i></button></a>
                 @endif
             </div>
         </div>

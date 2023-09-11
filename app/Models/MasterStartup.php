@@ -25,7 +25,7 @@ class MasterStartup extends Model
         'ms_link_legal',
         'ms_riset',
         'ms_proposal',
-        'ms_pithdeck',
+        'ms_pitchdeck',
         'ms_yearly_income',
         'ms_year_founded',
         'ms_funding_sources',

@@ -42,8 +42,12 @@ class StartupController extends Controller
     }
 
     public function store(Request $request){
-            // dd($request);
+        
+        $pitchDeck = $request->file('pitchDeck');
+        $pitchDeckPath = $pitchDeck->store('pitch_deck', 'public');
+        // dd($pitchDeckPath);
             
+
             MasterStartup::create([
                 'ms_startdate'=> Carbon::now(),
                 'ms_pks' => $request->programStartup,
@@ -53,7 +57,7 @@ class StartupController extends Controller
                 'ms_website' => $request->website,
                 'ms_socialmedia' => $request->sosialMedia,      
                 'ms_legal' => $request->legalitas,
-                'ms_pitchdeck' => $request->pitchDeck,
+                'ms_pitchdeck' => $pitchDeckPath,
                 'user_id'=>$request->userid,
                 'ms_yearly_income' => $request->pendapatanTahunan,
                 'ms_year_founded' => $request->tahunDidirikan,
@@ -64,25 +68,28 @@ class StartupController extends Controller
             ]);
             // dd(MasterStartup::where('ms_name', $request->namaStartup)->get()->first()['ms_id']);
 
+            
+    
+
         
 
-        for($i=0; $i< count($request->namaLengkap); $i++){
-            MasterMember::create([
-                'mm_name' => $request->namaLengkap[$i],
-                'mm_nik' => $request->nik[$i],
-                'mm_position' => $request->jabatan[$i],
-                'mm_phone' => $request->nomorHp[$i],
-                'mm_email' => $request->email[$i],
-                'mm_nim_nip' => $request->nimNip[$i],
-                'mm_socialmedia' => $request->mediaSosial[$i],
-                'mu_id' => $request->universitas[$i],
-                'mf_id' => $request->fakultas[$i],
-                'mps_id' => $request->prodi[$i],
-                'mci_id' => $request->civitasTelu[$i],
-                'mm_cv' => $request->cv[$i],
-                'ms_id' => MasterStartup::where('ms_name', $request->namaStartup)->get()->first()['ms_id'],
-            ]);
-        }
+        // for($i=0; $i< count($request->namaLengkap); $i++){
+        //     MasterMember::create([
+        //         'mm_name' => $request->namaLengkap[$i],
+        //         'mm_nik' => $request->nik[$i],
+        //         'mm_position' => $request->jabatan[$i],
+        //         'mm_phone' => $request->nomorHp[$i],
+        //         'mm_email' => $request->email[$i],
+        //         'mm_nim_nip' => $request->nimNip[$i],
+        //         'mm_socialmedia' => $request->mediaSosial[$i],
+        //         'mu_id' => $request->universitas[$i],
+        //         'mf_id' => $request->fakultas[$i],
+        //         'mps_id' => $request->prodi[$i],
+        //         'mci_id' => $request->civitasTelu[$i],
+        //         'mm_cv' => $request->cv[$i],
+        //         'ms_id' => MasterStartup::where('ms_name', $request->namaStartup)->get()->first()['ms_id'],
+        //     ]);
+        // }
 
         $score = 0;
         for($i =0; $i < count($request->answers); $i++){
@@ -95,7 +102,7 @@ class StartupController extends Controller
         $finalScore = (int)$score / (int)count($request->answers);
         
         
-        dd($finalScore);
+        // dd($finalScore);
         RegistationAnswer::create([
             'user_id' => $request->userid,
             'ra_score' => $finalScore,
