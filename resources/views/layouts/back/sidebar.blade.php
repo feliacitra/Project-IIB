@@ -176,11 +176,17 @@
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
-                    <span class="link-title">Dashboard</span>
+                    <span class="link-title">History</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+            <a href="{{ route('dashboard') }}" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
                     <span class="link-title">Profil Startup</span>
                 </a>
@@ -209,13 +215,12 @@
                     <span class="link-title">Sertifikat Monev</span>
                 </a>
             </li>
-            {{--
             @foreach (get_menu() as $menu)
             <li class="nav-item">
                 {!! $menu !!}
             </li>
             @endforeach
-            --}}
+           
             @endif
         </ul>
     </div>

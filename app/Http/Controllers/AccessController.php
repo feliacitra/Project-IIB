@@ -84,7 +84,12 @@ class AccessController extends Controller
             }
         }
         
-        return redirect('/access')->with('success', 'Berhasil mengubah hak akses');
+        $features = $roleDb->features;
+        return redirect('/access')->with([
+            'success' => 'Berhasil mengubah hak akses',
+            'role' => $role,
+            'feature' => $features
+        ]);
     }
 
     public function index() {
@@ -98,7 +103,7 @@ class AccessController extends Controller
         // dd($features);
         return redirect()->route('access.index')->with([
             'feature' => $features,
-            'role' => $request->role
+            'role' => $role->id
         ]);
     }
 
@@ -113,6 +118,9 @@ class AccessController extends Controller
     public function role_reset($role) {
         Role::find($role)->features()->detach();
 
-        return redirect('/access')->with('success', 'Berhasil mereset hak akses role');
+        return redirect('/access')->with([
+            'success' => 'Berhasil mereset hak akses role',
+            'role' => $role
+        ]);
     }
 }

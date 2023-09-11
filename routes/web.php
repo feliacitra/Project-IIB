@@ -17,6 +17,7 @@ use App\Http\Controllers\MasterPenggunaController;
 use App\Http\Controllers\PenilaiProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\MasterProgramInkubasiController;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,7 +56,12 @@ Route::post('/register',[RegisteredUserController::class, 'store']) ->name('regi
 
 Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+    $periode = DB::table('master_periode')->where('mpe_status', '=', '1')->get();
+    $status=0;
+    if($periode->isNotEmpty()){
+        $status = Carbon::now()->between($periode[0]->mpe_startdate,$periode[0]->mpe_enddate);
+    }
+    return view('dashboard')->with(compact('periode','status'));
     })->name('dashboard');
     
     Route::get('/change-password', function () {
