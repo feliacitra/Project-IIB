@@ -72,7 +72,7 @@
             </div>
             <div class="col-md-2 p-4">
                 <div class="mb-3">
-                    <a class="btn btn-primary" id="role-reset" href="{{ route('access.reset') }}/{{ isset($role) ? $role : '2' }}">Reset Role Akses</a>
+                    <a class="btn btn-primary" id="role-reset" href="{{ route('access.reset') }}/{{ session()->has('role') ? session('role') : '2' }}">Reset Role Akses</a>
                 </div>
             </div>
             <div class="col-md-2 p-4">
@@ -100,22 +100,46 @@
                             <td>Master Pengguna</td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="pengguna[]" class="form-check-input check-pengguna" value="pengguna-tambah">
+                                    <input type="checkbox" name="pengguna[]" class="form-check-input check-pengguna" value="pengguna-tambah"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "pengguna-tambah" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="pengguna[]" class="form-check-input check-pengguna" value="pengguna-ubah">
+                                    <input type="checkbox" name="pengguna[]" class="form-check-input check-pengguna" value="pengguna-ubah"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "pengguna-ubah" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="pengguna[]" class="form-check-input check-pengguna" value="pengguna-hapus">
+                                    <input type="checkbox" name="pengguna[]" class="form-check-input check-pengguna" value="pengguna-hapus"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "pengguna-hapus" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="pengguna[]" class="form-check-input check-pengguna" value="pengguna-lihat">
+                                    <input type="checkbox" name="pengguna[]" class="form-check-input check-pengguna" value="pengguna-lihat"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "pengguna-lihat" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
@@ -129,22 +153,46 @@
                             <td>Master Program Inkubasi</td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="program-inkubasi[]" class="form-check-input check-program-inkubasi" value="program-inkubasi-tambah">
+                                    <input type="checkbox" name="program-inkubasi[]" class="form-check-input check-program-inkubasi" value="program-inkubasi-tambah"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "program-inkubasi-tambah" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="program-inkubasi[]" class="form-check-input check-program-inkubasi" value="program-inkubasi-ubah">
+                                    <input type="checkbox" name="program-inkubasi[]" class="form-check-input check-program-inkubasi" value="program-inkubasi-ubah"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "program-inkubasi-ubah" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="program-inkubasi[]" class="form-check-input check-program-inkubasi" value="program-inkubasi-hapus">
+                                    <input type="checkbox" name="program-inkubasi[]" class="form-check-input check-program-inkubasi" value="program-inkubasi-hapus"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "program-inkubasi-hapus" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="program-inkubasi[]" class="form-check-input check-program-inkubasi" value="program-inkubasi-lihat">
+                                    <input type="checkbox" name="program-inkubasi[]" class="form-check-input check-program-inkubasi" value="program-inkubasi-lihat"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "program-inkubasi-lihat" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
@@ -158,22 +206,46 @@
                             <td>Master Kategori Startup</td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="kategori-startup[]" class="form-check-input check-kategori-startup" value="kategori-startup-tambah">
+                                    <input type="checkbox" name="kategori-startup[]" class="form-check-input check-kategori-startup" value="kategori-startup-tambah"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "kategori-startup-tambah" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="kategori-startup[]" class="form-check-input check-kategori-startup" value="kategori-startup-ubah">
+                                    <input type="checkbox" name="kategori-startup[]" class="form-check-input check-kategori-startup" value="kategori-startup-ubah"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "kategori-startup-ubah" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="kategori-startup[]" class="form-check-input check-kategori-startup" value="kategori-startup-hapus">
+                                    <input type="checkbox" name="kategori-startup[]" class="form-check-input check-kategori-startup" value="kategori-startup-hapus"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "kategori-startup-hapus" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="kategori-startup[]" class="form-check-input check-kategori-startup" value="kategori-startup-lihat">
+                                    <input type="checkbox" name="kategori-startup[]" class="form-check-input check-kategori-startup" value="kategori-startup-lihat"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "kategori-startup-lihat" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
@@ -187,22 +259,46 @@
                             <td>Master Civitas</td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="civitas[]" class="form-check-input check-civitas" value="civitas-tambah">
+                                    <input type="checkbox" name="civitas[]" class="form-check-input check-civitas" value="civitas-tambah"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "civitas-tambah" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="civitas[]" class="form-check-input check-civitas" value="civitas-ubah">
+                                    <input type="checkbox" name="civitas[]" class="form-check-input check-civitas" value="civitas-ubah"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "civitas-ubah" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="civitas[]" class="form-check-input check-civitas" value="civitas-hapus">
+                                    <input type="checkbox" name="civitas[]" class="form-check-input check-civitas" value="civitas-hapus"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "civitas-hapus" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="civitas[]" class="form-check-input check-civitas" value="civitas-lihat">
+                                    <input type="checkbox" name="civitas[]" class="form-check-input check-civitas" value="civitas-lihat"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "civitas-lihat" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
@@ -216,22 +312,46 @@
                             <td>Master Universitas</td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="universitas[]" class="form-check-input check-universitas" value="universitas-tambah">
+                                    <input type="checkbox" name="universitas[]" class="form-check-input check-universitas" value="universitas-tambah"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "universitas-tambah" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="universitas[]" class="form-check-input check-universitas" value="universitas-ubah">
+                                    <input type="checkbox" name="universitas[]" class="form-check-input check-universitas" value="universitas-ubah"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "universitas-ubah" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="universitas[]" class="form-check-input check-universitas" value="universitas-hapus">
+                                    <input type="checkbox" name="universitas[]" class="form-check-input check-universitas" value="universitas-hapus"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "universitas-hapus" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="universitas[]" class="form-check-input check-universitas" value="universitas-lihat">
+                                    <input type="checkbox" name="universitas[]" class="form-check-input check-universitas" value="universitas-lihat"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "universitas-lihat" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
@@ -245,22 +365,46 @@
                             <td>Master Fakultas</td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="fakultas[]" class="form-check-input check-fakultas" value="fakultas-tambah">
+                                    <input type="checkbox" name="fakultas[]" class="form-check-input check-fakultas" value="fakultas-tambah"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "fakultas-tambah" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="fakultas[]" class="form-check-input check-fakultas" value="fakultas-ubah">
+                                    <input type="checkbox" name="fakultas[]" class="form-check-input check-fakultas" value="fakultas-ubah"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "fakultas-ubah" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="fakultas[]" class="form-check-input check-fakultas" value="fakultas-hapus">
+                                    <input type="checkbox" name="fakultas[]" class="form-check-input check-fakultas" value="fakultas-hapus"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "fakultas-hapus" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="fakultas[]" class="form-check-input check-fakultas" value="fakultas-lihat">
+                                    <input type="checkbox" name="fakultas[]" class="form-check-input check-fakultas" value="fakultas-lihat"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "fakultas-lihat" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
@@ -274,22 +418,46 @@
                             <td>Master Periode Pendaftaran</td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="periode-pendaftaran[]" class="form-check-input check-periode-pendaftaran" value="periode-pendaftaran-tambah">
+                                    <input type="checkbox" name="periode-pendaftaran[]" class="form-check-input check-periode-pendaftaran" value="periode-pendaftaran-tambah"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "periode-pendaftaran-tambah" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="periode-pendaftaran[]" class="form-check-input check-periode-pendaftaran" value="periode-pendaftaran-ubah">
+                                    <input type="checkbox" name="periode-pendaftaran[]" class="form-check-input check-periode-pendaftaran" value="periode-pendaftaran-ubah"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "periode-pendaftaran-ubah" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="periode-pendaftaran[]" class="form-check-input check-periode-pendaftaran" value="periode-pendaftaran-hapus">
+                                    <input type="checkbox" name="periode-pendaftaran[]" class="form-check-input check-periode-pendaftaran" value="periode-pendaftaran-hapus"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "periode-pendaftaran-hapus" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="periode-pendaftaran[]" class="form-check-input check-periode-pendaftaran" value="periode-pendaftaran-lihat">
+                                    <input type="checkbox" name="periode-pendaftaran[]" class="form-check-input check-periode-pendaftaran" value="periode-pendaftaran-lihat"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "periode-pendaftaran-lihat" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
@@ -304,11 +472,9 @@
                             <td>
                                 <div class="form-check">
                                     <input type="checkbox" name="komponen-penilaian[]" class="form-check-input check-komponen-penilaian" value="komponen-penilaian-tambah"
-                                    @if (session()->has('features'))
-                                        @foreach (session('features') as $item)
-                                            @if ($item->name == 'komponen-penilaian-tambah')
-                                                selected
-                                            @endif
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "komponen-penilaian-tambah" ? "checked" : "" }}
                                         @endforeach
                                     @endif
                                     >
@@ -316,17 +482,35 @@
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="komponen-penilaian[]" class="form-check-input check-komponen-penilaian" value="komponen-penilaian-ubah">
+                                    <input type="checkbox" name="komponen-penilaian[]" class="form-check-input check-komponen-penilaian" value="komponen-penilaian-ubah"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "komponen-penilaian-ubah" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="komponen-penilaian[]" class="form-check-input check-komponen-penilaian" value="komponen-penilaian-hapus">
+                                    <input type="checkbox" name="komponen-penilaian[]" class="form-check-input check-komponen-penilaian" value="komponen-penilaian-hapus"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "komponen-penilaian-hapus" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" name="komponen-penilaian[]" class="form-check-input check-komponen-penilaian" value="komponen-penilaian-lihat">
+                                    <input type="checkbox" name="komponen-penilaian[]" class="form-check-input check-komponen-penilaian" value="komponen-penilaian-lihat"
+                                    @if (session()->has('feature'))
+                                        @foreach (session('feature') as $item)
+                                            {{ $item->name == "komponen-penilaian-lihat" ? "checked" : "" }}
+                                        @endforeach
+                                    @endif
+                                    >
                                 </div>
                             </td>
                             <td>
