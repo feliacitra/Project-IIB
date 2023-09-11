@@ -12,6 +12,7 @@ use App\Http\Controllers\MasterCategoryController;
 use App\Http\Controllers\UserProfileController;
 use App\Models\MasterCategory;
 use App\Http\Controllers\MasterUniversitasController;
+use App\Http\Controllers\PenilaianDeskController;
 use App\Http\Controllers\MasterFakultasController;
 use App\Http\Controllers\MasterProgramStudyController;
 use Illuminate\Support\Facades\View;
@@ -119,9 +120,13 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Pendaftaran-DataPendaftar.dataStartup');
     })->name('dataStartup');
 
-    Route::get('/master/penilaianDE', function() {
-        return view('Pendaftaran-PenilaianDE.penilaianDE');
-    })->name('penilaianDE');
+    Route::resource('/master/penilaianDE', PenilaianDeskController::class)->names([
+        'index' => 'penilaianDE',
+    ])->except(['show', 'edit', 'create']);
+
+    // Route::get('/master/penilaianDE', function() {
+    //     return view('Pendaftaran-PenilaianDE.penilaianDE');
+    // })->name('penilaianDE');
 
     Route::get('/master/penilaianDE/viewnilai', function() {
         return view('Pendaftaran-PenilaianDE.nilaiView');
