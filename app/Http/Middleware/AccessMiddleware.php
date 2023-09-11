@@ -20,6 +20,7 @@ class AccessMiddleware
     {
         $role = Auth::user()->role;
         $features = Role::find($role)->features;
+        $url = $request->url();
         session(['features' => $features]);
         return $next($request);
     }

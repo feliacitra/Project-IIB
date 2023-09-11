@@ -7,11 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class RegistationAnswer extends Model
 {
+    public $table = "registation_answer";
     use HasFactory;
 
     protected $fillable = [
         'ra_score',
-        'mqr_score',
-        'mq_score',
         ];
 }

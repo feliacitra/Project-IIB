@@ -20,7 +20,7 @@ class CreateStartupTable extends Migration
             $table->string('ms_pks')->nullable();
             $table->string('ms_link_pks')->nullable();
             $table->unsignedBigInteger('ms_phone');
-            $table->string('ms_name');
+            $table->string('ms_name')->nullable()->unique();
             $table->text('ms_address')->nullable();
             $table->string('ms_website')->nullable();
             $table->string('ms_logo')->nullable();
@@ -28,8 +28,11 @@ class CreateStartupTable extends Migration
             $table->string('ms_legal')->nullable();
             $table->string('ms_link_legal')->nullable();
             $table->tinyInteger('mt_riset')->nullable();
-            $table->string('ms_proposal');
-            $table->string('ms_pithdeck')->nullable();
+            // $table->string('ms_proposal');
+            $table->string('ms_yearly_income')->nullable();
+            $table->string('ms_year_founded')->nullable();
+            $table->string('ms_funding_sources')->nullable();
+            $table->string('ms_focus_area')->nullable();
             // $table->unsignedBigInteger('mm_id');
             $table->string('ms_npwp')->nullable();
             $table->unsignedBigInteger('user_id');

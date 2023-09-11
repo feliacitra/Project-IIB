@@ -18,13 +18,13 @@ class RegistationAnswer extends Migration
             $table->id('ra_id');
             $table->integer('ra_score');
             $table->timestamps();
-            $table->unsignedBigInteger('mqr_id');
-            $table->unsignedBigInteger('mq_id');
-            $table->unsignedBigInteger('user_id');
+            // $table->unsignedBigInteger('mqr_id');
+            // $table->unsignedBigInteger('mq_id');
+            // $table->unsignedBigInteger('user_id');
 
-            $table->foreign('mqr_id')->references('mqr_id')->on('master_questionrange')->restrictOnDelete();
-            $table->foreign('mq_id')->references('id')->on('master_question')->restrictOnDelete();
-            $table->foreign('user_id')->references('id')->on('users')->restrictOnDelete();
+            // $table->foreign('mqr_id')->references('mqr_id')->on('master_questionrange')->restrictOnDelete();
+            // $table->foreign('mq_id')->references('id')->on('master_question')->restrictOnDelete();
+            // $table->foreign('user_id')->references('id')->on('users')->restrictOnDelete();
         });
     }
 
