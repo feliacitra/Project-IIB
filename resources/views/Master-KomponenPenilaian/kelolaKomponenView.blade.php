@@ -26,22 +26,30 @@
             <!-- Home button -->
             <a href="/dashboard"><i data-feather="home" style="margin-right: 0.5rem;"></i></a>
             <!-- Home button -->
-            <a href="{{ route('penilaian') }}">Master Komponen Penilaian</a>&nbsp;> Kelola Komponen
+            <a href="{{ route('master.penilaian') }}">Master Komponen Penilaian</a>&nbsp;> Kelola Komponen
         </p>
     </div>
 
     <div class="container-fluid py-4 px-4" style="height: 100%">
         <div class="row">
-            <p class="col">Periode: Tahun 2022</p>
-            <p class="col">Tahap: Self Assessment</p>
-            <p class="col">Program Inkubasi: BTPIP</p>
+            {{-- @dd($component) --}}
+            <p class="col">Periode: {{ $component->periodeProgram->masterPeriode->mpe_name }}</p>
+            @if ($component->mct_step == 1)
+                <td>Tahap: Self Assessment</td>
+            @elseif ($component->mct_step == 2)
+                <td>Tahap: Presentasi</td>
+            @else
+                <td>Tahap: Desk Evaluation</td>
+            @endif
+            <p class="col">Program Inkubasi: {{ $component->periodeProgram->masterProgramInkubasi->mpi_name }}</p>
         </div>
 
         <div class="form-group">
             <div id="cardContainer">
+                @foreach($component->question as $question)
                 <div class="card mt-2">
                     <div class="card-body">
-                        <input type="text" class="form-control" id="pertanyaan" placeholder="Pertanyaan" disabled>
+                        <input type="text" class="form-control" id="pertanyaan" placeholder="{{ $question->mq_question }}" disabled>
 
                         <div class="table-responsive-md mt-2">
                             <table class="table">
@@ -59,17 +67,19 @@
                                 <!-- Table Body INSERT-->
                                 <div id="tableContainer">
                                     <tbody>
+                                        @foreach($question->questionRange as $qr)
                                         <tr>
                                             <td class="text-center">
-                                                1
+                                                {{ $loop->iteration }}
                                             </td>
                                             <td>
-                                                <input class="form-control" type="text" placeholder="Jawaban" value="Current jawaban" disabled>
+                                                <input class="form-control" type="text" placeholder="Jawaban" value="{{ $qr->mqr_description }}" disabled>
                                             </td>
                                             <td>
-                                                <input class="form-control" type="text" placeholder="Nilai" value="80" disabled>
+                                                <input class="form-control" type="text" placeholder="Nilai" value="{{ $qr->mqr_poin }}" disabled>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </div>
                                 <!-- Table Body -->
@@ -77,11 +87,12 @@
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
 
         <div class="container text-center inner-bottom-button">
-            <a href="{{ route('penilaian') }}" class="btn btn-secondary px-4">
+            <a href="{{ route('master.penilaian') }}" class="btn btn-secondary px-4">
                 Kembali
             </a>
         </div>

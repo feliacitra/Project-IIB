@@ -33,21 +33,27 @@
         <div class="col-4 col-md-3 col-lg-2">
             <select name="pilihPeriode" id="periode" class="form-control form-select">
                 <option value="select" class="text-muted">Periode</option>
-                <option value="th2022">Tahun 2022</option>
+                @foreach ($periode as $item)
+                    <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }}</option>
+                @endforeach
             </select>
         </div>
 
         <div class="col-4 col-md-3 col-lg-2">
             <select name="pilihPeriode" id="periode" class="form-control form-select">
                 <option value="select" class="text-muted">Program Inkubasi</option>
-                <option value="th2022">Tahun 2022</option>
+                @foreach ($programInkubasi as $item)
+                    <option value="{{ $item->mpi_id }}">{{ $item->mpi_name }}</option>
+                @endforeach
             </select>
         </div>
 
         <div class="col-4 col-md-3 col-lg-2">
             <select name="pilihPeriode" id="periode" class="form-control form-select">
                 <option value="select" class="text-muted">Tahap Seleksi</option>
-                <option value="th2022">Tahun 2022</option>
+                <option value="assess">Self Assessment</option>
+                <option value="present">Presentasi</option>
+                <option value="eval">Desk Evaluation</option>
             </select>
         </div>
 
@@ -56,9 +62,9 @@
                 <!-- Search Bar -->
                 <div class="input-group rounded">
                     <!-- Input Form -->
-                    <form action="" class="position-relative">
-                        
-                        <input type="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
+                    <form action="{{ route('master.penilaian') }}" class="position-relative">
+                        @csrf
+                        <input name="search" type="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
                         
                         <span class="position-absolute" style="top: 50%; left: 0.5rem; transform: translateY(-50%);">
                             <i data-feather="search"></i>
@@ -87,21 +93,29 @@
             <!-- Table Head -->
 
             <!-- Table Body -->
-            <tbody>
-                <tr>
-                    <th scope="row" class="text-center">1</th>
-                    <td>Tahun 2022</td>
-                    <td>BTPIP</td>
-                    <td>Self Assessment</td>
-                    <td class="text-center">
-                        <!-- VIEW -->
-                        <a href="{{ route('viewComponent') }}"><i data-feather="eye"></i></a>
-                        <!-- EDIT -->
-                        <a href="{{ route('editComponent') }}"><i data-feather="plus-circle"></i></a>
-                        <!-- DELETE -->
-                        <a href="#deletePeriod"><i data-feather="trash-2"></i></a>
-                    </td>
-                </tr>
+            <tbody class="text-center">
+                @foreach ($components as $item)
+                    <tr>
+                        <th scope="row" class="text-center">{{ $loop->iteration }}</th>
+                        <td>{{ $item->periodeProgram->masterPeriode->mpe_name }}</td>
+                        <td>{{ $item->periodeProgram->masterProgramInkubasi->mpi_name }}</td>
+                        @if ($item->mct_step == 1)
+                            <td>Self Assessment</td>
+                        @elseif ($item->mct_step == 2)
+                            <td>Presentasi</td>
+                        @else
+                            <td>Desk Evaluation</td>
+                        @endif
+                        <td class="text-center">
+                            <!-- VIEW -->
+                            <a href="{{ route('penilaian.show', $item->mct_id) }}"><i data-feather="eye"></i></a>
+                            <!-- EDIT -->
+                            <a href="{{ route('penilaian.create', $item->mct_id) }}"><i data-feather="plus-circle"></i></a>
+                            <!-- DELETE -->
+                            <a href="{{ route('penilaian.destroy', $item->mct_id) }}"><i data-feather="trash-2"></i></a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
             <!-- Table Body -->
         </table>
@@ -125,14 +139,17 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
-                        <form>
+                        <form method="POST" action="{{ route('penilaian.store') }}">
+                            @csrf
                             <!-- Nama Periode -->
                             <div class="form-group row align-items-center" style="margin-top: 1rem">
                                 <label for="namaPeriode" class="col-sm-4">Nama Periode</label>
                                 <div class="col-sm-8">
                                     <select name="pilihNamaPeriode" id="namaPeriode" class="form-control form-select">
                                         <option value="select" class="text-muted">Nama Periode</option>
-                                        <option value="th2022">Tahun 2022</option>
+                                        @foreach ($periode as $item)
+                                            <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -144,7 +161,9 @@
                                 <div class="col-sm-8">
                                     <select name="pilihProgramInkubasi" id="programInkubasi" class="form-control form-select">
                                         <option value="select" class="text-muted">Program Inkubasi</option>
-                                        <option value="btpip">BTPIP</option>
+                                        @foreach ($programInkubasi as $item)
+                                            <option value="{{ $item->mpi_id }}">{{ $item->mpi_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -156,7 +175,9 @@
                                 <div class="col-sm-8">
                                     <select name="pilihTahapanSeleksi" id="tahapanSeleksi" class="form-control form-select">
                                         <option value="select" class="text-muted">Tahapan Seleksi</option>
-                                        <option value="btpip">BTPIP</option>
+                                        <option value="1">Self Assessment</option>
+                                        <option value="2">Presentasi</option>
+                                        <option value="3">Desk Evaluation</option>
                                     </select>
                                 </div>
                             </div>

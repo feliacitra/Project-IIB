@@ -22549,6 +22549,7 @@ div.tox .tox-dialog__body {
 .wizard.vertical > .actions > ul > li {
   margin: 0 0 0 0.7em;
 }
+
 .progressbar-container {
   margin: 2rem auto 4rem auto;
   position: relative;
@@ -22699,46 +22700,39 @@ div.tox .tox-dialog__body {
   }
 }
 
-.radio input[type="radio"] {
-  display: none;
-}
 
-.radio input[type="radio"] + label {
-  position: relative;
-  padding-left: 30px;
-  cursor: pointer;
-  margin-right: 7rem;
-}
+  .radio input[type="radio"] {
+    display: none;
+  }
 
-.radio input[type="radio"] + label::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 20px;
-  height: 20px;
-  border: 2px solid #000;
-  border-radius: 50%;
-}
+  .radio input[type="radio"] + label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    margin-right: 7rem;
+  }
 
-.radio input[type="radio"]:checked + label::after {
-  content: "";
-  position: absolute;
-  left: 4px; 
-  top: 4px;
-  width: 12px;
-  height: 12px;
-  background-color: #000;
-  border-radius: 50%;
-}
+  .radio input[type="radio"] + label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000;
+    border-radius: 50%;
+  }
 
-.info-pair {
-  display: flex;
-  align-items: baseline;
-}
+  .radio input[type="radio"]:checked + label::after {
+    content: "";
+    position: absolute;
+    left: 4px; 
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    background-color: #000;
+    border-radius: 50%;
+  }
 
-.info-label {
-  width: 140px;
-  margin-right: 5px;
-}
+
 /*# sourceMappingURL=../maps/demo1/style.css.map */

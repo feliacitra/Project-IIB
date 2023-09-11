@@ -15,7 +15,10 @@ use App\Http\Controllers\MasterUniversitasController;
 use App\Http\Controllers\PenilaianDeskController;
 use App\Http\Controllers\MasterFakultasController;
 use App\Http\Controllers\MasterProgramStudyController;
+use App\Http\Controllers\MasterKomponenPenilaianController;
+use App\Http\Controllers\StartupController;
 use Illuminate\Support\Facades\View;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +57,12 @@ Route::post('/register',[RegisteredUserController::class, 'store']) ->name('regi
 
 Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+    $periode = DB::table('master_periode')->where('mpe_status', '=', '1')->get();
+    $status=0;
+    if($periode->isNotEmpty()){
+        $status = Carbon::now()->between($periode[0]->mpe_startdate,$periode[0]->mpe_enddate);
+    }
+    return view('dashboard')->with(compact('periode','status'));
     })->name('dashboard');
     
     Route::get('/change-password', function () {
@@ -100,9 +108,9 @@ Route::middleware(['auth', 'access'])->group(function () {
         'index' => 'master.periode',
     ])->except(['show', 'edit', 'create']);
 
-    Route::get('/master/penilaian', function() {
-        return view('Master-KomponenPenilaian.listKomponenPenilaian');
-    })->name('penilaian');
+    // Route::get('/master/penilaian', function() {
+    //     return view('Master-KomponenPenilaian.listKomponenPenilaian');
+    // })->name('penilaian');
 
     Route::get('/master/penilaian/editComponent', function() {
         return view('Master-KomponenPenilaian.kelolaKomponenEdit');
@@ -149,6 +157,10 @@ Route::middleware(['auth', 'access'])->group(function () {
         'index' => 'master.kategori.startup',
     ])->except(['show', 'edit', 'create']);
 
+    // Route::get('/daftar', function() {
+    //     return view('Startup.daftarStartup');
+    // })->name('daftar');
+
     // Route::get('/master/universitas', function() {
     //     return view('Master-Universitas.listUniversitas');
     // })->name('universitas');
@@ -164,11 +176,29 @@ Route::middleware(['auth', 'access'])->group(function () {
         'destroy' => 'faculty.destroy',
     ]);
 
+    Route::resource('startup', \App\Http\Controllers\StartupController::class)->only(['index', 'store'])->names([
+        'index' => 'startup.index',
+        'store' => 'startup.store',
+    ]);
+    Route::post('/startup/set/', [StartupController::class, 'setInkubasi'])->name('startup.setInkubasi');
+
     Route::resource('/master/prodi', MasterProgramStudyController::class)->names([
         'index' => 'master.prodi',
     ])->except(['show', 'edit', 'create', 'getFaculties']);
 
     Route::get('/master/prodi/{university}', [MasterProgramStudyController::class, 'getFaculties']);
+
+    Route::get('/master/penilaian', [MasterKomponenPenilaianController::class, 'index'])->name('penilaian');
+    Route::get('/master/penilaian/{id}', [MasterKomponenPenilaianController::class, 'create'])->name('penilaian.create');
+    Route::post('/master/penilaian/{id}', [MasterKomponenPenilaianController::class, 'storeQuest'])->name('quest.store');
+    Route::post('/master/penilaian/copy/{id}', [MasterKomponenPenilaianController::class, 'copyQuest'])->name('quest.copy');
+    Route::get('/master/penilaian/detail/{id}', [MasterKomponenPenilaianController::class, 'show'])->name('penilaian.show');
+    Route::get('/master/penilaian/delete/{id}', [MasterKomponenPenilaianController::class, 'destroy'])->name('penilaian.destroy');
+    Route::resource('/master/penilaian', MasterKomponenPenilaianController::class)->only(['index', 'store', 'update'])->names([
+        'index' => 'master.penilaian',
+        'store' => 'penilaian.store',
+        'update' => 'penilaian.update'
+    ]);
 
 });
 
