@@ -65,7 +65,6 @@
         <div class="tab-content" id="nav-tabContent">
             {{-- Identitas --}}
             <div class="tab-pane fade show active" id="nav-identitas" role="tabpanel" aria-labelledby="nav-identitas-tab">
-
                     @csrf
                     <div class="row p-3" >
                         <div class="col">

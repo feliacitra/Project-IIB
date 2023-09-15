@@ -7,6 +7,7 @@ use App\Models\MasterCivitas;
 use App\Models\MasterComponent;
 use App\Models\MasterFakultas;
 use App\Models\MasterMember;
+use App\Models\MasterPeriode;
 use App\Models\MasterPeriodeProgram;
 use App\Models\MasterProgramInkubasi;
 use App\Models\MasterProgramStudy;
@@ -15,9 +16,10 @@ use App\Models\MasterQuestionRange;
 use App\Models\MasterStartup;
 use App\Models\MasterUniversitas;
 use App\Models\RegistationAnswer;
+use App\Models\RegistationStatus;
+use App\Models\StartupComponentStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use MasterPeriode;
 
 class StartupController extends Controller
 {
@@ -42,16 +44,18 @@ class StartupController extends Controller
     }
 
     public function store(Request $request){
-        
+
         $pitchDeck = $request->file('pitchDeck');
         $pitchDeckPath = $pitchDeck->store('pitch_deck', 'public');
-        // dd($pitchDeckPath);
-            
+
+        $mpdId = MasterComponent::with('periodeProgram.masterProgramInkubasi')->where('mct_id', $request->mpdid)->first()->periodeProgram->masterProgramInkubasi->mpi_id;
+        // dd($mpdId);
 
             MasterStartup::create([
                 'ms_startdate'=> Carbon::now(),
                 'ms_pks' => $request->programStartup,
                 'ms_phone' => $request->kontakStartup,
+                'mc_id' => $request->kategori,
                 'ms_name' => $request->namaStartup,
                 'ms_address' => $request->alamat,
                 'ms_website' => $request->website,
@@ -63,34 +67,38 @@ class StartupController extends Controller
                 'ms_year_founded' => $request->tahunDidirikan,
                 'ms_focus_area' => $request->areaFokusBisnis,
                 'ms_funding_sources' => $request->sumberPendanaan,
-                'mpd_id'=> $request->mpdid,
+                'mpd_id'=> $mpdId,
                 'ms_status'=>"1",
             ]);
-            // dd(MasterStartup::where('ms_name', $request->namaStartup)->get()->first()['ms_id']);
 
+            $msid = MasterStartup::where('ms_name', $request->namaStartup)->get()->first()['ms_id'];
             
-    
+        $cvInput = [];
+        for($i =0; $i < count($request->file('cv')); $i++){
+            $cv = $request->file('cv')[$i];
+            $cvPath = $cv->store('cv', 'public');
+            array_push($cvInput, $cvPath);
+        }
 
-        
+        for($i=0; $i< count($request->namaLengkap); $i++){
+            MasterMember::create([
+                'mm_name' => $request->namaLengkap[$i],
+                'mm_nik' => $request->nik[$i],
+                'mm_position' => $request->jabatan[$i],
+                'mm_phone' => $request->nomorHp[$i],
+                'mm_email' => $request->email[$i],
+                'mm_nim_nip' => $request->nimNip[$i],
+                'mm_socialmedia' => $request->mediaSosial[$i],
+                'mu_id' => $request->universitas[$i],
+                'mf_id' => $request->fakultas[$i],
+                'mps_id' => $request->prodi[$i],
+                'mci_id' => $request->civitasTelu[$i],
+                'mm_cv' => $cvInput[$i],
+                'ms_id' => $msid,
+            ]);
+        }
 
-        // for($i=0; $i< count($request->namaLengkap); $i++){
-        //     MasterMember::create([
-        //         'mm_name' => $request->namaLengkap[$i],
-        //         'mm_nik' => $request->nik[$i],
-        //         'mm_position' => $request->jabatan[$i],
-        //         'mm_phone' => $request->nomorHp[$i],
-        //         'mm_email' => $request->email[$i],
-        //         'mm_nim_nip' => $request->nimNip[$i],
-        //         'mm_socialmedia' => $request->mediaSosial[$i],
-        //         'mu_id' => $request->universitas[$i],
-        //         'mf_id' => $request->fakultas[$i],
-        //         'mps_id' => $request->prodi[$i],
-        //         'mci_id' => $request->civitasTelu[$i],
-        //         'mm_cv' => $request->cv[$i],
-        //         'ms_id' => MasterStartup::where('ms_name', $request->namaStartup)->get()->first()['ms_id'],
-        //     ]);
-        // }
-
+        // count final score
         $score = 0;
         for($i =0; $i < count($request->answers); $i++){
             $point = MasterQuestionRange::where('mqr_id', $request->answers[$i])->get();
@@ -101,11 +109,29 @@ class StartupController extends Controller
         }
         $finalScore = (int)$score / (int)count($request->answers);
         
+        StartupComponentStatus::create([
+            'scs_notes' => $request->catatan,
+            'ms_id' => $msid,
+            'scs_totalscore' => $finalScore,
+        ]);
+
+        $question = MasterPeriodeProgram::with('component.question.questionRange')->where('mpd_id', $request->mpdid)->first();
+        // dd($request);
+        for($i =0; $i < count($request->answers); $i++){
+            // dd(StartupComponentStatus::where('ms_id', $msid)->first()->scs_id);
+            RegistationAnswer::create([
+                'mq_id' => $question->component[0]->question[$i]->id,
+                'mqr_id' => (int)$request->answers[$i],
+                'user_id' => (int)$request->userid,
+                'ra_score' => MasterQuestionRange::where('mqr_id', $request->answers[$i])->first()->mqr_poin,
+                'scs_id' => StartupComponentStatus::where('ms_id', $msid)->first()->scs_id,
+            ]);
+        }
         
-        // dd($finalScore);
-        RegistationAnswer::create([
-            'user_id' => $request->userid,
-            'ra_score' => $finalScore,
+
+        RegistationStatus::create([
+            'ms_id' => MasterStartup::where('ms_name', $request->namaStartup)->get()->first()['ms_id'],
+            'srt_step' => 2,
         ]);
 
         return view('dashboard');
@@ -115,6 +141,5 @@ class StartupController extends Controller
     public function setInkubasi(Request $request){
         $component = MasterComponent::with('question', 'question.questionRange', 'periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $request->program_id)->first();
         return response()->json($component);
-
     }
 }

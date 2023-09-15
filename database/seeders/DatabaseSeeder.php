@@ -182,7 +182,7 @@ class DatabaseSeeder extends Seeder
 
         $periode = [
             'mpe_startdate' => '2023-07-01',
-            'mpe_enddate' => '2023-07-31',
+            'mpe_enddate' => '2024-07-30',
             'mpe_name' => '2023/2024 Ganjil',
             'mpe_status' => 1,
             'mpe_description' => 'Deskripsi'

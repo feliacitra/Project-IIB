@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class MasterPeriodeProgram extends Model
 {
@@ -25,6 +26,10 @@ class MasterPeriodeProgram extends Model
     public function masterProgramInkubasi()
     {
         return $this->belongsTo(masterProgramInkubasi::class, 'mpi_id', 'mpi_id');
+    }
+
+    public function masterStartup(){
+        return $this->hasMany(MasterStartup::class, 'mpd_id');
     }
 
 }
