@@ -22,7 +22,8 @@
     <div class="container-fluid mt-4">
         <div class="alert alert-warning text-dark" role="alert">
             <h6><i data-feather="alert-triangle"></i>Info Pendaftaran Startup</h6>
-            <p class="mt-2" style="margin-left: 1.7rem">Pendaftaran startup telah dibuka, batas akhir pendaftaran <span style="font-weight: 600">31 Juli 2023</span>.</p>
+            {{-- @dd($periode[0]->mpe_enddate) --}}
+            <p class="mt-2" style="margin-left: 1.7rem">Pendaftaran startup telah dibuka, batas akhir pendaftaran <span style="font-weight: 600">{{ $periode[0]->mpe_enddate }}</span>.</p>
             <p class="mt-2" style="margin-left: 1.7rem">Ayo segera daftarkan startup anda!</p>
 
             <div class="text-center mt-4">
@@ -38,8 +39,8 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <h5>GoShop (Nama Startup)</h5>
-                        <p class="mt-2">Tanggal Daftar: 31-03-2022</p>
+                        <h5>{{ $startup->ms_name }}</h5>
+                        <p class="mt-2">Tanggal Daftar: {{ $startup->ms_startdate }}</p>
                     </div>
                     <div class="col">
                         <div class="alert alert-info text-dark" role="alert">
@@ -53,12 +54,12 @@
                     <ul class="progressbar">
                         <li class="success">
                             <p>Daftar Startup</p>
-                            <p class="date">26 Juni 2023</p>
+                            <p class="date">{{ $startup->ms_startdate }}</p>
                             <div class="status success">LOLOS</div>
                         </li>
                         <li class="success">
                             <p>Seleksi Administrasi</p>
-                            <p class="date">27 Juni 2023</p>
+                            <p class="date">{{ $startup->ms_startdate }}</p>
                             <div class="status success">LOLOS</div>
                         </li>
                         <li class="fail">
