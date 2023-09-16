@@ -63,7 +63,7 @@
                 @csrf
                 <h5 class="text-center mt-4">Penilaian Desk Evaluation</h5>
                 <div class="card">
-                    @foreach($question as $questIdx => $q)
+                    @foreach($mc->question as $questIdx => $q)
                     <div class="card-body">
                         <p>{{ $q->mq_question }}</p>
                         <div class="radio mt-2">

@@ -18,12 +18,24 @@ use Illuminate\Http\Request;
 class PenilaianDeskController extends Controller
 {
     public function index(){
-        $kategori = MasterCategory::all();
-        $startup = MasterStartup::with('masterPeriodeProgram', 'startupComponentStatus')->get();
+        if (request('search')){
 
-        // dd(StartupComponentStatus::with('registationAnswer')->get());
-
-        return view('Pendaftaran-PenilaianDE.penilaianDE', compact('kategori', 'startup'));
+            $search = request('search');
+            $startup = MasterStartup::where('ms_name', 'like', '%' . $search . '%')
+                ->orWhereHas('masterPeriodeProgram.masterPeriode.masterProgramInkubasi', function ($query) use ($search) {
+                    $query->where('mpi_name', 'like', '%' . $search . '%');
+                })
+                ->orWhereHas('masterPeriodeProgram.masterPeriode', function ($query) use ($search) {
+                    $query->where('mpe_name', 'like', '%' . $search . '%');
+                })->get();
+        } else {
+            // dd($periode);
+            $startup = MasterStartup::with('masterPeriodeProgram', 'startupComponentStatus')->get();
+        }
+        
+        
+        $periode = MasterPeriode::get();
+        return view('Pendaftaran-PenilaianDE.penilaianDE', compact('startup', 'periode'));
     }
     
     public function show($id){
@@ -32,8 +44,12 @@ class PenilaianDeskController extends Controller
         'masterPeriodeProgram.component.question.questionRange',
         'registationStatus',
         'startupComponentStatus.registationAnswer')->where('ms_id', $id)->first();
-        $question = MasterQuestion::with('questionRange')->get();
-        return view('Pendaftaran-PenilaianDE.nilaiView', compact('component', 'question'));
+        
+        $mct = $component->masterPeriodeProgram->component[0]->mct_id;
+        $mc = MasterComponent::with('question', 'question.questionRange', 'periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $mct)->first();
+
+        return view('Pendaftaran-PenilaianDE.nilaiView', compact('component', 'mc'));
+        
     }
 
     public function edit($id){
@@ -43,14 +59,22 @@ class PenilaianDeskController extends Controller
         'registationStatus',
         'startupComponentStatus.registationAnswer')->where('ms_id', $id)->first();
 
-        // $questionRange = MasterQuestionRange::with('question')->get();
-        $question = MasterQuestion::with('questionRange')->get();
-        return view('Pendaftaran-PenilaianDE.nilaiEdit', compact('component', 'question'));
+        $mct = $component->masterPeriodeProgram->component[0]->mct_id;
+        $mc = MasterComponent::with('question', 'question.questionRange', 'periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $mct)->first();
+        // dd($question);
+        // dd($mc);
+        return view('Pendaftaran-PenilaianDE.nilaiEdit', compact('component', 'mc' ));
+       
     }
 
-    public function update($id, Request $request){
-        
-        $component = MasterStartup::with('registationStatus', 'startupComponentStatus.registationAnswer' )->where('ms_id', $id)->first();
+    public function update(Request $request, $id){
+
+        $component = MasterStartup::with('startupComponentStatus',
+        'masterPeriodeProgram',
+        'masterPeriodeProgram.component.question.questionRange',
+        'registationStatus',
+        'startupComponentStatus.registationAnswer')->where('ms_id', $id)->first();
+
         $component->registationStatus->update(['srt_status' => $request->kelulusan]);
         $component->registationStatus->update(['srt-step' => 2]);
 

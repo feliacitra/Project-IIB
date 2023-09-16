@@ -61,7 +61,7 @@ Route::middleware(['auth', 'access'])->group(function () {
     // Route::get('/dashboard', function () {
     // })->name('dashboard');
     
-    Route::get('/dashboard/{id}', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/change-password', function () {
         return view('changepassword');

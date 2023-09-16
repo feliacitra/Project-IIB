@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HistoryStartup;
 use App\Models\MasterCategory;
 use App\Models\MasterCivitas;
 use App\Models\MasterComponent;
@@ -45,13 +46,14 @@ class StartupController extends Controller
 
     public function store(Request $request){
 
+        $mpdId = MasterPeriodeProgram::with('component')->where('mpd_id', $request->programStartup)->first()->mpd_id;
+        // dd($mpdId);
         $pitchDeck = $request->file('pitchDeck');
         $pitchDeckPath = $pitchDeck->store('pitch_deck', 'public');
 
-        $mpdId = MasterComponent::with('periodeProgram.masterProgramInkubasi')->where('mct_id', $request->mpdid)->first()->periodeProgram->masterProgramInkubasi->mpi_id;
-        // dd($mpdId);
+        
 
-            MasterStartup::create([
+        $startup = MasterStartup::create([
                 'ms_startdate'=> Carbon::now(),
                 'ms_pks' => $request->programStartup,
                 'ms_phone' => $request->kontakStartup,
@@ -71,7 +73,8 @@ class StartupController extends Controller
                 'ms_status'=>"1",
             ]);
 
-            $msid = MasterStartup::where('ms_name', $request->namaStartup)->get()->first()['ms_id'];
+            // dd($startup->ms_id);
+            $msid = $startup->ms_id;
             
         $cvInput = [];
         for($i =0; $i < count($request->file('cv')); $i++){
@@ -134,7 +137,12 @@ class StartupController extends Controller
             'srt_step' => 2,
         ]);
 
-        return view('dashboard');
+        HistoryStartup::create([
+            'ms_id' => $msid,
+            'mpd_id' => $mpdId,
+        ]);
+
+        return redirect()->route('dashboard');
     }
 
 

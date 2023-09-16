@@ -29,8 +29,8 @@
         <div class="col-4 col-md-3 col-lg-2">
             <select name="pilihPeriode" id="periode" class="form-control form-select">
                 <option value="select" class="text-muted">Periode</option>
-                @foreach($kategori as $item)
-                <option value="th2022">{{ $item->mc_name }}</option>
+                @foreach($periode as $item)
+                <option value="th2022">{{ $item->mpe_name }} </option>
                 @endforeach
             </select>
         </div>
@@ -38,9 +38,10 @@
         <div class="col-4 col-md-3 col-lg-2">
             <select name="pilihStatus" id="periode" class="form-control form-select">
                 <option value="select" class="text-muted">Status</option>
-                @foreach($kategori as $item)
-                <option value="th2022">{{ $item->mc_status }}</option>
-                @endforeach
+                {{-- @foreach($startup->periodeProgram as $item) --}}
+                <option value="th2022">AKTIF</option>
+                <option value="th2022">TIDAK AKTIF</option>
+                {{-- @endforeach --}}
             </select>
         </div>
 
@@ -49,8 +50,8 @@
                 <!-- Search Bar -->
                 <div class="input-group rounded">
                     <!-- Input Form -->
-                    <form action="" class="position-relative">
-                        <input type="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
+                    <form action="{{ route('penilaianDE') }}" method="get" class="position-relative">
+                        <input name="search" type="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
                         <span class="position-absolute" style="top: 50%; left: 0.5rem; transform: translateY(-50%);">
                             <i data-feather="search"></i>
                         </span>
@@ -94,7 +95,11 @@
                     <td>{{ $item->masterCategory->mc_name }}</td>
                     <td class="text-center">{{ $item->startupComponentStatus->scs_totalscore}}</td>
                     <td class="text-center">-</td>
-                    <td class="text-center">-</td>
+                    @if($item->ms_status == 1)
+                    <td class="text-center">AKTIF</td>
+                    @else
+                    <td class="text-center">TIDAK AKTIF</td>
+                    @endif
                     <td class="text-center action-icons">
                         <!-- VIEW -->
                         <a href="{{ route('penilaianDE.show', $item->ms_id) }}"><i data-feather="eye"></i></a>

@@ -22,8 +22,8 @@
     <div class="container-fluid mt-4">
         <div class="alert alert-warning text-dark" role="alert">
             <h6><i data-feather="alert-triangle"></i>Info Pendaftaran Startup</h6>
-            {{-- @dd($periode[0]->mpe_enddate) --}}
-            <p class="mt-2" style="margin-left: 1.7rem">Pendaftaran startup telah dibuka, batas akhir pendaftaran <span style="font-weight: 600">{{ $periode[0]->mpe_enddate }}</span>.</p>
+            {{-- @dd($periode) --}}
+            <p class="mt-2" style="margin-left: 1.7rem">Pendaftaran startup telah dibuka, batas akhir pendaftaran <span style="font-weight: 600">{{ $periode->mpe_enddate }}</span>.</p>
             <p class="mt-2" style="margin-left: 1.7rem">Ayo segera daftarkan startup anda!</p>
 
             <div class="text-center mt-4">
@@ -34,6 +34,7 @@
         </div>
     </div>
 
+    @if($startup != null)
     <div class="container-fluid mt-4">
         <div class="card">
             <div class="card-body">
@@ -75,5 +76,6 @@
             </div>
         </div>
     </div>
+    @endif
     @endif
 @endsection
