@@ -19,6 +19,7 @@
         </p>
     </div>
 
+    {{-- @if(isset($periode)) --}}
     <div class="container-fluid mt-4">
         <div class="alert alert-warning text-dark" role="alert">
             <h6><i data-feather="alert-triangle"></i>Info Pendaftaran Startup</h6>
@@ -33,8 +34,9 @@
             </div>
         </div>
     </div>
+    
 
-    @if($startup != null)
+    @if(isset($startup))
     <div class="container-fluid mt-4">
         <div class="card">
             <div class="card-body">
@@ -75,11 +77,20 @@
                         <li>
                             Presentasi
                         </li>
-                        @else
+                        @elseif($startup->registationStatus->srt_status == 'Lulus')
                         <li class="success">
                             <p>Penilaian Desk Evaluation</p>
                             <p class="date">{{ $penilaianDate }}</p>
                             <div class="status success">LOLOS</div>
+                        </li>
+                        <li>
+                            Presentasi
+                        </li>
+                        @else
+                        <li class="">
+                            <p>Penilaian Desk Evaluation</p>
+                            <p class="date">{{ $penilaianDate }}</p>
+                            <div class="status">Dalam Proses</div>
                         </li>
                         <li>
                             Presentasi
@@ -92,4 +103,5 @@
     </div>
     @endif
     @endif
+    {{-- @endif --}}
 @endsection

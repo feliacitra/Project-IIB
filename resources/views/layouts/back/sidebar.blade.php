@@ -157,7 +157,7 @@
             {{-- <li class="nav-item nav-category">Data Master</li> --}}
             {{-- @dd($history) --}}
             <li class="nav-item">
-                @if($history != null)
+                @if(isset($history))
                     <select name="history" id="periode" class="form-control form-select">
                         <option value="select" class="text-muted">History</option>
                         @foreach($history->historyStartup as $item)
