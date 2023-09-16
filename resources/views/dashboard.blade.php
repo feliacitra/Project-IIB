@@ -41,13 +41,16 @@
                 <div class="row">
                     <div class="col">
                         <h5>{{ $startup->ms_name }}</h5>
-                        <p class="mt-2">Tanggal Daftar: {{ $startup->ms_startdate }}</p>
+                        <p class="mt-2">Tanggal Daftar: {{ $startDate }}</p>
                     </div>
                     <div class="col">
+                        {{-- @dd($startup) --}}
+                        @if($startup->registationStatus->srt_status == "Tidak Lulus")
                         <div class="alert alert-info text-dark" role="alert">
                             <h6><i data-feather="info"></i>Informasi</h6>
                             <p class="mt-2" style="margin-left: 1.7rem">Maaf kamu belum dapat mengikuti tahap seleksi selanjutnya.</p>
                         </div>
+                        @endif
                     </div>
                 </div>
 
@@ -55,22 +58,33 @@
                     <ul class="progressbar">
                         <li class="success">
                             <p>Daftar Startup</p>
-                            <p class="date">{{ $startup->ms_startdate }}</p>
+                            <p class="date">{{ $startDate }}</p>
                             <div class="status success">LOLOS</div>
                         </li>
                         <li class="success">
                             <p>Seleksi Administrasi</p>
-                            <p class="date">{{ $startup->ms_startdate }}</p>
+                            <p class="date">{{ $startDate }}</p>
                             <div class="status success">LOLOS</div>
                         </li>
+                        @if($startup->registationStatus->srt_status == "Tidak Lulus")
                         <li class="fail">
                             <p>Penilaian Desk Evaluation</p>
-                            <p class="date">28 Juni 2023</p>
+                            <p class="date">{{ $penilaianDate }}</p>
                             <div class="status fail">TIDAK LOLOS</div>
                         </li>
                         <li>
                             Presentasi
                         </li>
+                        @else
+                        <li class="success">
+                            <p>Penilaian Desk Evaluation</p>
+                            <p class="date">{{ $penilaianDate }}</p>
+                            <div class="status success">LOLOS</div>
+                        </li>
+                        <li>
+                            Presentasi
+                        </li>
+                        @endif
                     </ul>
                 </div>
             </div>

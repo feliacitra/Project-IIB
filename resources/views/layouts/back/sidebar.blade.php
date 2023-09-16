@@ -155,11 +155,15 @@
             {{-- @elseif ( auth()->user()->role == '2' ) --}}
             @else
             {{-- <li class="nav-item nav-category">Data Master</li> --}}
+            {{-- @dd($history) --}}
             <li class="nav-item">
-                <a href="" class="nav-link">
-                    <i class="link-icon" data-feather="box"></i>
-                    <span class="link-title">History</span>
-                </a>
+                    <select name="history" id="periode" class="form-control form-select">
+                        <option value="select" class="text-muted">History</option>
+                        @foreach($history->historyStartup as $item)
+                        <option value="th2022">{{ $item->created_at }}</option>
+                        {{-- <option value="th2022">TIDAK AKTIF</option> --}}
+                        @endforeach
+                    </select>
             </li>
             <li class="nav-item">
                 <a href="{{ route('dashboard', auth()->user()->id) }}" class="nav-link">

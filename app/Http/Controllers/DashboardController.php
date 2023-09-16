@@ -39,9 +39,9 @@ class DashboardController extends Controller
 
         $penilaianDate = '';
         $startDate = '';
-        if($startDate == "g"){
+        
             $history = MasterStartup::with('historyStartup')->where('ms_name', $startup->ms_name)->first();
-        }
+        
         // dd($historyStartup);
         if($startup != null){
             $penilaianDate = date('d-M-Y', strtotime($startup->registationStatus->updated_at));
@@ -49,6 +49,6 @@ class DashboardController extends Controller
             // dd($startup);
         }
 
-        return view('dashboard')->with(compact('periode','status', 'startup', 'penilaianDate', 'startDate'));
+        return view('dashboard')->with(compact('periode','status', 'startup', 'penilaianDate', 'startDate', 'history'));
     }
 }
