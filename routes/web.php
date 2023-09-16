@@ -73,6 +73,7 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/access/reset/{role}', [AccessController::class, 'role_reset'])->name('access.role-reset');
 
     Route::get('/master/pengguna', [MasterPenggunaController::class, 'index'])->name('master.pengguna');
+    Route::get('/notify', [DashboardController::class, 'index'])->name('notify');
     
 
     Route::get('/master/inkubasi', function() {

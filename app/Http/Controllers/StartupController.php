@@ -31,6 +31,7 @@ class StartupController extends Controller
         $universities = MasterUniversitas::all();
         $faculties = MasterFakultas::all();
         $studyPrograms = MasterProgramStudy::all();
+        $history = null;
         // $questions = MasterQuestion::all();
         // $questionRange=MasterQuestionRange::all();
         $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi','question', 'question.questionRange')->get();
@@ -41,7 +42,8 @@ class StartupController extends Controller
             'universities',
             'faculties',
             'studyPrograms',
-            'components'));
+            'components',
+            'history'));
     }
 
     public function store(Request $request){

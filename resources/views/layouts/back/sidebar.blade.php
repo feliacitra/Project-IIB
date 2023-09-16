@@ -157,6 +157,7 @@
             {{-- <li class="nav-item nav-category">Data Master</li> --}}
             {{-- @dd($history) --}}
             <li class="nav-item">
+                @if($history != null)
                     <select name="history" id="periode" class="form-control form-select">
                         <option value="select" class="text-muted">History</option>
                         @foreach($history->historyStartup as $item)
@@ -164,6 +165,7 @@
                         {{-- <option value="th2022">TIDAK AKTIF</option> --}}
                         @endforeach
                     </select>
+                @endif
             </li>
             <li class="nav-item">
                 <a href="{{ route('dashboard', auth()->user()->id) }}" class="nav-link">

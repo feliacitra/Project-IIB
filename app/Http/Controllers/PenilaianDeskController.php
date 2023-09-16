@@ -13,6 +13,8 @@ use App\Models\MasterStartup;
 use App\Models\RegistationAnswer;
 use App\Models\RegistationStatus;
 use App\Models\StartupComponentStatus;
+use App\Models\User;
+use App\Notifications\PendaftaranStartupNotification;
 use Illuminate\Http\Request;
 
 class PenilaianDeskController extends Controller
@@ -98,6 +100,14 @@ class PenilaianDeskController extends Controller
         $component->startupComponentStatus->update(['scs_notes' => $request->catatan]);
         $component->startupComponentStatus->update(['scs_totalscore' => $finalScore]);        
         
+        $user = User::where('id',$component->user_id)->first();
+        if($request->kelulusan == "Lulus"){
+            $user->notify(new PendaftaranStartupNotification($user, 'Selamat Anda Lulus Ke Tahap Berikutnya!'));
+        }else{
+            $user->notify(new PendaftaranStartupNotification($user, 'Anda Tidak Lulus Ke Tahap Berikutnya'));
+        }
+        
+
         return redirect()->route('penilaianDE');
     }
 }
