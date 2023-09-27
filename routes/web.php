@@ -1,22 +1,25 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\AccessController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MasterCivitasController;
+use App\Http\Controllers\MasterPenggunaController;
+use App\Http\Controllers\MasterPeriodeController;
+use App\Http\Controllers\MasterProgramInkubasiController;
+use App\Http\Controllers\MasterCategoryController;
+use App\Http\Controllers\UserProfileController;
 use App\Models\MasterCategory;
 use App\Http\Controllers\MasterUniversitasController;
+use App\Http\Controllers\PenilaianDeskController;
+use App\Http\Controllers\MasterFakultasController;
 use App\Http\Controllers\MasterProgramStudyController;
 use App\Http\Controllers\MasterKomponenPenilaianController;
 use App\Http\Controllers\StartupController;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AccessController;
-use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\MasterCivitasController;
-use App\Http\Controllers\MasterPeriodeController;
-use App\Http\Controllers\MasterCategoryController;
-use App\Http\Controllers\MasterFakultasController;
-use App\Http\Controllers\MasterPenggunaController;
 use App\Http\Controllers\PenilaiProfileController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\MasterProgramInkubasiController;
 use Carbon\Carbon;
 
 /*
@@ -55,15 +58,12 @@ Route::get('/admin', function() {
 Route::post('/register',[RegisteredUserController::class, 'store']) ->name('register');
 
 Route::middleware(['auth', 'access'])->group(function () {
-    Route::get('/dashboard', function () {
-    $periode = DB::table('master_periode')->where('mpe_status', '=', '1')->get();
-    $status=0;
-    if($periode->isNotEmpty()){
-        $status = Carbon::now()->between($periode[0]->mpe_startdate,$periode[0]->mpe_enddate);
-    }
-    return view('dashboard')->with(compact('periode','status'));
-    })->name('dashboard');
+
+    // Route::get('/dashboard', function () {
+    // })->name('dashboard');
     
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::get('/change-password', function () {
         return view('changepassword');
     })->name('change-password');
@@ -75,6 +75,7 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::post('/access/role', [AccessController::class, 'role_index'])->name('access.role');
 
     Route::get('/master/pengguna', [MasterPenggunaController::class, 'index'])->name('master.pengguna');
+    Route::get('/notify', [DashboardController::class, 'index'])->name('notify');
     
 
     Route::get('/master/inkubasi', function() {
@@ -128,20 +129,24 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Pendaftaran-DataPendaftar.dataStartup');
     })->name('dataStartup');
 
-    Route::get('/master/penilaianDE', function() {
-        return view('Pendaftaran-PenilaianDE.penilaianDE');
-    })->name('penilaianDE');
+    Route::get('/master/penilaianDE/edit/{id}', [PenilaianDeskController::class, 'edit'])->name('penilaianDE.edit');
+    Route::get('/master/penilaianDE/detail/{id}', [PenilaianDeskController::class, 'show'])->name('penilaianDE.show');
+    Route::post('/master/penilaianDE/update/{id}', [PenilaianDeskController::class, 'update'])->name('penilaianDE.update');
+    Route::resource('/master/penilaianDE', PenilaianDeskController::class)->only(['index'])->names([
+        'index' => 'penilaianDE',
+    ]);
+    
+    // Route::get('/master/penilaianDE', function() {
+    //     return view('Pendaftaran-PenilaianDE.penilaianDE');
+    // })->name('penilaianDE');
 
-    Route::get('/master/penilaianDE/viewnilai', function() {
-        return view('Pendaftaran-PenilaianDE.nilaiView');
-    })->name('viewnilai');
+    // Route::get('/master/penilaianDE/viewnilai', function() {
+    //     return view('Pendaftaran-PenilaianDE.nilaiView');
+    // })->name('viewnilai');
 
-    Route::get('/master/penilaianDE/editnilai', function() {
-        return view('Pendaftaran-PenilaianDE.nilaiEdit');
-    })->name('editnilai');
-    Route::get('/daftar', function() {
-        return view('Startup.daftarStartup');
-    })->name('daftar');
+    // Route::get('/master/penilaianDE/editnilai', function() {
+    //     return view('Pendaftaran-PenilaianDE.nilaiEdit');
+    // })->name('editnilai');
 
     // Route::get('/master/inkubasi', function() {
     //     $master_programinkubasi = DB::table('master_programinkubasi')->get();
@@ -156,9 +161,9 @@ Route::middleware(['auth', 'access'])->group(function () {
         'index' => 'master.kategori.startup',
     ])->except(['show', 'edit', 'create']);
 
-    Route::get('/daftar', function() {
-        return view('Startup.daftarStartup');
-    })->name('daftar');
+    // Route::get('/daftar', function() {
+    //     return view('Startup.daftarStartup');
+    // })->name('daftar');
 
     // Route::get('/master/universitas', function() {
     //     return view('Master-Universitas.listUniversitas');

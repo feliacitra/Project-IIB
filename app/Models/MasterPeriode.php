@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MasterPeriode extends Model
 {
@@ -25,4 +26,7 @@ class MasterPeriode extends Model
     {
         return $this->hasMany(MasterPeriodeProgram::class, 'mpe_id', 'mpe_id');
     }
+
+    
+
 }

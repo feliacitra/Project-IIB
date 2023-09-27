@@ -29,6 +29,9 @@
         }
     </style>
 
+
+{{-- @dd($components) --}}
+
     <div class="pb-2">
         <p style="display: flex; align-items: flex-end;">
             <!-- Home button -->
@@ -37,7 +40,8 @@
             Daftar Startup
         </p>
     </div>
-    <form action="{{ route('startup.store') }}" method="post">
+
+    <form action="{{ route('startup.store') }}" method="post" enctype="multipart/form-data">
     <input type="hidden" name="userid" value="{{ Auth::user()->id }}" />
     {{-- periode masih hard code, ambil dari respond data dashboard --}}
     <input type="hidden" name="mpdid" value="{{ $components[0]->periodeProgram->mpd_id }}" />
@@ -108,8 +112,8 @@
 
                         <div class="col">
                             <label for="kontakStartup">Kontak Startup</label>
-                            <input type="text" class="form-control" id="kontakStartup" name="kontakStartup" placeholder="Kontak Startup">
 
+                            <input type="text" class="form-control" id="kontakStartup" name="kontakStartup" placeholder="Kontak Startup">
 
                             <label for="emailStartup">Email Startup</label>
                             <input type="email" class="form-control" id="emailStartup" name="emailStartup" placeholder="EmailStartup">
@@ -119,7 +123,6 @@
 
                             <label for="sosialMedia">Sosial Media</label>
                             <input type="text" class="form-control" id="sosialMedia" name="sosialMedia" placeholder="Sosial Media">
-
 
                             <label for="pitchDeck">Unggah Pitch Deck</label>
                             <input class="form-control" type="file" id="pitchDeck" name="pitchDeck">
@@ -135,7 +138,6 @@
 
             {{-- Anggota --}}
             <div class="tab-pane fade" id="nav-anggota" role="tabpanel" aria-labelledby="nav-anggota-tab">
-
                     <!-- + button -->
                     <div class="px-3 pt-3" style="display: flex; justify-content: flex-end;">
                         <button id="plus-button" class="btn btn-primary py-1 px-1" type="button" onclick="addCard()"><i data-feather="plus"></i></button>
@@ -152,7 +154,6 @@
                                 <div class="row">
                                     <div class="col">
                                         <label for="namaLengkap">Nama Lengkap</label>
-
                                         <input type="text" class="form-control" id="namaLengkap" name="namaLengkap[]" placeholder="Nama Lengkap">
 
                                         <label for="nik">NIK</label>
@@ -173,7 +174,6 @@
 
                                     <div class="col">
                                         <label for="civitasTELU">Civitas Telkom University</label>
-
                                         <select id="civitasTELU" class="form-control form-select" name="civitasTelu[]">
                                             <option value="" class="text-muted">Civitas Telkom University</option>
                                             @foreach($societies as $society)
@@ -225,7 +225,6 @@
                             <a class="btn btn-primary btnNext">Selanjutnya</a>
                         </div>
                     </div>
-
             </div>
             {{-- Anggota --}}
 
@@ -495,7 +494,6 @@
             /* Clone the existing row and append to card body */
             var existingRow = document.querySelector("#nav-anggota .card .row").cloneNode(true);
             cardBody.appendChild(existingRow);
-            
 
             /* Reset input field values in the new card */
             var inputs = cardBody.querySelectorAll("input");
