@@ -198,8 +198,8 @@
                 </a>
             </li>
             <li class="nav-item">
-            <a href="{{ route('dashboard') }}" class="nav-link">
-                    <i class="link-icon" data-feather="box"></i>
+            <a href="{{ route('profilstartup') }}" class="nav-link">
+                    <i class="link-icon" data-feather="folder"></i>
                     <span class="link-title">Profil Startup</span>
                 </a>
             </li>

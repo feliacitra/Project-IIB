@@ -40,7 +40,7 @@
     <form action="{{ route('startup.store') }}" method="post">
     <input type="hidden" name="userid" value="{{ Auth::user()->id }}" />
     {{-- periode masih hard code, ambil dari respond data dashboard --}}
-    <input type="hidden" name="mpdid" value="{{ $components[0]->periodeProgram->mpd_id }}" />
+    <input type="hidden" name="mpdid" value="" />
     {{-- @dd($components[0]->periodeProgram->mpd_id) --}}
     <div class="container-fluid mt-2">
         <nav>
@@ -182,16 +182,13 @@
                                         </select>
 
                                         <label for="universitas">Universitas</label>
-                                        <select id="universitas" class="form-control form-select" name="universitas[]" onchange="onChangeDropdownUniversitas(event)">
+                                        <select id="universitas" class="form-control form-select" name="universitas[]">
                                             <option value="" class="text-muted">Universitas</option>
                                             @foreach($universities as $university)
-                                            <option value="{{ $university->mu_id }}">{{ $university->mu_name }}</option>
+                                                <option value="{{ $university->mu_id }}">{{ $university->mu_name }}</option>
                                             @endforeach
-                                            <option value="lainnya" class="text-muted">Lainnya</option>
+                                                <option value="0">Lainnya</option>
                                         </select>
-
-                                        <!-- {{-- <label for="inputUniversitas">Masukan Universitas</label>
-                                        <input type="text" id="inputUniversitas" class="form-control" name="inputUniversitas[]"> --}} -->
 
                                         <label for="fakultas">Fakultas</label>
                                         <select id="fakultas" class="form-control form-select" name="fakultas[]">
@@ -199,7 +196,7 @@
                                             @foreach($faculties as $faculty)
                                                 <option value="{{ $faculty->mf_id }}">{{ $faculty->mf_name }}</option>
                                             @endforeach
-                                            <option value="lainnya" class="text">Lainnya</option>
+                                            <option value="0">Lainnya</option>
                                         </select>
 
                                         <label for="prodi">Program Studi</label>
@@ -208,7 +205,7 @@
                                             @foreach($studyPrograms as $studyProgram)
                                                 <option value="{{ $studyProgram->mps_id }}">{{ $studyProgram->mps_name }}</option>
                                             @endforeach
-                                            <option value="lainnya" class="text">Lainnya</option>
+                                            <option value="0">Lainnya</option>
                                         </select>
 
                                         <label for="nimnip">NIM/NIP</label>
@@ -258,146 +255,11 @@
         </div>
     </div>
     <script>
-
-    let totalCard = 0;
-
         $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
-            });
-
-            function onChangeDropdownUniversitas(event){
-            console.log(event.target);
-            let randomId = generateId(6);
-            let randomId2 = generateId(6);
-            if(event.target.value == "lainnya"){
-                // label
-                const element = document.createElement('label');
-                    element.setAttribute('for', randomId);
-                    element.setAttribute('id', randomId2);
-                    element.innerHTML = 'Masukan Universitas';
-    
-                    // input
-                    const input = document.createElement('input');
-                    input.setAttribute('type', 'text');
-                    input.setAttribute('id', randomId);
-                    input.setAttribute('class', 'form-control');
-                    input.setAttribute('name', 'universitas[]');
-    
-                    let element2 = event.target.id;
-                    $('#'+element2).after(element);
-                    $('#'+randomId2).after(input);
-            }else{
-                // document.querySelector("#universitas").closest(".card");
-
-                // if(document.getElementById(randomId2) != null){
-                //     var label = document.getElementById(randomId2);
-                //     var input = document.getElementById(randomId);
-                //     label.remove();
-                //     input.remove();
-                // }
-            }
-        }
-        function generateId(length){
-            let result = '';
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            const charactersLength = characters.length;
-            let counter = 0;
-            while (counter < length) {
-            result += characters.charAt(Math.floor(Math.random() * charactersLength));
-            counter += 1;
-            }
-            return result;
-        }
-
-        // $("#universitas").change(function(){
-        //     var u = document.getElementById("universitas").value;
-        //     if(u == "lainnya"){
-
-        //         // label
-        //         const element = document.createElement('label');
-        //         element.setAttribute('for', 'inputUniversitas');
-        //         element.setAttribute('id', 'labelUniversitas');
-        //         element.innerHTML = 'Masukan Universitas';
-
-        //         // input
-        //         const input = document.createElement('input');
-        //         input.setAttribute('type', 'text');
-        //         input.setAttribute('id', 'inputUniversitas');
-        //         input.setAttribute('class', 'form-control');
-        //         input.setAttribute('name', 'universitas[]');
-
-        //         $('#universitas').after(element);
-        //         $('#labelUniversitas').after(input);
-        //     }else{
-        //         if(document.getElementById('labelUniversitas') != null){
-        //             var label = document.getElementById('labelUniversitas');
-        //             var input = document.getElementById('inputUniversitas');
-        //             label.remove();
-        //             input.remove();
-        //         }
-        //     }
-        // })
-
-        $("#fakultas").change(function(){
-            var u = document.getElementById("fakultas").value;
-            if(u == "lainnya"){
-
-                // label
-                const element = document.createElement('label');
-                element.setAttribute('for', 'inputFakultas');
-                element.setAttribute('id', 'labelFakultas');
-                element.innerHTML = 'Masukan Fakultas';
-
-                // input
-                const input = document.createElement('input');
-                input.setAttribute('type', 'text');
-                input.setAttribute('id', 'inputFakultas');
-                input.setAttribute('class', 'form-control');
-                input.setAttribute('name', 'fakultas[]');
-
-                $('#fakultas').after(element);
-                $('#labelFakultas').after(input);
-            }else{
-                if(document.getElementById('labelFakultas') != null){
-                    var label = document.getElementById('labelFakultas');
-                    var input = document.getElementById('inputFakultas');
-                    label.remove();
-                    input.remove();
-                }
-            }
-        })
-
-        $("#prodi").change(function(){
-            var u = document.getElementById("prodi").value;
-            if(u == "lainnya"){
-
-                
-                // label
-                const element = document.createElement('label');
-                element.setAttribute('for', 'inputProdi');
-                element.setAttribute('id', 'labelProdi');
-                element.innerHTML = 'Masukan Prodi';
-
-                // input
-                const input = document.createElement('input');
-                input.setAttribute('type', 'text');
-                input.setAttribute('id', 'inputProdi');
-                input.setAttribute('class', 'form-control');
-                input.setAttribute('name', 'prodi[]');
-
-                $('#prodi').after(element);
-                $('#labelProdi').after(input);
-            }else{
-                if(document.getElementById('labelProdi') != null){
-                    var label = document.getElementById('labelProdi');
-                    var input = document.getElementById('inputProdi');
-                    label.remove();
-                    input.remove();
-                }
-            }
-        })
+        });
 
         $("#programInkubasi").change(function (){
             // get self assesment based by program inkubasi
@@ -422,7 +284,6 @@
                 }
             });
         })
-      
 
         function addQuestion(question, index){
             let cardEl = document.createElement('div');
@@ -452,12 +313,9 @@
             });
 
             return cardEl;
-        }
-
-        
+        } 
 
         function addCard() {
-            totalCard += 1;
             var container = document.querySelector("#nav-anggota .p-3");
 
             /* Create new card */
@@ -495,7 +353,6 @@
             /* Clone the existing row and append to card body */
             var existingRow = document.querySelector("#nav-anggota .card .row").cloneNode(true);
             cardBody.appendChild(existingRow);
-            
 
             /* Reset input field values in the new card */
             var inputs = cardBody.querySelectorAll("input");
