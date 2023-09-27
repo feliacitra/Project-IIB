@@ -14,6 +14,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Models\MasterCategory;
 use App\Http\Controllers\MasterUniversitasController;
 use App\Http\Controllers\PenilaianDeskController;
+use App\Http\Controllers\PresentationSecheduleController;
 use App\Http\Controllers\MasterFakultasController;
 use App\Http\Controllers\MasterProgramStudyController;
 use App\Http\Controllers\MasterKomponenPenilaianController;
@@ -206,6 +207,7 @@ Route::middleware(['auth', 'access'])->group(function () {
 
     Route::get('/penilai/profil', [PenilaiProfileController::class, 'edit'])->name('penilai.profil.edit');
     Route::put('/penilai/profil', [PenilaiProfileController::class, 'update'])->name('penilai.profil.update');
+    Route::get('/presentasi', [PresentationSecheduleController::class, 'index'])->name('presentation.index');
 });
 
 
