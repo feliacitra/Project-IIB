@@ -188,11 +188,17 @@
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
-                    <span class="link-title">Dashboard</span>
+                    <span class="link-title">History</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+            <a href="{{ route('dashboard') }}" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
                     <span class="link-title">Profil Startup</span>
                 </a>
@@ -226,6 +232,7 @@
                 {!! $menu !!}
             </li>
             @endforeach
+           
             @endif
         </ul>
     </div>
