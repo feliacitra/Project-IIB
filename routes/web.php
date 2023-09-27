@@ -139,6 +139,9 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/master/penilaianDE/editnilai', function() {
         return view('Pendaftaran-PenilaianDE.nilaiEdit');
     })->name('editnilai');
+    Route::get('/daftar', function() {
+        return view('Startup.daftarStartup');
+    })->name('daftar');
 
     // Route::get('/master/inkubasi', function() {
     //     $master_programinkubasi = DB::table('master_programinkubasi')->get();

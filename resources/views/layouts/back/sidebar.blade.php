@@ -215,12 +215,13 @@
                     <span class="link-title">Sertifikat Monev</span>
                 </a>
             </li>
+
+            {{--
             @foreach (get_menu() as $menu)
-            <li class="nav-item">
-                {!! $menu !!}
-            </li>
-            @endforeach
-           
+                <li class="nav-item">
+                    {!! $menu !!}
+                </li>
+            @endforeach--}}
             @endif
         </ul>
     </div>
