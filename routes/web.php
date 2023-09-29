@@ -130,6 +130,7 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/master/penilaianDE/edit/{id}', [PenilaianDeskController::class, 'edit'])->name('penilaianDE.edit');
     Route::get('/master/penilaianDE/detail/{id}', [PenilaianDeskController::class, 'show'])->name('penilaianDE.show');
     Route::post('/master/penilaianDE/update/{id}', [PenilaianDeskController::class, 'update'])->name('penilaianDE.update');
+    Route::get('/master/penilaianDE/{file}', [PenilaianDeskController::class, 'download'])->name('download');
     Route::resource('/master/penilaianDE', PenilaianDeskController::class)->only(['index'])->names([
         'index' => 'penilaianDE',
     ]);
@@ -189,6 +190,7 @@ Route::middleware(['auth', 'access'])->group(function () {
     ])->except(['show', 'edit', 'create', 'getFaculties']);
 
     Route::get('/master/prodi/{university}', [MasterProgramStudyController::class, 'getFaculties']);
+    Route::get('/master/prodi/getProdi/{prodi}', [MasterProgramStudyController::class, 'getProdi']);
 
     Route::get('/master/penilaian', [MasterKomponenPenilaianController::class, 'index'])->name('penilaian');
     Route::get('/master/penilaian/{id}', [MasterKomponenPenilaianController::class, 'create'])->name('penilaian.create');

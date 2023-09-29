@@ -149,19 +149,21 @@
                 </li>
                 {{-- @foreach (get_access() as $feature)
                     <li class="nav-item nav-category">{{ $feature }}</li>
-                @endforeach --}}
-                {{-- <li class="nav-item nav-category">{{ auth()->user()->role }}</li> --}}
-
-            {{-- @elseif ( auth()->user()->role == '2' ) --}}
-            @else
-            {{-- <li class="nav-item nav-category">Data Master</li> --}}
-            {{-- @dd($history) --}}
+                    @endforeach --}}
+                    {{-- <li class="nav-item nav-category">{{ auth()->user()->role }}</li> --}}
+                    
+                    {{-- @elseif ( auth()->user()->role == '2' ) --}}
+                    @else
+                    {{-- <li class="nav-item nav-category">Data Master</li> --}}
+                    {{-- @dd($history) --}}
+                    {{-- @dd($history) --}}
             <li class="nav-item">
+                {{-- @dd($history); --}}
                 @if(isset($history))
-                    <select name="history" id="periode" class="form-control form-select">
-                        <option value="select" class="text-muted">History</option>
-                        @foreach($history->historyStartup as $item)
-                        <option value="th2022">{{ $item->created_at }}</option>
+                <select name="history" id="periode" class="form-control form-select">
+                    <option value="select" class="text-muted">History</option>
+                    @foreach($history->historyStartup as $item)
+                        <option value="th2022">{{ $item->masterPeriodeProgram[$loop->iteration-1]->masterPeriode->mpe_name }}</option>
                         {{-- <option value="th2022">TIDAK AKTIF</option> --}}
                         @endforeach
                     </select>

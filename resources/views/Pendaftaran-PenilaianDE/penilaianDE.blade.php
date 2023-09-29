@@ -102,7 +102,7 @@
                     @endif
                     <td class="text-center action-icons">
                         <!-- VIEW -->
-                        <a href="{{ route('penilaianDE.show', $item->ms_id) }}"><i data-feather="eye"></i></a>
+                        {{-- <a href="{{ route('penilaianDE.show', $item->ms_id) }}"><i data-feather="eye"></i></a> --}}
                         <a href="{{ route('penilaianDE.edit', $item->ms_id) }}"><i data-feather="edit-2"></i></a>
                     </td>
                 </tr>

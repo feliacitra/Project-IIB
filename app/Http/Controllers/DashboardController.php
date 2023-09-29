@@ -44,13 +44,14 @@ class DashboardController extends Controller
                 'startupComponentStatus.registationAnswer')->where('user_id', auth()->id())->first();
                 
                 if(MasterStartup::with('historyStartup')->where('user_id', auth()->id())->first() != null){
-                    $history = MasterStartup::with('historyStartup')->where('user_id', auth()->id())->first();
+                    $history = MasterStartup::with('historyStartup.masterPeriodeProgram.masterPeriode')->where('user_id', auth()->id())->first();
                 }
                 
                 if($startup != null){
                     $penilaianDate = date('d-M-Y', strtotime($startup->registationStatus->updated_at));
                     $startDate = date('d-M-Y', strtotime($startup->ms_startdate));
                 }      
+                // dd($history);
                 return view('dashboard')->with(compact('periode','status', 'startup', 'penilaianDate', 'startDate', 'history'));
             }
         }

@@ -21,6 +21,7 @@ class MasterStartup extends Model
         'ms_name',
         'ms_address',
         'mc_id',
+        'ms_email',
         'ms_website',
         'ms_logo',
         'ms_socialmedia',
@@ -42,7 +43,7 @@ class MasterStartup extends Model
 
     public function masterMember()
     {
-        return $this->hasMany(MasterMember::class, 'mm_id');
+        return $this->hasMany(MasterMember::class, 'ms_id');
     }
 
     public function startupComponentStatus() : HasOne {

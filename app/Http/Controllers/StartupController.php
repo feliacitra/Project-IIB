@@ -47,34 +47,35 @@ class StartupController extends Controller
     }
 
     public function store(Request $request){
-
         $mpdId = MasterPeriodeProgram::with('component')->where('mpd_id', $request->programStartup)->first()->mpd_id;
         // dd($mpdId);
         $pitchDeck = $request->file('pitchDeck');
         $pitchDeckPath = $pitchDeck->store('pitch_deck', 'public');
-
         
-
+        
+        
         $startup = MasterStartup::create([
-                'ms_startdate'=> Carbon::now(),
-                'ms_pks' => $request->programStartup,
-                'ms_phone' => $request->kontakStartup,
-                'mc_id' => $request->kategori,
-                'ms_name' => $request->namaStartup,
-                'ms_address' => $request->alamat,
-                'ms_website' => $request->website,
-                'ms_socialmedia' => $request->sosialMedia,      
-                'ms_legal' => $request->legalitas,
-                'ms_pitchdeck' => $pitchDeckPath,
-                'user_id'=>$request->userid,
-                'ms_yearly_income' => $request->pendapatanTahunan,
-                'ms_year_founded' => $request->tahunDidirikan,
-                'ms_focus_area' => $request->areaFokusBisnis,
-                'ms_funding_sources' => $request->sumberPendanaan,
-                'mpd_id'=> $mpdId,
-                'ms_status'=>"1",
-            ]);
-
+            'ms_startdate'=> Carbon::now(),
+            'ms_pks' => $request->programStartup,
+            'ms_phone' => $request->kontakStartup,
+            'mc_id' => $request->kategori,
+            'ms_name' => $request->namaStartup,
+            'ms_address' => $request->alamat,
+            'ms_website' => $request->website,
+            'ms_socialmedia' => $request->sosialMedia,      
+            'ms_legal' => $request->legalitas,
+            'ms_pitchdeck' => $pitchDeckPath,
+            'ms_email'=>$request->emailStartup,
+            'user_id'=>$request->userid,
+            'ms_yearly_income' => $request->pendapatanTahunan,
+            'ms_year_founded' => $request->tahunDidirikan,
+            'ms_focus_area' => $request->areaFokusBisnis,
+            'ms_funding_sources' => $request->sumberPendanaan,
+            'mpd_id'=> $mpdId,
+            'ms_status'=>"1",
+        ]);
+        
+        // dd($request);
             // dd($startup->ms_id);
             $msid = $startup->ms_id;
             

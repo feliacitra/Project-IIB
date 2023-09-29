@@ -27,7 +27,7 @@ class CreateStartupTable extends Migration
             $table->string('ms_legal')->nullable();
             $table->string('ms_link_legal')->nullable();
             $table->tinyInteger('mt_riset')->nullable();
-            // $table->string('ms_proposal');
+            $table->string('ms_email');
             $table->string('ms_yearly_income')->nullable();
             $table->string('ms_year_founded')->nullable();
             $table->string('ms_funding_sources')->nullable();

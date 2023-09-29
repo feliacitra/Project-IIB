@@ -19,7 +19,7 @@
         </p>
     </div>
 
-    {{-- @if(isset($periode)) --}}
+    @if(isset($periode))
     <div class="container-fluid mt-4">
         <div class="alert alert-warning text-dark" role="alert">
             <h6><i data-feather="alert-triangle"></i>Info Pendaftaran Startup</h6>
@@ -28,12 +28,14 @@
             <p class="mt-2" style="margin-left: 1.7rem">Ayo segera daftarkan startup anda!</p>
 
             <div class="text-center mt-4">
-                @if($status == 1)
+                {{-- @dd($status) --}}
+                @if($status == 1 && !isset($startup))
                 <a href="{{ route('startup.index') }}"><button class="btn btn-primary px-4">Daftar<i data-feather="send" class="m-0"></i></button></a>
                 @endif
             </div>
         </div>
     </div>
+    @endif
     
 
     @if(isset($startup))
@@ -83,14 +85,14 @@
                             <p class="date">{{ $penilaianDate }}</p>
                             <div class="status success">LOLOS</div>
                         </li>
-                        <li>
-                            Presentasi
+                        <li class="" style="color:orange">
+                            <p style="color: orange">Presentasi</p>
                         </li>
                         @else
-                        <li class="">
+                        <li class="" style="color:orange">
                             <p>Penilaian Desk Evaluation</p>
-                            <p class="date">{{ $penilaianDate }}</p>
-                            <div class="status">Dalam Proses</div>
+                            {{-- <p class="date">{{ $penilaianDate }}</p> --}}
+                            <div class="status" style="background-color: orange; color:white">Dalam Proses</div>
                         </li>
                         <li>
                             Presentasi

@@ -16,4 +16,8 @@ class HistoryStartup extends Model
     public function masterStartup(){
         return $this->belongsTo(MasterStartup::class,'ms_id', 'ms_id');
     }
+
+    public function masterPeriodeProgram(){
+        return $this->hasMany(MasterPeriodeProgram::class, 'mpd_id', 'mpd_id');
+    }
 }
