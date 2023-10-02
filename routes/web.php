@@ -122,32 +122,49 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Master-KomponenPenilaian.kelolaKomponenView');
     })->name('viewComponent');
 
-    Route::get('/master/pendaftar', function() {
+    Route::get('/pendaftar', function() {
         return view('Pendaftaran-DataPendaftar.dataPendaftar');
     })->name('pendaftar');
 
-    Route::get('/master/pendaftar/datastartup', function() {
+    Route::get('/pendaftar/datastartup', function() {
         return view('Pendaftaran-DataPendaftar.dataStartup');
     })->name('dataStartup');
 
-    Route::get('/master/penilaianDE/edit/{id}', [PenilaianDeskController::class, 'edit'])->name('penilaianDE.edit');
-    Route::get('/master/penilaianDE/detail/{id}', [PenilaianDeskController::class, 'show'])->name('penilaianDE.show');
-    Route::post('/master/penilaianDE/update/{id}', [PenilaianDeskController::class, 'update'])->name('penilaianDE.update');
-    Route::resource('/master/penilaianDE', PenilaianDeskController::class)->only(['index'])->names([
-        'index' => 'penilaianDE',
-    ]);
-    
-    // Route::get('/master/penilaianDE', function() {
-    //     return view('Pendaftaran-PenilaianDE.penilaianDE');
-    // })->name('penilaianDE');
+    Route::get('/penilaianDE', function() {
+        return view('Pendaftaran-PenilaianDE.penilaianDE');
+    })->name('penilaianDE');
 
-    // Route::get('/master/penilaianDE/viewnilai', function() {
-    //     return view('Pendaftaran-PenilaianDE.nilaiView');
-    // })->name('viewnilai');
+    Route::get('/penilaianDE/viewnilai', function() {
+        return view('Pendaftaran-PenilaianDE.nilaiView');
+    })->name('viewnilai');
 
-    // Route::get('/master/penilaianDE/editnilai', function() {
-    //     return view('Pendaftaran-PenilaianDE.nilaiEdit');
-    // })->name('editnilai');
+    Route::get('/penilaianDE/editnilai', function() {
+        return view('Pendaftaran-PenilaianDE.nilaiEdit');
+    })->name('editnilai');
+
+    Route::get('/jadwalpresentasi', function() {
+        return view('Pendaftaran-KelolaJadwalPresentasi.listJadwalPresentasi');
+    })->name('jadwalpresentasi');
+
+    Route::get('/lihatjadwalpresentasi', function() {
+        return view('Penilai.lihatJadwalPresentasi');
+    })->name('lihatjadwalpresentasi');
+
+    Route::get('/lihatjadwalpresentasi/lihatnilai', function() {
+        return view('penilai.nilaiView');
+    })->name('lihatnilaipresentasi');
+
+    Route::get('/lihatjadwalpresentasi/editnilai', function() {
+        return view('penilai.nilaiEdit');
+    })->name('editnilaipresentasi');
+
+    Route::get('/berkas', function() {
+        return view('Pendaftaran-UnduhUnggahBerkas.listBerkas');
+    })->name('berkas');
+
+    Route::get('/profilstartup', function() {
+        return view('profilStartup');
+    })->name('profilstartup');
 
     // Route::get('/master/inkubasi', function() {
     //     $master_programinkubasi = DB::table('master_programinkubasi')->get();

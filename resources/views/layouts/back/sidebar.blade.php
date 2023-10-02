@@ -140,9 +140,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('presentation.index') }}" class="nav-link">
-                        <i class="link-icon" data-feather="edit"></i>
+                    <a href="{{ route('jadwalpresentasi') }}" class="nav-link">
+                        <i class="link-icon" data-feather="calendar"></i>
                         <span class="link-title">Kelola Jadwal Presentasi</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('berkas') }}" class="nav-link">
+                        <i class="link-icon" data-feather="file"></i>
+                        <span class="link-title">Unduh dan Unggah Berkas</span>
                     </a>
                 </li>
 
@@ -165,8 +171,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link">
-                    <i class="link-icon" data-feather="box"></i>
+                <a href="{{ route('lihatjadwalpresentasi') }}" class="nav-link">
+                    <i class="link-icon" data-feather="calendar"></i>
                     <span class="link-title">Lihat Jadwal Presentasi</span>
                 </a>
             </li>
@@ -198,8 +204,13 @@
                 </a>
             </li>
             <li class="nav-item">
+<<<<<<< HEAD
             <a href="" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
+=======
+            <a href="{{ route('profilstartup') }}" class="nav-link">
+                    <i class="link-icon" data-feather="folder"></i>
+>>>>>>> upstream/profilStartup
                     <span class="link-title">Profil Startup</span>
                 </a>
             </li>
