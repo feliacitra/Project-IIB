@@ -1,6 +1,6 @@
 @extends('layouts.back.app')
 @section('content')
-    @if(Auth::user()->id == 2)
+    @if(Auth::user()->role == 2)
     <style>
         .table thead th {
             color: black;

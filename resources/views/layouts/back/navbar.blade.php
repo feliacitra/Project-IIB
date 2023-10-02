@@ -30,7 +30,7 @@
                             </div>
                             <div class="flex-grow-1 me-2">
                                 <p>{{ $notification->data['message'] }}</p>
-                                <p class="tx-12 text-muted">30 min ago</p>
+                                {{-- <p class="tx-12 text-muted">30 min ago</p> --}}
                             </div>
                         </a>
                         @endforeach
