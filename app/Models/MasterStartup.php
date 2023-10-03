@@ -46,8 +46,8 @@ class MasterStartup extends Model
         return $this->hasMany(MasterMember::class, 'ms_id');
     }
 
-    public function startupComponentStatus() : HasOne {
-        return $this->hasOne(StartupComponentStatus::class,'ms_id');
+    public function startupComponentStatus() : HasMany {
+        return $this->hasMany(StartupComponentStatus::class,'ms_id');
     }
 
     public function historyStartup(){

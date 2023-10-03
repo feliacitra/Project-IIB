@@ -35,6 +35,14 @@
             </div>
         </div>
     </div>
+    @elseif(!isset($startup))
+    <div class="container-fluid mt-4">
+        <div class="alert alert-warning text-dark" role="alert">
+            <h6><i data-feather="alert-triangle"></i>Info Pendaftaran Startup</h6>
+            {{-- @dd($periode) --}}
+            <p class="mt-2" style="margin-left: 1.7rem">Pendaftaran telah ditutup untuk periode ini<span style="font-weight: 600"></span>.</p>
+        </div>
+    </div>
     @endif
     
 

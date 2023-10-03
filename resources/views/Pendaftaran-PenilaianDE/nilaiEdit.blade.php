@@ -47,6 +47,9 @@
                     <li class="nav-item">
                       <a class="nav-link" data-bs-toggle="tab" href="#nav-selfAssessment">Self Assessment</a>
                     </li>
+                    <li class="nav-item">
+                      <a class="nav-link" data-bs-toggle="tab" href="#nav-deskEvaluation">Desk Evaluation</a>
+                    </li>
                   </ul>
             </div>
         </nav>
@@ -88,7 +91,7 @@
                             <input type="text" class="form-control" id="namaStartup" placeholder="Nama Startup" value="{{ $component->ms_name }}" disabled>
 
                             <label for="deskripsi">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" cols="30" rows="3" placeholder="Deskripsi" disabled>{{ $component->startupComponentStatus->scs_notes }}</textarea>
+                            <textarea class="form-control" id="deskripsi" cols="30" rows="3" placeholder="Deskripsi" disabled>{{ $component->ms_description }}</textarea>
                             
                             <label for="tahunDidirikan">Tahun Didirikan</label>
                             <input type="text" class="form-control" id="tahunDidirikan" placeholder="YYYY" value="{{ $component->ms_year_founded }}" disabled>
@@ -216,50 +219,36 @@
                                 <p class="info-label">Periode</p>
                                 <p class="info-value">: {{ $component->masterPeriodeProgram->masterPeriode->mpe_name }}</p>
                             </div>
-                            {{-- <div class="info-pair mt-2">
-                                <p class="info-label">Nama Startup</p>
-                                <p class="info-value">: {{ $component->ms_name }}</p>
-                            </div> --}}
                         </div>
                         <div class="col"></div>
-                        {{-- <div class="col">
-                            <div class="info-pair">
-                                <p class="info-label">Program Inkubasi</p>
-                                <p class="info-value">: {{ $component->masterPeriodeProgram->masterProgramInkubasi->mpi_name }}</p>
-                            </div>
-                            <div class="info-pair mt-2">
-                                <p class="info-label">Kategori</p>
-                                <p class="info-value">: {{ $component->masterCategory->mc_name }}</p>
-                            </div>
-                        </div> --}}
                     </div>
             
                     <div class="form-group">
                             @csrf
-                            <h5 class="text-center mt-4">Penilaian Desk Evaluation</h5>
+                            <h5 class="text-center mt-4">Self Assessment</h5>
                             <div class="card">
                                 @foreach($mc->question as $questIdx => $q)
                                 <div class="card-body">
                                     <p>{{ $q->mq_question }}</p>
                                     <div class="radio mt-2">
                                         @foreach($q->questionRange as $index => $qr)
-                                        <input type="radio" id="{{ $qr->mqr_id }}" name="answer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}" {{ ($qr->mqr_id == $component->startupComponentStatus->registationAnswer[$questIdx]->mqr_id) ? "checked" : "" }} disabled>
+                                        <input type="radio" id="{{ $qr->mqr_id }}" name="answer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}" {{ ($qr->mqr_id == $component->startupComponentStatus[0]->registationAnswer[$questIdx]->mqr_id) ? "checked" : "" }} disabled>
                                         <label for="{{ $qr->mqr_id }}">{{ $qr->mqr_description }}</label>
                                         @endforeach
                                     </div>
                                 </div>
                                 @endforeach
                             </div>
-                            <h5 class="text-center mt-4">NILAI AKHIR: {{$component->startupComponentStatus->scs_totalscore}}</h5>
+                            <h5 class="text-center mt-4">NILAI AKHIR: {{$component->startupComponentStatus[0]->scs_totalscore}}</h5>
                             
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
                                         <label for="catatanTambahan" class="col col-md-2">Catatan Tambahan</label>
-                                        <textarea class="form-control col" name="catatan" id="catatanTambahan" cols="10" rows="4" disabled>{{ $component->startupComponentStatus->scs_notes }}</textarea>
+                                        <textarea class="form-control col" name="catatan" id="catatanTambahan" cols="10" rows="4" disabled>{{ $component->startupComponentStatus[0]->scs_notes }}</textarea>
                                     </div>
             
-                                    <div class="radio mt-4">
+                                    {{-- <div class="radio mt-4">
                                         @if($component->registationStatus->srt_status == "Lulus")
                                         <input type="radio" id="lulus" name="kelulusan" value="Lulus" checked>
                                         <label for="lulus">Lulus</label>
@@ -271,24 +260,95 @@
                                         <input type="radio" id="tidakLulus" name="kelulusan" value="Tidak Lulus" checked>
                                         <label for="tidakLulus">Tidak Lulus</label>
                                         @endif
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
-                            <div class="text-center inner-bottom-button">
+                            {{-- <div class="text-center inner-bottom-button">
                                 <button type="submit" class="btn btn-primary px-4" style="margin-right: 1rem;">
                                     Simpan
                                 </button>
                                 <a href="{{route ('penilaianDE')}}" class="btn btn-secondary px-4">Kembali</a>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
                 {{-- Self Assessment --}}
+
+                {{-- Desk Evaluation --}}
+                <div class="tab-pane fade" id="nav-deskEvaluation" role="tabpanel" aria-lab elledby="nav-assessment-tab">
+                    <div class="container-fluid py-4 px-4" style="height: 100%">
+                        <div class="row">
+                            <div class="col">
+                                <div class="info-pair">
+                                    <p class="info-label">Periode</p>
+                                    <p class="info-value">: {{ $component->masterPeriodeProgram->masterPeriode->mpe_name }}</p>
+                                </div>
+                            </div>
+                            <div class="col"></div>
+                        </div>
+                
+                        {{-- @dd($component) --}}
+                        <div class="form-group">
+                                @csrf
+                                <h5 class="text-center mt-4">Desk Evaluation</h5>
+                                <div class="card">
+                                    @foreach($componentDesk->question as $questIdx => $q)
+                                    <div class="card-body">
+                                        <p>{{ $q->mq_question }}</p>
+                                        <div class="radio mt-2">
+                                            @foreach($q->questionRange as $index => $qr)
+                                            @if(isset($mqDesk))
+                                            <input type="radio" id="{{ $qr->mqr_id }}" name="deskAnswer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}" {{ ($qr->mqr_id == $mqDesk->registationAnswer[$questIdx]->mqr_id) ? "checked" : "" }}>
+                                            @else
+                                            <input type="radio" id="{{ $qr->mqr_id }}" name="deskAnswer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}">
+                                            @endif
+                                            <label for="{{ $qr->mqr_id }}">{{ $qr->mqr_description }}</label>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                                {{-- <h5 class="text-center mt-4">NILAI AKHIR: {{$component->startupComponentStatus->scs_totalscore}}</h5> --}}
+                                
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <label for="catatanTambahan" class="col col-md-2">Catatan Tambahan</label>
+                                            @if(isset($mqDesk))
+                                            <textarea class="form-control col" name="catatan" id="catatanTambahan" cols="10" rows="4">{{ $mqDesk->scs_notes }}</textarea>
+                                            @else
+                                            <textarea class="form-control col" name="catatan" id="catatanTambahan" cols="10" rows="4"></textarea>
+                                            @endif
+                                        </div>
+                
+                                        <div class="radio mt-4">
+                                            @if($component->registationStatus->srt_status == "Lulus")
+                                            <input type="radio" id="lulus" name="kelulusan" value="Lulus" checked>
+                                            <label for="lulus">Lulus</label>
+                                            <input type="radio" id="tidakLulus" name="kelulusan" value="Tidak Lulus">
+                                            <label for="tidakLulus">Tidak Lulus</label>
+                                            @else
+                                            <input type="radio" id="lulus" name="kelulusan" value="Lulus">
+                                            <label for="lulus">Lulus</label>
+                                            <input type="radio" id="tidakLulus" name="kelulusan" value="Tidak Lulus" checked>
+                                            <label for="tidakLulus">Tidak Lulus</label>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center inner-bottom-button">
+                                    <button type="submit" class="btn btn-primary px-4" style="margin-right: 1rem;">
+                                        Simpan
+                                    </button>
+                                    <a href="{{route ('penilaianDE')}}" class="btn btn-secondary px-4">Kembali</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{-- Desk Evaluation --}}
             </div>
         </form>
     </div>
-
-    {{-- Data Pendaftar --}}
 
    
 

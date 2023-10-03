@@ -26,24 +26,25 @@
 
     {{-- @dd($kategori[0]->mc_name) --}}
     <div class="row mt-4">
-        <div class="col-4 col-md-3 col-lg-2">
-            <select name="pilihPeriode" id="periode" class="form-control form-select">
-                <option value="select" class="text-muted">Periode</option>
-                @foreach($periode as $item)
-                <option value="th2022">{{ $item->mpe_name }} </option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="col-4 col-md-3 col-lg-2">
-            <select name="pilihStatus" id="periode" class="form-control form-select">
-                <option value="select" class="text-muted">Status</option>
-                {{-- @foreach($startup->periodeProgram as $item) --}}
-                <option value="th2022">AKTIF</option>
-                <option value="th2022">TIDAK AKTIF</option>
-                {{-- @endforeach --}}
-            </select>
-        </div>
+            <div class="col-4 col-md-3 col-lg-2">
+                <select name="periode" id="periode" class="form-control form-select">
+                    <option value="" class="text-muted">Periode</option>
+                    @foreach($periode as $item)
+                    <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }} </option>
+                    @endforeach
+                </select>
+            </div>
+            
+            <div class="col-4 col-md-3 col-lg-2">
+                <select name="status" id="status" class="form-control form-select">
+                    <option value="" class="text-muted">Status</option>
+                    {{-- @foreach($startup->periodeProgram as $item) --}}
+                    <option value="1">AKTIF</option>
+                    <option value="2">TIDAK AKTIF</option>
+                    {{-- @endforeach --}}
+                </select>
+            </div>
+          
 
         <div class="col d-flex justify-content-end">
             <div class="pb-2">
@@ -93,8 +94,12 @@
                     <td>{{ $item->ms_name }}</td>
                     <td>{{ $item->masterPeriodeProgram->masterProgramInkubasi->mpi_name }}</td>
                     <td>{{ $item->masterCategory->mc_name }}</td>
-                    <td class="text-center">{{ $item->startupComponentStatus->scs_totalscore}}</td>
+                    <td class="text-center">{{ $item->startupComponentStatus[0]->scs_totalscore}}</td>
+                    @if(count($item->startupComponentStatus)==1)
                     <td class="text-center">-</td>
+                    @else
+                    <td class="text-center">{{ $item->startupComponentStatus[1]->scs_totalscore}}</td>
+                    @endif
                     @if($item->ms_status == 1)
                     <td class="text-center">AKTIF</td>
                     @else
@@ -112,4 +117,30 @@
         </table>
     </div>
     <!-- Users Table -->
+    <script>
+
+    //    function statusFilter(id){
+    //     $(id).on('change', function(e){
+    //         var variable = e.target.value;
+    //         console.log(e);
+    //     })
+    //    }
+       $("#status").change(function (e){
+            e.preventDefault();
+            var variable = e.target.value;
+            console.log(variable);
+            
+            document.getElementById('filter').click();
+        })
+       $("#periode").change(function (e){
+            e.preventDefault();
+            var variable = e.target.value;
+            console.log(variable);
+            
+            document.getElementById('filter').click();
+        })
+
+    </script>
+    
 @endsection
+

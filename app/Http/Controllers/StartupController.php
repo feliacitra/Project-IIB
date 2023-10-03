@@ -34,7 +34,7 @@ class StartupController extends Controller
         $history = null;
         // $questions = MasterQuestion::all();
         // $questionRange=MasterQuestionRange::all();
-        $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi','question', 'question.questionRange')->get();
+        $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi','question', 'question.questionRange')->where('mct_step',1)->get();
         return view('Startup.daftarStartup', compact(
             'incubations',
             'categories',
@@ -115,7 +115,7 @@ class StartupController extends Controller
         }
         $finalScore = (int)$score / (int)count($request->answers);
         
-        StartupComponentStatus::create([
+        $scs = StartupComponentStatus::create([
             'scs_notes' => $request->catatan,
             'ms_id' => $msid,
             'scs_totalscore' => $finalScore,
@@ -130,7 +130,7 @@ class StartupController extends Controller
                 'mqr_id' => (int)$request->answers[$i],
                 'user_id' => (int)$request->userid,
                 'ra_score' => MasterQuestionRange::where('mqr_id', $request->answers[$i])->first()->mqr_poin,
-                'scs_id' => StartupComponentStatus::where('ms_id', $msid)->first()->scs_id,
+                'scs_id' => $scs->scs_id,
             ]);
         }
         

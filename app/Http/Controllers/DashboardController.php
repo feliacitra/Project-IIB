@@ -30,8 +30,11 @@ class DashboardController extends Controller
                 $periode='';
                 $history = null;
 
-                $periode = DB::table('master_periode')->where('mpe_status', '=', '1')->first();
+                $dt = Carbon::now();
+                $periode = DB::table('master_periode')->where('mpe_status', '=', '1')
+                ->whereRaw('"'.$dt.'" between `mpe_startdate` and `mpe_enddate`')->first();
                 // dd($periode);
+                
                 $status=0;
                 if($periode != null){
                     $status = Carbon::now()->between($periode->mpe_startdate, $periode->mpe_enddate);

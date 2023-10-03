@@ -197,7 +197,7 @@
                                             @foreach($universities as $university)
                                             <option value="{{ $university->mu_id }}">{{ $university->mu_name }}</option>
                                             @endforeach
-                                            {{-- <option value="lainnya" class="text-muted">Lainnya</option> --}}
+                                            <option value="lainnya" class="text-muted">Lainnya</option>
                                         </select>
 
                                         <!-- {{-- <label for="inputUniversitas">Masukan Universitas</label>
@@ -209,7 +209,7 @@
                                             @foreach($faculties as $faculty)
                                                 {{-- <option value="{{ $faculty->mf_id }}">{{ $faculty->mf_name }}</option> --}}
                                             @endforeach
-                                            {{-- <option value="lainnya" class="text">Lainnya</option> --}}
+                                            <option value="lainnya" class="text">Lainnya</option>
                                         </select>
 
                                         <label for="prodi">Program Studi</label>
@@ -218,7 +218,7 @@
                                             @foreach($studyPrograms as $studyProgram)
                                                 {{-- <option value="{{ $studyProgram->mps_id }}">{{ $studyProgram->mps_name }}</option> --}}
                                             @endforeach
-                                            {{-- <option value="lainnya" class="text">Lainnya</option> --}}
+                                            <option value="lainnya" class="text">Lainnya</option>
                                         </select>
 
                                         <label for="nimnip">NIM/NIP</label>

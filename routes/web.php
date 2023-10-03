@@ -131,6 +131,7 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/master/penilaianDE/detail/{id}', [PenilaianDeskController::class, 'show'])->name('penilaianDE.show');
     Route::post('/master/penilaianDE/update/{id}', [PenilaianDeskController::class, 'update'])->name('penilaianDE.update');
     Route::get('/master/penilaianDE/{file}', [PenilaianDeskController::class, 'download'])->name('download');
+    Route::post('/master/penilaianDE/filter', [PenilaianDeskController::class, 'filterStatus'])->name('penilaianStatus');
     Route::resource('/master/penilaianDE', PenilaianDeskController::class)->only(['index'])->names([
         'index' => 'penilaianDE',
     ]);
