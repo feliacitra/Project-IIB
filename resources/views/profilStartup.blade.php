@@ -168,7 +168,7 @@
                                     <th scope="col">No HP</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Media Sosial</th>
-                                    <th scope="col" style="width: 11%">Aksi</th>
+                                    <th scope="col" style="width: 8%">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -179,10 +179,8 @@
                                     <td>080808080808</td>
                                     <td>Mark@gmail.com</td>
                                     <td>@markmark</td>
-                                    <td class="action-icons">
-                                        <a href="#" data-name="" data-description=""><i data-feather="eye"></i></a>
-                                        <a href="#" data-id="" data-name="" data-description="" ><i data-feather="edit-2"></i></a>
-                                        <a href="#" data-id=""><i data-feather="trash-2"></i></a>
+                                    <td>
+                                        <button id="plus-button" class="btn btn-primary py-1 px-1"><i data-feather="minus"></i></button>
                                     </td>
                                 </tr>
                                 <tr class="text-center">
@@ -192,10 +190,8 @@
                                     <td>080808080808</td>
                                     <td>Jacob@gmail.com</td>
                                     <td>@jacob12</td>
-                                    <td class="action-icons">
-                                        <a href="#" data-name="" data-description=""><i data-feather="eye"></i></a>
-                                        <a href="#" data-id="" data-name="" data-description="" ><i data-feather="edit-2"></i></a>
-                                        <a href="#" data-id=""><i data-feather="trash-2"></i></a>
+                                    <td>
+                                        <button id="plus-button" class="btn btn-primary py-1 px-1"><i data-feather="minus"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
