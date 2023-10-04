@@ -128,6 +128,14 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Pendaftaran-DataPendaftar.dataStartup');
     })->name('dataStartup');
 
+    Route::get('/datastartup', function() {
+        return view('Pendaftaran-DataStartup.listStartup');
+    })->name('datastartup');
+
+    Route::get('/datastartup/edit', function() {
+        return view('Pendaftaran-DataStartup.editDataStartup');
+    })->name('editdatastartup');
+
     Route::get('/penilaianDE', function() {
         return view('Pendaftaran-PenilaianDE.penilaianDE');
     })->name('penilaianDE');
