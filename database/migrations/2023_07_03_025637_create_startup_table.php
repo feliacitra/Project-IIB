@@ -18,9 +18,8 @@ class CreateStartupTable extends Migration
             $table->date('ms_startdate');
             $table->date('ms_enddate')->nullable();
             $table->string('ms_pks')->nullable();
-            $table->string('ms_link_pks')->nullable();
             $table->unsignedBigInteger('ms_phone');
-            $table->string('ms_name')->nullable()->unique();
+            $table->string('ms_name')->nullable();
             $table->text('ms_address')->nullable();
             $table->string('ms_website')->nullable();
             $table->string('ms_logo')->nullable();
@@ -35,12 +34,15 @@ class CreateStartupTable extends Migration
             $table->string('ms_focus_area')->nullable();
             // $table->unsignedBigInteger('mm_id');
             $table->string('ms_npwp')->nullable();
+            $table->string('ms_pitchdeck')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('mpd_id');
+            // $table->unsignedBigInteger('mpd_id');
             $table->tinyInteger('ms_status');
             $table->timestamps();
 
-            // $table->foreign('mm_id')->references('mm_id')->on('master_members');
+            $table->foreignId('mc_id')->nullable()->constrained('master_categories', 'mc_id')->nullable();
+            $table->foreignId('mpd_id')->nullable()->constrained('master_periodeprogram', 'mpd_id')->nullable();
+            // $table->foreignId('mpd_id')->references('mpd_id')->on('master_periodeprogram');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
