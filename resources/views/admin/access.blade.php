@@ -75,11 +75,11 @@
                     <a class="btn btn-primary" id="role-reset" href="{{ route('access.reset') }}/{{ session()->has('role') ? session('role') : '2' }}">Reset Role Akses</a>
                 </div>
             </div>
-            <div class="col-md-2 p-4">
+            {{-- <div class="col-md-2 p-4">
                 <div class="mb-3">
                     <a class="btn btn-primary" href="{{ route('access.reset') }}">Reset Semua Akses</a>
                 </div>
-            </div>
+            </div> --}}
             <!-- Kolom syarat -->
         </div>
         <div class="row">
