@@ -49,8 +49,7 @@
         </div>
         <div class="pb-2">
             <a href="{{ route('master.kategori.startup') }}" class="button btn-primary">
-                <button class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
-                    <i data-feather="plus" style="margin-right: 0.3rem;"></i>
+                <button class="btn btn-primary py-1 px-2" style="display: flex; align-items: center; height: 96%">
                     RESET PENCARIAN
                 </button>
             </a>

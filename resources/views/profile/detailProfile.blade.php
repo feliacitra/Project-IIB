@@ -26,7 +26,7 @@
 
     <div class="pb-4">
         <p style="display: flex; align-items: flex-end;">
-            <a href=""><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
+            <a href="{{ route('dashboard') }}"><i data-feather="home" style="margin-right: 8px; margin-left: 12px;"></i></a>
             <a href="" style="color: black;">Profile</a>
         </p>
     </div>
@@ -78,23 +78,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="position">Posisi</label>
-                                <select class="form-control @error('position') is-invalid @enderror" id="position" name="position" readonly disabled>
-                                    <option value="" disabled selected>Pilih posisi</option>
-                                    <option value="1" {{ $user->role == 1 ? 'selected' : '' }}>Admin</option>
-                                    <option value="2" {{ $user->role == 2 ? 'selected' : '' }}>Peserta</option>
-                                    <option value="3" {{ $user->role == 3 ? 'selected' : '' }}>Penilai</option>
-                                    <option value="4" {{ $user->role == 4 ? 'selected' : '' }}>Pemateri</option>
-                                    <option value="5" {{ $user->role == 5 ? 'selected' : '' }}>Mentor</option>
-                                    <option value="6" {{ $user->role == 6 ? 'selected' : '' }}>Dosen</option>
-                                    <option value="7" {{ $user->role == 7 ? 'selected' : '' }}>Management</option>
-                                </select>
-                                @error('position')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
                                 <label for="gender">Jenis Kelamin</label>
                                 <select class="form-control" id="gender" name="gender" readonly disabled>
                                     <option value="" disabled selected>-</option>
@@ -110,7 +93,7 @@
                             
                             <div class="form-group">
                                 <label for="birthdate">Tanggal Lahir</label>
-                                <input type="date" id="birthdate" name="birthdate" placeholder="Tanggal Lahir" class="form-control @error('birthdate') is-invalid @enderror" value="{{ $user->user_detail?->ud_birthday ?? '-' }}" readonly disabled>
+                                <input type="date" id="birthdate" readonly disabled name="birthdate" placeholder="Tanggal Lahir" class="form-control @error('birthdate') is-invalid @enderror" value="{{ old('birthdate', optional($user->user_detail)->ud_birthday ? date('Y-m-d', strtotime($user->user_detail->ud_birthday)) : null) }}">
                                 @error('birthdate')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

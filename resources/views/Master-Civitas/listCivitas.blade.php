@@ -19,6 +19,7 @@
     </div>
 
     <!-- Button Tambah -->
+    @if (isFeatureInclude('civitas-tambah', session('features')))
     <div class="pb-2" style="display: flex; justify-content: flex-end;">
         <a href="#addCivitas" class="button btn-primary">
             <button id="openAddCivitas" class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
@@ -27,6 +28,7 @@
             </button>
         </a>
     </div>
+    @endif
     <!-- Button Tambah -->
 
     <!-- Search Bar -->
@@ -93,11 +95,17 @@
                     <td>{{ $civ->mci_description }}</td>
                     <td class="text-center">
                         <!-- VIEW -->
+                        @if (isFeatureInclude('civitas-lihat', session('features')))
                         <a href="#viewCivitas" data-name="{{ $civ->mci_name }}" data-description="{{ $civ->mci_description }}"><i data-feather="eye"></i></a>
+                        @endif
                         <!-- EDIT -->
+                        @if (isFeatureInclude('civitas-ubah', session('features')))
                         <a href="#editCivitas" data-id="{{ $civ->mci_id }}" data-name="{{ $civ->mci_name }}" data-description="{{ $civ->mci_description }}"><i data-feather="edit-2"></i></a>
+                        @endif
                         <!-- DELETE -->
+                        @if (isFeatureInclude('civitas-hapus', session('features')))
                         <a href="#deleteCivitas" data-id="{{ $civ->mci_id }}"><i data-feather="trash-2"></i></a>
+                        @endif
                     </td>
                 </tr>
 

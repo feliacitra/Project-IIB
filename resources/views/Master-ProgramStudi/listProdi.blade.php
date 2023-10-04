@@ -19,6 +19,7 @@
     </div>
 
     <!-- Button Tambah -->
+    @if (isFeatureInclude('program-studi-tambah', session('features')))
     <div class="pb-2" style="display: flex; justify-content: flex-end;">
         <a href="#addStudyProgram" class="button btn-primary">
             <button id="openAddFaculty" class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
@@ -27,6 +28,7 @@
             </button>
         </a>
     </div>
+    @endif
     <!-- Button Tambah -->
 
     <!-- Search Bar -->
@@ -34,9 +36,9 @@
         <div class="pb-2">
             <div class="input-group rounded">
                 <!-- Input Form -->
-                <form action="" class="position-relative">
-                    
-                    <input type="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
+                <form action="/master/prodi" class="position-relative">
+                    @csrf
+                    <input type="search" name="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
                     
                     <span class="position-absolute" style="top: 50%; left: 0.5rem; transform: translateY(-50%);">
                         <i data-feather="search"></i>
@@ -47,6 +49,20 @@
         </div>
     </div>
     <!-- Search Bar -->
+
+    <!-- Flash Message -->
+    @if (Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get('success') }}
+            <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @elseif ($errors->any())
+    <div class="alert alert-danger">
+        {{ $errors->first() }}
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+    <!-- Flash Message -->
 
     <!-- Users Table -->
     <div class="table-responsive-md">
@@ -66,21 +82,43 @@
 
             <!-- Table Body -->
             <tbody>
+                @foreach ($programStudi as $prodi)
                 <tr>
-                    <th scope="row" class="text-center">1</th>
-                    <td>Telkom University</td>
-                    <td>Fakultas Informatika</td>
-                    <td>S1 Informatika</td>
-                    <td>Fakultas Informatika Telkom University lorem ipsum</td>
+                    <th scope="row" class="text-center">{{ $loop->iteration }}</th>
+                    <td>{{ $prodi->faculty->university->mu_name }}</td>
+                    <td>{{ $prodi->faculty->mf_name }}</td>
+                    <td>{{ $prodi->mps_name }}</td>
+                    <td>{{ $prodi->mps_description }}</td>
                     <td class="text-center">
                         <!-- VIEW -->
-                        <a href="#viewStudyProgram"><i data-feather="eye"></i></a>
+                        @if (isFeatureInclude('program-studi-lihat', session('features')))
+                        <a href="#viewStudyProgram"
+                            data-university="{{ $prodi->faculty->university->mu_name }}"
+                            data-faculty="{{ $prodi->faculty->mf_name }}"
+                            data-name="{{ $prodi->mps_name }}"
+                            data-description="{{ $prodi->mps_description }}"
+                        ><i data-feather="eye"></i></a>
+                        @endif
                         <!-- EDIT -->
-                        <a href="#editStudyProgram"><i data-feather="edit-2"></i></a>
+                        @if (isFeatureInclude('program-studi-ubah', session('features')))
+                        <a href="#editStudyProgram"
+                            data-id="{{ $prodi->mps_id }}"
+                            data-university="{{ $prodi->faculty->university->mu_name }}"
+                            data-univid="{{ $prodi->faculty->university->mu_id }}"
+                            data-faculty="{{ $prodi->faculty->mf_name }}"
+                            data-name="{{ $prodi->mps_name }}"
+                            data-description="{{ $prodi->mps_description }}"
+                        ><i data-feather="edit-2"></i></a>
+                        @endif
                         <!-- DELETE -->
-                        <a href="#deleteStudyProgram"><i data-feather="trash-2"></i></a>
+                        @if (isFeatureInclude('program-studi-hapus', session('features')))
+                        <a href="#deleteStudyProgram"
+                            data-id="{{ $prodi->mps_id }}"
+                        ><i data-feather="trash-2"></i></a>
+                        @endif
                     </td>
                 </tr>
+                @endforeach
             </tbody>
             <!-- Table Body -->
         </table>
@@ -104,33 +142,35 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
-                        <form>
+                        <form action="/master/prodi" method="POST">
+                            @csrf
                             <!-- Select Nama Universitas -->
-                            <select class="form-control form-select" name="selectUniversity" id="university" style="margin-top: 1rem">
+                            <select class="form-control form-select" name="addUniversity" id="addUniversity" style="margin-top: 1rem">
                                 <option value="select" class="text-muted">Nama Universitas</option>
-                                <option value="telkomUniversity">Telkom University</option>
+                                @foreach ($universities as $univ)
+                                    <option value="{{ $univ->mu_id }}">{{ $univ->mu_name }}</option>
+                                @endforeach
                             </select>
                             <!-- Select Nama Universitas -->
 
                             <!-- Select Nama Fakultas -->
-                            <select class="form-control form-select" name="selectFaculty" id="university" style="margin-top: 1rem">
+                            <select class="form-control form-select" name="addFaculty" id="addFaculty" style="margin-top: 1rem">
                                 <option value="select" class="text-muted">Nama Fakultas</option>
-                                <option value="informatika">S1 Informatika</option>
                             </select>
                             <!-- Select Nama Fakultas -->
 
                             <!-- Input Nama Prodi -->
-                            <input type="text" class="form-control rounded" id="namaProdi" placeholder="Nama Program Studi" style="margin-top: 1rem">
+                            <input type="text" class="form-control rounded" name="addNamaProdi" id="addNamaProdi" placeholder="Nama Program Studi" style="margin-top: 1rem">
                             <!-- Input Nama Prodi -->
 
                             <!-- Input Keterangan Prodi -->
-                            <textarea class="form-control rounded" id="keteranganProdi" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem"></textarea>
+                            <textarea class="form-control rounded" name="addKeteranganProdi" id="addKeteranganProdi" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem"></textarea>
                             <!-- Input Keterangan Prodi -->
 
                             <div class="row mt-4">
                                 <!--Button Simpan -->
                                 <div class="col">
-                                    <button id="simpanTambah" class="btn btn-primary">
+                                    <button type="submit" id="simpanTambah" class="btn btn-primary">
                                         Simpan
                                     </button>
                                 </div>
@@ -167,32 +207,19 @@
                 <div class="container-fluid p-0">
                     <div>
                         <!-- Nama Universitas -->
-                        <select class="form-control form-select" name="selectUniversity" id="university" style="margin-top: 1rem" disabled>
-                            <option value="select" class="text-muted">Nama Universitas</option>
-                            <option value="telkomUniversity">Telkom University</option>
-                        </select>
+                        <input type="text" class="form-control rounded" name="viewUniversitas" id="viewUniversitas" placeholder="Nama Universitas" style="margin-top: 1rem" readonly>
                         <!-- Nama Universitas -->
 
                         <!-- Select Nama Fakultas -->
-                        <select class="form-control form-select" name="selectFaculty" id="university" style="margin-top: 1rem" disabled>
-                            <option value="select" class="text-muted">Nama Fakultas</option>
-                            <option value="informatika">S1 Informatika</option>
-                        </select>
+                        <input type="text" class="form-control rounded" name="viewFakultas" id="viewFakultas" placeholder="Nama Fakultas" style="margin-top: 1rem" readonly>
                         <!-- Select Nama Fakultas -->
                         
                         <!-- View Nama Prodi -->
-                        <input 
-                        type="text" 
-                        class="form-control rounded" 
-                        id="namaProdi" 
-                        placeholder="Nama Program Studi" 
-                        style="margin-top: 1rem"
-                        value="Current Study Program"
-                        readonly>
+                        <input type="text" class="form-control rounded" name="viewNamaProdi" id="viewNamaProdi" placeholder="Nama Program Studi" style="margin-top: 1rem" readonly>
                         <!-- View Nama Prodi -->
 
                         <!-- View Keterangan Prodi -->
-                        <textarea class="form-control rounded" id="keteranganProdi" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;" readonly>Current study program.</textarea>
+                        <textarea class="form-control rounded" name="viewKeteranganProdi" id="viewKeteranganProdi" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;" readonly></textarea>
                         <!-- View Keterangan Prodi -->
 
                         <!--Button Kembali -->
@@ -223,39 +250,36 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
-                        <form>
+                        <form action="/master/prodi" method="POST" id="editForm">
+                            @csrf
+                            @method('PUT')
                             <!-- Select Nama Universitas -->
-                            <select class="form-control form-select" name="selectUniversity" id="university" style="margin-top: 1rem">
-                                <option value="select" class="text-muted">Nama Universitas</option>
-                                <option value="telkomUniversity">Telkom University</option>
+                            <select class="form-control form-select" name="editUniversitas" id="editUniversitas" style="margin-top: 1rem">
+                                <option value="" class="text-muted">Nama Universitas</option>
+                                @foreach ($universities as $univ)
+                                    <option value="{{ $univ->mu_id }}">{{ $univ->mu_name }}</option>
+                                @endforeach
                             </select>
                             <!-- Select Nama Universitas -->
 
                             <!-- Select Nama Fakultas -->
-                            <select class="form-control form-select" name="selectFaculty" id="university" style="margin-top: 1rem">
-                                <option value="select" class="text-muted">Nama Fakultas</option>
-                                <option value="informatika">S1 Informatika</option>
+                            <select class="form-control form-select" name="editFakultas" id="editFakultas" style="margin-top: 1rem">
+                                <option value="" class="text-muted">Nama Fakultas</option>
                             </select>
                             <!-- Select Nama Fakultas -->
 
                             <!-- Edit Nama Prodi -->
-                            <input 
-                                type="text" 
-                                class="form-control rounded" 
-                                id="namaProdi" 
-                                placeholder="Nama Program Studi" 
-                                style="margin-top: 1rem"
-                                value="Current Study Program">
+                            <input type="text" class="form-control rounded" name="editNamaProdi" id="editNamaProdi" placeholder="Nama Program Studi" style="margin-top: 1rem" value="Current Study Program">
                             <!-- Edit Nama Prodi -->
 
                             <!-- Edit Keterangan Prodi -->
-                            <textarea class="form-control rounded" id="keteranganProdi" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;">Current faculty information.</textarea>
+                            <textarea class="form-control rounded" name="editKeteranganProdi" id="editKeteranganProdi" cols="20" rows="10" placeholder="Keterangan" style="margin-top: 1rem;">Current faculty information.</textarea>
                             <!-- Edit Keterangan Prodi -->
 
                             <div class="row mt-4">
                                 <!--Button Perbarui -->
                                 <div class="col">
-                                    <button id="saveEdit" class="btn btn-primary">
+                                    <button type="submit" id="saveEdit" class="btn btn-primary">
                                         Perbarui
                                     </button>
                                 </div>
@@ -278,6 +302,9 @@
     <!-- DELETE -->
     <div class="overlay" id="deleteStudyProgram">
         <div class="wrapper" style="width: 25%">
+            <form action="/master/prodi" method="POST" id="deleteForm">
+            @csrf
+            @method('DELETE')
             <div class="content">
                 <p class="text-center">
                     Hapus program studi?
@@ -286,7 +313,7 @@
                 <div class="row mt-4">
                     <!--Button Ya -->
                     <div class="col">
-                        <button id="delete" class="btn btn-primary" style="width: 50%">
+                        <button type="submit" id="delete" class="btn btn-primary" style="width: 50%">
                             Ya
                         </button>
                     </div>
@@ -299,8 +326,126 @@
                     <!--Button Tidak -->
                 </div>
             </div>
+            </form>
         </div>
     </div>
     <!-- DELETE -->
-    <!-- POP-UP TAMBAH, VIEW, EDIT -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#addUniversity').on('change', function() {
+                var universityId = $(this).val();
+                if (universityId) {
+                    $.ajax({
+                        url: '/master/prodi/' + universityId,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#addFaculty').empty();
+                            $('#addFaculty').append('<option value="" class="text-muted">Nama Fakultas</option>');
+                            $.each(data, function(key, value) {
+                                $('#addFaculty').append('<option value="' + value.mf_id + '">' + value.mf_name + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#addFaculty').empty();
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $('#editUniversitas').on('change', function() {
+                var universityId = $(this).val();
+                if (universityId) {
+                    $.ajax({
+                        url: '/master/prodi/' + universityId,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#editFakultas').empty();
+                            $('#editFakultas').append('<option value="" class="text-muted">Nama Fakultas</option>');
+                            $.each(data, function(key, value) {
+                                $('#editFakultas').append('<option value="' + value.mf_id + '">' + value.mf_name + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#editFakultas').empty();
+                }
+            });
+        });
+
+        const viewLinks = document.querySelectorAll('a[href="#viewStudyProgram"]');
+    
+        viewLinks.forEach(link => {
+            link.addEventListener('click', event => {
+                const name = link.dataset.name;
+                const description = link.dataset.description;
+                const university = link.dataset.university;
+                const faculty = link.dataset.faculty;
+                const enddate = link.dataset.enddate;
+                document.getElementById('viewNamaProdi').value = name;
+                document.getElementById('viewKeteranganProdi').value = description;
+                document.getElementById('viewUniversitas').value = university;
+                document.getElementById('viewFakultas').value = faculty;
+            });
+        });
+
+        const editLinks = document.querySelectorAll('a[href="#editStudyProgram"]');
+    
+        editLinks.forEach(link => {
+            link.addEventListener('click', event => {
+                $('#editFakultas').empty();
+                const id = link.dataset.id;
+                const name = link.dataset.name;
+                const description = link.dataset.description;
+                const university = link.dataset.university;
+                const univid = link.dataset.univid;
+                const faculty = link.dataset.faculty;
+                document.getElementById('editNamaProdi').value = name;
+                document.getElementById('editKeteranganProdi').value = description;
+
+                const universitySelect = document.getElementById('editUniversitas');
+                for (let i = 0; i < universitySelect.options.length; i++) {
+                    if (universitySelect.options[i].text === university) {
+                        universitySelect.options[i].selected = true;
+                        break;
+                    }
+                }
+
+                if (univid) {
+                    $.ajax({
+                        url: '/master/prodi/' + univid,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#editFakultas').append('<option value="" class="text-muted">Nama Fakultas</option>');
+                            $.each(data, function(key, value) {
+                                if (value.mf_name == faculty) {
+                                    $('#editFakultas').append('<option value="' + value.mf_id + '" selected>' + value.mf_name + '</option>');
+                                } else {
+                                    $('#editFakultas').append('<option value="' + value.mf_id + '">' + value.mf_name + '</option>');
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    $('#editFakultas').empty();
+                }
+
+                editForm.action = `/master/prodi/${id}`;
+            });
+        });
+
+        const deleteLinks = document.querySelectorAll('a[href="#deleteStudyProgram"]');
+    
+        deleteLinks.forEach(link => {
+            link.addEventListener('click', event => {
+                const id = link.dataset.id;
+                deleteForm.action = `/master/prodi/${id}`;
+            })
+        })
+    </script>
 @endsection

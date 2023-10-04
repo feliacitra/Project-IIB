@@ -12,4 +12,8 @@ class MasterCategory extends Model
     protected $guarded = [
         'mc_id',
     ];
+
+    public function masterStartup(){
+        return $this->hasMany(MasterStartup::class, 'mc_id');
+    }
 }

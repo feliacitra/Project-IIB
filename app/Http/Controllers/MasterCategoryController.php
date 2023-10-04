@@ -121,7 +121,9 @@ class MasterCategoryController extends Controller
             'mc_status' => $validatedData['editStatusKategori'],
         ]);
 
-        return redirect()->route('master.kategori.startup')->with('success', "Kategori $category->mc_name berhasil diperbarui");
+        $name = $request->input('editNamaKategori');
+
+        return redirect()->route('master.kategori.startup')->with('success', "Kategori $name berhasil diperbarui");
     }
 
     /**
