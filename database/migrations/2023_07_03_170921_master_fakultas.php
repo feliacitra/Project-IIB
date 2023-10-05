@@ -18,7 +18,7 @@ class MasterFakultas extends Migration
             $table->id('mf_id');
             $table->string('mf_name');
             $table->string('mf_description')->nullable();
-            $table->foreignId('mu_id')->nullable()->constrained('master_universitas', 'mu_id')->onDelete('restrict')->nullable();
+            $table->foreignId('mu_id')->nullable()->constrained('master_universitas', 'mu_id')->nullable();
             $table->timestamps();
         });
     }

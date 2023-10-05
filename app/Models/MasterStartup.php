@@ -4,9 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
 
 class MasterStartup extends Model
 {
+   
+
     use HasFactory;
     protected $table = 'master_startup';
     protected $primaryKey = 'ms_id';
@@ -18,6 +23,8 @@ class MasterStartup extends Model
         'ms_phone',
         'ms_name',
         'ms_address',
+        'mc_id',
+        'ms_email',
         'ms_website',
         'ms_logo',
         'ms_socialmedia',
@@ -25,7 +32,7 @@ class MasterStartup extends Model
         'ms_link_legal',
         'ms_riset',
         'ms_proposal',
-        'ms_pithdeck',
+        'ms_pitchdeck',
         'ms_yearly_income',
         'ms_year_founded',
         'ms_funding_sources',
@@ -34,11 +41,33 @@ class MasterStartup extends Model
         'ms_npwp',
         'user_id',
         'mpd_id',
-        'ms_status'
+        'ms_status',
     ];
+
+    
 
     public function masterMember()
     {
-        return $this->hasMany(MasterMember::class, 'mm_id');
+        return $this->hasMany(MasterMember::class, 'ms_id');
+    }
+
+    public function startupComponentStatus() : HasMany {
+        return $this->hasMany(StartupComponentStatus::class,'ms_id');
+    }
+
+    public function historyStartup(){
+        return $this->hasMany(HistoryStartup::class,'user_id', 'user_id');
+    }
+
+    public function masterPeriodeProgram(){
+        return $this->belongsTo(MasterPeriodeProgram::class, 'mpd_id', 'mpd_id');
+    }
+
+    public function masterCategory(){
+        return $this->belongsTo(MasterCategory::class, 'mc_id', 'mc_id');
+    }
+
+    public function registationStatus(){
+        return $this->hasOne(RegistationStatus::class, 'ms_id');
     }
 }

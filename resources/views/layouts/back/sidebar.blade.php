@@ -149,68 +149,64 @@
                 </li>
                 {{-- @foreach (get_access() as $feature)
                     <li class="nav-item nav-category">{{ $feature }}</li>
-                @endforeach --}}
-                {{-- <li class="nav-item nav-category">{{ auth()->user()->role }}</li> --}}
-            @elseif ( auth()->user()->role == '3' )
+                    @endforeach --}}
+                    {{-- <li class="nav-item nav-category">{{ auth()->user()->role }}</li> --}}
+                    
+                    {{-- @elseif ( auth()->user()->role == '2' ) --}}
+                    @else
+                    {{-- <li class="nav-item nav-category">Data Master</li> --}}
+                    {{-- @dd($history) --}}
+                    {{-- @dd($history) --}}
             <li class="nav-item">
-                <a href="{{ route('penilai.profil.edit') }}" class="nav-link">
-                    <i class="link-icon" data-feather="user"></i>
-                    <span class="link-title">Profil Penilai</span>
-                </a>
+                {{-- @dd($history); --}}
+                @if(isset($history))
+                <form action="{{ route('dashboard') }}" method="GET">
+                    <select name="history" id="periode" class="form-control form-select">
+                        <option value="" class="text-muted">History</option>
+                        @foreach($history->historyStartup as $item)
+                        @if($item->masterPeriodeProgram[0]->masterPeriode->mpe_id == $periode->mpe_id)
+                        <option value="{{ $item->mpd_id }}" selected>{{ $item->masterPeriodeProgram[0]->masterPeriode->mpe_name }}</option>
+                        @else
+                        <option value="{{ $item->mpd_id }}">{{ $item->masterPeriodeProgram[0]->masterPeriode->mpe_name }}</option>
+                        @endif
+                        @endforeach
+                    </select>
+                    <button type="submit" id="periodeButton" hidden></button>
+                </form>
+                @endif
             </li>
             <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link">
-                    <i class="link-icon" data-feather="box"></i>
-                    <span class="link-title">Lihat Jadwal Presentasi</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link">
-                    <i class="link-icon" data-feather="box"></i>
-                    <span class="link-title">Lihat Jadwal Monev</span>
-                </a>
-            </li>
-            {{-- @elseif ( auth()->user()->role == '2' ) --}}
-            @else
-            {{-- <li class="nav-item nav-category">Data Master</li> --}}
-            <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link">
-                    <i class="link-icon" data-feather="box"></i>
-                    <span class="link-title">History</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link">
+                <a href="{{ route('dashboard', auth()->user()->id) }}" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
                     <span class="link-title">Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-            <a href="{{ route('dashboard') }}" class="nav-link">
+            <a href="" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
                     <span class="link-title">Profil Startup</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link">
+                <a href="" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
                     <span class="link-title">Voting Jadwal Mentoring</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link">
+                <a href="" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
                     <span class="link-title">Jadwal Mentoring</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link">
+                <a href="" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
                     <span class="link-title">Jadwal Bootcamp</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link">
+                <a href="" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
                     <span class="link-title">Sertifikat Monev</span>
                 </a>
@@ -222,6 +218,11 @@
             @endforeach
            
             @endif
+            <script>
+                 $("#periode").change(function (){
+                    document.getElementById('periodeButton').click();
+                 });
+            </script>
         </ul>
     </div>
 </nav>

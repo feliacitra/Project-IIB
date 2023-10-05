@@ -191,4 +191,10 @@ class MasterProgramStudyController extends Controller
         $faculties = MasterFakultas::where('mu_id', $universityId)->get();
         return response()->json($faculties);
     }
+
+    public function getProdi(int $fakultasId){
+        $prodi = MasterProgramStudy::where('mf_id', $fakultasId)->get();
+        // dd($prodi);
+        return response()->json($prodi);
+    }
 }
