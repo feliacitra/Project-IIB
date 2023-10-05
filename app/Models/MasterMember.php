@@ -22,6 +22,7 @@ class MasterMember extends Model
         'mps_id',
         'mci_id',
         'ms_id',
+        'mm_cv',
         
     ];
 
