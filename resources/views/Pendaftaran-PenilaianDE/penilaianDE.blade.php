@@ -26,16 +26,19 @@
 
     {{-- @dd($kategori[0]->mc_name) --}}
     <div class="row mt-4">
-            <div class="col-4 col-md-3 col-lg-2">
+            <form action="{{ route('penilaianDE') }}" class="col-4 col-md-3 col-lg-2" method="get">
+                
                 <select name="periode" id="periode" class="form-control form-select">
                     <option value="" class="text-muted">Periode</option>
                     @foreach($periode as $item)
                     <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }} </option>
                     @endforeach
-                </select>
-            </div>
+                </select>   
+            <button type="submit" id="periodeButton" hidden></button>
+        </form>
             
-            <div class="col-4 col-md-3 col-lg-2">
+        <form action="{{ route('penilaianDE') }}" class="col-4 col-md-3 col-lg-2" method="get">
+            
                 <select name="status" id="status" class="form-control form-select">
                     <option value="" class="text-muted">Status</option>
                     {{-- @foreach($startup->periodeProgram as $item) --}}
@@ -43,9 +46,10 @@
                     <option value="2">TIDAK AKTIF</option>
                     {{-- @endforeach --}}
                 </select>
-            </div>
-          
-
+            <button type="submit" id="statusButton" hidden></button>
+        </form>
+            
+            
         <div class="col d-flex justify-content-end">
             <div class="pb-2">
                 <!-- Search Bar -->
@@ -86,6 +90,7 @@
             {{-- @dd($startup[]->masterPeriodeProgram->masterPeriode->mpe_name) --}}
             <!-- Table Body -->
             <tbody>
+                {{-- @dd($startup[1]->registationStatus) --}}
                 @foreach($startup as $item)
                 {{-- @dd($item->ms_category) --}}
                 <tr>
@@ -100,10 +105,10 @@
                     @else
                     <td class="text-center">{{ $item->startupComponentStatus[1]->scs_totalscore}}</td>
                     @endif
-                    @if($item->ms_status == 1)
-                    <td class="text-center">AKTIF</td>
+                    @if($item->registationStatus->srt_status != null)
+                    <td class="text-center">{{ $item->registationStatus->srt_status }}</td>
                     @else
-                    <td class="text-center">TIDAK AKTIF</td>
+                    <td class="text-center">-</td>
                     @endif
                     <td class="text-center action-icons">
                         <!-- VIEW -->
@@ -130,14 +135,14 @@
             var variable = e.target.value;
             console.log(variable);
             
-            document.getElementById('filter').click();
+            document.getElementById('statusButton').click();
         })
        $("#periode").change(function (e){
             e.preventDefault();
             var variable = e.target.value;
             console.log(variable);
             
-            document.getElementById('filter').click();
+            document.getElementById('periodeButton').click();
         })
 
     </script>

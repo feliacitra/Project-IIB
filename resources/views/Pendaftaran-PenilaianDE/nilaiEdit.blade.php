@@ -274,6 +274,7 @@
                 </div>
                 {{-- Self Assessment --}}
 
+                @if(isset($componentDesk))
                 {{-- Desk Evaluation --}}
                 <div class="tab-pane fade" id="nav-deskEvaluation" role="tabpanel" aria-lab elledby="nav-assessment-tab">
                     <div class="container-fluid py-4 px-4" style="height: 100%">
@@ -345,6 +346,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 {{-- Desk Evaluation --}}
             </div>
         </form>

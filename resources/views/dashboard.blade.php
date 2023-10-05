@@ -18,8 +18,9 @@
             Dashboard
         </p>
     </div>
-
-    @if(isset($periode))
+    {{-- @dd($history) --}}
+    {{-- @dd($startup) --}}
+    @if(isset($periode) && !isset($startup))
     <div class="container-fluid mt-4">
         <div class="alert alert-warning text-dark" role="alert">
             <h6><i data-feather="alert-triangle"></i>Info Pendaftaran Startup</h6>
@@ -45,8 +46,11 @@
     </div>
     @endif
     
-
-    @if(isset($startup))
+    {{-- @dd($history); --}}
+    @if(isset($startup) && $startup->masterPeriodeProgram->masterPeriode->mpe_status == 1 || $check == 1)
+    @if($check == 1)
+    <p>ceritanya ini progress dulu</p>
+    @endif
     <div class="container-fluid mt-4">
         <div class="card">
             <div class="card-body">

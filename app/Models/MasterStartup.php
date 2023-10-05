@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+
 class MasterStartup extends Model
 {
+   
+
     use HasFactory;
     protected $table = 'master_startup';
     protected $primaryKey = 'ms_id';
@@ -41,6 +44,8 @@ class MasterStartup extends Model
         'ms_status',
     ];
 
+    
+
     public function masterMember()
     {
         return $this->hasMany(MasterMember::class, 'ms_id');
@@ -51,7 +56,7 @@ class MasterStartup extends Model
     }
 
     public function historyStartup(){
-        return $this->hasMany(HistoryStartup::class,'ms_id', 'ms_id');
+        return $this->hasMany(HistoryStartup::class,'user_id', 'user_id');
     }
 
     public function masterPeriodeProgram(){

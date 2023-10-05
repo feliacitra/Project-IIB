@@ -16,5 +16,6 @@ class RegistationStatus extends Model
         'srt_step',
         'srt_status',
         'ms_id',
+        'user_id',
         ];
 }

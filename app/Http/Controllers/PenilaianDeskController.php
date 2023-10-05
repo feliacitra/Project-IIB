@@ -26,10 +26,6 @@ use Illuminate\Support\Facades\Storage;
 class PenilaianDeskController extends Controller
 {
     public function index(){
-        
-        // if(request('periode')){
-        //     dd(request());
-        // }
 
         if (request('search')){
             $search = request('search');
@@ -40,16 +36,24 @@ class PenilaianDeskController extends Controller
                 ->orWhereHas('masterPeriodeProgram.masterPeriode', function ($query) use ($search) {
                     $query->where('mpe_name', 'like', '%' . $search . '%');
                 })->get();
-        } 
+        }elseif(request('periode')){
+            $startup = MasterStartup::with('masterPeriodeProgram', 'startupComponentStatus')
+            ->whereHas('masterPeriodeProgram', function($q){
+                $q->where('mpe_id', request('periode'));
+            })->get();
+        }elseif(request('status')){
+            $startup = MasterStartup::with('masterPeriodeProgram', 'startupComponentStatus')
+            ->where('ms_status', request('status'))->get();
+        }
         else{
             // dd($periode);
             $startup = MasterStartup::with('masterPeriodeProgram', 'startupComponentStatus')->get();
         }
         
-        $mqDesk = StartupComponentStatus::with('registationAnswer')->
-        whereHas('registationAnswer',function($q){
-            $q->where('user_id','=',auth()->user()->id);
-        })->get();
+        // $mqDesk = StartupComponentStatus::with('registationAnswer')->
+        // whereHas('registationAnswer',function($q){
+        //     $q->where('user_id','=',auth()->user()->id);
+        // })->get();
 
         $periode = MasterPeriode::get();
         // dd($startup); 
@@ -198,5 +202,4 @@ class PenilaianDeskController extends Controller
         }
     }
 
-    
 }

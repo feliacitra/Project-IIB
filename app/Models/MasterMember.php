@@ -9,6 +9,22 @@ class MasterMember extends Model
 {
     use HasFactory;
 
+    protected $fillable =[
+        'mm_name',
+        'mm_nik',
+        'mm_position',
+        'mm_phone',
+        'mm_email',
+        'mm_nim_nip',
+        'mm_socialmedia',
+        'mu_id',
+        'mf_id',
+        'mps_id',
+        'mci_id',
+        'ms_id',
+        
+    ];
+
     protected $guarded = [
         'mm_id'
     ];

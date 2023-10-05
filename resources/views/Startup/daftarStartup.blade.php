@@ -75,13 +75,15 @@
             {{-- Identitas --}}
             <div class="tab-pane fade show active" id="nav-identitas" role="tabpanel" aria-labelledby="nav-identitas-tab">
                     @csrf
+                    {{-- @dd($components) --}}
                     <div class="row p-3" >
                         <div class="col">
                             <label for="programInkubasi">Program Inkubasi</label>
                             <select id="programInkubasi" class="form-control form-select" name="programStartup">
                                 <option value="" class="text-muted">Program Inkubasi</option>
-                                @foreach ($components as $item)
-                                    <option value="{{ $item->mct_id }}">{{ $item->periodeProgram->masterProgramInkubasi->mpi_name }}</option>
+                                @foreach ($periode->masterPeriodeProgram as $item)
+                                    {{-- @if($item->mpd_id) --}}
+                                    <option value="{{ $item->mpd_id }}">{{ $item->masterProgramInkubasi->mpi_name }}</option>
                                 @endforeach
                             </select>
 
@@ -213,7 +215,7 @@
                                         </select>
 
                                         <label for="prodi">Program Studi</label>
-                                        <select id="prodi-0" class="form-control form-select" name="prodi[]">
+                                        <select id="prodi-0" class="form-control form-select" name="prodi[]" onchange="onChangeDropdownProdi(event)">
                                             <option value="" class="text-muted">Program Studi</option>
                                             @foreach($studyPrograms as $studyProgram)
                                                 {{-- <option value="{{ $studyProgram->mps_id }}">{{ $studyProgram->mps_name }}</option> --}}
@@ -282,11 +284,40 @@
 
             function onChangeDropdownUniversitas(event){
                 var select = event.target;
-
+                
                 var lastChar = select.id.substr(select.id.length - 1)
 
                 var selectedUniversityId = select.children[select.selectedIndex].value;
-                if (selectedUniversityId) {
+                
+                if(event.target.value == "lainnya"){
+                    // label
+                    const element = document.createElement('label');
+                        element.setAttribute('for', 'label-'+event.target.id);
+                        element.setAttribute('id', 'label-'+event.target.id);
+                        element.innerHTML = 'Masukan Universitas';
+
+                        // input
+                        const input = document.createElement('input');
+                        input.setAttribute('type', 'text');
+                        input.setAttribute('id', event.target.id+'-input');
+                        input.setAttribute('class', 'form-control');
+                        input.setAttribute('name', 'universitas-input[]');
+                        
+                        let element2 = event.target.id;
+                        $('#'+element2).after(element);
+                        $('#label-'+element2).after(input);
+                }else{
+                    if(document.getElementById(`label-${event.target.id}`) != null){
+                    var label = document.getElementById(`label-${event.target.id}`);
+                    var input = document.getElementById(`${event.target.id}-input`);
+                    // console.log(input);
+                        label.remove();
+                        input.remove();
+                    }
+                    
+                }
+        
+                if (selectedUniversityId && event.target.value!='lainnya') {
                     $.ajax({
                         url: '/master/prodi/' + selectedUniversityId,
                         type: 'GET',
@@ -297,10 +328,14 @@
                             $.each(data, function(key, value) {
                                 $('#fakultas-'+lastChar).append('<option value="' + value.mf_id + '">' + value.mf_name + '</option>');
                             });
+                            $('#fakultas-'+lastChar).append('<option value="' + 'lainnya' + '">' + 'lainnya' + '</option>');
                         }
                     });
                 } else {
                     $('#fakultas-'+lastChar).empty();
+                    $('#fakultas-'+lastChar).append('<option value="" class="text-muted">Nama Fakultas</option>');
+                    $('#fakultas-'+lastChar).append('<option value="' + 'lainnya' + '">' + 'lainnya' + '</option>');
+                    
                 }
         };
 
@@ -310,7 +345,36 @@
             var lastChar = select.id.substr(select.id.length - 1)
 
             var selectedFakultasId = select.children[select.selectedIndex].value;
-            if (selectedFakultasId) {
+
+            if(event.target.value == "lainnya"){
+                    // label
+                    const element = document.createElement('label');
+                        element.setAttribute('for', 'label-'+event.target.id);
+                        element.setAttribute('id', 'label-'+event.target.id);
+                        element.innerHTML = 'Masukan Fakultas';
+
+                        // input
+                        const input = document.createElement('input');
+                        input.setAttribute('type', 'text');
+                        input.setAttribute('id', event.target.id+'-input');
+                        input.setAttribute('class', 'form-control');
+                        input.setAttribute('name', 'fakultas-input[]');
+                        
+                        let element2 = event.target.id;
+                        $('#'+element2).after(element);
+                        $('#label-'+element2).after(input);
+                }else{
+                    if(document.getElementById(`label-${event.target.id}`) != null){
+                    var label = document.getElementById(`label-${event.target.id}`);
+                    var input = document.getElementById(`${event.target.id}-input`);
+                    // console.log(input);
+                        label.remove();
+                        input.remove();
+                    }
+                    
+                }
+
+            if (selectedFakultasId && event.target.value!='lainnya') {
                 $.ajax({
                     url: '/master/prodi/getProdi/' + selectedFakultasId,
                     type: 'GET',
@@ -321,13 +385,17 @@
                         $.each(data, function(key, value) {
                             $('#prodi-'+lastChar).append('<option value="' + value.mps_id + '">' + value.mps_name + '</option>');
                         });
+                        $('#prodi-'+lastChar).append('<option value="' + 'lainnya' + '">' + 'lainnya' + '</option>');
                     }
                 });
             } else {
                 $('#prodi-'+lastChar).empty();
+                $('#prodi-'+lastChar).append('<option value="" class="text-muted">Nama Prodi</option>');
+                $('#prodi-'+lastChar).append('<option value="' + 'lainnya' + '">' + 'lainnya' + '</option>');
             }
         };
 
+       
 
         function generateId(length){
             let result = '';
@@ -341,7 +409,42 @@
             return result;
         }
 
-       
+        function onChangeDropdownProdi(event){
+            var select = event.target;
+
+            var lastChar = select.id.substr(select.id.length - 1)
+
+            var selectedFakultasId = select.children[select.selectedIndex].value;
+
+            if(event.target.value == "lainnya"){
+                    // label
+                    const element = document.createElement('label');
+                        element.setAttribute('for', 'label-'+event.target.id);
+                        element.setAttribute('id', 'label-'+event.target.id);
+                        element.innerHTML = 'Masukan Prodi';
+
+                        // input
+                        const input = document.createElement('input');
+                        input.setAttribute('type', 'text');
+                        input.setAttribute('id', event.target.id+'-input');
+                        input.setAttribute('class', 'form-control');
+                        input.setAttribute('name', 'prodi-input[]');
+                        
+                        let element2 = event.target.id;
+                        $('#'+element2).after(element);
+                        $('#label-'+element2).after(input);
+                }else{
+                    if(document.getElementById(`label-${event.target.id}`) != null){
+                    var label = document.getElementById(`label-${event.target.id}`);
+                    var input = document.getElementById(`${event.target.id}-input`);
+                    // console.log(input);
+                        label.remove();
+                        input.remove();
+                    }
+                    
+                }
+        };
+
        
 
 
