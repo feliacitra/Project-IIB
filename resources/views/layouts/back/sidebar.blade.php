@@ -187,6 +187,9 @@
                     <span class="link-title">Profil Startup</span>
                 </a>
             </li>
+            {{-- @dd(isset($check)) --}}
+            @if(isset($check))
+            @if($check != 1)
             <li class="nav-item">
                 <a href="" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
@@ -211,6 +214,8 @@
                     <span class="link-title">Sertifikat Monev</span>
                 </a>
             </li>
+            @endif
+            @endif
             @foreach (get_menu() as $menu)
             <li class="nav-item">
                 {!! $menu !!}

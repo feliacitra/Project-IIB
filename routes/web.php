@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DataPendaftarController;
 use App\Http\Controllers\MasterCivitasController;
 use App\Http\Controllers\MasterPenggunaController;
 use App\Http\Controllers\MasterPeriodeController;
@@ -19,17 +20,9 @@ use App\Http\Controllers\MasterProgramStudyController;
 use App\Http\Controllers\MasterKomponenPenilaianController;
 use App\Http\Controllers\StartupController;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AccessController;
-use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\MasterCivitasController;
-use App\Http\Controllers\MasterPeriodeController;
-use App\Http\Controllers\MasterCategoryController;
-use App\Http\Controllers\MasterFakultasController;
-use App\Http\Controllers\MasterPenggunaController;
 use App\Http\Controllers\PenilaiProfileController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\MasterProgramInkubasiController;
+
+
 use Carbon\Carbon;
 
 /*
@@ -131,13 +124,12 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Master-KomponenPenilaian.kelolaKomponenView');
     })->name('viewComponent');
 
-    Route::get('/master/pendaftar', function() {
-        return view('Pendaftaran-DataPendaftar.dataPendaftar');
-    })->name('pendaftar');
+    Route::get('/master/pendaftar', [DataPendaftarController::class, 'index'])->name('pendaftar');
+    Route::get('/master/pendaftar/show/{id}', [DataPendaftarController::class, 'show'])->name('pendaftar.show');
 
-    Route::get('/master/pendaftar/datastartup', function() {
-        return view('Pendaftaran-DataPendaftar.dataStartup');
-    })->name('dataStartup');
+    // Route::get('/master/pendaftar/datastartup', function() {
+    //     return view('Pendaftaran-DataPendaftar.dataStartup');
+    // })->name('dataStartup');
 
     Route::get('/master/penilaianDE/edit/{id}', [PenilaianDeskController::class, 'edit'])->name('penilaianDE.edit');
     Route::get('/master/penilaianDE/detail/{id}', [PenilaianDeskController::class, 'show'])->name('penilaianDE.show');

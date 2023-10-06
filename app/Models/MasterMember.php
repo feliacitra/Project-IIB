@@ -47,4 +47,8 @@ class MasterMember extends Model
         return $this->belongsTo(MasterProgramStudy::class, 'mps_id', 'mps_id');
     }
 
+    public function masterStartup(){
+        return $this->belongsTo(MasterStartup::class, 'ms_id', 'ms_id');
+    }
+
 }

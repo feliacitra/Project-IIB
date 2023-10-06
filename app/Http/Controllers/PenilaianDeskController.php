@@ -122,7 +122,7 @@ class PenilaianDeskController extends Controller
         'startupComponentStatus.registationAnswer')->where('ms_id', $id)->first();
         
         $component->registationStatus->update(['srt_status' => $request->kelulusan]);
-        $component->registationStatus->update(['srt-step' => 2]);
+        $component->registationStatus->update(['srt_step' => 3]);
 
         $mqDesk = StartupComponentStatus::with('registationAnswer')->
         whereHas('registationAnswer',function($q){

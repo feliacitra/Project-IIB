@@ -60,6 +60,7 @@
                     <th scope="col" style="width: 5%;">#</th>
                     <th scope="col" style="width: 10%">PERIODE</th>
                     <th scope="col" style="width: 15%">NAMA STARTUP</th>
+                    <th scope="col" style="width: 15%">NAMA PENGGUNA</th>
                     <th scope="col" style="width: 15%">PROGRAM INKUBASI</th>
                     <th scope="col" style="width: 15%">KATEGORI</th>
                     <th scope="col" style="width: 10%">DESK EVALUATION</th>
@@ -72,20 +73,32 @@
 
             <!-- Table Body -->
             <tbody>
+                {{-- @dd($member) --}}
+                @foreach($member as $item)
                 <tr>
-                    <th scope="row" class="text-center">1</th>
-                    <td>Tahun 2022</td>
-                    <td>GoShop</td>
-                    <td>BTPIP</td>
-                    <td>SmartTech</td>
+                    <th scope="row" class="text-center">{{ $loop->iteration }}</th>
+                    <td>{{ $item->masterStartup->masterPeriodeProgram->masterPeriode->mpe_name }}</td>
+                    <td>{{ $item->masterStartup->ms_name }}</td>
+                    <td>{{ $item->mm_name }}</td>
+                    <td>{{ $item->masterStartup->masterPeriodeProgram->masterProgramInkubasi->mpi_name }}</td>
+                    <td>{{ $item->masterStartup->masterCategory->mc_name }}</td>
+                    @if($item->masterStartup->registationStatus->srt_step >= 3)
                     <td class="text-center"><i data-feather="check"></i></td>
+                    @else
                     <td class="text-center"><i data-feather="minus"></i></td>
-                    <td class="text-center">On Progress</td>
+                    @endif
+                    <td class="text-center"><i data-feather="minus"></i></td>
+                    @if($item->masterStartup->registationStatus->srt_status)
+                    <td class="text-center">{{ $item->masterStartup->registationStatus->srt_status }}</td>
+                    @else
+                    <td class="text-center">-</td>
+                    @endif
                     <td class="text-center">
                         <!-- VIEW -->
-                        <a href="{{route ('dataStartup')}}"><i data-feather="eye"></i></a>
+                        <a href="{{ route('pendaftar.show', $item->mm_id) }}"><i data-feather="eye"></i></a>
                     </td>
                 </tr>
+                @endforeach
             </tbody>
             <!-- Table Body -->
         </table>
