@@ -25,6 +25,7 @@ class AccessController extends Controller
         $universitas = $request->input('universitas');
         $fakultas = $request->input('fakultas');
         $periodePendaftaran = $request->input('periode-pendaftaran');
+        $komponenPenilaian = $request->input('komponen-penilaian');
 
         $roleDb = Role::find($role);
         if ($pengguna) {
@@ -75,12 +76,35 @@ class AccessController extends Controller
                 $roleDb->features()->save($featureDb);
             }
         }
+
+        if ($komponenPenilaian) {
+            foreach ($komponenPenilaian as $feature) {
+                $featureDb = Feature::where('name', $feature)->first();
+                $roleDb->features()->save($featureDb);
+            }
+        }
         
-        return redirect('/access')->with('success', 'Berhasil mengubah hak akses');
+        $features = $roleDb->features;
+        return redirect('/access')->with([
+            'success' => 'Berhasil mengubah hak akses',
+            'role' => $role,
+            'feature' => $features
+        ]);
     }
 
     public function index() {
+        // $role_feature = Role::with('features')->get();
         return view('admin.access');
+    }
+
+    public function role_index(Request $request) {
+        $role = Role::find($request->role);
+        $features = $role->features;
+        // dd($features);
+        return redirect()->route('access.index')->with([
+            'feature' => $features,
+            'role' => $role->id
+        ]);
     }
 
     public function reset() {
@@ -94,6 +118,9 @@ class AccessController extends Controller
     public function role_reset($role) {
         Role::find($role)->features()->detach();
 
-        return redirect('/access')->with('success', 'Berhasil mereset hak akses role');
+        return redirect('/access')->with([
+            'success' => 'Berhasil mereset hak akses role',
+            'role' => $role
+        ]);
     }
 }

@@ -56,6 +56,12 @@ if (!function_exists('get_menu')) {
                             <span class=\"link-title\">Master Program Studi</span>
                         </a>";
         }
+        if (isSubStringInArray('komponen-penilaian', $features)) {
+            $menu[] = "<a href=\"" . route('master.penilaian') . "\" class=\"nav-link\">
+                            <i class=\"link-icon\" data-feather=\"box\"></i>
+                            <span class=\"link-title\">Master Komponen Penilaian</span>
+                        </a>";
+        }
         return $menu;
     }
 }
