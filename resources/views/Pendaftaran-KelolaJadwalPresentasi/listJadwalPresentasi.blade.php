@@ -24,6 +24,15 @@
         </p>
     </div>
 
+    <div class="pb-2" style="display: flex; justify-content: flex-end;">
+        <a href="#addPresentasi" class="button btn-primary">
+            <button id="openAddPresentasi   " class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
+                <i data-feather="plus" style="margin-right: 0.3rem;"></i>
+                TAMBAH
+            </button>
+        </a>
+    </div>
+
     <div class="row mt-4">
         <div class="col-4 col-md-3 col-lg-2">
             <select name="pilihPeriode" id="periode" class="form-control form-select">
