@@ -188,6 +188,11 @@
                     <span class="link-title">Lihat Jadwal Monev</span>
                 </a>
             </li>
+            @foreach (get_menu() as $menu)
+                <li class="nav-item">
+                    {!! $menu !!}
+                </li>
+            @endforeach
             {{-- @elseif ( auth()->user()->role == '2' ) --}}
             @else
             {{-- <li class="nav-item nav-category">Data Master</li> --}}
@@ -210,13 +215,8 @@
                 </a>
             </li>
             <li class="nav-item">
-<<<<<<< HEAD
-            <a href="" class="nav-link">
-                    <i class="link-icon" data-feather="box"></i>
-=======
             <a href="{{ route('profilstartup') }}" class="nav-link">
                     <i class="link-icon" data-feather="folder"></i>
->>>>>>> upstream/profilStartup
                     <span class="link-title">Profil Startup</span>
                 </a>
             </li>
@@ -245,12 +245,12 @@
                 </a>
             </li>
 
-            {{--
+            
             @foreach (get_menu() as $menu)
                 <li class="nav-item">
                     {!! $menu !!}
                 </li>
-            @endforeach--}}
+            @endforeach
             @endif
         </ul>
     </div>
