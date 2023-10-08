@@ -25,7 +25,7 @@
     </div>
 
     <div class="pb-2" style="display: flex; justify-content: flex-end;">
-        <a href="#addPresentasi" class="button btn-primary">
+        <a href="#createJadwal" class="button btn-primary">
             <button id="openAddPresentasi   " class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
                 <i data-feather="plus" style="margin-right: 0.3rem;"></i>
                 TAMBAH
@@ -128,10 +128,11 @@
                             <div class="form-group row align-items-center">
                                 <label for="periode" class="col-sm-3">Nama Periode</label>
                                 <div class="col-sm-9">
-                                    <select id="periode" class="form-control form-select" disabled>
-                                        <option value="" class="text-muted">Nama Periode</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
+                                    <select id="periode" class="form-control form-select" >
+                                        <option value="" class="text-muted"></option>
+                                        @foreach($periode as $per)
+                                            <option value="{{ $per->mpe_id }}">{{ $per->mpe_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>  
@@ -139,10 +140,11 @@
                             <div class="form-group row align-items-center">
                                 <label for="startup" class="col-sm-3">Nama Startup</label>
                                 <div class="col-sm-9">
-                                    <select id="startup" class="form-control form-select" disabled>
-                                        <option value="" class="text-muted">Nama Startup</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
+                                    <select id="startup" class="form-control form-select">
+                                        <option value="" class="text-muted"></option>
+                                        @foreach($startup as $start)
+                                            <option value="{{ $start->ms_id }}">{{ $start->ms_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -151,9 +153,10 @@
                                 <label for="penilai" class="col-sm-3">Penilai</label>
                                 <div class="col-sm-9">
                                     <select id="penilai" class="form-control form-select">
-                                        <option value="" class="text-muted">Penilai</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
+                                        <option value="" class="text-muted"></option>
+                                        @foreach($user as $penilai)
+                                            <option value="{{ $penilai->id }}">{{ $penilai->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
