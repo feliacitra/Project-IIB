@@ -42,8 +42,10 @@ class PenilaianDeskController extends Controller
                 $q->where('mpe_id', request('periode'));
             })->get();
         }elseif(request('status')){
-            $startup = MasterStartup::with('masterPeriodeProgram', 'startupComponentStatus')
-            ->where('ms_status', request('status'))->get();
+            $startup = MasterStartup::with('masterPeriodeProgram', 'startupComponentStatus', 'registationStatus')
+            ->wherehas('registationStatus', function($q){
+                $q->where('srt_status', request('status'));
+            })->get();
         }
         else{
             // dd($periode);

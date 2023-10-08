@@ -42,8 +42,8 @@
                 <select name="status" id="status" class="form-control form-select">
                     <option value="" class="text-muted">Status</option>
                     {{-- @foreach($startup->periodeProgram as $item) --}}
-                    <option value="1">AKTIF</option>
-                    <option value="2">TIDAK AKTIF</option>
+                    <option value="Lulus">LULUS</option>
+                    <option value="Tidak Lulus">TIDAK LULUS</option>
                     {{-- @endforeach --}}
                 </select>
             <button type="submit" id="statusButton" hidden></button>

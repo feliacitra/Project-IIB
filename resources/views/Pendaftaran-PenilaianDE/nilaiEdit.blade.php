@@ -90,8 +90,8 @@
                             <label for="namaStartup">Nama Startup</label>
                             <input type="text" class="form-control" id="namaStartup" placeholder="Nama Startup" value="{{ $component->ms_name }}" disabled>
 
-                            <label for="deskripsi">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" cols="30" rows="3" placeholder="Deskripsi" disabled>{{ $component->ms_description }}</textarea>
+                            {{-- <label for="deskripsi">Deskripsi</label>
+                            <textarea class="form-control" id="deskripsi" cols="30" rows="3" placeholder="Deskripsi" disabled>{{ $component->ms_description }}</textarea> --}}
                             
                             <label for="tahunDidirikan">Tahun Didirikan</label>
                             <input type="text" class="form-control" id="tahunDidirikan" placeholder="YYYY" value="{{ $component->ms_year_founded }}" disabled>
@@ -309,7 +309,8 @@
                                     </div>
                                     @endforeach
                                 </div>
-                                {{-- <h5 class="text-center mt-4">NILAI AKHIR: {{$component->startupComponentStatus->scs_totalscore}}</h5> --}}
+                                {{-- @dd($mqDesk) --}}
+                                <h5 class="text-center mt-4">NILAI AKHIR: {{$mqDesk->scs_totalscore}}</h5>
                                 
                                 <div class="card">
                                     <div class="card-body">

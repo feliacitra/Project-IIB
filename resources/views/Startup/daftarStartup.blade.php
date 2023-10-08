@@ -542,12 +542,22 @@
             cardBody.appendChild(minusButtonContainer);
 
             /* Clone the existing row and append to card body */
+            if(document.getElementById(`label-universitas-${totalCard-1}`)){
+                document.getElementById(`label-universitas-${totalCard-1}`).remove();
+                document.getElementById(`universitas-${totalCard-1}-input`).remove();
+            }
             var existingRow = document.querySelector("#nav-anggota .card .row").cloneNode(true);
-            // existingRow.id = "test-"+totalCard;
+            // console.log(document.getElementById(`label-universitas-${totalCard-1}`))
+            // console.log(document.getElementById(`universitas-${totalCard-1}-input`))
+            console.log(existingRow.children[1].children);
             existingRow.children[1].children[3].id = "universitas-"+totalCard;
             existingRow.children[1].children[5].id = "fakultas-"+totalCard;
             existingRow.children[1].children[7].id = "prodi-"+totalCard;
             // console.log(existingRow.children[1].children[7]);
+
+            
+            // console.log(`label-${totalCard-1}`)
+
             cardBody.appendChild(existingRow);
 
             /* Reset input field values in the new card */

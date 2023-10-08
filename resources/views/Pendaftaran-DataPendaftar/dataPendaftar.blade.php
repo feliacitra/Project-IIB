@@ -19,27 +19,35 @@
     </div>
 
     <div class="row mt-4">
-        <div class="col-4 col-md-3 col-lg-2">
-            <select name="pilihPeriode" id="periode" class="form-control form-select">
-                <option value="select" class="text-muted">Periode</option>
-                <option value="th2022">Tahun 2022</option>
-            </select>
-        </div>
-
-        <div class="col-4 col-md-3 col-lg-2">
-            <select name="pilihStatus" id="periode" class="form-control form-select">
-                <option value="select" class="text-muted">Status</option>
-                <option value="status1">On Progress</option>
-            </select>
-        </div>
+        <form action="{{ route('pendaftar') }}" class="col-4 col-md-3 col-lg-2" method="get">
+                <select name="periode" id="periode" class="form-control form-select">
+                    <option value="" class="text-muted">Periode</option>
+                    @foreach($periode as $item)
+                    <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }} </option>
+                    @endforeach
+                </select>   
+            <button type="submit" id="periodeButton" hidden></button>
+        </form>
+            
+        <form action="{{ route('pendaftar') }}" class="col-4 col-md-3 col-lg-2" method="get">
+            
+                <select name="status" id="status" class="form-control form-select">
+                    <option value="" class="text-muted">Status</option>
+                    {{-- @foreach($startup->periodeProgram as $item) --}}
+                    <option value="Lulus">LULUS</option>
+                    <option value="Tidak Lulus">TIDAK LULUS</option>
+                    {{-- @endforeach --}}
+                </select>
+            <button type="submit" id="statusButton" hidden></button>
+        </form>
 
         <div class="col d-flex justify-content-end">
             <div class="pb-2">
                 <!-- Search Bar -->
                 <div class="input-group rounded">
                     <!-- Input Form -->
-                    <form action="" class="position-relative">
-                        <input type="search" class="form-control rounded" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
+                    <form action="{{ route('pendaftar') }}" class="position-relative">
+                        <input type="search" class="form-control rounded" name="search" placeholder="Cari" aria-label="Search" aria-describedby="search-addon" style="width: 350px; padding-left: 2.5rem">
                         <span class="position-absolute" style="top: 50%; left: 0.5rem; transform: translateY(-50%);">
                             <i data-feather="search"></i>
                         </span>
@@ -82,8 +90,10 @@
                     <td>{{ $item->mm_name }}</td>
                     <td>{{ $item->masterStartup->masterPeriodeProgram->masterProgramInkubasi->mpi_name }}</td>
                     <td>{{ $item->masterStartup->masterCategory->mc_name }}</td>
-                    @if($item->masterStartup->registationStatus->srt_step >= 3)
+                    @if($item->masterStartup->registationStatus->srt_status == 'Lulus')
                     <td class="text-center"><i data-feather="check"></i></td>
+                    @elseif($item->masterStartup->registationStatus->srt_status == 'Tidak Lulus')
+                    <td class="text-center"><i data-feather="x"></i></td>
                     @else
                     <td class="text-center"><i data-feather="minus"></i></td>
                     @endif
@@ -104,4 +114,21 @@
         </table>
     </div>
     <!-- Users Table -->
+
+    <script>
+         $("#status").change(function (e){
+            e.preventDefault();
+            var variable = e.target.value;
+            console.log(variable);
+            
+            document.getElementById('statusButton').click();
+        })
+       $("#periode").change(function (e){
+            e.preventDefault();
+            var variable = e.target.value;
+            console.log(variable);
+            
+            document.getElementById('periodeButton').click();
+        })
+    </script>
 @endsection
