@@ -15,9 +15,12 @@ class HistoryStartup extends Migration
     {
         Schema::create('history_startup', function (Blueprint $table) {
             $table->id('hs_id');
-            $table->foreignId('ms_id')->nullable()->constrained('master_startup', 'ms_id');
+            $table->foreignId('user_id')->nullable()->constrained('master_startup', 'user_id');
+            $table->foreignId('ms_id');
             $table->bigInteger('mpd_id');
             $table->timestamps();
+
+            // $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

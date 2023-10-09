@@ -26,25 +26,30 @@
 
     {{-- @dd($kategori[0]->mc_name) --}}
     <div class="row mt-4">
-        <div class="col-4 col-md-3 col-lg-2">
-            <select name="pilihPeriode" id="periode" class="form-control form-select">
-                <option value="select" class="text-muted">Periode</option>
-                @foreach($periode as $item)
-                <option value="th2022">{{ $item->mpe_name }} </option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="col-4 col-md-3 col-lg-2">
-            <select name="pilihStatus" id="periode" class="form-control form-select">
-                <option value="select" class="text-muted">Status</option>
-                {{-- @foreach($startup->periodeProgram as $item) --}}
-                <option value="th2022">AKTIF</option>
-                <option value="th2022">TIDAK AKTIF</option>
-                {{-- @endforeach --}}
-            </select>
-        </div>
-
+            <form action="{{ route('penilaianDE') }}" class="col-4 col-md-3 col-lg-2" method="get">
+                
+                <select name="periode" id="periode" class="form-control form-select">
+                    <option value="" class="text-muted">Periode</option>
+                    @foreach($periode as $item)
+                    <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }} </option>
+                    @endforeach
+                </select>   
+            <button type="submit" id="periodeButton" hidden></button>
+        </form>
+            
+        <form action="{{ route('penilaianDE') }}" class="col-4 col-md-3 col-lg-2" method="get">
+            
+                <select name="status" id="status" class="form-control form-select">
+                    <option value="" class="text-muted">Status</option>
+                    {{-- @foreach($startup->periodeProgram as $item) --}}
+                    <option value="Lulus">LULUS</option>
+                    <option value="Tidak Lulus">TIDAK LULUS</option>
+                    {{-- @endforeach --}}
+                </select>
+            <button type="submit" id="statusButton" hidden></button>
+        </form>
+            
+            
         <div class="col d-flex justify-content-end">
             <div class="pb-2">
                 <!-- Search Bar -->
@@ -85,6 +90,7 @@
             {{-- @dd($startup[]->masterPeriodeProgram->masterPeriode->mpe_name) --}}
             <!-- Table Body -->
             <tbody>
+                {{-- @dd($startup[1]->registationStatus) --}}
                 @foreach($startup as $item)
                 {{-- @dd($item->ms_category) --}}
                 <tr>
@@ -93,16 +99,20 @@
                     <td>{{ $item->ms_name }}</td>
                     <td>{{ $item->masterPeriodeProgram->masterProgramInkubasi->mpi_name }}</td>
                     <td>{{ $item->masterCategory->mc_name }}</td>
-                    <td class="text-center">{{ $item->startupComponentStatus->scs_totalscore}}</td>
+                    <td class="text-center">{{ $item->startupComponentStatus[0]->scs_totalscore}}</td>
+                    @if(count($item->startupComponentStatus)==1)
                     <td class="text-center">-</td>
-                    @if($item->ms_status == 1)
-                    <td class="text-center">AKTIF</td>
                     @else
-                    <td class="text-center">TIDAK AKTIF</td>
+                    <td class="text-center">{{ $item->startupComponentStatus[1]->scs_totalscore}}</td>
+                    @endif
+                    @if($item->registationStatus->srt_status != null)
+                    <td class="text-center">{{ $item->registationStatus->srt_status }}</td>
+                    @else
+                    <td class="text-center">-</td>
                     @endif
                     <td class="text-center action-icons">
                         <!-- VIEW -->
-                        <a href="{{ route('penilaianDE.show', $item->ms_id) }}"><i data-feather="eye"></i></a>
+                        {{-- <a href="{{ route('penilaianDE.show', $item->ms_id) }}"><i data-feather="eye"></i></a> --}}
                         <a href="{{ route('penilaianDE.edit', $item->ms_id) }}"><i data-feather="edit-2"></i></a>
                     </td>
                 </tr>
@@ -112,4 +122,30 @@
         </table>
     </div>
     <!-- Users Table -->
+    <script>
+
+    //    function statusFilter(id){
+    //     $(id).on('change', function(e){
+    //         var variable = e.target.value;
+    //         console.log(e);
+    //     })
+    //    }
+       $("#status").change(function (e){
+            e.preventDefault();
+            var variable = e.target.value;
+            console.log(variable);
+            
+            document.getElementById('statusButton').click();
+        })
+       $("#periode").change(function (e){
+            e.preventDefault();
+            var variable = e.target.value;
+            console.log(variable);
+            
+            document.getElementById('periodeButton').click();
+        })
+
+    </script>
+    
 @endsection
+

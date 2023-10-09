@@ -25,6 +25,9 @@ use Illuminate\Http\Request;
 class StartupController extends Controller
 {
     public function index(){
+        $periode = MasterPeriode::with('masterPeriodeProgram','masterProgramInkubasi')->where('mpe_status', '=', '1')
+        ->whereRaw('"'.Carbon::now().'" between `mpe_startdate` and `mpe_enddate`')->first();
+        // dd($periode);
         $incubations = MasterProgramInkubasi::all();
         $categories = MasterCategory::all();
         $societies = MasterCivitas::all();
@@ -34,7 +37,7 @@ class StartupController extends Controller
         $history = null;
         // $questions = MasterQuestion::all();
         // $questionRange=MasterQuestionRange::all();
-        $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi','question', 'question.questionRange')->get();
+        $components = MasterComponent::with('periodeProgram.masterPeriode.masterPeriodeProgram', 'periodeProgram.masterProgramInkubasi','question', 'question.questionRange')->where('mct_step',1)->get();
         return view('Startup.daftarStartup', compact(
             'incubations',
             'categories',
@@ -43,38 +46,111 @@ class StartupController extends Controller
             'faculties',
             'studyPrograms',
             'components',
-            'history'));
+            'history',
+            'periode'));
+
+        // dd($components);
     }
 
     public function store(Request $request){
-
-        $mpdId = MasterPeriodeProgram::with('component')->where('mpd_id', $request->programStartup)->first()->mpd_id;
+        if($request->collect('universitas-input')){
+            // lainya create univ, fakultas, prodi
+            // create universitas
+            $univ = $request->universitas;
+            $count = 0;
+            for($i=0; $i<count($univ); $i++){
+                if($univ[$i]=='lainnya'){
+                    $duplicateUniv = MasterUniversitas::where('mu_name', $request->collect('universitas-input')[$count])->first();
+                    if($duplicateUniv == null){   
+                        $createUniv = MasterUniversitas::create([
+                            'mu_name' => $request->collect('universitas-input')[$count],
+                            'mu_description' => '-',
+                        ]);
+                        $univ[$i] = $createUniv->mu_id;
+                        $count+=1;
+                    }else{
+                        $univ[$i] = $duplicateUniv->mu_id;
+                        $count+=1;
+                    }
+                }
+            }
+        }
+        
+        // create fakultas
+        if($request->collect('fakultas-input')){
+            $fakultas = $request->fakultas;
+            $count=0;
+            for($i=0; $i<count($fakultas); $i++){
+                if($fakultas[$i]=='lainnya'){
+                    $duplicateFakultas = MasterFakultas::where('mf_name', $request->collect('fakultas-input')[$count])->first();
+                    if($duplicateFakultas == null){
+                    $createFakultas = MasterFakultas::create([
+                        'mf_name' => $request->collect('fakultas-input')[$count],
+                        'mf_description' => '-',
+                        'mu_id' => (int)$univ[$i],
+                    ]);
+                    $fakultas[$i] = $createFakultas->mf_id;
+                    $count+=1;
+                }else{
+                    $fakultas[$i] = $duplicateFakultas->mf_id;
+                    $count+=1;
+                }
+            }
+        }
+    }
+            
+        if($request->collect('prodi-input')){
+            //create prodi
+            $prodi = $request->prodi;
+            $count=0;
+            for($i=0; $i<count($prodi); $i++){
+                if($prodi[$i]=='lainnya'){
+                    $duplicateProdi = MasterProgramStudy::where('mps_name', $request->collect('prodi-input')[$count])->first();
+                    if($duplicateProdi == null){
+                    $createProdi = MasterProgramStudy::create([
+                        'mps_name' => $request->collect('prodi-input')[$count],
+                        'mps_description' => '-',
+                        'mf_id' => (int)$fakultas[$i],
+                    ]);
+                    $prodi[$i] = $createProdi->id;
+                    $count+=1;
+                }else{
+                    $prodi[$i] = $duplicateProdi->id;
+                    $count+=1; 
+                }
+            }
+        }
+    }
+    
+    // dd($prodi);
+        
+        // $mpdId = MasterPeriodeProgram::with('component')->where('mpd_id', $request->programStartup)->first()->mpd_id;
         // dd($mpdId);
         $pitchDeck = $request->file('pitchDeck');
         $pitchDeckPath = $pitchDeck->store('pitch_deck', 'public');
-
         
-
         $startup = MasterStartup::create([
-                'ms_startdate'=> Carbon::now(),
-                'ms_pks' => $request->programStartup,
-                'ms_phone' => $request->kontakStartup,
-                'mc_id' => $request->kategori,
-                'ms_name' => $request->namaStartup,
-                'ms_address' => $request->alamat,
-                'ms_website' => $request->website,
-                'ms_socialmedia' => $request->sosialMedia,      
-                'ms_legal' => $request->legalitas,
-                'ms_pitchdeck' => $pitchDeckPath,
-                'user_id'=>$request->userid,
-                'ms_yearly_income' => $request->pendapatanTahunan,
-                'ms_year_founded' => $request->tahunDidirikan,
-                'ms_focus_area' => $request->areaFokusBisnis,
-                'ms_funding_sources' => $request->sumberPendanaan,
-                'mpd_id'=> $mpdId,
-                'ms_status'=>"1",
-            ]);
-
+            'ms_startdate'=> Carbon::now(),
+            'ms_pks' => $request->programStartup,
+            'ms_phone' => $request->kontakStartup,
+            'mc_id' => $request->kategori,
+            'ms_name' => $request->namaStartup,
+            'ms_address' => $request->alamat,
+            'ms_website' => $request->website,
+            'ms_socialmedia' => $request->sosialMedia,      
+            'ms_legal' => $request->legalitas,
+            'ms_pitchdeck' => $pitchDeckPath,
+            'ms_email'=>$request->emailStartup,
+            'user_id'=>$request->userid,
+            'ms_yearly_income' => $request->pendapatanTahunan,
+            'ms_year_founded' => $request->tahunDidirikan,
+            'ms_focus_area' => $request->areaFokusBisnis,
+            'ms_funding_sources' => $request->sumberPendanaan,
+            'mpd_id'=> $request->programStartup,
+            'ms_status'=>"1",
+        ]);
+        
+        // dd($request);
             // dd($startup->ms_id);
             $msid = $startup->ms_id;
             
@@ -86,6 +162,7 @@ class StartupController extends Controller
         }
 
         for($i=0; $i< count($request->namaLengkap); $i++){
+            // dd($prodi[$i]);
             MasterMember::create([
                 'mm_name' => $request->namaLengkap[$i],
                 'mm_nik' => $request->nik[$i],
@@ -94,9 +171,9 @@ class StartupController extends Controller
                 'mm_email' => $request->email[$i],
                 'mm_nim_nip' => $request->nimNip[$i],
                 'mm_socialmedia' => $request->mediaSosial[$i],
-                'mu_id' => $request->universitas[$i],
-                'mf_id' => $request->fakultas[$i],
-                'mps_id' => $request->prodi[$i],
+                'mu_id' => $univ[$i],
+                'mf_id' => $fakultas[$i],
+                'mps_id' => $prodi[$i],
                 'mci_id' => $request->civitasTelu[$i],
                 'mm_cv' => $cvInput[$i],
                 'ms_id' => $msid,
@@ -114,7 +191,7 @@ class StartupController extends Controller
         }
         $finalScore = (int)$score / (int)count($request->answers);
         
-        StartupComponentStatus::create([
+        $scs = StartupComponentStatus::create([
             'scs_notes' => $request->catatan,
             'ms_id' => $msid,
             'scs_totalscore' => $finalScore,
@@ -129,19 +206,20 @@ class StartupController extends Controller
                 'mqr_id' => (int)$request->answers[$i],
                 'user_id' => (int)$request->userid,
                 'ra_score' => MasterQuestionRange::where('mqr_id', $request->answers[$i])->first()->mqr_poin,
-                'scs_id' => StartupComponentStatus::where('ms_id', $msid)->first()->scs_id,
+                'scs_id' => $scs->scs_id,
             ]);
         }
         
 
         RegistationStatus::create([
-            'ms_id' => MasterStartup::where('ms_name', $request->namaStartup)->get()->first()['ms_id'],
+            'ms_id' => $msid,
             'srt_step' => 2,
         ]);
 
         HistoryStartup::create([
             'ms_id' => $msid,
-            'mpd_id' => $mpdId,
+            'mpd_id' => $request->programStartup,
+            'user_id' => $request->userid,
         ]);
 
         return redirect()->route('dashboard');

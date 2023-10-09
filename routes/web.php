@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DataPendaftarController;
 use App\Http\Controllers\MasterCivitasController;
 use App\Http\Controllers\MasterPenggunaController;
 use App\Http\Controllers\MasterPeriodeController;
@@ -21,6 +22,8 @@ use App\Http\Controllers\MasterKomponenPenilaianController;
 use App\Http\Controllers\StartupController;
 use Illuminate\Support\Facades\View;
 use App\Http\Controllers\PenilaiProfileController;
+
+
 use Carbon\Carbon;
 
 /*
@@ -122,41 +125,32 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Master-KomponenPenilaian.kelolaKomponenView');
     })->name('viewComponent');
 
-    Route::get('/pendaftar', function() {
-        return view('Pendaftaran-DataPendaftar.dataPendaftar');
-    })->name('pendaftar');
+    Route::get('/master/pendaftar', [DataPendaftarController::class, 'index'])->name('pendaftar');
+    Route::get('/master/pendaftar/show/{id}', [DataPendaftarController::class, 'show'])->name('pendaftar.show');
 
-    Route::get('/pendaftar/datastartup', function() {
-        return view('Pendaftaran-DataPendaftar.dataStartup');
-    })->name('dataStartup');
+    // Route::get('/master/pendaftar/datastartup', function() {
+    //     return view('Pendaftaran-DataPendaftar.dataStartup');
+    // })->name('dataStartup');
 
-    Route::get('/datastartup', function() {
-        return view('Pendaftaran-DataStartup.listStartup');
-    })->name('datastartup');
-
-    Route::get('/datastartup/edit', function() {
-        return view('Pendaftaran-DataStartup.editDataStartup');
-    })->name('editdatastartup');
-
-    Route::get('/penilaianDE', function() {
-        return view('Pendaftaran-PenilaianDE.penilaianDE');
-    })->name('penilaianDE');
-
-    Route::get('/penilaianDE/viewnilai', function() {
-        return view('Pendaftaran-PenilaianDE.nilaiView');
-    })->name('viewnilai');
-
-    Route::get('/penilaianDE/editnilai', function() {
-        return view('Pendaftaran-PenilaianDE.nilaiEdit');
-    })->name('editnilai');
-
+    Route::get('/master/penilaianDE/edit/{id}', [PenilaianDeskController::class, 'edit'])->name('penilaianDE.edit');
+    Route::get('/master/penilaianDE/detail/{id}', [PenilaianDeskController::class, 'show'])->name('penilaianDE.show');
+    Route::post('/master/penilaianDE/update/{id}', [PenilaianDeskController::class, 'update'])->name('penilaianDE.update');
+    Route::get('/master/penilaianDE/{file}', [PenilaianDeskController::class, 'download'])->name('download');
+    Route::get('/master/penilaianDE/', [PenilaianDeskController::class, 'filterStatus'])->name('penilaianStatus');
+    Route::get('/master/penilaianDE/', [PenilaianDeskController::class, 'filterPeriode'])->name('penilaianPeriode');
+    Route::resource('/master/penilaianDE', PenilaianDeskController::class)->only(['index', 'filterStatus', 'filterPeriode'])->names([
+        'index' => 'penilaianDE',
+    ]);
     Route::get('/jadwalpresentasi', [PresentationSecheduleController::class, 'index'])->name('jadwalpresentasi');
     Route::post('/jadwalpresentasi/tambah', [PresentationSecheduleController::class, 'store'])->name('jadwalpresentasi.simpan');
     Route::delete('/jadwalpresentasi/{id}', [PresentationSecheduleController::class, 'delete'])->name('jadwalpresentasi.hapus');
-
+    
     Route::get('/lihatjadwalpresentasi', function() {
         return view('Penilai.lihatJadwalPresentasi');
     })->name('lihatjadwalpresentasi');
+    // Route::get('/master/penilaianDE', function() {
+    //     return view('Pendaftaran-PenilaianDE.penilaianDE');
+    // })->name('penilaianDE');
 
     Route::get('/lihatjadwalpresentasi/lihatnilai', function() {
         return view('penilai.nilaiView');
@@ -217,6 +211,7 @@ Route::middleware(['auth', 'access'])->group(function () {
     ])->except(['show', 'edit', 'create', 'getFaculties']);
 
     Route::get('/master/prodi/{university}', [MasterProgramStudyController::class, 'getFaculties']);
+    Route::get('/master/prodi/getProdi/{prodi}', [MasterProgramStudyController::class, 'getProdi']);
 
     Route::get('/master/penilaian', [MasterKomponenPenilaianController::class, 'index'])->name('penilaian');
     Route::get('/master/penilaian/{id}', [MasterKomponenPenilaianController::class, 'create'])->name('penilaian.create');

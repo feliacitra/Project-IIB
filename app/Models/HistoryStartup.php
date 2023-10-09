@@ -11,9 +11,13 @@ class HistoryStartup extends Model
 
     protected $table = "history_startup";
     protected $primaryKey = 'hs_id';
-    protected $fillable = ['ms_id', 'mpd_id'];
+    protected $fillable = ['ms_id', 'mpd_id', 'user_id'];
 
     public function masterStartup(){
-        return $this->belongsTo(MasterStartup::class,'ms_id', 'ms_id');
+        return $this->belongsTo(MasterStartup::class,'user_id', 'user_id');
+    }
+
+    public function masterPeriodeProgram(){
+        return $this->hasMany(MasterPeriodeProgram::class, 'mpd_id', 'mpd_id');
     }
 }
