@@ -11,6 +11,9 @@ class MasterPeriodeProgram extends Model
     use HasFactory;
 
     protected $table = 'master_periodeprogram';
+    protected $primaryKey = 'mpd_id';
+    public $incrementing = true;
+    
     public $timestamps = true;
 
     public function component()

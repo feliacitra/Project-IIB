@@ -150,9 +150,9 @@ Route::middleware(['auth', 'access'])->group(function () {
         return view('Pendaftaran-PenilaianDE.nilaiEdit');
     })->name('editnilai');
 
-    Route::get('/jadwalpresentasi', function() {
-        return view('Pendaftaran-KelolaJadwalPresentasi.listJadwalPresentasi');
-    })->name('jadwalpresentasi');
+    Route::get('/jadwalpresentasi', [PresentationSecheduleController::class, 'index'])->name('jadwalpresentasi');
+    Route::post('/jadwalpresentasi/tambah', [PresentationSecheduleController::class, 'store'])->name('jadwalpresentasi.simpan');
+    Route::delete('/jadwalpresentasi/{id}', [PresentationSecheduleController::class, 'delete'])->name('jadwalpresentasi.hapus');
 
     Route::get('/lihatjadwalpresentasi', function() {
         return view('Penilai.lihatJadwalPresentasi');
