@@ -22,8 +22,10 @@ class CreatePresentationSchedulesTable extends Migration
             $table->string('ps_place', 255);
             $table->string('ps_link', 255);
             $table->unsignedBigInteger('mpd_id');
+            $table->unsignedBigInteger('ms_id');
             
             $table->foreign('mpd_id')->references('mpd_id')->on('master_periodeprogram');
+            $table->foreign('ms_id')->references('ms_id')->on('master_startup');
             
             $table->timestamps();
         });

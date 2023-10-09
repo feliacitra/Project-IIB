@@ -9,6 +9,12 @@ class PresentationSchedule extends Model
     protected $table = 'presentation_schedules';
     protected $primaryKey = 'ps_id';
     public $timestamps = false;
+    protected $casts = [
+        'ps_date' => 'date',
+        // 'ps_timestart' => 'time',
+        // 'ps_timeend' => 'time',
+        'ps_online' => 'boolean',
+    ];
 
     protected $fillable = [
         'ps_date',
@@ -18,17 +24,17 @@ class PresentationSchedule extends Model
         'ps_place',
         'ps_link',
         'mpd_id',
+        'ms_id'
     ];
 
-    protected $casts = [
-        'ps_date' => 'date',
-        'ps_timestart' => 'time',
-        'ps_timeend' => 'time',
-        'ps_online' => 'boolean',
-    ];
 
     public function masterPeriodeProgram()
     {
         return $this->belongsTo(MasterPeriodeProgram::class, 'mpd_id');
+    }
+
+    public function masterStartup()
+    {
+        return $this->belongsTo(MasterStartup::class, 'ms_id');
     }
 }

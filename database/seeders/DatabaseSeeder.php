@@ -8,6 +8,7 @@ use App\Models\MasterFakultas;
 use App\Models\MasterProgramInkubasi;
 use App\Models\MasterPeriode;
 use App\Models\MasterMember;
+use App\Models\MasterCategory;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
@@ -211,8 +212,18 @@ class DatabaseSeeder extends Seeder
             'mpi_description' => 'Desc',
             'mpi_type' => 'AKTIF'
         ];
+        $category = [
+            'mc_name' => 'contoh',
+            'mc_description' => 'aktif',
+            'mc_status' => 'aktif',
+        ];
         MasterProgramInkubasi::firstOrCreate(['mpi_name' => 'Upward'], $programInkubasi);
         MasterProgramInkubasi::firstOrCreate(['mpi_name' => 'Contoh'], $contoh);
+
+        $this->call(MasterCivitasSeeder::class);
+        $this->call(MasterPeriodeProgramSeeder::class);
+        MasterCategory::firstOrCreate(['mc_name' => 'Contoh'], $category);
+        $this->call(MasterStartupSeeder::class);
 
     }
 }

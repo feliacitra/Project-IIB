@@ -151,6 +151,8 @@ Route::middleware(['auth', 'access'])->group(function () {
     })->name('editnilai');
 
     Route::get('/jadwalpresentasi', [PresentationSecheduleController::class, 'index'])->name('jadwalpresentasi');
+    Route::post('/jadwalpresentasi/tambah', [PresentationSecheduleController::class, 'store'])->name('jadwalpresentasi.simpan');
+    Route::delete('/jadwalpresentasi/{id}', [PresentationSecheduleController::class, 'delete'])->name('jadwalpresentasi.hapus');
 
     Route::get('/lihatjadwalpresentasi', function() {
         return view('Penilai.lihatJadwalPresentasi');

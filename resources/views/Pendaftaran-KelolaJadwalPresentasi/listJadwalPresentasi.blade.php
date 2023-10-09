@@ -24,6 +24,20 @@
         </p>
     </div>
 
+    @if ($message = Session::get('success'))
+                <div class="alert alert-success alert-block">   
+                    <strong>{{ $message }}</strong>
+                </div>
+            @endif
+            @if ($message = Session::get('errors'))
+                <div class="alert alert-danger alert-block">   
+                    @foreach ($errors->all() as $error)
+                        <strong>{{ $error }}</strong>
+                        <br>
+                    @endforeach
+                </div>
+            @endif
+
     <div class="pb-2" style="display: flex; justify-content: flex-end;">
         <a href="#createJadwal" class="button btn-primary">
             <button id="openAddPresentasi   " class="btn btn-primary py-1 px-2" style="display: flex; align-items: center;">
@@ -87,20 +101,24 @@
 
             <!-- Table Body -->
             <tbody>
-                <tr>
-                    <th scope="row" class="text-center">1</th>
-                    <td>Tahun 2022</td>
-                    <td>GoShop</td>
-                    <td>BTPIP</td>
-                    <td>Gd. A</td>
-                    <td class="text-center">03 Maret 2022</td>
-                    <td class="text-center">08:00-09:00</td>
-                    <td class="text-center">LULUS</td>
-                    <td class="text-center action-icons">
-                        <a href="#viewJadwal"><i data-feather="eye"></i></a>
-                        <a href="#createJadwal"><i data-feather="edit-2"></i></a>
-                    </td>
-                </tr>
+                {{-- {{ $presentasi }} --}}
+                @foreach($presentasi as $present)
+                    <tr>
+                        <th scope="row" class="text-center">1</th>
+                        <td>{{ $present->MasterPeriodeProgram->MasterPeriode->mpe_name }}</td>
+                        <td>{{ $present->MasterStartup->ms_name }}</td>
+                        <td>{{ $present->MasterPeriodeProgram->MasterPrograminkubasi->mpi_name }}</td>
+                        <td>{{ $present->ps_place }}</td>
+                        <td class="text-center">{{ $present->ps_date->format('d-m-Y') }}</td>
+                        <td class="text-center">{{ $present->ps_timestart }}-{{ $present->ps_timeend }}</td>
+                        <td class="text-center">LULUS</td>
+                        <td class="text-center action-icons">
+                            <a href="#viewJadwal"><i data-feather="eye"></i></a>
+                            <a href="#createJadwal"><i data-feather="edit-2"></i></a>
+                            <a href="#deleteJadwal" data-id="{{ $present->ps_id }}"><i data-feather="trash-2"></i></a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
             <!-- Table Body -->
         </table>
@@ -123,12 +141,12 @@
             <div class="content">
                 <div class="container-fluid p-0">
                     <div class="input-group-lg rounded">
-                        <form action ="" method="post">
+                        <form action ="{{ route('jadwalpresentasi.simpan') }}" method="post">
                         @csrf
                             <div class="form-group row align-items-center">
                                 <label for="periode" class="col-sm-3">Nama Periode</label>
                                 <div class="col-sm-9">
-                                    <select id="periode" class="form-control form-select" >
+                                    <select name="periode" id="periode" class="form-control form-select" >
                                         <option value="" class="text-muted"></option>
                                         @foreach($periode as $per)
                                             <option value="{{ $per->mpe_id }}">{{ $per->mpe_name }}</option>
@@ -140,7 +158,7 @@
                             <div class="form-group row align-items-center">
                                 <label for="startup" class="col-sm-3">Nama Startup</label>
                                 <div class="col-sm-9">
-                                    <select id="startup" class="form-control form-select">
+                                    <select name="startup" id="startup" class="form-control form-select">
                                         <option value="" class="text-muted"></option>
                                         @foreach($startup as $start)
                                             <option value="{{ $start->ms_id }}">{{ $start->ms_name }}</option>
@@ -152,7 +170,7 @@
                             <div class="form-group row align-items-center">
                                 <label for="penilai" class="col-sm-3">Penilai</label>
                                 <div class="col-sm-9">
-                                    <select id="penilai" class="form-control form-select">
+                                    <select name="penilai" id="penilai" class="form-control form-select">
                                         <option value="" class="text-muted"></option>
                                         @foreach($user as $penilai)
                                             <option value="{{ $penilai->id }}">{{ $penilai->name }}</option>
@@ -164,7 +182,7 @@
                             <div class="form-group row align-items-center">
                                 <label for="date" class="col-sm-3">Tanggal</label>
                                 <div class="col-sm-9">
-                                    <input type="date" name="date" id="date" class="form-control">
+                                    <input type="date" name="tanggal" id="date" class="form-control">
                                 </div>
                             </div>
 
@@ -172,9 +190,9 @@
                                 <label for="time" class="col-sm-3">Pukul</label>
                                 <div class="col-sm-9">
                                     <div class="d-flex align-items-center">
-                                        <input type="time" name="time" id="timeFrom" class="form-control">
+                                        <input type="time" name="time_from" id="timeFrom" class="form-control">
                                         <span class="mx-4">s.d.</span>
-                                        <input type="time" name="time" id="timeTo" class="form-control">
+                                        <input type="time" name="time_to" id="timeTo" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -182,10 +200,10 @@
                             <div class="form-group row align-items-center">
                                 <label for="radio" class="col-sm-3">Online</label>
                                 <div class="col-sm-9 radio">
-                                    <input type="radio" id="iya" name="online" value="Iya">
+                                    <input type="radio" id="iya" name="online" value="1">
                                     <label for="iya">Iya</label>
             
-                                    <input type="radio" id="tidak" name="online" value="Tidak">
+                                    <input type="radio" id="tidak" name="online" value="0">
                                     <label for="tidak">Tidak</label>
                                 </div>
                             </div>
@@ -225,6 +243,40 @@
             </div>
         </div>
     </div>
+
+    <!-- DELETE -->
+    <div class="overlay" id="deleteCivitas">
+        <div class="wrapper" style="width: 25%">
+            <form action="/jadwalpresentasi/hapus" method="POST" id="deleteForm">
+            @csrf
+            @method('DELETE')
+            <div class="content">
+                <p class="text-center">
+                    Hapus jadwal?
+                </p>
+
+                <input type="hidden" name="_method" value="DELETE">
+
+                <div class="row mt-4">
+                    <!--Button Ya -->
+                    <div class="col">
+                        <button type="submit" id="delete" class="btn btn-primary" style="width: 50%">
+                            Ya
+                        </button>
+                    </div>
+                    <!--Button Ya -->
+
+                    <!--Button Tidak -->
+                    <div class="col d-flex justify-content-end">
+                        <a href="#" class="button-link text-center" style="width: 50%">Tidak</a>
+                    </div>
+                    <!--Button Tidak -->
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    <!-- DELETE -->
 
     {{-- POP UP VIEW --}}
     <div class="overlay" id="viewJadwal">
