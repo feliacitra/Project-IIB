@@ -167,6 +167,7 @@
                                         <input type="text" class="form-control" id="mediaSosial" placeholder="Media Sosial" value="{{ $member->mm_socialmedia }}" disabled>
                                     </div>
                                     {{-- @dd($member) --}}
+                                    {{-- @dd($member) --}}
                                     <div class="col">
                                         <label for="civitasTELU">Civitas Telkom University</label>
                                         <select id="civitasTELU" class="form-control form-select" disabled>
@@ -290,6 +291,8 @@
                 
                         {{-- @dd($component) --}}
                         <div class="form-group">
+                            {{-- @dd($mqDesk) --}}
+                            {{-- @if(isset($mqDesk)) --}}
                                 @csrf
                                 <h5 class="text-center mt-4">Desk Evaluation</h5>
                                 <div class="card">
@@ -310,8 +313,9 @@
                                     @endforeach
                                 </div>
                                 {{-- @dd($mqDesk) --}}
+                                @if(isset($mqDesk))
                                 <h5 class="text-center mt-4">NILAI AKHIR: {{$mqDesk->scs_totalscore}}</h5>
-                                
+                                @endif
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
@@ -344,6 +348,7 @@
                                     </button>
                                     <a href="{{route ('penilaianDE')}}" class="btn btn-secondary px-4">Kembali</a>
                                 </div>
+                                {{-- @endif --}}
                             </div>
                         </div>
                     </div>

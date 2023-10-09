@@ -38,6 +38,7 @@ class CreateStartupTable extends Migration
             $table->unsignedBigInteger('mm_id')->nullable(); // Added mm_id
             $table->string('ms_npwp')->nullable();
             $table->string('ms_pitchdeck')->nullable();
+            $table->string('ms_email')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->tinyInteger('ms_status');
             $table->timestamps();

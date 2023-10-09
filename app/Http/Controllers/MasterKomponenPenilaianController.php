@@ -245,7 +245,7 @@ class MasterKomponenPenilaianController extends Controller
         $mpe_id = $request->input('pilihNamaPeriode');
         $mpi_id = $request->input('pilihProgramInkubasi');
         $tahap = $request->input('pilihTahapanSeleksi');
-
+        
         $periode = MasterPeriode::find($mpe_id);
         $programInkubasi = MasterProgramInkubasi::find($mpi_id);
         
@@ -255,6 +255,7 @@ class MasterKomponenPenilaianController extends Controller
         
         $periodeProgram = MasterPeriodeProgram::where('mpe_id', $mpe_id)->where('mpi_id', $mpi_id)->first();
         
+        // dd($periodeProgram->mpd_id);
         $component = MasterComponent::firstOrCreate([
             'mct_step' => $tahap,
             'mpd_id' => $periodeProgram->mpd_id

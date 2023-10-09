@@ -99,16 +99,24 @@
                     <td>{{ $item->ms_name }}</td>
                     <td>{{ $item->masterPeriodeProgram->masterProgramInkubasi->mpi_name }}</td>
                     <td>{{ $item->masterCategory->mc_name }}</td>
+                    @if(count($item->startupComponentStatus)!= 0)
                     <td class="text-center">{{ $item->startupComponentStatus[0]->scs_totalscore}}</td>
+                        
                     @if(count($item->startupComponentStatus)==1)
-                    <td class="text-center">-</td>
+                        <td class="text-center">-</td>
+                        @else
+                        <td class="text-center">{{ $item->startupComponentStatus[1]->scs_totalscore}}</td>
+                        @endif
+
+                        @if($item->registationStatus->srt_status != null)
+                        <td class="text-center">{{ $item->registationStatus->srt_status }}</td>
+                        @else
+                        <td class="text-center">-</td>
+                        @endif
                     @else
-                    <td class="text-center">{{ $item->startupComponentStatus[1]->scs_totalscore}}</td>
-                    @endif
-                    @if($item->registationStatus->srt_status != null)
-                    <td class="text-center">{{ $item->registationStatus->srt_status }}</td>
-                    @else
-                    <td class="text-center">-</td>
+                        <td class="text-center">-</td>
+                        <td class="text-center">-</td>
+                        <td class="text-center">-</td>
                     @endif
                     <td class="text-center action-icons">
                         <!-- VIEW -->

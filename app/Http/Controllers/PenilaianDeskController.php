@@ -102,7 +102,7 @@ class PenilaianDeskController extends Controller
         })->where('ms_id',$component->ms_id)->first();
 
         
-        // dd($mqDesk);
+        // dd(auth()->user()->id);
         $masterKategori = MasterCategory::all();
         $universitas = MasterUniversitas::with('faculties', 'faculties.programStudy')->get();
         // $fakultas = MasterFakultas::all();

@@ -14,6 +14,7 @@ class MasterComponent extends Model
     protected $fillable = [
         'mct_id',
         'mct_step',
+        'mpd_id'
     ];
 
     public function periodeProgram()

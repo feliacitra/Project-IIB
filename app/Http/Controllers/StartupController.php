@@ -53,6 +53,7 @@ class StartupController extends Controller
     }
 
     public function store(Request $request){
+        // dd($request);
         if($request->collect('universitas-input')){
             // lainya create univ, fakultas, prodi
             // create universitas
@@ -197,10 +198,12 @@ class StartupController extends Controller
             'scs_totalscore' => $finalScore,
         ]);
 
+        
         $question = MasterPeriodeProgram::with('component.question.questionRange')->where('mpd_id', $request->mpdid)->first();
         // dd($request);
         for($i =0; $i < count($request->answers); $i++){
             // dd(StartupComponentStatus::where('ms_id', $msid)->first()->scs_id);
+            // dd($question);
             RegistationAnswer::create([
                 'mq_id' => $question->component[0]->question[$i]->id,
                 'mqr_id' => (int)$request->answers[$i],

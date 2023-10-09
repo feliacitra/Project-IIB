@@ -128,9 +128,17 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::get('/master/pendaftar', [DataPendaftarController::class, 'index'])->name('pendaftar');
     Route::get('/master/pendaftar/show/{id}', [DataPendaftarController::class, 'show'])->name('pendaftar.show');
 
-    // Route::get('/master/pendaftar/datastartup', function() {
-    //     return view('Pendaftaran-DataPendaftar.dataStartup');
-    // })->name('dataStartup');
+    Route::get('/master/pendaftar/datastartup', function() {
+        return view('Pendaftaran-DataPendaftar.dataStartup');
+    })->name('dataStartup');
+
+    Route::get('/datastartup', function() {
+        return view('Pendaftaran-DataStartup.listStartup');
+    })->name('datastartup');
+
+    Route::get('/datastartup/edit', function() {
+        return view('Pendaftaran-DataStartup.editDataStartup');
+    })->name('editdatastartup');
 
     Route::get('/master/penilaianDE/edit/{id}', [PenilaianDeskController::class, 'edit'])->name('penilaianDE.edit');
     Route::get('/master/penilaianDE/detail/{id}', [PenilaianDeskController::class, 'show'])->name('penilaianDE.show');

@@ -53,7 +53,8 @@
     <form action="{{ route('startup.store') }}" method="post" enctype="multipart/form-data">
     <input type="hidden" name="userid" value="{{ Auth::user()->id }}" />
     {{-- periode masih hard code, ambil dari respond data dashboard --}}
-    <input type="hidden" name="mpdid" value="" />
+    {{-- @dd($components[0]->periodeProgram->mpd_id ) --}}
+    <input type="hidden" name="mpdid" value="{{ $components[0]->periodeProgram->mpd_id }}" />
     {{-- @dd($components[0]->periodeProgram->mpd_id) --}}
     <div class="container-fluid mt-2">
         <nav>
@@ -199,7 +200,7 @@
                                             @foreach($universities as $university)
                                                 <option value="{{ $university->mu_id }}">{{ $university->mu_name }}</option>
                                             @endforeach
-                                                <option value="0">Lainnya</option>
+                                                <option value="lainnya">Lainnya</option>
                                         </select>
 
                                         <label for="fakultas">Fakultas</label>
@@ -208,7 +209,7 @@
                                             @foreach($faculties as $faculty)
                                                 {{-- <option value="{{ $faculty->mf_id }}">{{ $faculty->mf_name }}</option> --}}
                                             @endforeach
-                                            <option value="0">Lainnya</option>
+                                            <option value="lainnya">Lainnya</option>
                                         </select>
 
                                         <label for="prodi">Program Studi</label>
@@ -217,7 +218,7 @@
                                             @foreach($studyPrograms as $studyProgram)
                                                 {{-- <option value="{{ $studyProgram->mps_id }}">{{ $studyProgram->mps_name }}</option> --}}
                                             @endforeach
-                                            <option value="0">Lainnya</option>
+                                            <option value="lainnya">Lainnya</option>
                                         </select>
 
                                         <label for="nimnip">NIM/NIP</label>
@@ -270,6 +271,9 @@
     </div>
 
     <script>
+
+    let totalCard = 0;
+
         $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -278,7 +282,7 @@
 
             function onChangeDropdownUniversitas(event){
                 var select = event.target;
-                
+                // console.log('test');
                 var lastChar = select.id.substr(select.id.length - 1)
 
                 var selectedUniversityId = select.children[select.selectedIndex].value;
@@ -298,6 +302,7 @@
                         input.setAttribute('name', 'universitas-input[]');
                         
                         let element2 = event.target.id;
+                        // console.log(event.target.id)
                         $('#'+element2).after(element);
                         $('#label-'+element2).after(input);
                 }else{
@@ -497,6 +502,7 @@
         } 
 
         function addCard() {
+            totalCard +=1
             var container = document.querySelector("#nav-anggota .p-3");
 
             /* Create new card */
@@ -537,16 +543,9 @@
                 document.getElementById(`universitas-${totalCard-1}-input`).remove();
             }
             var existingRow = document.querySelector("#nav-anggota .card .row").cloneNode(true);
-            // console.log(document.getElementById(`label-universitas-${totalCard-1}`))
-            // console.log(document.getElementById(`universitas-${totalCard-1}-input`))
-            console.log(existingRow.children[1].children);
             existingRow.children[1].children[3].id = "universitas-"+totalCard;
             existingRow.children[1].children[5].id = "fakultas-"+totalCard;
             existingRow.children[1].children[7].id = "prodi-"+totalCard;
-            // console.log(existingRow.children[1].children[7]);
-
-            
-            // console.log(`label-${totalCard-1}`)
 
             cardBody.appendChild(existingRow);
 

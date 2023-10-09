@@ -47,10 +47,10 @@ class DashboardController extends Controller
                 'masterPeriodeProgram.masterPeriode',
                 'registationStatus',
                 'startupComponentStatus.registationAnswer')->where('mpd_id', request('history'))
-                ->first();
+                ->where('user_id', auth()->user()->id)->first();
 
                 $history = MasterStartup::with('historyStartup.masterPeriodeProgram.masterPeriode')->where('user_id', auth()->id())->first();
-                // dd($periode);
+                // dd($startup);
                 $check = 1;
             }else{
                 if(MasterPeriode::first()){
