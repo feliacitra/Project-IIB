@@ -223,16 +223,16 @@
                         </div>
                         <div class="col"></div>
                     </div>
-            
                     <div class="form-group">
-                            @csrf
-                            <h5 class="text-center mt-4">Self Assessment</h5>
-                            <div class="card">
-                                @foreach($mc->question as $questIdx => $q)
-                                <div class="card-body">
-                                    <p>{{ $q->mq_question }}</p>
-                                    <div class="radio mt-2">
-                                        @foreach($q->questionRange as $index => $qr)
+                        @csrf
+                        <h5 class="text-center mt-4">Self Assessment</h5>
+                        <div class="card">
+                            @foreach($mc->question as $questIdx => $q)
+                            <div class="card-body">
+                                <p>{{ $q->mq_question }}</p>
+                                <div class="radio mt-2">
+                                    @foreach($q->questionRange as $index => $qr)
+                                    {{-- @dd($component->startupComponentStatus[0]->registationAnswer[0]->mqr_id) --}}
                                         <input type="radio" id="{{ $qr->mqr_id }}" name="answer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}" {{ ($qr->mqr_id == $component->startupComponentStatus[0]->registationAnswer[$questIdx]->mqr_id) ? "checked" : "" }} disabled>
                                         <label for="{{ $qr->mqr_id }}">{{ $qr->mqr_description }}</label>
                                         @endforeach
@@ -289,9 +289,9 @@
                             <div class="col"></div>
                         </div>
                 
-                        {{-- @dd($component) --}}
+                        {{-- @dd($mqDesk) --}}
                         <div class="form-group">
-                            {{-- @dd($mqDesk) --}}
+                            {{-- @dd($componentDesk->question) --}}
                             {{-- @if(isset($mqDesk)) --}}
                                 @csrf
                                 <h5 class="text-center mt-4">Desk Evaluation</h5>
@@ -301,8 +301,8 @@
                                         <p>{{ $q->mq_question }}</p>
                                         <div class="radio mt-2">
                                             @foreach($q->questionRange as $index => $qr)
-                                            @if(isset($mqDesk))
-                                            <input type="radio" id="{{ $qr->mqr_id }}" name="deskAnswer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}" {{ ($qr->mqr_id == $mqDesk->registationAnswer[$questIdx]->mqr_id) ? "checked" : "" }}>
+                                            @if(isset($mqDesk[1]))
+                                            <input type="radio" id="{{ $qr->mqr_id }}" name="deskAnswer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}" {{ ($qr->mqr_id == $mqDesk[1]->registationAnswer[$questIdx]->mqr_id) ? "checked" : "" }}>
                                             @else
                                             <input type="radio" id="{{ $qr->mqr_id }}" name="deskAnswer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}">
                                             @endif
@@ -313,15 +313,16 @@
                                     @endforeach
                                 </div>
                                 {{-- @dd($mqDesk) --}}
-                                @if(isset($mqDesk))
-                                <h5 class="text-center mt-4">NILAI AKHIR: {{$mqDesk->scs_totalscore}}</h5>
+                                @if(isset($mqDesk) && isset($mqDesk[1]->registationAnswer[0]->mqr_id))
+                                <h5 class="text-center mt-4">NILAI AKHIR: {{$mqDesk[0]->scs_totalscore}}</h5>
                                 @endif
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
                                             <label for="catatanTambahan" class="col col-md-2">Catatan Tambahan</label>
-                                            @if(isset($mqDesk))
-                                            <textarea class="form-control col" name="catatan" id="catatanTambahan" cols="10" rows="4">{{ $mqDesk->scs_notes }}</textarea>
+                                            @if(isset($mqDesk[1]))
+                                            {{-- @dd($mqDesk) --}}
+                                            <textarea class="form-control col" name="catatan" id="catatanTambahan" cols="10" rows="4">{{ $mqDesk[1]->scs_notes }}</textarea>
                                             @else
                                             <textarea class="form-control col" name="catatan" id="catatanTambahan" cols="10" rows="4"></textarea>
                                             @endif

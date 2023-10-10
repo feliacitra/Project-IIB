@@ -25,28 +25,39 @@
     </div>
 
     {{-- @dd($kategori[0]->mc_name) --}}
+    <form action="{{ route('penilaianDE') }}" method="get">
     <div class="row mt-4">
-            <form action="{{ route('penilaianDE') }}" class="col-4 col-md-3 col-lg-2" method="get">
-                
-                <select name="periode" id="periode" class="form-control form-select">
-                    <option value="" class="text-muted">Periode</option>
-                    @foreach($periode as $item)
-                    <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }} </option>
-                    @endforeach
-                </select>   
-            <button type="submit" id="periodeButton" hidden></button>
-        </form>
-            
-        <form action="{{ route('penilaianDE') }}" class="col-4 col-md-3 col-lg-2" method="get">
-            
-                <select name="status" id="status" class="form-control form-select">
-                    <option value="" class="text-muted">Status</option>
-                    {{-- @foreach($startup->periodeProgram as $item) --}}
+                <div class="col-4 col-md-3 col-lg-2">
+                    <select name="pilihPeriode" id="periode" class="form-control form-select">
+                        <option value="select" class="text-muted">Periode</option>
+                        @foreach($periode as $item)
+                        @if($pilihPeriode == $item->mpe_id)
+                        <option selected value="{{ $item->mpe_id }}">{{ $item->mpe_name }} </option>
+                        @else
+                        <option value="{{ $item->mpe_id }}">{{ $item->mpe_name }} </option>
+                        @endif
+                        @endforeach
+                    </select>   
+                    <button type="submit" id="periodeButton" hidden></button>
+                </div>
+                {{-- @dd($pilihStatus) --}}
+                <div class="col-4 col-md-3 col-lg-2">
+                <select name="pilihStatus" id="status" class="form-control form-select">
+                    <option value="select" class="text-muted">Status</option>
+                    @if($pilihStatus == "Lulus")
+                    <option selected value="Lulus">LULUS</option>
+                    <option value="Tidak Lulus">TIDAK LULUS</option>
+                    @elseif($pilihStatus == 'Tidak Lulus')
+                    <option value="Lulus">LULUS</option>
+                    <option selected value="Tidak Lulus">TIDAK LULUS</option>
+                    @else
                     <option value="Lulus">LULUS</option>
                     <option value="Tidak Lulus">TIDAK LULUS</option>
+                    @endif
                     {{-- @endforeach --}}
                 </select>
-            <button type="submit" id="statusButton" hidden></button>
+                <button type="submit" id="statusButton" hidden></button>
+            </div>
         </form>
             
             
@@ -120,7 +131,7 @@
                     @endif
                     <td class="text-center action-icons">
                         <!-- VIEW -->
-                        {{-- <a href="{{ route('penilaianDE.show', $item->ms_id) }}"><i data-feather="eye"></i></a> --}}
+                        <a href="{{ route('penilaianDE.show', $item->ms_id) }}"><i data-feather="eye"></i></a>
                         <a href="{{ route('penilaianDE.edit', $item->ms_id) }}"><i data-feather="edit-2"></i></a>
                     </td>
                 </tr>

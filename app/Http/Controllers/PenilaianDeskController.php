@@ -25,7 +25,24 @@ use Illuminate\Support\Facades\Storage;
 
 class PenilaianDeskController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+        $pilihPeriode = '';
+        $pilihStatus = '';
+        $builder = MasterStartup::query();
+        // dd($builder->with('registationStatus')->get());
+        if ($request->has('pilihPeriode') && $request->pilihPeriode != 'select') {
+            $pilihPeriode = request('pilihPeriode');
+            $builder->whereHas('masterPeriodeProgram.masterPeriode', function ($query) use ($pilihPeriode) {
+                $query->where('master_periode.mpe_id', 'like', '%' . $pilihPeriode . '%');
+            });
+        }
+
+        if ($request->has('pilihStatus') && $request->pilihStatus != 'select') {
+            $pilihStatus = request('pilihStatus');
+            $builder->whereHas('registationStatus', function ($query) use ($pilihStatus) {
+                $query->where('srt_status', $pilihStatus);
+            });
+        }
 
         if (request('search')){
             $search = request('search');
@@ -36,30 +53,17 @@ class PenilaianDeskController extends Controller
                 ->orWhereHas('masterPeriodeProgram.masterPeriode', function ($query) use ($search) {
                     $query->where('mpe_name', 'like', '%' . $search . '%');
                 })->get();
-        }elseif(request('periode')){
-            $startup = MasterStartup::with('masterPeriodeProgram', 'startupComponentStatus')
-            ->whereHas('masterPeriodeProgram', function($q){
-                $q->where('mpe_id', request('periode'));
-            })->get();
-        }elseif(request('status')){
-            $startup = MasterStartup::with('masterPeriodeProgram', 'startupComponentStatus', 'registationStatus')
-            ->wherehas('registationStatus', function($q){
-                $q->where('srt_status', request('status'));
-            })->get();
-        }
-        else{
-            // dd($periode);
-            $startup = MasterStartup::with('masterPeriodeProgram', 'startupComponentStatus')->get();
         }
         
         // $mqDesk = StartupComponentStatus::with('registationAnswer')->
         // whereHas('registationAnswer',function($q){
-        //     $q->where('user_id','=',auth()->user()->id);
-        // })->get();
-
+            //     $q->where('user_id','=',auth()->user()->id);
+            // })->get();
+            
+        $startup = $builder->with('masterPeriodeProgram', 'startupComponentStatus')->get();
         $periode = MasterPeriode::get();
         // dd($startup); 
-        return view('Pendaftaran-PenilaianDE.penilaianDE', compact('startup', 'periode'));
+        return view('Pendaftaran-PenilaianDE.penilaianDE', compact('startup', 'periode', 'pilihPeriode', 'pilihStatus'));
     }
     
     public function show($id){
@@ -96,12 +100,10 @@ class PenilaianDeskController extends Controller
         $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi','question', 'question.questionRange')->where('mct_step', 1)->get();
         $componentDesk = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi','question', 'question.questionRange')->where('mct_step', 3)->where('mpd_id', $mc->periodeProgram->mpd_id)->first();
 
-        $mqDesk = StartupComponentStatus::with('registationAnswer')->
-        whereHas('registationAnswer',function($q){
-            $q->where('user_id','=',auth()->user()->id);
-        })->where('ms_id',$component->ms_id)->first();
+        $mqDesk = StartupComponentStatus::with('registationAnswer')
+        ->where('ms_id',$component->ms_id)->get();
 
-        
+        // dd($mqDesk);
         // dd(auth()->user()->id);
         $masterKategori = MasterCategory::all();
         $universitas = MasterUniversitas::with('faculties', 'faculties.programStudy')->get();
@@ -126,13 +128,11 @@ class PenilaianDeskController extends Controller
         $component->registationStatus->update(['srt_status' => $request->kelulusan]);
         $component->registationStatus->update(['srt_step' => 3]);
 
-        $mqDesk = StartupComponentStatus::with('registationAnswer')->
-        whereHas('registationAnswer',function($q){
-            $q->where('user_id','=',auth()->user()->id);
-        })->where('ms_id',$component->ms_id)->first();
+        $mqDesk = StartupComponentStatus::with('registationAnswer')
+        ->where('ms_id',$component->ms_id)->get();
         
         // if allready updated
-        if(!isset($mqDesk)){
+        if(!isset($mqDesk[1])){
             // count final score desk evaluation
             $score = 0;
             for($i =0; $i < count($request->deskAnswer); $i++){
@@ -165,9 +165,9 @@ class PenilaianDeskController extends Controller
                 ]);
             }
         }else{
-            for($i=0; $i < count($mqDesk->registationAnswer); $i++){
+            for($i=0; $i < count($mqDesk[1]->registationAnswer); $i++){
                 // dd($request);
-                    $mqDesk->registationAnswer[$i]->update(['mqr_id' => $request->deskAnswer[$i]]);
+                    $mqDesk[1]->registationAnswer[$i]->update(['mqr_id' => $request->deskAnswer[$i]]);
                 }
 
             $score = 0;
@@ -180,8 +180,8 @@ class PenilaianDeskController extends Controller
             }
             $finalScore = (int)$score / (int)count($request->deskAnswer);
                 
-            $mqDesk->update(['scs_notes' => $request->catatan]);
-            $mqDesk->update(['scs_totalscore' => $finalScore]);     
+            $mqDesk[1]->update(['scs_notes' => $request->catatan]);
+            $mqDesk[1]->update(['scs_totalscore' => $finalScore]);     
         }
 
           

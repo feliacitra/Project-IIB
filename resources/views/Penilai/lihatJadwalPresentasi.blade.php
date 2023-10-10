@@ -78,20 +78,28 @@
 
             <!-- Table Body -->
             <tbody>
+                @foreach($presentasi as $item)
                 <tr>
-                    <th scope="row" class="text-center">1</th>
-                    <td>Tahun 2022</td>
-                    <td>GoShop</td>
-                    <td>Gd. A</td>
-                    <td class="text-center">03 Maret 2022</td>
-                    <td class="text-center">08:00-09:00</td>
-                    <td class="text-center">3.0</td>
-                    <td class="text-center">LULUS</td>
+                    <th scope="row" class="text-center">{{ $loop->iteration }}</th>
+                    <td>{{ $item->masterPeriodeProgram->masterPeriode->mpe_name }}</td>
+                    <td>{{ $item->masterStartup->ms_name }}</td>
+                    <td>{{ $item->ps_place }}</td>
+                    <td class="text-center">{{ $item->ps_date->format('d-m-Y') }}</td>
+                    <td class="text-center">{{ $item->ps_timestart }} - {{ $item->ps_timeend }}</td>
+                    @if(isset($item->presentationEvaluator))
+                    <td class="text-center">{{ $item->presentationEvaluator->registationAnswer->ra_score }}</td>
+                    <td class="text-center">{{ $item->presentationEvaluator->registationAnswer->startupComponentStatus->srt_status }}</td>
+                    @else
+                    <td class="text-center">-</td>
+                    <td class="text-center">-</td>
+                    @endif
                     <td class="text-center action-icons">
-                        <a href="{{route ('lihatnilaipresentasi')}}"><i data-feather="eye"></i></a>
-                        <a href="{{route ('editnilaipresentasi')}}"><i data-feather="edit-2"></i></a>
+                        <a href="{{route ('lihatnilaipresentasi', $item->ps_id)}}"><i data-feather="eye"></i></a>
+                        <a href="{{route('editnilaipresentasi', $item->ps_id) }}"><i data-feather="edit-2"></i></a>
+                        
                     </td>
                 </tr>
+                @endforeach
             </tbody>
             <!-- Table Body -->
         </table>

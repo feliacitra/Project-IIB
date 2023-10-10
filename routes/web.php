@@ -22,8 +22,7 @@ use App\Http\Controllers\MasterKomponenPenilaianController;
 use App\Http\Controllers\StartupController;
 use Illuminate\Support\Facades\View;
 use App\Http\Controllers\PenilaiProfileController;
-
-
+use App\Http\Controllers\PresentationEvaluatorController;
 use Carbon\Carbon;
 
 /*
@@ -153,16 +152,12 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::post('/jadwalpresentasi/tambah', [PresentationSecheduleController::class, 'store'])->name('jadwalpresentasi.simpan');
     Route::delete('/jadwalpresentasi/{id}', [PresentationSecheduleController::class, 'delete'])->name('jadwalpresentasi.hapus');
     
-    Route::get('/lihatjadwalpresentasi', function() {
-        return view('Penilai.lihatJadwalPresentasi');
-    })->name('lihatjadwalpresentasi');
+    Route::get('/lihatjadwalpresentasi', [PresentationEvaluatorController::class, 'index'] )->name('lihatjadwalpresentasi');
+    Route::get('/lihatjadwalpresentasi/show/{id}',[PresentationEvaluatorController::class, 'show'] )->name('lihatnilaipresentasi');
     // Route::get('/master/penilaianDE', function() {
     //     return view('Pendaftaran-PenilaianDE.penilaianDE');
     // })->name('penilaianDE');
 
-    Route::get('/lihatjadwalpresentasi/lihatnilai', function() {
-        return view('penilai.nilaiView');
-    })->name('lihatnilaipresentasi');
 
     Route::get('/lihatjadwalpresentasi/editnilai', function() {
         return view('penilai.nilaiEdit');

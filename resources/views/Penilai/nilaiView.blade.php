@@ -38,22 +38,22 @@
             <div class="col">
                 <div class="info-pair">
                     <p class="info-label">Periode</p>
-                    <p class="info-value">: Tahun 2022</p>
+                    <p class="info-value">: {{ $presentasi->masterPeriodeProgram->masterPeriode->mpe_name }}</p>
                 </div>
                 <div class="info-pair mt-2">
                     <p class="info-label">Nama Startup</p>
-                    <p class="info-value">: GoShop</p>
+                    <p class="info-value">: {{ $presentasi->masterStartup->ms_name }}</p>
                 </div>
             </div>
             <div class="col"></div>
             <div class="col">
                 <div class="info-pair">
                     <p class="info-label">Program Inkubasi</p>
-                    <p class="info-value">: BTPIP</p>
+                    <p class="info-value">: {{ $presentasi->masterPeriodeProgram->masterProgramInkubasi->mpi_name }}</p>
                 </div>
                 <div class="info-pair mt-2">
                     <p class="info-label">Kategori</p>
-                    <p class="info-value">: SmartTech</p>
+                    <p class="info-value">: {{ $presentasi->masterStartup->masterCategory->mc_name }}</p>
                 </div>
             </div>
         </div>
@@ -62,21 +62,23 @@
             <form action="">
                 <h5 class="text-center mt-4">Penilaian Presentasi</h5>
                 <div class="card">
-                    <div class="card-body">
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aenean commodo ligula eget dolor. Aenean massa?</p>
-                        <div class="radio mt-2">
-                            <input type="radio" id="1" name="lorem_radio" value="1" disabled>
-                            <label for="1">Lorem lorem</label>
-
-                            <input type="radio" id="2" name="lorem_radio" value="2" disabled>
-                            <label for="2">Lorem ipsum</label>
-
-                            <input type="radio" id="3" name="lorem_radio" value="3" disabled>
-                            <label for="3">Dolor sit amet</label>
-
-                            <input type="radio" id="4" name="lorem_radio" value="4" disabled>
-                            <label for="4">Consecteturer</label>
+                    <div class="card">
+                        {{-- @dd($componentDesk) --}}
+                        @foreach($componentDesk->question as $questIdx => $q)
+                        <div class="card-body">
+                            <p>{{ $q->mq_question }}</p>
+                            <div class="radio mt-2">
+                                @foreach($q->questionRange as $index => $qr)
+                                @if(isset($mqDesk[2]))
+                                <input type="radio" id="{{ $qr->mqr_id }}" name="deskAnswer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}" {{ ($qr->mqr_id == $mqDesk[2]->registationAnswer[$questIdx]->mqr_id) ? "checked" : "" }}>
+                                @else
+                                <input type="radio" id="{{ $qr->mqr_id }}" name="deskAnswer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}">
+                                @endif
+                                <label for="{{ $qr->mqr_id }}">{{ $qr->mqr_description }}</label>
+                                @endforeach
+                            </div>
                         </div>
+                        @endforeach
                     </div>
                 </div>
 
