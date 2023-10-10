@@ -119,8 +119,8 @@
                         <td class="text-center">{{ $item->startupComponentStatus[1]->scs_totalscore}}</td>
                         @endif
 
-                        @if($item->registationStatus->srt_status != null)
-                        <td class="text-center">{{ $item->registationStatus->srt_status }}</td>
+                        @if($item->registationStatus[0]->srt_status != null)
+                        <td class="text-center">{{ $item->registationStatus[0]->srt_status }}</td>
                         @else
                         <td class="text-center">-</td>
                         @endif
@@ -131,7 +131,7 @@
                     @endif
                     <td class="text-center action-icons">
                         <!-- VIEW -->
-                        <a href="{{ route('penilaianDE.show', $item->ms_id) }}"><i data-feather="eye"></i></a>
+                        {{-- <a href="{{ route('penilaianDE.show', $item->ms_id) }}"><i data-feather="eye"></i></a> --}}
                         <a href="{{ route('penilaianDE.edit', $item->ms_id) }}"><i data-feather="edit-2"></i></a>
                     </td>
                 </tr>

@@ -79,16 +79,17 @@
             <!-- Table Body -->
             <tbody>
                 @foreach($presentasi as $item)
+                {{-- @dd($item->masterStartup->registationStatus->srt_status) --}}
                 <tr>
                     <th scope="row" class="text-center">{{ $loop->iteration }}</th>
                     <td>{{ $item->masterPeriodeProgram->masterPeriode->mpe_name }}</td>
                     <td>{{ $item->masterStartup->ms_name }}</td>
-                    <td>{{ $item->ps_place }}</td>
+                <td>{{ $item->ps_place }}</td>
                     <td class="text-center">{{ $item->ps_date->format('d-m-Y') }}</td>
                     <td class="text-center">{{ $item->ps_timestart }} - {{ $item->ps_timeend }}</td>
                     @if(isset($item->presentationEvaluator))
-                    <td class="text-center">{{ $item->presentationEvaluator->registationAnswer->ra_score }}</td>
-                    <td class="text-center">{{ $item->presentationEvaluator->registationAnswer->startupComponentStatus->srt_status }}</td>
+                    <td class="text-center">{{ $item->presentationEvaluator->startupComponentStatus->scs_totalscore }}</td>
+                    <td class="text-center">{{ $item->masterStartup->registationStatus[1]->srt_status }}</td>
                     @else
                     <td class="text-center">-</td>
                     <td class="text-center">-</td>

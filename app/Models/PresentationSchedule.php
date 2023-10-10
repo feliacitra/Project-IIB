@@ -37,4 +37,9 @@ class PresentationSchedule extends Model
     {
         return $this->belongsTo(MasterStartup::class, 'ms_id');
     }
+
+    public function presentationEvaluator()
+    {
+        return $this->belongsTo(presentationEvaluator::class, 'ps_id', 'ps_id');
+    }
 }

@@ -61,7 +61,7 @@
                     </div>
                     <div class="col">
                         {{-- @dd($startup) --}}
-                        @if($startup->registationStatus->srt_status == "Tidak Lulus")
+                        @if($startup->registationStatus[0]->srt_status == "Tidak Lulus")
                         <div class="alert alert-info text-dark" role="alert">
                             <h6><i data-feather="info"></i>Informasi</h6>
                             <p class="mt-2" style="margin-left: 1.7rem">Maaf kamu belum dapat mengikuti tahap seleksi selanjutnya.</p>
@@ -82,7 +82,7 @@
                             <p class="date">{{ $startDate }}</p>
                             <div class="status success">LOLOS</div>
                         </li>
-                        @if($startup->registationStatus->srt_status == "Tidak Lulus")
+                        @if($startup->registationStatus[0]->srt_status == "Tidak Lulus")
                         <li class="fail">
                             <p>Penilaian Desk Evaluation</p>
                             <p class="date">{{ $penilaianDate }}</p>
@@ -91,15 +91,33 @@
                         <li>
                             Presentasi
                         </li>
-                        @elseif($startup->registationStatus->srt_status == 'Lulus')
+                        @elseif($startup->registationStatus[0]->srt_status == 'Lulus')
                         <li class="success">
                             <p>Penilaian Desk Evaluation</p>
                             <p class="date">{{ $penilaianDate }}</p>
                             <div class="status success">LOLOS</div>
                         </li>
+                        @if(isset($startup->registationStatus[1]))
+                            @if($startup->registationStatus[1]->srt_status == 'Lulus')
+                                <li class="success">
+                                    <p>Presentasi</p>
+                                    <p class="date">{{ $presentasiDate->format('d-M-y') }}</p>
+                                    <div class="status success">LOLOS</div>
+                                </li>
+                            @elseif($startup->registationStatus[1]->srt_status == 'Tidak Lulus')
+                                <li class="fail" >
+                                    <p>Presentasi</p>
+                                    <p class="date">{{ $presentasiDate->format('d-M-y') }}</p>
+                                    <div class="status fail">TIDAK LOLOS</div>
+                                </li>
+                            @endif
+                        @else
                         <li class="" style="color:orange">
                             <p style="color: orange">Presentasi</p>
+                            <div class="status" style="background-color: orange; color:white">Dalam Proses</div>
                         </li>
+                        @endif
+                        {{-- presentasi --}}
                         @else
                         <li class="" style="color:orange">
                             <p>Penilaian Desk Evaluation</p>

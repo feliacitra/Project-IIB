@@ -125,8 +125,8 @@ class PenilaianDeskController extends Controller
         'registationStatus',
         'startupComponentStatus.registationAnswer')->where('ms_id', $id)->first();
         
-        $component->registationStatus->update(['srt_status' => $request->kelulusan]);
-        $component->registationStatus->update(['srt_step' => 3]);
+        $component->registationStatus[0]->update(['srt_status' => $request->kelulusan]);
+        $component->registationStatus[0]->update(['srt_step' => 3]);
 
         $mqDesk = StartupComponentStatus::with('registationAnswer')
         ->where('ms_id',$component->ms_id)->get();

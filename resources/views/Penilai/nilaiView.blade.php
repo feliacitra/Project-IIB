@@ -62,41 +62,60 @@
             <form action="">
                 <h5 class="text-center mt-4">Penilaian Presentasi</h5>
                 <div class="card">
-                    <div class="card">
-                        {{-- @dd($componentDesk) --}}
-                        @foreach($componentDesk->question as $questIdx => $q)
-                        <div class="card-body">
-                            <p>{{ $q->mq_question }}</p>
-                            <div class="radio mt-2">
-                                @foreach($q->questionRange as $index => $qr)
-                                @if(isset($mqDesk[2]))
-                                <input type="radio" id="{{ $qr->mqr_id }}" name="deskAnswer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}" {{ ($qr->mqr_id == $mqDesk[2]->registationAnswer[$questIdx]->mqr_id) ? "checked" : "" }}>
-                                @else
-                                <input type="radio" id="{{ $qr->mqr_id }}" name="deskAnswer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}">
-                                @endif
-                                <label for="{{ $qr->mqr_id }}">{{ $qr->mqr_description }}</label>
-                                @endforeach
-                            </div>
+                    {{-- @dd($componentDesk) --}}
+                    @foreach($componentDesk->question as $questIdx => $q)
+                    <div class="card-body">
+                        <p>{{ $q->mq_question }}</p>
+                        <div class="radio mt-2">
+                            @foreach($q->questionRange as $index => $qr)
+                            @if(isset($mqDesk[2]))
+                            <input type="radio" disabled id="{{ $qr->mqr_id }}" name="deskAnswer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}" {{ ($qr->mqr_id == $mqDesk[2]->registationAnswer[$questIdx]->mqr_id) ? "checked" : "" }}>
+                            @else
+                            <input type="radio" disabled id="{{ $qr->mqr_id }}" name="deskAnswer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}">
+                            @endif
+                            <label for="{{ $qr->mqr_id }}">{{ $qr->mqr_description }}</label>
+                            @endforeach
                         </div>
-                        @endforeach
                     </div>
+                    @endforeach
                 </div>
-
-                <h5 class="text-center mt-4">NILAI AKHIR: -</h5>
+                
+                @if(isset($mqDesk[2]))
+                <h5 class="text-center mt-4">NILAI AKHIR: - {{ $mqDesk[2]->scs_totalscore }}</h5>
+                @else
+                <h5 class="text-center mt-4">NILAI AKHIR: -  </h5>
+                @endif
                 
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
                             <label for="catatanTambahan" class="col col-md-2">Catatan Tambahan</label>
+                            @if(isset($mqDesk[2]))
+                            <textarea class="form-control col" name="catatan" id="catatanTambahan" cols="10" rows="4" disabled>{{ $mqDesk[2]->scs_notes }}</textarea>
+                            @else
                             <textarea class="form-control col" name="catatan" id="catatanTambahan" cols="10" rows="4" disabled></textarea>
+                            @endif
                         </div>
 
                         <div class="radio mt-4">
+                            @if(isset($presentasi->masterStartup->registationStatus[1]))
+                                @if($presentasi->masterStartup->registationStatus[1]->srt_status == 'Lulus')
+                                    <input type="radio" id="lulus" name="kelulusan" value="Lulus" disabled checked>
+                                    <label for="lulus">Lulus</label>
+                                    <input type="radio" id="tidakLulus" name="kelulusan" disabled value="Tidak Lulus">
+                                    <label for="tidakLulus">Tidak Lulus</label>
+                                @else
+                                    <input type="radio" id="lulus" name="kelulusan" disabled value="Lulus">
+                                    <label for="lulus">Lulus</label>
+                                    <input type="radio" id="tidakLulus" name="kelulusan" disabled value="Tidak Lulus" checked>
+                                    <label for="tidakLulus">Tidak Lulus</label>
+                                @endif
+                            @else
                             <input type="radio" id="lulus" name="kelulusan" value="Lulus" disabled>
                             <label for="lulus">Lulus</label>
-
-                            <input type="radio" id="tidakLulus" name="kelulusan" value="Tidak Lulus" disabled>
+                            <input type="radio" id="tidakLulus" name="kelulusan" disabled value="Tidak Lulus">
                             <label for="tidakLulus">Tidak Lulus</label>
+                            @endif
                         </div>
                     </div>
                 </div>

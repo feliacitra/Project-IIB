@@ -38,46 +38,47 @@
             <div class="col">
                 <div class="info-pair">
                     <p class="info-label">Periode</p>
-                    <p class="info-value">: Tahun 2022</p>
+                    <p class="info-value">: {{ $presentasi->masterPeriodeProgram->masterPeriode->mpe_name }}</p>
                 </div>
                 <div class="info-pair mt-2">
                     <p class="info-label">Nama Startup</p>
-                    <p class="info-value">: GoShop</p>
+                    <p class="info-value">: {{ $presentasi->masterStartup->ms_name }}</p>
                 </div>
             </div>
             <div class="col"></div>
             <div class="col">
                 <div class="info-pair">
                     <p class="info-label">Program Inkubasi</p>
-                    <p class="info-value">: BTPIP</p>
+                    <p class="info-value">: {{ $presentasi->masterPeriodeProgram->masterProgramInkubasi->mpi_name }}</p>
                 </div>
                 <div class="info-pair mt-2">
                     <p class="info-label">Kategori</p>
-                    <p class="info-value">: SmartTech</p>
+                    <p class="info-value">: {{ $presentasi->masterStartup->masterCategory->mc_name }}</p>
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            <form action="">
+            <form action="{{ route('updatenilaipresentasi', $presentasi->ps_id) }}" method="post">
+                @csrf
                 <h5 class="text-center mt-4">Penilaian Presentasi</h5>
                 <div class="card">
+                    {{-- @dd($componentDesk) --}}
+                    @foreach($componentDesk->question as $questIdx => $q)
                     <div class="card-body">
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aenean commodo ligula eget dolor. Aenean massa?</p>
+                        <p>{{ $q->mq_question }}</p>
                         <div class="radio mt-2">
-                            <input type="radio" id="1" name="lorem_radio" value="1">
-                            <label for="1">Lorem lorem</label>
-
-                            <input type="radio" id="2" name="lorem_radio" value="2">
-                            <label for="2">Lorem ipsum</label>
-
-                            <input type="radio" id="3" name="lorem_radio" value="3">
-                            <label for="3">Dolor sit amet</label>
-
-                            <input type="radio" id="4" name="lorem_radio" value="4">
-                            <label for="4">Consecteturer</label>
+                            @foreach($q->questionRange as $index => $qr)
+                            @if(isset($mqDesk[2]))
+                            <input type="radio" id="{{ $qr->mqr_id }}" name="deskAnswer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}" {{ ($qr->mqr_id == $mqDesk[2]->registationAnswer[$questIdx]->mqr_id) ? "checked" : "" }}>
+                            @else
+                            <input type="radio" id="{{ $qr->mqr_id }}" name="deskAnswer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}">
+                            @endif
+                            <label for="{{ $qr->mqr_id }}">{{ $qr->mqr_description }}</label>
+                            @endforeach
                         </div>
                     </div>
+                    @endforeach
                 </div>
 
                 <h5 class="text-center mt-4">NILAI AKHIR: -</h5>
@@ -86,21 +87,38 @@
                     <div class="card-body">
                         <div class="row">
                             <label for="catatanTambahan" class="col col-md-2">Catatan Tambahan</label>
+                            @if(isset($mqDesk[2]))
+                            <textarea class="form-control col" name="catatan" id="catatanTambahan" cols="10" rows="4">{{ $mqDesk[2]->scs_notes }}</textarea>
+                            @else
                             <textarea class="form-control col" name="catatan" id="catatanTambahan" cols="10" rows="4"></textarea>
+                            @endif
                         </div>
 
                         <div class="radio mt-4">
+                            @if(isset($presentasi->masterStartup->registationStatus[1]))
+                                @if($presentasi->masterStartup->registationStatus[1]->srt_status == 'Lulus')
+                                    <input type="radio" id="lulus" name="kelulusan" value="Lulus"  checked>
+                                    <label for="lulus">Lulus</label>
+                                    <input type="radio" id="tidakLulus" name="kelulusan"  value="Tidak Lulus">
+                                    <label for="tidakLulus">Tidak Lulus</label>
+                                @else
+                                    <input type="radio" id="lulus" name="kelulusan"  value="Lulus">
+                                    <label for="lulus">Lulus</label>
+                                    <input type="radio" id="tidakLulus" name="kelulusan"  value="Tidak Lulus" checked>
+                                    <label for="tidakLulus">Tidak Lulus</label>
+                                @endif
+                            @else
                             <input type="radio" id="lulus" name="kelulusan" value="Lulus">
                             <label for="lulus">Lulus</label>
-
                             <input type="radio" id="tidakLulus" name="kelulusan" value="Tidak Lulus">
                             <label for="tidakLulus">Tidak Lulus</label>
+                            @endif
                         </div>
                     </div>
                 </div>
 
                 <div class="text-center inner-bottom-button">
-                    <button class="btn btn-primary px-4" style="margin-right: 1rem;">
+                    <button type="submit" class="btn btn-primary px-4" style="margin-right: 1rem;">
                         Simpan
                     </button>
                     <a href="{{route ('lihatjadwalpresentasi')}}" class="btn btn-secondary px-4">Kembali</a>

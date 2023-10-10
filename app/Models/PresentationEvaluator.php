@@ -9,13 +9,13 @@ class PresentationEvaluator extends Model
 {
     use HasFactory;
 
-    protected $table = 'presentation_schedules';
-    protected $primaryKey = 'mu_id';
+    protected $table = 'presentation_evaluator';
+    protected $primaryKey = 'pe_id';
 
     protected $fillable = [
         'ps_id',
         'user_id',
-        'ra_id',
+        'scs_id',
         ];
 
 
@@ -27,9 +27,9 @@ class PresentationEvaluator extends Model
     {
         return $this->belongsTo(PresentationSchedule::class, 'ps_id', 'ps_id');
     }
-    public function registationAnswer()
+    public function startupComponentStatus()
     {
-        return $this->belongsTo(RegistationAnswer::class, 'ra_id', 'ra_id');
+        return $this->belongsTo(startupComponentStatus::class, 'scs_id', 'scs_id');
     }
     
 }

@@ -299,7 +299,7 @@
                                         <div class="radio mt-2">
                                             @foreach($q->questionRange as $index => $qr)
                                             @if(isset($mqDesk))
-                                            <input type="radio" id="{{ $qr->mqr_id }}" name="deskAnswer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}" {{ ($qr->mqr_id == $mqDesk->registationAnswer[$questIdx]->mqr_id) ? "checked" : "" }}>
+                                            <input type="radio" id="{{ $qr->mqr_id }}" name="deskAnswer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}" {{ ($qr->mqr_id == $mqDesk[1]->registationAnswer[$questIdx]->mqr_id) ? "checked" : "" }}>
                                             @else
                                             <input type="radio" id="{{ $qr->mqr_id }}" name="deskAnswer[{{ $loop->parent->index }}]" value="{{ $qr->mqr_id }}">
                                             @endif
@@ -309,22 +309,25 @@
                                     </div>
                                     @endforeach
                                 </div>
-                                {{-- @dd($mqDesk) --}}
-                                <h5 class="text-center mt-4">NILAI AKHIR: {{$mqDesk->scs_totalscore}}</h5>
-                                
+
+                                @if(isset($mqDesk[1]))
+                                <h5 class="text-center mt-4">NILAI AKHIR: {{$mqDesk[1]->scs_totalscore}}</h5>
+                                @endif
+
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
                                             <label for="catatanTambahan" class="col col-md-2">Catatan Tambahan</label>
-                                            @if(isset($mqDesk))
-                                            <textarea class="form-control col" disabled name="catatan" id="catatanTambahan" cols="10" rows="4">{{ $mqDesk->scs_notes }}</textarea>
+                                            @if(isset($mqDesk[1]))
+                                            <textarea class="form-control col" disabled name="catatan" id="catatanTambahan" cols="10" rows="4">{{ $mqDesk[1]->scs_notes }}</textarea>
                                             @else
                                             <textarea class="form-control col" disabled name="catatan" id="catatanTambahan" cols="10" rows="4"></textarea>
                                             @endif
                                         </div>
                 
+                                        @if(isset($component->registationStatus[0]))
                                         <div class="radio mt-4">
-                                            @if($component->registationStatus->srt_status == "Lulus")
+                                            @if($component->registationStatus[0]->srt_status == "Lulus")
                                             <input type="radio" disabled id="lulus" name="kelulusan" value="Lulus" checked>
                                             <label for="lulus">Lulus</label>
                                             <input type="radio" id="tidakLulus"  disabled name="kelulusan" value="Tidak Lulus">
@@ -336,6 +339,7 @@
                                             <label for="tidakLulus">Tidak Lulus</label>
                                             @endif
                                         </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="text-center inner-bottom-button">

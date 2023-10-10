@@ -90,16 +90,24 @@
                     <td>{{ $item->mm_name }}</td>
                     <td>{{ $item->masterStartup->masterPeriodeProgram->masterProgramInkubasi->mpi_name }}</td>
                     <td>{{ $item->masterStartup->masterCategory->mc_name }}</td>
-                    @if($item->masterStartup->registationStatus->srt_status == 'Lulus')
+                    @if($item->masterStartup->registationStatus[0]->srt_status == 'Lulus')
                     <td class="text-center"><i data-feather="check"></i></td>
-                    @elseif($item->masterStartup->registationStatus->srt_status == 'Tidak Lulus')
+                    @elseif($item->masterStartup->registationStatus[0]->srt_status == 'Tidak Lulus')
                     <td class="text-center"><i data-feather="x"></i></td>
                     @else
                     <td class="text-center"><i data-feather="minus"></i></td>
                     @endif
+                    @if($item->masterStartup->registationStatus[1]->srt_status == 'Lulus')
+                    <td class="text-center"><i data-feather="check"></i></td>
+                    @elseif($item->masterStartup->registationStatus[1]->srt_status == 'Tidak Lulus')
+                    <td class="text-center"><i data-feather="x"></i></td>
+                    @else
                     <td class="text-center"><i data-feather="minus"></i></td>
-                    @if($item->masterStartup->registationStatus->srt_status)
-                    <td class="text-center">{{ $item->masterStartup->registationStatus->srt_status }}</td>
+                    @endif
+                    @if($item->masterStartup->registationStatus[0]->srt_status == 'Lulus' &&  $item->masterStartup->registationStatus[1]->srt_status == 'Lulus')
+                    <td class="text-center">Lulus</td>
+                    @elseif($item->masterStartup->registationStatus[0]->srt_status == 'Tidak Lulus' ||  $item->masterStartup->registationStatus[1]->srt_status == 'Tidak Lulus')
+                    <td class="text-center">Tidak Lulus</td>
                     @else
                     <td class="text-center">-</td>
                     @endif

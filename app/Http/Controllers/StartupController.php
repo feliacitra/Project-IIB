@@ -230,7 +230,8 @@ class StartupController extends Controller
 
 
     public function setInkubasi(Request $request){
-        $component = MasterComponent::with('question', 'question.questionRange', 'periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $request->program_id)->first();
+        $component = MasterComponent::with('question', 'question.questionRange', 'periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')
+        ->where('mpd_id', $request->program_id)->where('mct_step', 1)->first();
         return response()->json($component);
     }
 }

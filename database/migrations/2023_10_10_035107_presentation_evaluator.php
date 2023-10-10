@@ -17,7 +17,7 @@ class PresentationEvaluator extends Migration
             $table->id('pe_id');
             $table->foreignId('ps_id')->nullable()->constrained('presentation_schedules', 'ps_id');
             $table->foreignId('user_id')->nullable()->constrained('users', 'id');
-            $table->foreignId('ra_id')->nullable()->constrained('registation_answer', 'ra_id');
+            $table->foreignId('scs_id')->nullable()->constrained('startup_componentstatus', 'scs_id');
             $table->timestamps();
         });
     }

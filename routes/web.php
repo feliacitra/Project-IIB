@@ -154,14 +154,13 @@ Route::middleware(['auth', 'access'])->group(function () {
     
     Route::get('/lihatjadwalpresentasi', [PresentationEvaluatorController::class, 'index'] )->name('lihatjadwalpresentasi');
     Route::get('/lihatjadwalpresentasi/show/{id}',[PresentationEvaluatorController::class, 'show'] )->name('lihatnilaipresentasi');
+    Route::get('/lihatjadwalpresentasi/editnilai/{id}', [PresentationEvaluatorController::class, 'edit'])->name('editnilaipresentasi');
+    Route::post('/lihatjadwalpresentasi/update/{id}', [PresentationEvaluatorController::class, 'update'])->name('updatenilaipresentasi');
     // Route::get('/master/penilaianDE', function() {
     //     return view('Pendaftaran-PenilaianDE.penilaianDE');
     // })->name('penilaianDE');
 
 
-    Route::get('/lihatjadwalpresentasi/editnilai', function() {
-        return view('penilai.nilaiEdit');
-    })->name('editnilaipresentasi');
 
     Route::get('/berkas', function() {
         return view('Pendaftaran-UnduhUnggahBerkas.listBerkas');

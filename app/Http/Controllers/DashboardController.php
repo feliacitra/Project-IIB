@@ -7,6 +7,7 @@ use App\Models\MasterPeriode as ModelsMasterPeriode;
 use App\Models\MasterStartup;
 use App\Models\MasterPeriode;
 use App\Models\MasterPeriodeProgram;
+use App\Models\PresentationSchedule;
 use App\Models\User;
 use App\Notifications\PendaftaranStartupNotification;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class DashboardController extends Controller
             $penilaianDate = '';
                 $startDate = '';
                 $periode='';
+                $presentasiDate= '';
                 $history = null;
                 $startup=null;
                 
@@ -85,12 +87,20 @@ class DashboardController extends Controller
                     
                 }
                     if($startup != null){
-                        $penilaianDate = date('d-M-Y', strtotime($startup->registationStatus->updated_at));
+                        $penilaianDate = date('d-M-Y', strtotime($startup->registationStatus[0]->updated_at));
                         $startDate = date('d-M-Y', strtotime($startup->ms_startdate));
                     }      
                     $check = 0;
                 }
-                return view('dashboard')->with(compact('periode','status', 'startup', 'penilaianDate', 'startDate', 'history', 'check'));
+
+                $presentasi = PresentationSchedule::with('MasterPeriodeProgram.MasterPeriode', 'MasterStartup', 'presentationEvaluator')
+                ->whereHas('MasterStartup', function($q){
+                    $q->where('user_id', auth()->user()->id);
+                })->first();
+                if($presentasi != null){
+                    $presentasiDate = $presentasi->presentationEvaluator->created_at;
+                }
+                return view('dashboard')->with(compact('periode','status', 'startup', 'penilaianDate', 'startDate', 'history', 'check', 'presentasiDate'));
             }
         return view('dashboard');
     }

@@ -68,6 +68,6 @@ class MasterStartup extends Model
     }
 
     public function registationStatus(){
-        return $this->hasOne(RegistationStatus::class, 'ms_id');
+        return $this->hasMany(RegistationStatus::class, 'ms_id', 'ms_id');
     }
 }

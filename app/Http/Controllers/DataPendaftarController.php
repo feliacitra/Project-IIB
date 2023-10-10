@@ -89,10 +89,8 @@ class DataPendaftarController extends Controller
         $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi','question', 'question.questionRange')->where('mct_step', 1)->get();
         $componentDesk = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi','question', 'question.questionRange')->where('mct_step', 3)->where('mpd_id', $mc->periodeProgram->mpd_id)->first();
 
-        $mqDesk = StartupComponentStatus::with('registationAnswer')->
-        whereHas('registationAnswer',function($q){
-            $q->where('user_id','=',auth()->user()->id);
-        })->where('ms_id',$component->ms_id)->first();
+        $mqDesk = StartupComponentStatus::with('registationAnswer')
+        ->where('ms_id',$component->ms_id)->get();
 
         
         // dd($mqDesk);

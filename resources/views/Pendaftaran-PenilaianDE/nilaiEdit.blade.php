@@ -329,7 +329,7 @@
                                         </div>
                 
                                         <div class="radio mt-4">
-                                            @if($component->registationStatus->srt_status == "Lulus")
+                                            @if($component->registationStatus[0]->srt_status == "Lulus")
                                             <input type="radio" id="lulus" name="kelulusan" value="Lulus" checked>
                                             <label for="lulus">Lulus</label>
                                             <input type="radio" id="tidakLulus" name="kelulusan" value="Tidak Lulus">
