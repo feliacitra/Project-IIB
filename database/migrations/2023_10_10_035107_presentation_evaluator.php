@@ -15,7 +15,7 @@ class PresentationEvaluator extends Migration
     {
         Schema::create('presentation_evaluator', function (Blueprint $table) {
             $table->id('pe_id');
-            $table->foreignId('ps_id')->nullable()->constrained('presentation_schedules', 'ps_id');
+            $table->foreignId('ps_id')->nullable()->constrained('presentation_schedules', 'ps_id')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained('users', 'id');
             $table->foreignId('scs_id')->nullable()->constrained('startup_componentstatus', 'scs_id');
             $table->timestamps();

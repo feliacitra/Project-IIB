@@ -95,7 +95,7 @@
                     <td class="text-center">-</td>
                     @endif
                     <td class="text-center action-icons">
-                        <a href="{{route ('lihatnilaipresentasi', $item->ps_id)}}"><i data-feather="eye"></i></a>
+                        {{-- <a href="{{route ('lihatnilaipresentasi', $item->ps_id)}}"><i data-feather="eye"></i></a> --}}
                         <a href="{{route('editnilaipresentasi', $item->ps_id) }}"><i data-feather="edit-2"></i></a>
                         
                     </td>

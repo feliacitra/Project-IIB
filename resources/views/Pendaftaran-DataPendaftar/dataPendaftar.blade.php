@@ -68,7 +68,6 @@
                     <th scope="col" style="width: 5%;">#</th>
                     <th scope="col" style="width: 10%">PERIODE</th>
                     <th scope="col" style="width: 15%">NAMA STARTUP</th>
-                    <th scope="col" style="width: 15%">NAMA PENGGUNA</th>
                     <th scope="col" style="width: 15%">PROGRAM INKUBASI</th>
                     <th scope="col" style="width: 15%">KATEGORI</th>
                     <th scope="col" style="width: 10%">DESK EVALUATION</th>
@@ -82,38 +81,53 @@
             <!-- Table Body -->
             <tbody>
                 {{-- @dd($member) --}}
-                @foreach($member as $item)
+                @foreach($startup as $item)
+                {{-- @dd($item) --}}
                 <tr>
                     <th scope="row" class="text-center">{{ $loop->iteration }}</th>
-                    <td>{{ $item->masterStartup->masterPeriodeProgram->masterPeriode->mpe_name }}</td>
-                    <td>{{ $item->masterStartup->ms_name }}</td>
-                    <td>{{ $item->mm_name }}</td>
-                    <td>{{ $item->masterStartup->masterPeriodeProgram->masterProgramInkubasi->mpi_name }}</td>
-                    <td>{{ $item->masterStartup->masterCategory->mc_name }}</td>
-                    @if($item->masterStartup->registationStatus[0]->srt_status == 'Lulus')
-                    <td class="text-center"><i data-feather="check"></i></td>
-                    @elseif($item->masterStartup->registationStatus[0]->srt_status == 'Tidak Lulus')
-                    <td class="text-center"><i data-feather="x"></i></td>
+                    <td>{{ $item->masterPeriodeProgram->masterPeriode->mpe_name }}</td>
+                    <td>{{ $item->ms_name }}</td>
+                    <td>{{ $item->masterPeriodeProgram->masterProgramInkubasi->mpi_name }}</td>
+                    <td>{{ $item->masterCategory->mc_name }}</td>
+                    {{-- desk evaluatin --}}
+                    @if(isset($item->registationStatus[0]))
+                        @if($item->registationStatus[0]->srt_status == 'Lulus')
+                        <td class="text-center"><i data-feather="check"></i></td>
+                        @elseif($item->registationStatus[0]->srt_status == 'Tidak Lulus')
+                        <td class="text-center"><i data-feather="x"></i></td>
+                        @else
+                        <td class="text-center"><i data-feather="minus"></i></td>
+                        @endif
+                    @else
+                        <td class="text-center"><i data-feather="minus"></i></td>
+                    @endif
+                    {{-- presentasi --}}
+                    @if(isset($item->registationStatus[1]))
+                        @if($item->registationStatus[1]->srt_status == 'Lulus')
+                        <td class="text-center"><i data-feather="check"></i></td>
+                        @elseif($item->registationStatus[1]->srt_status == 'Tidak Lulus')
+                        <td class="text-center"><i data-feather="x"></i></td>
+                        @else
+                        <td class="text-center"><i data-feather="minus"></i></td>
+                        @endif
+                        @if($item->registationStatus[0]->srt_status == 'Lulus' &&  $item->registationStatus[1]->srt_status == 'Lulus')
+                        <td class="text-center">Lulus</td>
+                        @elseif($item->registationStatus[0]->srt_status == 'Tidak Lulus' ||  $item->registationStatus[1]->srt_status == 'Tidak Lulus')
+                        <td class="text-center">Tidak Lulus</td>
+                        @else
+                        <td class="text-center">-</td>
+                        @endif
                     @else
                     <td class="text-center"><i data-feather="minus"></i></td>
-                    @endif
-                    @if($item->masterStartup->registationStatus[1]->srt_status == 'Lulus')
-                    <td class="text-center"><i data-feather="check"></i></td>
-                    @elseif($item->masterStartup->registationStatus[1]->srt_status == 'Tidak Lulus')
-                    <td class="text-center"><i data-feather="x"></i></td>
-                    @else
-                    <td class="text-center"><i data-feather="minus"></i></td>
-                    @endif
-                    @if($item->masterStartup->registationStatus[0]->srt_status == 'Lulus' &&  $item->masterStartup->registationStatus[1]->srt_status == 'Lulus')
-                    <td class="text-center">Lulus</td>
-                    @elseif($item->masterStartup->registationStatus[0]->srt_status == 'Tidak Lulus' ||  $item->masterStartup->registationStatus[1]->srt_status == 'Tidak Lulus')
+                    @if(isset($item->registationStatus[0]) && $item->registationStatus[0]->srt_status == 'Tidak Lulus')
                     <td class="text-center">Tidak Lulus</td>
                     @else
-                    <td class="text-center">-</td>
+                    <td class="text-center"><i data-feather="minus"></i></td>
+                    @endif
                     @endif
                     <td class="text-center">
                         <!-- VIEW -->
-                        <a href="{{ route('pendaftar.show', $item->mm_id) }}"><i data-feather="eye"></i></a>
+                        <a href="{{ route('pendaftar.show', $item->ms_id) }}"><i data-feather="eye"></i></a>
                     </td>
                 </tr>
                 @endforeach

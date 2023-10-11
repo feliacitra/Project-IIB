@@ -49,6 +49,19 @@
             Daftar Startup
         </p>
     </div>
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success alert-block">   
+        <strong>{{ $message }}</strong>
+    </div>
+    @endif
+    @if ($message = Session::get('errors'))
+    <div class="alert alert-danger alert-block">   
+        @foreach ($errors->all() as $error)
+            <strong>{{ $error }}</strong>
+            <br>
+        @endforeach
+    </div>
+    @endif
 
     <form action="{{ route('startup.store') }}" method="post" enctype="multipart/form-data">
     <input type="hidden" name="userid" value="{{ Auth::user()->id }}" />
@@ -90,55 +103,54 @@
 
                             <label for="kategori">Kategori</label>
                             <select id="kategori" class="form-control form-select" name="kategori">
-                                <option value="" class="text-muted">Kategori</option>
+                                <option value="{{ old('kategori') }}" class="text-muted">Kategori</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->mc_id }}">{{ $category->mc_name }}</option>
                                 @endforeach
                             </select>
 
                             <label for="namaStartup">Nama Startup</label>
-                            <input type="text" class="form-control" id="namaStartup" name="namaStartup" placeholder="Nama Startup" required>
+                            <input type="text" class="form-control" id="namaStartup" name="namaStartup" placeholder="Nama Startup" value="{{ old('namaStartup') }}">
 
                             <label for="deskripsi">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" cols="30" rows="3" name="deskripsi" placeholder="Deskripsi" required></textarea>
+                            <textarea class="form-control" id="deskripsi" cols="30" rows="3" name="deskripsi" placeholder="Deskripsi" value="{{ old('deskripsi') }}"></textarea>
                             
                             <label for="tahunDidirikan">Tahun Didirikan</label>
-                            <input type="number" class="form-control" id="tahunDidirikan" name="tahunDidirikan" placeholder="YYYY" required>
+                            <input type="number" class="form-control" id="tahunDidirikan" name="tahunDidirikan" placeholder="YYYY" value="{{ old('tahunDidirikan') }}">
 
                             <label for="alamat">Alamat</label>
-                            <textarea class="form-control" id="alamat" cols="30" rows="3" name="alamat" placeholder="Alamat" required></textarea>
+                            <textarea class="form-control" id="alamat" cols="30" rows="3" name="alamat" placeholder="Alamat" value="{{ old('alamat') }}"></textarea>
 
                             <label for="legalitas">Legalitas</label>
-                            <input type="text" class="form-control" id="legalitas" name="legalitas" placeholder="Legalitas" required>
+                            <input type="text" class="form-control" id="legalitas" name="legalitas" placeholder="Legalitas" value="{{ old('legalitas') }}">
 
                             <label for="sumberPendanaan">Sumber Pendanaan</label>
-                            <input type="text" class="form-control" id="sumberPendanaan" name="sumberPendanaan" placeholder="Sumber Pendanaan" required>
+                            <input type="text" class="form-control" id="sumberPendanaan" name="sumberPendanaan" placeholder="Sumber Pendanaan" value="{{ old('sumberPendanaan') }}">
 
                             <label for="pendapatanTahunan">Pendapatan Tahunan</label>
-                            <input type="number" class="form-control" id="pendapatanTahunan" name="pendapatanTahunan" placeholder="Pendapatan Tahunan" required>
+                            <input type="number" class="form-control" id="pendapatanTahunan" name="pendapatanTahunan" placeholder="Pendapatan Tahunan" value="{{ old('pendapatanTahunan') }}">
 
                             <label for="areaFokusBisnis">Area Fokus Bisnis</label>
-                            <textarea class="form-control" id="areaFokusBisnis" cols="30" rows="3" name="areaFokusBisnis" placeholder="Area Fokus Bisnis" required></textarea>
+                            <textarea class="form-control" id="areaFokusBisnis" cols="30" rows="3" name="areaFokusBisnis" placeholder="Area Fokus Bisnis" value="{{ old('areaFokusBisnis') }}"></textarea>
 
                         </div>
 
                         <div class="col">
                             <label for="kontakStartup">Kontak Startup</label>
 
-                            <input type="number" class="form-control" id="kontakStartup" name="kontakStartup" placeholder="Kontak Startup" required>
+                            <input type="number" class="form-control" id="kontakStartup" name="kontakStartup" placeholder="Kontak Startup" value="{{ old('kontakStartup') }}">
 
                             <label for="email">Email Startup</label>
-                            <input type="email" class="form-control" id="emailStartup" name="emailStartup" placeholder="Email Startup" required>
+                            <input type="email" class="form-control" id="emailStartup" name="emailStartup" placeholder="Email Startup" value="{{ old('emailStartup') }}">
 
                             <label for="website">Website</label>
-
-                            <input type="text" class="form-control" id="website" name="website" placeholder="Website" required>
+                            <input type="text" class="form-control" id="website" name="website" placeholder="Website" value="{{ old('website') }}">
 
                             <label for="sosialMedia">Sosial Media</label>
-                            <input type="text" class="form-control" id="sosialMedia" name="sosialMedia" placeholder="Sosial Media" required>
+                            <input type="text" class="form-control" id="sosialMedia" name="sosialMedia" placeholder="Sosial Media" value="{{ old('sosialMedia') }}">
 
                             <label for="pitchDeck">Unggah Pitch Deck</label>
-                            <input class="form-control" type="file" id="pitchDeck" name="pitchDeck" required>
+                            <input class="form-control" type="file" id="pitchDeck" name="pitchDeck" >
 
                             <div class="d-flex justify-content-end">
                                 <a class="btn btn-primary btnNext  mt-2">Selanjutnya</a>
@@ -167,19 +179,19 @@
                                 <div class="row">
                                     <div class="col">
                                         <label for="namaLengkap">Nama Lengkap</label>
-                                        <input type="text" class="form-control" id="namaLengkap" name="namaLengkap[]" placeholder="Nama Lengkap" required>
+                                        <input type="text" class="form-control" id="namaLengkap" name="namaLengkap[]" placeholder="Nama Lengkap">
 
                                         <label for="nik">NIK</label>
-                                        <input type="number" class="form-control" id="nik" name="nik[]" placeholder="NIK" required>
+                                        <input type="number" class="form-control" id="nik" name="nik[]" placeholder="NIK" >
 
                                         <label for="jabatan">Jabatan</label>
-                                        <input type="text" class="form-control" id="jabatan" name="jabatan[]" placeholder="Jabatan" required>
+                                        <input type="text" class="form-control" id="jabatan" name="jabatan[]" placeholder="Jabatan" >
 
                                         <label for="nomorHP">Nomor HP</label>
-                                        <input type="number" class="form-control" id="nomorHP" name="nomorHp[]" placeholder="Nomor HP" required>
+                                        <input type="number" class="form-control" id="nomorHP" name="nomorHp[]" placeholder="Nomor HP" >
 
                                         <label for="email">Email</label>
-                                        <input type="email" id="email" name="email[]" class="form-control" placeholder="Email" required>
+                                        <input type="email" id="email" name="email[]" class="form-control" placeholder="Email" >
 
                                         <label for="mediaSosial">Media Sosial</label>
                                         <input type="text" class="form-control" id="mediaSosial" name="mediaSosial[]" placeholder="Media Sosial" required>
@@ -187,7 +199,7 @@
 
                                     <div class="col">
                                         <label for="civitasTELU">Civitas Telkom University</label>
-                                        <select id="civitasTELU" class="form-control form-select" name="civitasTelu[]">
+                                        <select id="civitasTELU" class="form-control form-select" name="civitasTelu[]" required>
                                             <option value="" class="text-muted">Civitas Telkom University</option>
                                             @foreach($societies as $society)
                                                 <option value="{{ $society->mci_id }}">{{ $society->mci_name }}</option>
@@ -222,10 +234,10 @@
                                         </select>
 
                                         <label for="nimnip">NIM/NIP</label>
-                                        <input type="number" class="form-control" id="nimnip" name="nimNip[]" placeholder="NIM/NIP" required>
+                                        <input type="number" class="form-control" id="nimnip" name="nimNip[]" placeholder="NIM/NIP" >
 
                                         <label for="CV">Curricullum Vitae</label>
-                                        <input class="form-control" type="file" id="CV" name="cv[]" required>
+                                        <input class="form-control" type="file" id="CV" name="cv[]" >
 
                                     </div>                            
                                 </div>

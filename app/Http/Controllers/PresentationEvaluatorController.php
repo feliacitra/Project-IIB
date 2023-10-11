@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MasterCategory;
+use App\Models\MasterCivitas;
 use App\Models\MasterComponent;
 use App\Models\MasterPeriode;
 use App\Models\MasterQuestionRange;
 use App\Models\MasterStartup;
+use App\Models\MasterUniversitas;
 use App\Models\PresentationEvaluator;
 use App\Models\PresentationSchedule;
 use App\Models\RegistationAnswer;
@@ -47,16 +50,38 @@ class PresentationEvaluatorController extends Controller
 
     public function edit($id){
 
+        
         $presentasi = PresentationSchedule::with('MasterPeriodeProgram.MasterPeriode', 'MasterStartup')
         ->where('ps_id', $id)->first();
 
-        $componentDesk = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi','question', 'question.questionRange')
+        $component = MasterStartup::with('startupComponentStatus',
+        'masterPeriodeProgram',
+        'masterPeriodeProgram.component.question.questionRange',
+        'registationStatus',
+        'startupComponentStatus.registationAnswer',
+        'masterMember.civitas',
+        'masterMember.universitas',
+        'masterMember.fakultas',
+        'masterMember.prodi')->where('ms_id', $presentasi->ms_id)->first();
+        // dd($component);
+
+        $mct = $component->masterPeriodeProgram->component[0]->mct_id;
+        $mc = MasterComponent::with('question', 'question.questionRange', 'periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $mct)->first();
+        $components = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi','question', 'question.questionRange')->where('mct_step', 1)->get();
+        $componentDesk = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi','question', 'question.questionRange')->where('mct_step', 3)->where('mpd_id', $mc->periodeProgram->mpd_id)->first();
+
+
+        $componentPresentasi = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi','question', 'question.questionRange')
         ->where('mct_step', 2)->where('mpd_id', $presentasi->masterPeriodeProgram->mpd_id)->first();
 
         $mqDesk = StartupComponentStatus::with('registationAnswer')
         ->where('ms_id',$presentasi->masterStartup->ms_id)->get();
 
-        return view('penilai.nilaiEdit', compact('presentasi', 'componentDesk', 'mqDesk'));
+        $masterKategori = MasterCategory::all();
+        $universitas = MasterUniversitas::with('faculties', 'faculties.programStudy')->get();
+        $civitas = MasterCivitas::all();
+
+        return view('penilai.nilaiEdit', compact('masterKategori', 'universitas', 'civitas', 'component', 'components', 'presentasi', 'mc', 'componentDesk', 'mqDesk', 'componentPresentasi'));
     }
 
     public function update(Request $request, $id){

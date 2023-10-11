@@ -115,7 +115,7 @@
                         <td class="text-center action-icons">
                             <a href="#viewJadwal"><i data-feather="eye"></i></a>
                             <a href="#createJadwal"><i data-feather="edit-2"></i></a>
-                            <a href="#deleteJadwal" data-id="{{ $present->ps_id }}"><i data-feather="trash-2"></i></a>
+                            <a href="{{ route('jadwalpresentasi.hapus', $present->ps_id) }}"><i data-feather="trash-2"></i></a>
                         </td>
                     </tr>
                 @endforeach

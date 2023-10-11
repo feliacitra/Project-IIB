@@ -188,12 +188,6 @@
                     <span class="link-title">Lihat Jadwal Monev</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="{{ route('penilaianDE') }}" class="nav-link">
-                    <i class="link-icon" data-feather="edit"></i>
-                    <span class="link-title">Penilaian Desk Evaluation</span>
-                </a>
-            </li>
             @foreach (get_menu() as $menu)
                 <li class="nav-item">
                     {!! $menu !!}
@@ -210,11 +204,13 @@
                     <select name="history" id="periode" class="form-control form-select">
                         <option value="" class="text-muted">History</option>
                         @foreach($history->historyStartup as $item)
-                        @if($item->masterPeriodeProgram[0]->masterPeriode->mpe_id == $periode->mpe_id)
-                        <option value="{{ $item->mpd_id }}" selected>{{ $item->masterPeriodeProgram[0]->masterPeriode->mpe_name }}</option>
-                        @else
-                        <option value="{{ $item->mpd_id }}">{{ $item->masterPeriodeProgram[0]->masterPeriode->mpe_name }}</option>
-                        @endif
+                        {{-- @if(isset($periode_mpe_id))  --}}
+                            @if(isset($periode->mpe_id) && $item->masterPeriodeProgram[0]->masterPeriode->mpe_id == $periode->mpe_id)
+                            <option value="{{ $item->mpd_id }}" selected>{{ $item->masterPeriodeProgram[0]->masterPeriode->mpe_name }}</option>
+                        {{-- @endif --}}
+                            @else
+                            <option value="{{ $item->mpd_id }}">{{ $item->masterPeriodeProgram[0]->masterPeriode->mpe_name }}</option>
+                            @endif
                         @endforeach
                     </select>
                     <button type="submit" id="periodeButton" hidden></button>
@@ -227,15 +223,17 @@
                     <span class="link-title">Dashboard</span>
                 </a>
             </li>
+            @if(isset($startup))
             <li class="nav-item">
             <a href="{{ route('profilstartup') }}" class="nav-link">
                     <i class="link-icon" data-feather="folder"></i>
                     <span class="link-title">Profil Startup</span>
                 </a>
             </li>
-            {{-- @dd(isset($check)) --}}
-            @if(isset($check))
-            @if($check != 1)
+            @endif
+            {{-- @dd($check) --}}
+            @if(isset($tampilSidebar))
+            @if($tampilSidebar == 1 && $periodeAktif==1)
             <li class="nav-item">
                 <a href="" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>

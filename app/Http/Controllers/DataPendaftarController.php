@@ -10,6 +10,7 @@ use App\Models\MasterStartup;
 use App\Models\MasterUniversitas;
 use App\Models\StartupComponentStatus;
 use App\Models\MasterPeriode;
+use App\Models\PresentationSchedule;
 use Illuminate\Http\Request;
 
 
@@ -58,20 +59,27 @@ class DataPendaftarController extends Controller
             'masterStartup.masterCategory',
             'masterStartup.registationStatus',
             'masterStartup.startupComponentStatus')->get();
+
+            $startup = MasterStartup::with('masterPeriodeProgram.masterPeriode',
+            'masterPeriodeProgram.masterProgramInkubasi',
+            'registationStatus',
+            'startupComponentStatus')->get();
         }
         
         
         // dd($member);
       
         $periode = MasterPeriode::get();
-        return view('Pendaftaran-DataPendaftar.dataPendaftar', compact('member', 'periode'));
+        return view('Pendaftaran-DataPendaftar.dataPendaftar', compact('member', 'periode', 'startup'));
 
     }
 
     public function show($id){
-
-        $member = MasterMember::with('civitas', 'universitas', 'fakultas', 'prodi')
-        ->where('mm_id', $id)->first();
+        // dd('test');
+        // $member = MasterMember::with('civitas', 'universitas', 'fakultas', 'prodi')
+        // ->whereHas('masterStartup',function($q){
+        //     $q->where('ms_id', $id);
+        // })->first
 
           
         $component = MasterStartup::with('startupComponentStatus',
@@ -82,7 +90,7 @@ class DataPendaftarController extends Controller
         'masterMember.civitas',
         'masterMember.universitas',
         'masterMember.fakultas',
-        'masterMember.prodi')->where('ms_id', $member->ms_id )->first();
+        'masterMember.prodi')->where('ms_id', $id )->first();
         
         $mct = $component->masterPeriodeProgram->component[0]->mct_id;
         $mc = MasterComponent::with('question', 'question.questionRange', 'periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi')->where('mct_id', $mct)->first();
@@ -100,6 +108,15 @@ class DataPendaftarController extends Controller
         // $prodi = MasterProgramStudy::all();
         $civitas = MasterCivitas::all();
 
-        return view('Pendaftaran-DataPendaftar.dataStartup', compact('member', 'component','mc', 'masterKategori', 'universitas', 'civitas', 'components', 'componentDesk', 'mqDesk'));
+        // presentasi 
+        $componentPresentasi = null; 
+        $presentasi = PresentationSchedule::with('MasterPeriodeProgram.MasterPeriode', 'MasterStartup')
+        ->where('ms_id', $id)->first();
+        if(isset($presentasi)){
+            $componentPresentasi = MasterComponent::with('periodeProgram.masterPeriode', 'periodeProgram.masterProgramInkubasi','question', 'question.questionRange')
+            ->where('mct_step', 2)->where('mpd_id', $presentasi->masterPeriodeProgram->mpd_id)->first();
+        }
+            
+        return view('Pendaftaran-DataPendaftar.dataStartup', compact('component','mc', 'masterKategori', 'universitas', 'civitas', 'components', 'componentDesk', 'mqDesk', 'presentasi', 'componentPresentasi'));
     }
 }

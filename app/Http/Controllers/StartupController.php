@@ -53,6 +53,35 @@ class StartupController extends Controller
     }
 
     public function store(Request $request){
+        
+        $validated = $request->validate([
+            'programStartup' => 'required',
+            'kategori' => 'required',
+            'namaStartup' => 'required',
+            'tahunDidirikan' => 'required',
+            'alamat' => 'required',
+            'legalitas' => 'required',
+            'sumberPendanaan' => 'required',
+            'pendapatanTahunan' => 'required',
+            'areaFokusBisnis' => 'required',
+            'kontakStartup' => 'required',
+            'emailStartup' => 'required',
+            'website' => 'required',
+            'namaLengkap' => 'required',
+            'nik' => 'required',
+            'jabatan' => 'required',
+            'nomorHp' => 'required',
+            'email' => 'required',
+            'civitasTelu' => 'required',
+            'universitas' => 'required',
+            'fakultas' => 'required',
+            'prodi' => 'required',
+            'nimNip' => 'required',
+            'answers' => 'required',
+            'pitchDeck' => 'required',
+            'cv' => 'required',
+        ]);
+
         // dd($request);
         if($request->collect('universitas-input')){
             // lainya create univ, fakultas, prodi

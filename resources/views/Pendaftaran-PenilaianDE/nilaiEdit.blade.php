@@ -334,10 +334,15 @@
                                             <label for="lulus">Lulus</label>
                                             <input type="radio" id="tidakLulus" name="kelulusan" value="Tidak Lulus">
                                             <label for="tidakLulus">Tidak Lulus</label>
-                                            @else
+                                            @elseif($component->registationStatus[0]->srt_status == "Tidak Lulus")
                                             <input type="radio" id="lulus" name="kelulusan" value="Lulus">
                                             <label for="lulus">Lulus</label>
                                             <input type="radio" id="tidakLulus" name="kelulusan" value="Tidak Lulus" checked>
+                                            <label for="tidakLulus">Tidak Lulus</label>
+                                            @else
+                                            <input type="radio" id="lulus" name="kelulusan" value="Lulus">
+                                            <label for="lulus">Lulus</label>
+                                            <input type="radio" id="tidakLulus" name="kelulusan" value="Tidak Lulus">
                                             <label for="tidakLulus">Tidak Lulus</label>
                                             @endif
                                         </div>

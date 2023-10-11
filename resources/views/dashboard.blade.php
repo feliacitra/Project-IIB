@@ -9,7 +9,7 @@
             color: black;
         }
     </style>
-
+    {{-- @dd($presentasi) --}}
     <div class="pb-2">
         <p style="display: flex; align-items: flex-end;">
             <!-- Home button -->
@@ -18,8 +18,24 @@
             Dashboard
         </p>
     </div>
-    {{-- @dd($history) --}}
-    {{-- @dd($startup) --}}
+
+    {{-- @dd($startup->presentationSchedule) --}}
+    @if(isset($startup->presentationSchedule) && !isset($startup->presentationSchedule->presentationEvaluator))
+    <div class="container-fluid mt-4">
+        <div class="alert alert-warning text-dark" role="alert">
+            <h6><i data-feather="alert-triangle"></i>Jadwal Presentasi</h6>
+            <p class="mt-2" style="margin-left: 1.7rem">Presentasi akan dilakukan pada tanggal <span style="font-weight: 600">{{ $startup->presentationSchedule->ps_date->format('D M Y') }}</span>.</p>
+            <p class="mt-2" style="margin-left: 1.7rem">Pukul {{ $startup->presentationSchedule->ps_timestart }} sampai {{ $startup->presentationSchedule->ps_timeend }}</p>
+            @if($startup->presentationSchedule->ps_online == 1)
+            <p class="mt-2" style="margin-left: 1.7rem">Dilakukan secara Online</p>
+            <a class="mt-2" style="margin-left: 1.7rem; font-weight: 600" href="{{ $startup->presentationSchedule->ps_link }}">Link Meeting</a>
+            @else
+            <p class="mt-2" style="margin-left: 1.7rem">Dilakukan secara Offline di {{ $startup->presentationSchedule->ps_place }}</p>
+            @endif
+        </div>
+    </div>
+    @endif
+
     @if(isset($periode) && !isset($startup))
     <div class="container-fluid mt-4">
         <div class="alert alert-warning text-dark" role="alert">
@@ -49,7 +65,6 @@
     {{-- @dd($history); --}}
     @if(isset($startup) && $startup->masterPeriodeProgram->masterPeriode->mpe_status == 1 || $check == 1)
     @if($check == 1)
-    <p>ceritanya ini progress dulu</p>
     @endif
     <div class="container-fluid mt-4">
         <div class="card">

@@ -150,7 +150,7 @@ Route::middleware(['auth', 'access'])->group(function () {
     ]);
     Route::get('/jadwalpresentasi', [PresentationSecheduleController::class, 'index'])->name('jadwalpresentasi');
     Route::post('/jadwalpresentasi/tambah', [PresentationSecheduleController::class, 'store'])->name('jadwalpresentasi.simpan');
-    Route::delete('/jadwalpresentasi/{id}', [PresentationSecheduleController::class, 'delete'])->name('jadwalpresentasi.hapus');
+    Route::get('/jadwalpresentasi/{id}', [PresentationSecheduleController::class, 'delete'])->name('jadwalpresentasi.hapus');
     
     Route::get('/lihatjadwalpresentasi', [PresentationEvaluatorController::class, 'index'] )->name('lihatjadwalpresentasi');
     Route::get('/lihatjadwalpresentasi/show/{id}',[PresentationEvaluatorController::class, 'show'] )->name('lihatnilaipresentasi');

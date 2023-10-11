@@ -23,6 +23,7 @@ class DashboardController extends Controller
 
     
     public function index(){
+        // dd(request());
         if(auth()->user()->role != 1){
 
             $penilaianDate = '';
@@ -39,7 +40,8 @@ class DashboardController extends Controller
                 })->first();
             }
             // dd(request());
-            if(request('history') != null && $periode->mpe_status==0){
+            // if(request('history') != null && $periode->mpe_status==0){
+            if(request('history') != null){
                 
                 // dd($periode);
                 $status = Carbon::now()->between($periode->mpe_startdate, $periode->mpe_enddate);
@@ -86,21 +88,39 @@ class DashboardController extends Controller
                     }
                     
                 }
-                    if($startup != null){
-                        $penilaianDate = date('d-M-Y', strtotime($startup->registationStatus[0]->updated_at));
-                        $startDate = date('d-M-Y', strtotime($startup->ms_startdate));
-                    }      
-                    $check = 0;
+                // $startup = $UserStartup;
+                $check = 0;
                 }
 
+                // dd($startup);
+                if($startup != null){
+                    $penilaianDate = date('d-M-Y', strtotime($startup->registationStatus[0]->updated_at));
+                    $startDate = date('d-M-Y', strtotime($startup->ms_startdate));
+                    // dd($penilaianDate);
+                    }      
                 $presentasi = PresentationSchedule::with('MasterPeriodeProgram.MasterPeriode', 'MasterStartup', 'presentationEvaluator')
                 ->whereHas('MasterStartup', function($q){
                     $q->where('user_id', auth()->user()->id);
                 })->first();
-                if($presentasi != null){
+                if(isset($presentasi->presentationEvaluator)){
                     $presentasiDate = $presentasi->presentationEvaluator->created_at;
                 }
-                return view('dashboard')->with(compact('periode','status', 'startup', 'penilaianDate', 'startDate', 'history', 'check', 'presentasiDate'));
+                $tampilSidebar = 0;
+                $periodeAktif = 0;
+                // dd(isset($startup->registationStatus[1]));
+                if(isset($startup->registationStatus[1]) && $startup->registationStatus[1]->srt_status == 'Lulus'){
+                    $tampilSidebar = 1;
+                    if($startup->masterPeriodeProgram->masterPeriode->mpe_status==1){
+                        $periodeAktif = 1;
+                    }
+                }
+                // dd($startup->registationStatus[1]->srt_status);
+                
+                // dd($periodeAktif);
+                // jadwal presentasi
+
+
+                return view('dashboard')->with(compact('periode','status', 'startup', 'penilaianDate', 'startDate', 'history', 'check', 'presentasiDate', 'tampilSidebar', 'presentasi', 'periodeAktif'));
             }
         return view('dashboard');
     }

@@ -70,4 +70,9 @@ class MasterStartup extends Model
     public function registationStatus(){
         return $this->hasMany(RegistationStatus::class, 'ms_id', 'ms_id');
     }
+
+    public function presentationSchedule(){
+        return $this->hasOne(PresentationSchedule::class, 'ms_id', 'ms_id');
+    }
+
 }
