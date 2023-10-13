@@ -38,6 +38,6 @@ class MasterStartupSeeder extends Seeder
         ];
 
         // Use firstOrCreate to create a single record or find an existing one
-        MasterStartup::firstOrCreate(['ms_name' => 'Example Startup'], $data);
+        // MasterStartup::firstOrCreate(['ms_name' => 'Example Startup'], $data);
     }
 }

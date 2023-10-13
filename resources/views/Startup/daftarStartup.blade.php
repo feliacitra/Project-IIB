@@ -89,7 +89,7 @@
             {{-- Identitas --}}
             <div class="tab-pane fade show active" id="nav-identitas" role="tabpanel" aria-labelledby="nav-identitas-tab">
                     @csrf
-                    {{-- @dd($components) --}}
+                    {{-- @dd($periode->masterPeriodeProgram[1]->masterProgramInkubasi) --}}
                     <div class="row p-3" >
                         <div class="col">
                             <label for="programInkubasi">Program Inkubasi</label>

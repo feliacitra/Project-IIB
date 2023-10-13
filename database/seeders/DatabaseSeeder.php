@@ -223,7 +223,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterCivitasSeeder::class);
         $this->call(MasterPeriodeProgramSeeder::class);
         MasterCategory::firstOrCreate(['mc_name' => 'Contoh'], $category);
-        $this->call(MasterStartupSeeder::class);
+        // $this->call(MasterStartupSeeder::class);
 
     }
 }

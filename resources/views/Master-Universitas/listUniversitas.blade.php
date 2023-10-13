@@ -293,7 +293,7 @@
     <script>
     function test(){
         const viewLinks = document.querySelectorAll('a[href="#viewUniversitas"]');
-        console.log(viewLinks);
+        // console.log(viewLinks);
     }
  const viewLinks = document.querySelectorAll('a[href="#viewUniversitas"]');
  

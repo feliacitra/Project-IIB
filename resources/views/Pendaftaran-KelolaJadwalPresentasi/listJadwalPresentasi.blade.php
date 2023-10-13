@@ -49,14 +49,14 @@
 
     <div class="row mt-4">
         <div class="col-4 col-md-3 col-lg-2">
-            <select name="pilihPeriode" id="periode" class="form-control form-select">
+            <select name="pilihPeriode" id="periode-filter" class="form-control form-select">
                 <option value="select" class="text-muted">Periode</option>
                 <option value="th2022">Tahun 2022</option>
             </select>
         </div>
 
         <div class="col-4 col-md-3 col-lg-2">
-            <select name="pilihStatus" id="periode" class="form-control form-select">
+            <select name="pilihStatus" id="status-filter" class="form-control form-select">
                 <option value="select" class="text-muted">Status</option>
                 <option value="status1">On Progress</option>
             </select>
@@ -130,7 +130,7 @@
         <div class="wrapper">
             <div class="row align-items-center">
                 <div class="col col-lg-9 col-md-8">
-                    <h4>Tambah Jadwal Presentasi</h4>
+                    <h4>Jadwal Presentasi</h4>
                 </div>
                 <div class="col col-lg-3 col-md-4 d-flex justify-content-end">
                     <!-- X button -->
@@ -297,7 +297,7 @@
                         <div class="form-group row align-items-center">
                             <label for="periode" class="col-sm-3">Nama Periode</label>
                             <div class="col-sm-9">
-                                <select id="periode" class="form-control form-select" disabled>
+                                <select id="periode-view" class="form-control form-select" disabled>
                                     <option value="" class="text-muted">Nama Periode</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -306,9 +306,9 @@
                         </div>  
 
                         <div class="form-group row align-items-center">
-                            <label for="startup" class="col-sm-3">Nama Startup</label>
+                            <label for="startup-view" class="col-sm-3">Nama Startup</label>
                             <div class="col-sm-9">
-                                <select id="startup" class="form-control form-select" disabled>
+                                <select id="startupview" class="form-control form-select" disabled>
                                     <option value="" class="text-muted">Nama Startup</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -317,9 +317,9 @@
                         </div>
 
                         <div class="form-group row align-items-center">
-                            <label for="penilai" class="col-sm-3">Penilai</label>
+                            <label for="penilai-view" class="col-sm-3">Penilai</label>
                             <div class="col-sm-9">
-                                <select id="penilai" class="form-control form-select" disabled>
+                                <select id="penilai-view" class="form-control form-select" disabled>
                                     <option value="" class="text-muted">Penilai</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -330,7 +330,7 @@
                         <div class="form-group row align-items-center">
                             <label for="date" class="col-sm-3">Tanggal</label>
                             <div class="col-sm-9">
-                                <input type="date" name="date" id="date" class="form-control" disabled>
+                                <input type="date" name="date" id="date-view" class="form-control" disabled>
                             </div>
                         </div>
 
@@ -338,9 +338,9 @@
                             <label for="time" class="col-sm-3">Pukul</label>
                             <div class="col-sm-9">
                                 <div class="d-flex align-items-center">
-                                    <input type="time" name="time" id="timeFrom" class="form-control" disabled>
+                                    <input type="time" name="time" id="timeFrom-view" class="form-control" disabled>
                                     <span class="mx-4">s.d.</span>
-                                    <input type="time" name="time" id="timeTo" class="form-control" disabled>
+                                    <input type="time" name="time" id="timeTo-view" class="form-control" disabled>
                                 </div>
                             </div>
                          </div>
@@ -348,10 +348,10 @@
                         <div class="form-group row align-items-center">
                             <label for="radio" class="col-sm-3">Online</label>
                             <div class="col-sm-9 radio">
-                                <input type="radio" id="iya" name="online" value="Iya" disabled>
+                                <input type="radio" id="iya-view" name="online" value="Iya" disabled>
                                 <label for="iya">Iya</label>
         
-                                <input type="radio" id="tidak" name="online" value="Tidak" disabled>
+                                <input type="radio" id="tidak-view" name="online" value="Tidak" disabled>
                                 <label for="tidak">Tidak</label>
                             </div>
                         </div>
@@ -359,14 +359,14 @@
                         <div class="form-group row align-items-center">
                             <label for="tempat" class="col-sm-3">Tempat</label>
                             <div class="col-sm-9">
-                                <input type="text" name="tempat" id="tempat" class="form-control" placeholder="Tempat" disabled>
+                                <input type="text" name="tempat" id="tempat-view" class="form-control" placeholder="Tempat" disabled>
                             </div>
                         </div>
 
                         <div class="form-group row align-items-center">
                             <label for="link" class="col-sm-3">Link</label>
                             <div class="col-sm-9">
-                                <input type="url" name="link" id="link" class="form-control" placeholder="Link" disabled>
+                                <input type="url" name="link" id="link-view" class="form-control" placeholder="Link" disabled>
                             </div>
                         </div>
 

@@ -454,10 +454,8 @@
                     </div>
     
                     <div class="text-center inner-bottom-button">
-                        <button type="submit" class="btn btn-primary px-4" style="margin-right: 1rem;">
-                            Simpan
-                        </button>
-                        <a href="{{route ('lihatjadwalpresentasi')}}" class="btn btn-secondary px-4">Kembali</a>
+
+                        <a href="{{route ('pendaftar')}}" class="btn btn-secondary px-4">Kembali</a>
                     </div>
                 </form>
             </div>
